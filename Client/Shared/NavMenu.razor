@@ -7,12 +7,12 @@
     </button>
 
     <!--Show if NavBar<=sm -->
-    <div class="col-12 @NavMenuCssClass d-sm-none">
+    <div class="col-12 @NavMenuCssClass d-sm-none" @onclick="ToggleNavMenu">
         <NavBarLinks />
     </div>
     
     <!--Show if NavBar>sm  -->
-    <div class="col-12 d-none d-sm-block">
+    <div class="col-12 d-none d-sm-block" @onclick="ToggleNavMenu">
         <NavBarLinks />
     </div>
 </nav>

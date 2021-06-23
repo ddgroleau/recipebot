@@ -1,7 +1,11 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 body {
-    font-family: monospace, Helvetica, Arial, sans-serif;
+    font-family: sans-serif;
+}
+
+nav {
+    font-family: monospace;
 }
 
 .container, .container-fluid {
@@ -11,6 +15,7 @@ body {
 
 .row {
     border: black solid 1px;
+    padding: 1px;
 }
 
 .col {
@@ -19,6 +24,7 @@ body {
 
 footer {
     border-top: solid black 1px;
+    padding-left: 10px;
 }
 
 #blazor-error-ui {

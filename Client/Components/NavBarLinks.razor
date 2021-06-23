@@ -21,12 +21,21 @@
         </NavLink>
     </li>
     <li class="nav-item">
-        <NavLink class="nav-link" href="login">
+        <NavLink class="nav-link" href="login" style=@login>
             Login
+        </NavLink>
+    </li>
+    <li class="nav-item">
+        <NavLink class="nav-link" href="logout" style=@logout>
+            Logout
         </NavLink>
     </li>
 </ul>
 
 @code {
+    private static bool isLoggedIn { get; set; } = true;
+    private string login { get; set; } = $"{ (isLoggedIn ? "display:none" : "display:normal") }";
+    private string logout { get; set; } = $"{ (isLoggedIn ? "display:normal" : "display:none") }";
+
 
 }
