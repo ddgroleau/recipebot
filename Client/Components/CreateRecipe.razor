@@ -1,17 +1,22 @@
-﻿
-<form>
-    <div class="row">
-        <div class="col-12">
-            <label for="createRecipe">
-                Add a recipe:
-                <br />
-                <input id="createRecipe" />
-            </label>
+﻿<div class="card">
+    <h4 class="card-header">Add a Recipe</h4>
+    <div class="card-body">
+        <EditForm Model="@model">
+            <DataAnnotationsValidator />
+
+            <InputText @bind-Value="model.Url" class="form-control" DisplayName="Recipe URL"/>
             <button type="submit" class="btn btn-success">Add</button>
-        </div>
+            <ValidationMessage For="@(() => model.Url)" />
+        </EditForm>
     </div>
-</form>
+    </div>
+        @code {
+            RecipeURL model = new RecipeURL();
 
-@code {
-
-}
+            public class RecipeURL
+            {
+                private int Id { get; set; }
+                [Required]
+                public string Url { get; set; }
+            }
+        }
