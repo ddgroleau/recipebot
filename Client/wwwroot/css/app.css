@@ -1,31 +1,24 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 body {
-    font-family: 'Calibri', Helvetica, Arial, sans-serif;
-    background-color: white;
-
+    font-family: monospace, Helvetica, Arial, sans-serif;
 }
 
-.main-Layout {
-    min-height: 100vh;
-}
 .container, .container-fluid {
-    background-color: teal;
-    border: black solid 4px;
-    color: rgb(255, 255, 255);
+    border: white solid 3px;
 }
 
 
 .row {
-    background-color: white;
-    border: lime solid 3px;
-    color: black;
+    border: black solid 1px;
 }
 
 .col {
-    border: black solid 2px;
-    background-color: white;
-    color: black;
+    border: blue solid 2px;
+}
+
+footer {
+    border-top: solid black 1px;
 }
 
 #blazor-error-ui {

@@ -1,18 +1,15 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="container-fluid main-Layout">
+    <div class="container-fluid">
 
-    <div class="row">
-        <NavMenu />
+            <NavMenu />
+
+        <div class="row">
+            @Body
+        </div>
+
+        <footer class="fixed-bottom">
+            <a href="">Dan G - 2021</a>
+        </footer>
+
     </div>
-
-
-    <div class="row">
-        @Body
-    </div>
-    
-    <div class="row">
-        <a href="">Dan G - 2021</a>
-    </div>
-
-</div>

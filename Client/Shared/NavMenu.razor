@@ -1,44 +1,24 @@
-﻿<div class="container-fluid">
-    <div class="row">
-        <a class="col-5" href="">Component-Based Architecture</a>
-        <button class="" @onclick="ToggleNavMenu">
-            <span class="col"></span>
-        </button>
-    </div>
+﻿<nav class="navbar navbar-expand-sm navbar-light bg-light"><p>DummyNavBar</p></nav>
+<nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light">
 
-    <div class="@NavMenuCssClass">
-        <ul class="row">
-            <li class="col">
-                <NavLink class="" href="" Match="NavLinkMatch.All">
-                    <span class="" aria-hidden="true"></span> Home
-                </NavLink>
-            </li>
-            <li class="col">
-                <NavLink class="" href="catalog">
-                    <span class="" aria-hidden="true"></span> Catalog
-                </NavLink>
-            </li>
-            <li class="col">
-                <NavLink class="" href="lists">
-                    <span class="" aria-hidden="true"></span> Lists
-                </NavLink>
-            </li>
-            <li class="col">
-                <NavLink class="" href="account">
-                    <span class="" aria-hidden="true"></span> Account
-                </NavLink>
-            </li>
-            <li class="col">
-                <NavLink class="" href="login">
-                    <span class="" aria-hidden="true"></span> Login
-                </NavLink>
-            </li>
-        </ul>
+    <a class="navbar-brand" href="#">RecipeBot</a>
+    <button class="btn" type="button" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon d-block d-sm-none"></span>
+    </button>
+
+    <!--Show if NavBar<=sm -->
+    <div class="col-12 @NavMenuCssClass d-sm-none">
+        <NavBarLinks />
     </div>
-</div>
+    
+    <!--Show if NavBar>sm  -->
+    <div class="col-12 d-none d-sm-block">
+        <NavBarLinks />
+    </div>
+</nav>
+
 @code {
-    private bool collapseNavMenu = false;
-
+    private bool collapseNavMenu = true;
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
