@@ -1,16 +1,49 @@
 ﻿<div class="card">
-    <h4 class="card-header">Generate List</h4>
-    <div class="card-body">
-        <EditForm Model="@model">
-            <DataAnnotationsValidator />
-
-            <InputText @bind-Value="model.Url" class="form-control" DisplayName="Recipe URL" />
-            <button type="submit" class="btn btn-success">Add</button>
-            <ValidationMessage For="@(() => model.Url)" />
+    <h4 class="card-header">
+        Generate List
+        <br />
+        <label>Days:</label>
+        <button class="btn btn-success" @onclick="model.HandleUp">Up</button>
+        <button class="btn btn-danger" @onclick="model.HandleDown">Down</button>
+       <EditForm Model="model">
+           <DataAnnotationsValidator />
+            <InputNumber @bind-Value=@model.Days />
         </EditForm>
+        
+    </h4>
+    <div class="card-body">
+        <div class="row">
+            @{
+                for (int day = 0; day <= model.Days; day++)
+                {
+                    if (day>0)
+                {
+                    <DayMealsCard/>
+                }
+                }
+            }
+
+
+        </div>
     </div>
 </div>
 
 @code {
-    
+    ListGeneratorModel model = new ListGeneratorModel();
+    public class ListGeneratorModel
+    {
+        [Range(0,7,ErrorMessage ="Days cannot exceed 7.")]
+        public int Days { get; set; } = 0;
+
+        public void HandleUp()
+        {
+            Days += 1;
+        }
+        public void HandleDown()
+        {
+            Days -= 1;
+        }
+    }
+
+
 }
