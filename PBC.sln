@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PBC.Server", "Server\PBC.Server.csproj", "{905E2DFE-5938-4459-8001-606AF246D33A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PBC.Server", "Server\PBC.Server.csproj", "{905E2DFE-5938-4459-8001-606AF246D33A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PBC.Client", "Client\PBC.Client.csproj", "{2991E020-2E2F-4744-8E84-F2532B5F7BDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PBC.Client", "Client\PBC.Client.csproj", "{2991E020-2E2F-4744-8E84-F2532B5F7BDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PBC.Shared", "Shared\PBC.Shared.csproj", "{81CF3802-53D7-425F-9BF3-FBEBFEE007F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PBC.Shared", "Shared\PBC.Shared.csproj", "{81CF3802-53D7-425F-9BF3-FBEBFEE007F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

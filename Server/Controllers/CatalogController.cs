@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace PBC.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CatalogController : ControllerBase
     {
    

@@ -1,0 +1,16 @@
+﻿<div class="card">
+    <h4 class="card-header">Generate List</h4>
+    <div class="card-body">
+        <EditForm Model="@model">
+            <DataAnnotationsValidator />
+
+            <InputText @bind-Value="model.Url" class="form-control" DisplayName="Recipe URL" />
+            <button type="submit" class="btn btn-success">Add</button>
+            <ValidationMessage For="@(() => model.Url)" />
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    
+}
