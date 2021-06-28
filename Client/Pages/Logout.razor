@@ -1,13 +1,36 @@
 ﻿@page "/logout"
+@inject NavigationManager navigationManager
 
 <div class="col-12">
     <h3>Logout</h3>
 </div>
 
-<a href="login">
-    Return to Login
-</a>
+<div class="card text-center">
+    <div class="card-header">
+        Are you sure you want to log out?
+    </div>
+    <div class="card-body">
+        <button disabled="@loading" class="btn btn-outline-danger" @onclick="HandleLogout">
+            @if (loading)
+            {
+                <span class="spinner-border spinner-border-sm mr-1"></span>
+            }
+            Logout
+        </button>
+    </div>
+    <div class="card-footer">
+        <a href="/">
+            Return to Home
+        </a>
+    </div>
+</div>
+
 
 @code {
+    private bool loading = false;
 
+    public void HandleLogout()
+    {
+        navigationManager.NavigateTo("login");
+    }
 }

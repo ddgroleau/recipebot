@@ -1,0 +1,66 @@
+﻿<EditForm Model="@model">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>
+            Confirm Current Email:
+            <InputText type="email" @bind-Value="model.CurrentEmail" class="form-control" />
+            <ValidationMessage For="@(() => model.CurrentEmail)" />
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label>
+            Enter New Email:
+
+            <InputText type="email" @bind-Value="model.NewEmail" class="form-control" />
+            <ValidationMessage For="@(() => model.NewEmail)" />
+
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label>
+            Confirm New Email:
+
+            <InputText type="email" @bind-Value="model.ConfirmNewEmail" class="form-control" />
+            <ValidationMessage For="@(() => model.ConfirmNewEmail)" />
+
+        </label>
+    </div>
+
+    <button disabled="@loading" class="btn btn-success" type="submit">
+        @if (loading)
+        {
+            <span class="spinner-border spinner-border-sm mr-1"></span>
+        }
+        Submit
+    </button>
+</EditForm>
+
+@code {
+   ChangedUser model = new ChangedUser();
+    private bool loading = false;
+    public class ChangedUser
+    {
+        [Required]
+        public string Username { get; set; }
+
+        [Required]
+        public string CurrentEmail { get; set; }
+
+        [Required]
+        public string NewEmail { get; set; }
+
+        [Required]
+        public string ConfirmNewEmail { get; set; }
+
+        [Required]
+        public string CurrentPassword { get; set; }
+
+        [Required]
+        public string NewPassword { get; set; }
+
+        [Required]
+        public string ConfirmNewPassword { get; set; }
+    }
+}

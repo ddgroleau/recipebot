@@ -3,13 +3,13 @@
         Generate List
         <br />
         <label>Days:</label>
-        <button class="btn btn-success" @onclick="model.HandleUp">Up</button>
-        <button class="btn btn-danger" @onclick="model.HandleDown">Down</button>
-       <EditForm Model="model">
-           <DataAnnotationsValidator />
+        <button class="btn btn-success" @onclick="model.HandleUp">+</button>
+        <button class="btn btn-danger" @onclick="model.HandleDown">(-)</button>
+        <EditForm Model="model">
+            <DataAnnotationsValidator />
             <InputNumber @bind-Value=@model.Days />
         </EditForm>
-        
+        <span class="small form-text text-danger">@model.errorMessage</span>
     </h4>
     <div class="card-body">
         <div class="row">
@@ -18,12 +18,10 @@
                 {
                     if (day>0)
                 {
-                    <DayMealsCard/>
+                    <ListGenCard/>
                 }
                 }
             }
-
-
         </div>
     </div>
 </div>
@@ -35,13 +33,32 @@
         [Range(0,7,ErrorMessage ="Days cannot exceed 7.")]
         public int Days { get; set; } = 0;
 
+        public string errorMessage { get; set; }
+
         public void HandleUp()
         {
-            Days += 1;
+            errorMessage = "";
+            if (Days >=7)
+            {
+                errorMessage = "Max 7 Days";
+            }
+            else
+            {
+                Days += 1;
+            }
+
         }
         public void HandleDown()
         {
-            Days -= 1;
+            errorMessage = "";
+            if (Days <= 0)
+            {
+                errorMessage = "Min 0 Days";
+            }
+            else
+            {
+                Days -= 1;
+            }
         }
     }
 
