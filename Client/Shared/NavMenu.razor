@@ -2,27 +2,31 @@
 <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light">
 
     <a class="navbar-brand" href="#">RecipeBot</a>
-    <button class="btn" type="button" @onclick="ToggleNavMenu">
+    <button class="btn" type="button" @onclick="l.Toggle">
         <span class="navbar-toggler-icon d-block d-sm-none"></span>
     </button>
 
     <!--Show if NavBar<=sm -->
-    <div class="col-12 @NavMenuCssClass d-sm-none" @onclick="ToggleNavMenu">
+    <div class="col-12 @l.ToggleClass d-sm-none" @onclick="l.Toggle">
         <NavBarLinks />
     </div>
     
     <!--Show if NavBar>sm  -->
-    <div class="col-12 d-none d-sm-block" @onclick="ToggleNavMenu">
+    <div class="col-12 d-none d-sm-block" @onclick="l.Toggle">
         <NavBarLinks />
     </div>
 </nav>
 
 @code {
-    private bool collapseNavMenu = true;
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
+    Lazor l = new Lazor();
+    public class Lazor
     {
-        collapseNavMenu = !collapseNavMenu;
+        public bool isCollapsed = true;
+        public string ToggleClass => isCollapsed ? "collapse" : null;
+
+        public void Toggle()
+        {
+            isCollapsed = !isCollapsed;
+        }
     }
 }
