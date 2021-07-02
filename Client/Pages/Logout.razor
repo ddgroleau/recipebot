@@ -10,13 +10,9 @@
         Are you sure you want to log out?
     </div>
     <div class="card-body">
-        <button disabled="@loading" class="btn btn-outline-danger" @onclick="HandleLogout">
-            @if (loading)
-            {
-                <span class="spinner-border spinner-border-sm mr-1"></span>
-            }
-            Logout
-        </button>
+        <CascadingValue Name="loading" Value="@loading">
+            <LoadingButton>Logout</LoadingButton>
+        </CascadingValue>
     </div>
     <div class="card-footer">
         <a href="/">

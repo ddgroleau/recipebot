@@ -1,0 +1,22 @@
+﻿
+
+.l-modal {
+    position: fixed;
+    height: 80vh;
+    width: 100%;
+    top: 58px;
+    left: 0;
+    z-index: 1;
+    border: solid red 1px;
+    background-color: white;
+    padding: 10px;
+    overflow: auto;
+}
+
+.l-hide {
+    display: none !important;
+}
+
+.l-show {
+    display: normal !important;
+}

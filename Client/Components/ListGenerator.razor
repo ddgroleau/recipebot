@@ -16,18 +16,24 @@
             @{
                 for (int day = 0; day <= model.Days; day++)
                 {
-                    if (day>0)
-                {
-                    <ListGenCard/>
-                }
+                    if (day > 0)
+                    {
+                        <ListGenCard />
+                    }
                 }
             }
         </div>
+        <CascadingValue Name="loading" Value="@loading">
+            <LoadingButton>Submit</LoadingButton>
+        </CascadingValue>
     </div>
 </div>
 
 @code {
     ListGeneratorModel model = new ListGeneratorModel();
+
+    private bool loading = false;
+
     public class ListGeneratorModel
     {
         [Range(0,7,ErrorMessage ="Days cannot exceed 7.")]

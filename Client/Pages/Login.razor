@@ -15,13 +15,9 @@
                 <InputText @bind-Value="model.Password" type="password" class="form-control" />
                 <ValidationMessage For="@(() => model.Password)" />
             </div>
-            <button disabled="@loading" class="btn btn-primary">
-                @if (loading)
-                {
-                    <span class="spinner-border spinner-border-sm mr-1"></span>
-                }
-                Login
-            </button>
+            <CascadingValue Name="loading" Value="@loading">
+                <LoadingButton>Login</LoadingButton>
+            </CascadingValue>
             <NavLink href="register" class="btn btn-link">Register</NavLink>
         </EditForm>
     </div>

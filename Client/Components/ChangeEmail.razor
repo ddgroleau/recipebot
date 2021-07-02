@@ -28,13 +28,10 @@
         </label>
     </div>
 
-    <button disabled="@loading" class="btn btn-success" type="submit">
-        @if (loading)
-        {
-            <span class="spinner-border spinner-border-sm mr-1"></span>
-        }
-        Submit
-    </button>
+    <CascadingValue Name="loading" Value="@loading">
+        <LoadingButton>Submit</LoadingButton>
+    </CascadingValue>
+
 </EditForm>
 
 @code {
