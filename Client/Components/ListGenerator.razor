@@ -3,13 +3,13 @@
         Generate List
         <br />
         <label>Days:</label>
-        <button class="btn btn-success" @onclick="model.HandleUp">+</button>
-        <button class="btn btn-danger" @onclick="model.HandleDown">(-)</button>
+        <button class="btn btn-success" @onclick="HandleUp">+</button>
+        <button class="btn btn-danger" @onclick="HandleDown">(-)</button>
         <EditForm Model="model">
             <DataAnnotationsValidator />
             <InputNumber @bind-Value=@model.Days />
         </EditForm>
-        <span class="small form-text text-danger">@model.errorMessage</span>
+        <span class="small form-text text-danger">@errorMessage</span>
     </h4>
     <div class="card-body">
         <div class="row">
@@ -30,43 +30,39 @@
 </div>
 
 @code {
-    ListGeneratorModel model = new ListGeneratorModel();
+    ListGeneratorDTO model = new ListGeneratorDTO();
 
     private bool loading = false;
-
-    public class ListGeneratorModel
+    public string errorMessage { get; set; }
+    public void HandleUp()
     {
-        [Range(0,7,ErrorMessage ="Days cannot exceed 7.")]
-        public int Days { get; set; } = 0;
-
-        public string errorMessage { get; set; }
-
-        public void HandleUp()
+        errorMessage = "";
+        if (model.Days >= 7)
         {
-            errorMessage = "";
-            if (Days >=7)
-            {
-                errorMessage = "Max 7 Days";
-            }
-            else
-            {
-                Days += 1;
-            }
-
+            errorMessage = "Max 7 Days";
         }
-        public void HandleDown()
+        else
         {
-            errorMessage = "";
-            if (Days <= 0)
-            {
-                errorMessage = "Min 0 Days";
-            }
-            else
-            {
-                Days -= 1;
-            }
+            model.Days += 1;
+            ListDayDTO day = new ListDayDTO();
+            model.GeneratedDays.Add(model.Days, day);
+        }
+
+    }
+    public void HandleDown()
+    {
+        errorMessage = "";
+        if (model.Days <= 0)
+        {
+            errorMessage = "Min 0 Days";
+        }
+        else
+        {
+            model.GeneratedDays.Remove(model.Days);
+            model.Days -= 1;
         }
     }
 
-
 }
+
+

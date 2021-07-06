@@ -1,0 +1,38 @@
+﻿<div class="form-group">
+    <label for="Ingredients">Ingredients:</label>
+        <ol>
+            @{
+                if (model.Ingredients.Any())
+                {
+                    foreach (string ingredient in model.Ingredients)
+                    {
+                        <li>
+                            <input id="Ingredients" value="@ingredient" />
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="list-unstyled">
+                        <p>No ingredients found. Want to add some?</p>
+                    </li>
+                }
+            }
+                </ol>
+        <div class="form-group">
+            <InputText @bind-Value="@NewIngredient" />
+            <button type="button" class="btn btn-dark" @onclick="@addIngredient">Add Ingredient</button>
+        </div>
+</div>
+
+@code {
+    [CascadingParameter(Name = "RecipeDTO")]
+    public RecipeDTO model { get; set; }
+
+    private string NewIngredient { get; set; }
+
+    public void addIngredient()
+    {
+        model.Ingredients.Add(NewIngredient);
+    }
+}

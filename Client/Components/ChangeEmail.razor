@@ -36,29 +36,6 @@
 
 @code {
  
-   ChangedUser model = new ChangedUser();
+   AccountChangesDTO model = new AccountChangesDTO();
     private bool loading = false;
-    public class ChangedUser
-    {
-        [Required]
-        public string Username { get; set; }
-
-        [Required]
-        public string CurrentEmail { get; set; }
-
-        [Required]
-        public string NewEmail { get; set; }
-
-        [Required]
-        public string ConfirmNewEmail { get; set; }
-
-        [Required]
-        public string CurrentPassword { get; set; }
-
-        [Required]
-        public string NewPassword { get; set; }
-
-        [Required]
-        public string ConfirmNewPassword { get; set; }
-    }
 }

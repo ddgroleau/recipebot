@@ -1,10 +1,10 @@
 ﻿<div class="form-group">
-    <label for="Instructions">
-        Instructions:
+        <label for="Instructions">Instructions:</label>
         <ol>
             @{
                 if (model.Instructions.Any())
                 {
+
                     foreach (string instruction in model.Instructions)
                     {
                         <li>
@@ -14,18 +14,22 @@
                 }
                 else
                 {
-                    <p>No instructions found. Want to add some?</p>
+                    <li class="list-unstyled">
+                        <p>No instructions found. Want to add some?</p>
+                    </li>
                 }
-            }
-        </ol>
+             }
+         </ol>
         <div class="form-group">
             <InputText @bind-Value="@NewInstruction" />
             <button type="button" class="btn btn-dark" @onclick="@addInstruction">Add Instruction</button>
         </div>
-    </label>
 </div>
 
 @code {
+    [CascadingParameter(Name = "RecipeDTO")]
+    public RecipeDTO model { get; set; }
+
     private string NewInstruction { get; set; }
 
     public void addInstruction()

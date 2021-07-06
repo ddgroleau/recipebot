@@ -4,25 +4,20 @@
         <EditForm Model="@model">
             <DataAnnotationsValidator />
 
-            <InputText @bind-Value="model.Url" class="form-control" DisplayName="Recipe URL"/>
+            <InputText @bind-Value="model.URL" class="form-control" DisplayName="Recipe URL"/>
             <button type="submit" class="btn btn-success" @onclick="e.Toggle">Add</button>
-            <ValidationMessage For="@(() => model.Url)" />
+            <ValidationMessage For="@(() => model.URL)" />
         </EditForm>
     </div>
 
     <CascadingValue Name="LazorObject" Value="@e">
-        <Modal />
+        <CascadingValue Name="RecipeDTO" Value="model">
+            <Modal />
+        </CascadingValue>
     </CascadingValue>
  
 </div>
         @code {
             Lazor e = new Lazor();
-            RecipeURL model = new RecipeURL();
-
-            public class RecipeURL
-            {
-                private int Id { get; set; }
-                [Required]
-                public string Url { get; set; }
-            }
+            RecipeDTO model = new RecipeDTO();
         }
