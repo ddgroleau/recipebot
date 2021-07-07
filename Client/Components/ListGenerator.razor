@@ -1,15 +1,17 @@
-﻿<div class="card">
+﻿@inject IListGeneratorDTO model
+
+<div class="card">
     <h4 class="card-header">
         Generate List
         <br />
         <label>Days:</label>
-        <button class="btn btn-success" @onclick="HandleUp">+</button>
-        <button class="btn btn-danger" @onclick="HandleDown">(-)</button>
+        <button class="btn btn-success" @onclick="model.AddDay">+</button>
+        <button class="btn btn-danger" @onclick="model.RemoveDay">(-)</button>
         <EditForm Model="model">
             <DataAnnotationsValidator />
             <InputNumber @bind-Value=@model.Days />
         </EditForm>
-        <span class="small form-text text-danger">@errorMessage</span>
+        <span class="small form-text text-danger">@model.ErrorMessage</span>
     </h4>
     <div class="card-body">
         <div class="row">
@@ -23,45 +25,13 @@
                 }
             }
         </div>
-        <CascadingValue Name="loading" Value="@loading">
+        <CascadingValue Name="loading" Value="@model.Loading">
             <LoadingButton>Submit</LoadingButton>
         </CascadingValue>
     </div>
 </div>
 
 @code {
-    ListGeneratorDTO model = new ListGeneratorDTO();
-
-    private bool loading = false;
-    public string errorMessage { get; set; }
-    public void HandleUp()
-    {
-        errorMessage = "";
-        if (model.Days >= 7)
-        {
-            errorMessage = "Max 7 Days";
-        }
-        else
-        {
-            model.Days += 1;
-            ListDayDTO day = new ListDayDTO();
-            model.GeneratedDays.Add(model.Days, day);
-        }
-
-    }
-    public void HandleDown()
-    {
-        errorMessage = "";
-        if (model.Days <= 0)
-        {
-            errorMessage = "Min 0 Days";
-        }
-        else
-        {
-            model.GeneratedDays.Remove(model.Days);
-            model.Days -= 1;
-        }
-    }
 
 }
 

@@ -1,4 +1,6 @@
-﻿<EditForm Model="@model">
+﻿@inject IAccountChangesDTO model
+
+<EditForm Model="@model">
     <DataAnnotationsValidator />
     <div class="form-group">
         <label>
@@ -28,14 +30,12 @@
         </label>
     </div>
 
-    <CascadingValue Name="loading" Value="@loading">
+    <CascadingValue Name="loading" Value="@model.Loading">
         <LoadingButton>Submit</LoadingButton>
     </CascadingValue>
 
 </EditForm>
 
 @code {
- 
-   AccountChangesDTO model = new AccountChangesDTO();
-    private bool loading = false;
+
 }

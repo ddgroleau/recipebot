@@ -1,4 +1,5 @@
 ﻿@page "/login"
+@inject IAccountLoginDTO model
 
 <div class="card">
     <h4 class="card-header">Login</h4>
@@ -15,7 +16,7 @@
                 <InputText @bind-Value="model.Password" type="password" class="form-control" />
                 <ValidationMessage For="@(() => model.Password)" />
             </div>
-            <CascadingValue Name="loading" Value="@loading">
+            <CascadingValue Name="loading" Value="@model.Loading">
                 <LoadingButton>Login</LoadingButton>
             </CascadingValue>
             <NavLink href="register" class="btn btn-link">Register</NavLink>
@@ -25,15 +26,5 @@
 
 
 @code {
-    LoginUser model = new LoginUser();
-    private bool loading = false;
 
-    public class LoginUser
-    {
-        [Required]
-        public string Username { get; set; }
-
-        [Required]
-        public string Password { get; set; }
-    }
 }

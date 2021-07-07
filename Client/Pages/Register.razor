@@ -1,5 +1,5 @@
 ﻿@page "/register"
-
+@inject IAccountRegisterDTO model
 <div class="card">
     <h4 class="card-header">Register</h4>
     <div class="card-body">
@@ -24,7 +24,7 @@
                 <label>Re-Enter Password</label>
                 <input type="password" class="form-control" />
             </div>
-            <CascadingValue Name="loading" Value="@loading">
+            <CascadingValue Name="loading" Value="@model.Loading">
                 <LoadingButton>Register</LoadingButton>
             </CascadingValue>
             <NavLink href="login" class="btn btn-link">Login</NavLink>
@@ -34,20 +34,5 @@
 
 
 @code {
-    RegisterUser model = new RegisterUser();
-    private bool loading = false;
-
-    public class RegisterUser
-    {
-        [Required]
-        public string Username { get; set; }
-
-
-        [Required]
-        public string Email { get; set; }
-
-        [Required]
-        public string Password { get; set; }
-    }
 
 }

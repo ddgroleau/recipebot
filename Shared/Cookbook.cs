@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PBC.Shared
 {
-    public class Catalog
+    public class Cookbook
     {
         public int id { get; set; }
     }

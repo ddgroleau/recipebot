@@ -6,7 +6,7 @@
         </NavLink>
     </li>
     <li class="nav-item">
-        <NavLink class="nav-link" href="catalog">
+        <NavLink class="nav-link" href="cookbook">
             Catalog
         </NavLink>
     </li>
@@ -36,6 +36,5 @@
     private static bool isLoggedIn { get; set; } = true;
     private string login { get; set; } = $"{ (isLoggedIn ? "display:none" : "display:normal") }";
     private string logout { get; set; } = $"{ (isLoggedIn ? "display:normal" : "display:none") }";
-
 
 }

@@ -36,10 +36,10 @@
     private bool loading = false;
 
     [CascadingParameter(Name = "LazorObject")]
-    public Lazor e { get; set; }
+    public ILazor e { get; set; }
 
     [CascadingParameter(Name = "RecipeDTO")]
-    public RecipeDTO model { get; set; }
+    public IRecipeDTO model { get; set; }
 
     public void handleClick()
     {

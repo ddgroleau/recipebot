@@ -10,22 +10,23 @@ namespace PBC.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CatalogController : ControllerBase
+
+    public class CookbookController : ControllerBase
     {
    
 
-        private readonly ILogger<CatalogController> _logger;
+        private readonly ILogger<CookbookController> _logger;
 
-        public CatalogController(ILogger<CatalogController> logger)
+        public CookbookController(ILogger<CookbookController> logger)
         {
             _logger = logger;
         }
 
         [HttpGet]
-        public IEnumerable<Catalog> Get()
+        public IEnumerable<Cookbook> Get()
         {
             var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new Catalog
+            return Enumerable.Range(1, 5).Select(index => new Cookbook
             {
                 id = rng.Next(1, 11)
             }) 

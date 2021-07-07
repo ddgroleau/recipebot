@@ -1,10 +1,13 @@
-﻿<div class="card">
+﻿@inject ILazor e
+@inject IRecipeDTO model
+
+<div class="card">
     <h4 class="card-header">Add a Recipe</h4>
     <div class="card-body">
         <EditForm Model="@model">
             <DataAnnotationsValidator />
 
-            <InputText @bind-Value="model.URL" class="form-control" DisplayName="Recipe URL"/>
+            <InputText @bind-Value="model.URL" class="form-control" DisplayName="Recipe URL" />
             <button type="submit" class="btn btn-success" @onclick="e.Toggle">Add</button>
             <ValidationMessage For="@(() => model.URL)" />
         </EditForm>
@@ -15,9 +18,8 @@
             <Modal />
         </CascadingValue>
     </CascadingValue>
- 
+
 </div>
-        @code {
-            Lazor e = new Lazor();
-            RecipeDTO model = new RecipeDTO();
-        }
+@code {
+
+}
