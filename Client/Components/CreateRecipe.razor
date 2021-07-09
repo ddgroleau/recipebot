@@ -4,22 +4,37 @@
 <div class="card">
     <h4 class="card-header">Add a Recipe</h4>
     <div class="card-body">
-        <EditForm Model="@model">
+        <EditForm Model="@model" OnSubmit="HandleSubmit">
             <DataAnnotationsValidator />
-
             <InputText @bind-Value="model.URL" class="form-control" DisplayName="Recipe URL" />
-            <button type="submit" class="btn btn-success" @onclick="e.Toggle">Add</button>
             <ValidationMessage For="@(() => model.URL)" />
+            <span class="small form-text text-danger">@e.ErrorMessage</span>
+            <CascadingValue Name="Loading" Value="@e.Loading">
+                <LoadingButton>Add</LoadingButton>
+            </CascadingValue>
         </EditForm>
     </div>
 
     <CascadingValue Name="LazorObject" Value="@e">
         <CascadingValue Name="RecipeDTO" Value="model">
-            <Modal />
+            <AddRecipeModal />
         </CascadingValue>
     </CascadingValue>
-
 </div>
 @code {
+
+    private void HandleSubmit()
+    {
+        if (Uri.IsWellFormedUriString(model.URL, UriKind.Absolute))
+        {
+            e.ErrorMessage = "";
+            e.Toggle();
+        }
+        else
+        {
+            e.ErrorMessage = "Bad URL. Try again.";
+        }
+
+    }
 
 }

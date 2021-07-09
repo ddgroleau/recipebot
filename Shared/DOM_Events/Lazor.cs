@@ -9,6 +9,9 @@ namespace PBC.Shared.Lazor
 {
     public class Lazor : ILazor
     {
+        public bool Loading { get; set; } = false;
+        public string ErrorMessage { get; set; }
+        public bool isSuccess { get; set; }
         public bool isToggled { get; set; } = true;
         public string ToggleTarget { get => isToggled ? "l-hide" : null; set { } }
         public void Toggle()
@@ -30,5 +33,6 @@ namespace PBC.Shared.Lazor
         {
             isShown = true;
         }
+
     }
 }

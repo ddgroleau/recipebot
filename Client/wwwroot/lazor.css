@@ -1,6 +1,4 @@
-﻿
-
-.l-modal {
+﻿.l-modal {
     position: fixed;
     height: 80vh;
     width: 100%;
@@ -13,6 +11,7 @@
     overflow: auto;
 }
 
+
 .l-hide {
     display: none !important;
 }
@@ -20,5 +19,7 @@
 .l-show {
     display: normal !important;
 }
+
+
 
 

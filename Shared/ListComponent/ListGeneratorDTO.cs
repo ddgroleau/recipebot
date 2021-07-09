@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PBC.Shared.DOM_Events;
 using PBC.Shared.ListComponent;
 
 namespace PBC.Shared
@@ -11,17 +12,15 @@ namespace PBC.Shared
     public class ListGeneratorDTO : IListGeneratorDTO
     {
         public int Id { get; set; }
-        [Range(0, 7, ErrorMessage = "Days cannot exceed 7.")]
+        [Range(0, 7)]
         public int Days { get; set; } = 0;
         public Dictionary<int, ListDayDTO> GeneratedDays { get; set; } = new Dictionary<int, ListDayDTO>();
-        public bool Loading { get; set; } = false;
-        public string ErrorMessage { get; set; }
-        public void AddDay()
+        public void AddDay(ILazor e)
         {
-            ErrorMessage = "";
+            e.ErrorMessage = "";
             if (Days >= 7)
             {
-                ErrorMessage = "Max 7 Days";
+                e.ErrorMessage = "Max 7 Days";
             }
             else
             {
@@ -31,12 +30,12 @@ namespace PBC.Shared
             }
 
         }
-        public void RemoveDay()
+        public void RemoveDay(ILazor e)
         {
-            ErrorMessage = "";
+            e.ErrorMessage = "";
             if (Days <= 0)
             {
-                ErrorMessage = "Min 0 Days";
+                e.ErrorMessage = "Min 0 Days";
             }
             else
             {

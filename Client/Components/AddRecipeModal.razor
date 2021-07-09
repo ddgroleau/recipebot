@@ -1,0 +1,96 @@
+﻿@inject HttpClient Http
+@inject IRecipeDTO newIRecipeDTO
+
+<div class="@e.ToggleTarget">
+    <div class="l-modal">
+        <div class="card">
+            <h4 class="card-header">
+                Modal
+                <button type="button" @onclick="HandleClick" class="btn btn-danger float-right">&times;</button>
+            </h4>
+            <div class="card-body">
+
+                @{
+                    if (e.isSuccess)
+                    {
+                        <h4 class="text-center text-success">Success!</h4>
+                    }
+                    else
+                    {
+                        <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+                            <DataAnnotationsValidator />
+                            <div class="form-group">
+                                <label for="Title">
+                                    Title:
+                                    <InputText id="Title" @bind-Value="@model.Title" />
+                                    <div class="small form-text text-danger">
+                                        <ValidationMessage For="@(() => model.Title)" />
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="Description">
+                                    Description:
+                                    <InputTextArea id="Description" @bind-Value="@model.Description" />
+                                </label>
+                            </div>
+                            <IngredientsForm />
+
+                            <InstructionsForm />
+                            <span class="small form-text text-danger">@e.ErrorMessage</span>
+                            <CascadingValue Name="Loading" Value="@e.Loading">
+                                <LoadingButton>Submit</LoadingButton>
+                            </CascadingValue>
+                        </EditForm>
+                    
+                    }
+
+                }
+                       
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    [CascadingParameter(Name = "LazorObject")]
+    public ILazor e { get; set; }
+
+    [CascadingParameter(Name = "RecipeDTO")]
+    public IRecipeDTO model { get; set; }
+
+    private async Task HandleValidSubmit()
+    {
+        if (model.Ingredients.Any() && model.Instructions.Any())
+        {
+            e.Loading = true;
+            try
+            {
+                var response = await Http.PostAsJsonAsync<IRecipeDTO>("/api/Recipe/NewRecipe", model);
+                e.isSuccess = true;
+            }
+            catch(Exception err)
+            {
+                e.ErrorMessage = "Request failed. Try again later.";
+                throw new HttpRequestException("Could not submit new recipe to RecipeController PostNewRecipe method",err);
+            }
+
+            model.ResetRecipe();
+            e.Loading = false;
+        }
+        else
+        {
+            e.ErrorMessage = "You must include at least one ingredient and one instruction.";
+        }
+        return;
+    }
+
+    public void HandleClick()
+    {
+        e.isSuccess = false;
+        e.Toggle();
+    }
+
+}

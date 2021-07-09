@@ -10,6 +10,5 @@ namespace PBC.Shared.AccountComponent
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        public bool Loading { get; set; }
     }
 }

@@ -52,7 +52,6 @@ namespace PBC.Server
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
-                endpoints.MapDefaultControllerRoute();
                 endpoints.MapFallbackToFile("index.html");
             });
         }

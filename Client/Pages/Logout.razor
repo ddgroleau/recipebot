@@ -1,5 +1,6 @@
 ﻿@page "/logout"
 @inject NavigationManager navigationManager
+@inject ILazor e
 
 <div class="col-12">
     <h3>Logout</h3>
@@ -10,7 +11,7 @@
         Are you sure you want to log out?
     </div>
     <div class="card-body">
-        <CascadingValue Name="loading" Value="@loading">
+        <CascadingValue Name="loading" Value="@e.Loading">
             <LoadingButton handleClick="HandleLogout">Logout</LoadingButton>
         </CascadingValue>
     </div>
@@ -23,7 +24,6 @@
 
 
 @code {
-    private bool loading = false;
 
     public void HandleLogout()
     {

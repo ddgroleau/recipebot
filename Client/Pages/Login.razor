@@ -1,5 +1,6 @@
 ﻿@page "/login"
 @inject IAccountLoginDTO model
+@inject ILazor e
 
 <div class="card">
     <h4 class="card-header">Login</h4>
@@ -16,7 +17,7 @@
                 <InputText @bind-Value="model.Password" type="password" class="form-control" />
                 <ValidationMessage For="@(() => model.Password)" />
             </div>
-            <CascadingValue Name="loading" Value="@model.Loading">
+            <CascadingValue Name="loading" Value="@e.Loading">
                 <LoadingButton>Login</LoadingButton>
             </CascadingValue>
             <NavLink href="register" class="btn btn-link">Register</NavLink>

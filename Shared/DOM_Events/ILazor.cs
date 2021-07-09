@@ -8,6 +8,9 @@ namespace PBC.Shared.DOM_Events
 {
     public interface ILazor
     {
+        public bool Loading { get; set; }
+        public string ErrorMessage { get; set; }
+        public bool isSuccess { get; set; }
         public bool isToggled { get; set; }
         public string ToggleTarget { get; set; }
         public void Toggle();

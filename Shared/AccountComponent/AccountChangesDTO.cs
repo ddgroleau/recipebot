@@ -32,6 +32,5 @@ namespace PBC.Shared
 
         [Required]
         public string ConfirmNewPassword { get; set; }
-        public bool Loading { get; set; } = false;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PBC.Shared.DOM_Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,7 @@ namespace PBC.Shared.ListComponent
         public int Id { get; set; }
         public int Days { get; set; }
         public Dictionary<int, ListDayDTO> GeneratedDays { get; set; }
-        public bool Loading { get; set; }
-        public string ErrorMessage { get; set; }
-        public void AddDay();
-        public void RemoveDay();
+        public void AddDay(ILazor e);
+        public void RemoveDay(ILazor e);
     }
 }

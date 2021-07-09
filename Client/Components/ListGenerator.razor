@@ -1,17 +1,18 @@
 ﻿@inject IListGeneratorDTO model
+@inject ILazor e
 
 <div class="card">
     <h4 class="card-header">
         Generate List
         <br />
         <label>Days:</label>
-        <button class="btn btn-success" @onclick="model.AddDay">+</button>
-        <button class="btn btn-danger" @onclick="model.RemoveDay">(-)</button>
+        <button class="btn btn-success" @onclick="() => model.AddDay(e)">+</button>
+        <button class="btn btn-danger" @onclick="() => model.RemoveDay(e)">(-)</button>
         <EditForm Model="model">
             <DataAnnotationsValidator />
             <InputNumber @bind-Value=@model.Days />
         </EditForm>
-        <span class="small form-text text-danger">@model.ErrorMessage</span>
+        <span class="small form-text text-danger">@e.ErrorMessage</span>
     </h4>
     <div class="card-body">
         <div class="row">
@@ -25,7 +26,7 @@
                 }
             }
         </div>
-        <CascadingValue Name="loading" Value="@model.Loading">
+        <CascadingValue Name="loading" Value="@e.Loading">
             <LoadingButton>Submit</LoadingButton>
         </CascadingValue>
     </div>

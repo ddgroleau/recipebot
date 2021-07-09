@@ -1,4 +1,5 @@
 ﻿@inject IAccountChangesDTO model
+@inject ILazor e 
 
 <EditForm Model="@model">
     <DataAnnotationsValidator />
@@ -30,7 +31,7 @@
         </label>
     </div>
 
-    <CascadingValue Name="loading" Value="@model.Loading">
+    <CascadingValue Name="loading" Value="@e.Loading">
         <LoadingButton>Submit</LoadingButton>
     </CascadingValue>
 
