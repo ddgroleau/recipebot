@@ -38,9 +38,9 @@ namespace PBC.Shared.WebScraper
 
             var Summary = new Dictionary<string, string>()
                 {
-                    { "PrepTime",summary.ElementAt(0) },
-                    { "CookTime",summary.ElementAt(1) },
-                    { "TotalTime",summary.ElementAt(2) },
+                    { "Prep Time",summary.ElementAt(0) },
+                    { "Cook Time",summary.ElementAt(1) },
+                    { "Total Time",summary.ElementAt(2) },
                     { "Servings",summary.ElementAt(3) },
                     { "Yield",summary.ElementAt(4)}
                 };
