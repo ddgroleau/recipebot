@@ -211,7 +211,7 @@ namespace UnitTests.WebScraper
         }
 
         [Fact]
-        public void Scrape_WithLegacyUI_ShouldReturnRecipeDTO()
+        public void Scrape_WithAlternateUI_ShouldReturnRecipeDTO()
         {
             string validRecipeUrl = "https://www.allrecipes.com/recipe/212400/ginger-ale/";
             IRecipeDTO recipeDTOExpected = new RecipeDTO();
