@@ -5,6 +5,12 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PBC.Shared;
+using PBC.Shared.AccountComponent;
+using PBC.Shared.DOM_Events;
+using PBC.Shared.Lazor;
+using PBC.Shared.ListComponent;
+using PBC.Shared.RecipeComponent;
 using System.Linq;
 
 namespace PBC.Server
@@ -25,6 +31,13 @@ namespace PBC.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddScoped<IAccountChangesDTO, AccountChangesDTO>();
+            services.AddScoped<IAccountRegisterDTO, AccountRegisterDTO>();
+            services.AddScoped<IAccountLoginDTO, AccountLoginDTO>();
+            services.AddScoped<IRecipeDTO, RecipeDTO>();
+            services.AddScoped<IListGeneratorDTO, ListGeneratorDTO>();
+            services.AddScoped<IListDayDTO, ListDayDTO>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
