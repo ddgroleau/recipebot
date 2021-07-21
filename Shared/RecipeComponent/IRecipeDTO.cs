@@ -12,8 +12,8 @@ namespace PBC.Shared.RecipeComponent
         public string URL { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public IEnumerable<string> Ingredients { get; set; }
-        public IEnumerable<string> Instructions { get; set; }
+        public List<string> Ingredients { get; set; }
+        public List<string> Instructions { get; set; }
         public string NewIngredient { get; set; }
         public string NewInstruction { get; set; }
         public void AddIngredient();

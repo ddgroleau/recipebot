@@ -16,8 +16,8 @@ namespace PBC.Shared
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }
-        public IEnumerable<string> Ingredients { get; set; } = new List<string>();
-        public IEnumerable<string> Instructions { get; set; } = new List<string>();
+        public List<string> Ingredients { get; set; } = new List<string>();
+        public List<string> Instructions { get; set; } = new List<string>();
         public string NewIngredient { get; set; }
         public string NewInstruction { get; set; }
         public void AddIngredient()
