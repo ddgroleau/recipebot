@@ -25,6 +25,7 @@ namespace PBC.Shared
             else
             {
                 Days += 1;
+                // To do: add functionality to fill in day object.
                 ListDayDTO day = new ListDayDTO();
                 GeneratedDays.Add(Days, day);
             }
