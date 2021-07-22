@@ -11,32 +11,46 @@ namespace PBC.Shared
     public class RecipeDTO : IRecipeDTO
     {
         public int Id { get; set; }
-        [Required, Url]
+        [Url]
         public string URL { get; set; }
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }
         public List<string> Ingredients { get; set; } = new List<string>();
         public List<string> Instructions { get; set; } = new List<string>();
+        [StringLength(100, ErrorMessage = "New ingredient is too long.", MinimumLength = 1)]
         public string NewIngredient { get; set; }
+        [StringLength(350, ErrorMessage = "New instruction is too long.", MinimumLength = 1)]
         public string NewInstruction { get; set; }
         public void AddIngredient()
         {
-            Ingredients.ToList().Add(NewIngredient);
+            var validationContext = new ValidationContext(this)
+            {
+                MemberName = "NewIngredient"
+            };
+            bool newIngredientIsValid = Validator.TryValidateProperty(NewIngredient, validationContext, new List<ValidationResult>());
+
+            if(newIngredientIsValid) { Ingredients.Add(NewIngredient); }
         }
         public void AddInstruction()
         {
-            Instructions.ToList().Add(NewInstruction);
+            var validationContext = new ValidationContext(this)
+            {
+                MemberName = "NewInstruction"
+            };
+            bool newInstructionIsValid = Validator.TryValidateProperty(NewInstruction, validationContext, new List<ValidationResult>());
+
+            if (newInstructionIsValid) { Instructions.Add(NewInstruction); }
         }
         public void ResetRecipe()
         {
-            URL = "";
-            Title = "";
-            Description = "";
+            URL = null;
+            Title = null;
+            Description = null;
             Ingredients = new List<string>();
             Instructions = new List<string>();
-            NewIngredient = "";
-            NewInstruction = "";
+            NewIngredient = null;
+            NewInstruction = null;
         }
     }
 }

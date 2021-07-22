@@ -6,26 +6,32 @@
     <div class="card-body">
         <EditForm Model="@model" OnSubmit="HandleSubmit">
             <DataAnnotationsValidator />
+
             <InputText @bind-Value="model.URL" class="form-control" DisplayName="Recipe URL" />
             <ValidationMessage For="@(() => model.URL)" />
+            
             <span class="small form-text text-danger">@e.ErrorMessage</span>
+
             <CascadingValue Name="Loading" Value="@e.Loading">
                 <LoadingButton>Add</LoadingButton>
             </CascadingValue>
+
         </EditForm>
     </div>
 
     <CascadingValue Name="LazorObject" Value="@e">
+
         <CascadingValue Name="RecipeDTO" Value="model">
             <AddRecipeModal />
         </CascadingValue>
+
     </CascadingValue>
 </div>
 @code {
 
     private void HandleSubmit()
     {
-        if (Uri.IsWellFormedUriString(model.URL, UriKind.Absolute))
+        if (model.URL.StartsWith("https://www.allrecipes.com/recipe/"))
         {
             e.ErrorMessage = "";
             e.Toggle();

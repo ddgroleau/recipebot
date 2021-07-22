@@ -19,6 +19,7 @@
                     {
                         <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
                             <DataAnnotationsValidator />
+                            
                             <div class="form-group">
                                 <label for="Title">
                                     Title:
@@ -34,13 +35,17 @@
                                     <InputTextArea id="Description" @bind-Value="@model.Description" />
                                 </label>
                             </div>
+                            
                             <IngredientsForm />
 
                             <InstructionsForm />
+                            
                             <span class="small form-text text-danger">@e.ErrorMessage</span>
+                            
                             <CascadingValue Name="Loading" Value="@e.Loading">
                                 <LoadingButton>Submit</LoadingButton>
                             </CascadingValue>
+
                         </EditForm>
                     
                     }

@@ -10,7 +10,7 @@ namespace PBC.Shared.WebScraper
 {
     public class AllRecipesScraper
     {
-        public IRecipeDTO Scrape(string URL, IRecipeDTO recipeDTO)
+        public IRecipeDTO ScrapeRecipe(string URL, IRecipeDTO recipeDTO)
         {
             if(!URL.StartsWith("https://www.allrecipes.com/recipe/"))
             {
@@ -22,9 +22,14 @@ namespace PBC.Shared.WebScraper
                 HtmlDocument page = webPage.Load(URL);
 
                 recipeDTO.URL = URL;
+
                 recipeDTO.Title = page.DocumentNode
                                         .SelectNodes("//h1[@class='headline heading-content']")
                                         .FirstOrDefault().InnerHtml.Trim();
+
+                var summary = page.DocumentNode
+                                        .SelectNodes("//div[@class='recipe-meta-item-body']")
+                                        .Select(x => x.InnerHtml.Trim());
 
                 recipeDTO.Description = page.DocumentNode
                                         .SelectNodes("//p[@class='margin-0-auto']")
@@ -40,30 +45,18 @@ namespace PBC.Shared.WebScraper
                                         .Where(x => x.Name.Equals("p"))
                                         .Select(x => x.InnerHtml.Trim()).ToList();
 
-                var summary = page.DocumentNode
-                                        .SelectNodes("//div[@class='recipe-meta-item-body']")
-                                        .Select(x => x.InnerHtml.Trim());
 
-                var summaryItems = new Dictionary<string, string>()
-                {
-                    { "Prep",summary.ElementAt(0) },
-                    { "Cook",summary.ElementAt(1) },
-                    { "Total",summary.ElementAt(2) },
-                    { "Servings",summary.ElementAt(3) },
-                    { "Yield",summary.ElementAt(4)}
-                };
-
-                recipeDTO.Description += $" Prep Time: {summaryItems["Prep"]}. "
-                 + $"Cook Time: {summaryItems["Cook"]}. "
-                 + $"Total Time: {summaryItems["Total"]}. "
-                 + $"Servings: {summaryItems["Servings"]}. "
-                 + $"Yield: {summaryItems["Yield"]}.";
+                recipeDTO.Description += $" Prep Time: {summary.ElementAt(0)}. "
+                 + $"Cook Time: {summary.ElementAt(1)}. "
+                 + $"Total Time: {summary.ElementAt(2)}. "
+                 + $"Servings: {summary.ElementAt(3)}. "
+                 + $"Yield: {summary.ElementAt(4)}.";
 
                 return recipeDTO;
             }
             catch (ArgumentNullException)
             {
-                return ScrapeAlternateUI(URL, recipeDTO);
+                return ScrapeRecipeFromAlternateUI(URL, recipeDTO);
             }
             catch (Exception)
             {
@@ -71,7 +64,7 @@ namespace PBC.Shared.WebScraper
             }
         }
 
-        private IRecipeDTO ScrapeAlternateUI(string URL, IRecipeDTO recipeDTO)
+        private IRecipeDTO ScrapeRecipeFromAlternateUI(string URL, IRecipeDTO recipeDTO)
         {
             try
             {
@@ -79,15 +72,19 @@ namespace PBC.Shared.WebScraper
                 HtmlDocument page = webPage.Load(URL);
 
                 recipeDTO.URL = URL;
+
                 recipeDTO.Title = page.DocumentNode
                                       .SelectNodes("//h1[@class='recipe-summary__h1']")
                                       .FirstOrDefault().InnerHtml;
+
                 recipeDTO.Description = page.DocumentNode
                                       .SelectNodes("//div[@class='submitter__description']")
                                       .FirstOrDefault().InnerHtml[7..].Replace("&#34;", "").Trim();
+
                 recipeDTO.Ingredients = page.DocumentNode
                                       .SelectNodes("//span[@class='recipe-ingred_txt added']")
                                       .Select(x => x.InnerHtml.Trim().Replace("&#174;", "")).ToList();
+
                 recipeDTO.Instructions = recipeDTO.Instructions = page.DocumentNode
                                       .SelectNodes("//span[@class='recipe-directions__list--item']")
                                       .Select(x => x.InnerHtml.Trim())
