@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Server\PBC.Server.csproj" />
     <ProjectReference Include="..\Shared\PBC.Shared.csproj" />
   </ItemGroup>
 

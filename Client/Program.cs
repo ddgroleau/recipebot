@@ -33,7 +33,8 @@ namespace PBC.Client
             builder.Services.AddScoped<IRecipeDTO, RecipeDTO>();
             builder.Services.AddScoped<IListGeneratorDTO, ListGeneratorDTO>();
             builder.Services.AddScoped<IListDayDTO, ListDayDTO>();
-           
+            builder.Services.AddScoped<IRecipeUrlDTO, RecipeUrlDTO>();
+
             await builder.Build().RunAsync();
         }
     }

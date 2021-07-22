@@ -1,5 +1,7 @@
-﻿@inject ILazor e
-@inject IRecipeDTO model
+﻿@inject HttpClient Http
+@inject ILazor e
+@inject IRecipeUrlDTO model
+
 
 <div class="card">
     <h4 class="card-header">Add a Recipe</h4>
@@ -8,8 +10,7 @@
             <DataAnnotationsValidator />
 
             <InputText @bind-Value="model.URL" class="form-control" DisplayName="Recipe URL" />
-            <ValidationMessage For="@(() => model.URL)" />
-            
+
             <span class="small form-text text-danger">@e.ErrorMessage</span>
 
             <CascadingValue Name="Loading" Value="@e.Loading">
@@ -20,27 +21,43 @@
     </div>
 
     <CascadingValue Name="LazorObject" Value="@e">
-
-        <CascadingValue Name="RecipeDTO" Value="model">
-            <AddRecipeModal />
-        </CascadingValue>
-
+        <AddRecipeModal />
     </CascadingValue>
 </div>
 @code {
 
-    private void HandleSubmit()
+    public void HandleSubmit()
     {
-        if (model.URL.StartsWith("https://www.allrecipes.com/recipe/"))
+        e.Loading = true;
+        try
         {
-            e.ErrorMessage = "";
-            e.Toggle();
+            if (model.URL.StartsWith("https://www.allrecipes.com/recipe/"))
+            {
+                try
+                {
+                    var response = PostUrl();
+                    e.ErrorMessage = "";
+                    e.Toggle();
+                }
+                catch (Exception)
+                {
+                    e.ErrorMessage = "Bad response from server.";
+                }
+            }
+            else
+            {
+                e.ErrorMessage = "Bad URL. Try again.";
+            }
         }
-        else
+        catch (NullReferenceException)
         {
-            e.ErrorMessage = "Bad URL. Try again.";
+            e.ErrorMessage = "Please add a recipe URL.";
         }
-
+        e.Loading = false;
     }
 
+    public async Task PostUrl()
+    {
+        var response = await Http.PostAsJsonAsync<IRecipeUrlDTO>("/api/Recipe/RecipeURL", model);
+    }
 }
