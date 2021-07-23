@@ -1,6 +1,7 @@
 ﻿using PBC.Shared.DOM_Events;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,5 +35,23 @@ namespace PBC.Shared.Lazor
             isShown = true;
         }
 
+        // This method needs to be re-worked.
+        public bool isStringPropertyValid(Object obj, string property)
+        {
+            bool isValid = false;
+            try
+            {
+                var validationContext = new ValidationContext(obj)
+                {
+                    MemberName = property
+                };
+                isValid = Validator.TryValidateProperty(obj.GetType().GetProperty(property), validationContext, new List<ValidationResult>());
+            }
+            catch (Exception)
+            {
+                isValid = false;
+            }
+            return isValid;
+        }
     }
 }

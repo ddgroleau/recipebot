@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using PBC.Shared.RecipeComponent;
 
@@ -50,6 +54,20 @@ namespace PBC.Shared
             Instructions = new List<string>();
             NewIngredient = null;
             NewInstruction = null;
+        }
+
+        public async Task<IRecipeDTO> ReadRecipe(HttpContent content)
+        {
+            try
+            {
+                var newRecipe = await content.ReadFromJsonAsync<RecipeDTO>();
+                return newRecipe;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return this;
         }
     }
 }

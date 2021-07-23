@@ -1,5 +1,4 @@
 ﻿@inject HttpClient Http
-@inject IRecipeDTO model
 
 <div class="@e.ToggleTarget">
     <div class="l-modal">
@@ -47,12 +46,8 @@
                         <CascadingValue Name="Loading" Value="@e.Loading">
                             <LoadingButton>Submit</LoadingButton>
                         </CascadingValue>
-                  
-
             </EditForm>
-                    
                     }
-
                 }
                        
             </div>
@@ -66,6 +61,9 @@
     [CascadingParameter(Name = "LazorObject")]
     public ILazor e { get; set; }
 
+    [CascadingParameter(Name = "RecipeDTO")]
+    public IRecipeDTO model { get; set; }
+
     private async Task HandleValidSubmit()
     {
         if (model.Ingredients.Any() && model.Instructions.Any())
@@ -74,7 +72,7 @@
             try
             {
                 var response = await Http.PostAsJsonAsync<IRecipeDTO>("/api/Recipe/NewRecipe", model);
-                
+
                 e.isSuccess = true;
             }
             catch(Exception err)

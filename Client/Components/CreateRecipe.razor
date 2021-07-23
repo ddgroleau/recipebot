@@ -1,7 +1,7 @@
 ﻿@inject HttpClient Http
 @inject ILazor e
 @inject IRecipeUrlDTO model
-
+@inject IRecipeDTO recipeDTO
 
 <div class="card">
     <h4 class="card-header">Add a Recipe</h4>
@@ -10,7 +10,7 @@
             <DataAnnotationsValidator />
 
             <InputText @bind-Value="model.URL" class="form-control" DisplayName="Recipe URL" />
-
+            <ValidationMessage For="@(() => model.URL)" />
             <span class="small form-text text-danger">@e.ErrorMessage</span>
 
             <CascadingValue Name="Loading" Value="@e.Loading">
@@ -21,43 +21,31 @@
     </div>
 
     <CascadingValue Name="LazorObject" Value="@e">
-        <AddRecipeModal />
+        <CascadingValue Name="RecipeDTO" Value="@recipeDTO">
+            <AddRecipeModal />
+        </CascadingValue>
     </CascadingValue>
 </div>
 @code {
 
-    public void HandleSubmit()
+    public async Task<IRecipeDTO> HandleSubmit()
     {
         e.Loading = true;
-        try
+        e.ErrorMessage = null;
+
+        var validationContext = new ValidationContext(model)
         {
-            if (model.URL.StartsWith("https://www.allrecipes.com/recipe/"))
-            {
-                try
-                {
-                    var response = PostUrl();
-                    e.ErrorMessage = "";
-                    e.Toggle();
-                }
-                catch (Exception)
-                {
-                    e.ErrorMessage = "Bad response from server.";
-                }
-            }
-            else
-            {
-                e.ErrorMessage = "Bad URL. Try again.";
-            }
-        }
-        catch (NullReferenceException)
+            MemberName = "URL"
+        };
+        bool urlIsValid = Validator.TryValidateProperty(model.URL, validationContext, new List<ValidationResult>());
+
+        if (urlIsValid)
         {
-            e.ErrorMessage = "Please add a recipe URL.";
+            recipeDTO = await model.PostRecipeUrl(Http, model, recipeDTO);
+            e.Toggle();
         }
-        e.Loading = false;
+        e.Loading = !e.Loading;
+        return recipeDTO;
     }
 
-    public async Task PostUrl()
-    {
-        var response = await Http.PostAsJsonAsync<IRecipeUrlDTO>("/api/Recipe/RecipeURL", model);
     }
-}

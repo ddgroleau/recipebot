@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PBC.Shared.WebScraper
 {
-    public class AllRecipesScraper
+    public class AllRecipesScraper : IAllRecipesScraper
     {
         public IRecipeDTO ScrapeRecipe(string URL, IRecipeDTO recipeDTO)
         {

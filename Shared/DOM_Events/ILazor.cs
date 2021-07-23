@@ -22,5 +22,7 @@ namespace PBC.Shared.DOM_Events
         public bool isShown { get; set; }
         public string ShowTarget { get; set; }
         public void Show();
+
+        public bool isStringPropertyValid(Object obj, string property);
     }
 }

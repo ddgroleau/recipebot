@@ -11,6 +11,7 @@ using PBC.Shared.DOM_Events;
 using PBC.Shared.Lazor;
 using PBC.Shared.ListComponent;
 using PBC.Shared.RecipeComponent;
+using PBC.Shared.WebScraper;
 using System.Linq;
 
 namespace PBC.Server
@@ -38,6 +39,7 @@ namespace PBC.Server
             services.AddScoped<IRecipeDTO, RecipeDTO>();
             services.AddScoped<IListGeneratorDTO, ListGeneratorDTO>();
             services.AddScoped<IListDayDTO, ListDayDTO>();
+            services.AddSingleton<IAllRecipesScraper, AllRecipesScraper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
