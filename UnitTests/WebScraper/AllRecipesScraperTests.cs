@@ -1,4 +1,5 @@
-﻿using PBC.Shared;
+﻿using Microsoft.Extensions.Logging;
+using PBC.Shared;
 using PBC.Shared.RecipeComponent;
 using PBC.Shared.WebScraper;
 using System;
@@ -12,8 +13,9 @@ namespace UnitTests.WebScraper
         [Fact]
         public void ScrapeRecipe_WithValidDinnerRecipe_ShouldReturnRecipeDTO()
         {
+            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
             string validRecipeUrl = "https://www.allrecipes.com/recipe/255220/pineapple-sticky-ribs/";
-            IRecipeDTO recipeDTOExpected = new RecipeDTO();
+            IRecipeDTO recipeDTOExpected = new RecipeDTO(logger);
 
             recipeDTOExpected.URL = validRecipeUrl;
             recipeDTOExpected.Title = "Pineapple Sticky Ribs";
@@ -39,7 +41,7 @@ namespace UnitTests.WebScraper
             recipeDTOExpected.Instructions.Add("Bake in the preheated oven, basting every 15 minutes, until ribs are glazed and pull away easily from the bone, about 1 1/2 hours. An instant-read thermometer inserted into the center should read 145 degrees F (63 degrees C).");
 
             var allRecipeScraper = new AllRecipesScraper();
-            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO());
+            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO(logger));
 
             Assert.Equal(recipeDTOExpected.Title, recipeDTOActual.Title);
             Assert.Equal(recipeDTOExpected.Description, recipeDTOActual.Description);
@@ -50,8 +52,9 @@ namespace UnitTests.WebScraper
         [Fact]
         public void ScrapeRecipe_WithValidBreakfastRecipe_ShouldReturnRecipeDTO()
         {
+            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
             string validRecipeUrl = "https://www.allrecipes.com/recipe/274974/lemon-ricotta-cornmeal-waffles/";
-            IRecipeDTO recipeDTOExpected = new RecipeDTO();
+            IRecipeDTO recipeDTOExpected = new RecipeDTO(logger);
 
             recipeDTOExpected.URL = validRecipeUrl;
             recipeDTOExpected.Title = "Lemon-Ricotta Cornmeal Waffles";
@@ -78,7 +81,7 @@ namespace UnitTests.WebScraper
             recipeDTOExpected.Instructions.Add("Coat the preheated waffle iron with cooking spray. Pour batter into waffle iron in batches and cook until crisp and golden brown and the iron stops steaming, about 5 minutes.");
 
             var allRecipeScraper = new AllRecipesScraper();
-            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO());
+            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO(logger));
 
             Assert.Equal(recipeDTOExpected.Title, recipeDTOActual.Title);
             Assert.Equal(recipeDTOExpected.Description, recipeDTOActual.Description);
@@ -88,8 +91,9 @@ namespace UnitTests.WebScraper
         [Fact]
         public void ScrapeRecipe_WithValidAirFryerRecipe_ShouldReturnRecipeDTO()
         {
+            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
             string validRecipeUrl = "https://www.allrecipes.com/recipe/260624/air-fried-crumbed-fish/";
-            IRecipeDTO recipeDTOExpected = new RecipeDTO();
+            IRecipeDTO recipeDTOExpected = new RecipeDTO(logger);
 
             recipeDTOExpected.URL = validRecipeUrl;
             recipeDTOExpected.Title = "Air-Fried Crumbed Fish";
@@ -108,7 +112,7 @@ namespace UnitTests.WebScraper
             recipeDTOExpected.Instructions.Add("Lay coated fillets gently in the preheated air fryer. Cook until fish flakes easily with a fork, about 12 minutes. Garnish with lemon slices.");
 
             var allRecipeScraper = new AllRecipesScraper();
-            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO());
+            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO(logger));
 
             Assert.Equal(recipeDTOExpected.Title, recipeDTOActual.Title);
             Assert.Equal(recipeDTOExpected.Description, recipeDTOActual.Description);
@@ -119,8 +123,9 @@ namespace UnitTests.WebScraper
         [Fact]
         public void ScrapeRecipe_WithValidDessertRecipe_ShouldReturnRecipeDTO()
         {
+            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
             string validRecipeUrl = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
-            IRecipeDTO recipeDTOExpected = new RecipeDTO();
+            IRecipeDTO recipeDTOExpected = new RecipeDTO(logger);
 
             recipeDTOExpected.URL = validRecipeUrl;
             recipeDTOExpected.Title = "No Bake Strawberry Cheesecake";
@@ -141,7 +146,7 @@ namespace UnitTests.WebScraper
             recipeDTOExpected.Instructions.Add("Set graham cracker crust on a baking sheet or plate to maintain stability. Pour cheesecake filling into crust. Refrigerate until cake is set, at least 3 1/2 hours.");
 
             var allRecipeScraper = new AllRecipesScraper();
-            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO());
+            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO(logger));
 
             Assert.Equal(recipeDTOExpected.Title, recipeDTOActual.Title);
             Assert.Equal(recipeDTOExpected.Description, recipeDTOActual.Description);
@@ -152,8 +157,9 @@ namespace UnitTests.WebScraper
         [Fact]
         public void ScrapeRecipe_WithPartialButValidURL_ShouldReturnRecipeDTO()
         {
+            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
             string validRecipeUrl = "https://www.allrecipes.com/recipe/234410/";
-            IRecipeDTO recipeDTOExpected = new RecipeDTO();
+            IRecipeDTO recipeDTOExpected = new RecipeDTO(logger);
 
             recipeDTOExpected.URL = validRecipeUrl;
             recipeDTOExpected.Title = "No Bake Strawberry Cheesecake";
@@ -174,7 +180,7 @@ namespace UnitTests.WebScraper
             recipeDTOExpected.Instructions.Add("Set graham cracker crust on a baking sheet or plate to maintain stability. Pour cheesecake filling into crust. Refrigerate until cake is set, at least 3 1/2 hours.");
 
             var allRecipeScraper = new AllRecipesScraper();
-            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO());
+            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO(logger));
 
             Assert.Equal(recipeDTOExpected.Title, recipeDTOActual.Title);
             Assert.Equal(recipeDTOExpected.Description, recipeDTOActual.Description);
@@ -185,10 +191,11 @@ namespace UnitTests.WebScraper
         [Fact]
         public void ScrapeRecipe_WithValidURLAndNoRecipe_ShouldReturnEmptyRecipeDTO()
         {
+            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
             string validRecipeUrl = "https://www.allrecipes.com/recipe/";
             var allRecipeScraper = new AllRecipesScraper();
 
-            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO());
+            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO(logger));
 
             Assert.True(String.IsNullOrEmpty(recipeDTOActual.Title));
             Assert.True(String.IsNullOrEmpty(recipeDTOActual.Description));
@@ -199,10 +206,11 @@ namespace UnitTests.WebScraper
         [Fact]
         public void ScrapeRecipe_WithInvalidUrl_ShouldReturnEmptyRecipeDTO()
         {
+            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
             string validRecipeUrl = "https://www.google.com";
             var allRecipeScraper = new AllRecipesScraper();
 
-            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO());
+            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO(logger));
 
             Assert.True(String.IsNullOrEmpty(recipeDTOActual.Title));
             Assert.True(String.IsNullOrEmpty(recipeDTOActual.Description));
@@ -213,8 +221,9 @@ namespace UnitTests.WebScraper
         [Fact]
         public void ScrapeRecipe_WithAlternateUI_ShouldReturnRecipeDTO()
         {
+            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
             string validRecipeUrl = "https://www.allrecipes.com/recipe/212400/ginger-ale/";
-            IRecipeDTO recipeDTOExpected = new RecipeDTO();
+            IRecipeDTO recipeDTOExpected = new RecipeDTO(logger);
 
             recipeDTOExpected.URL = validRecipeUrl;
             recipeDTOExpected.Title = "Ginger Ale";
@@ -234,7 +243,7 @@ namespace UnitTests.WebScraper
             recipeDTOExpected.Instructions.Add("Allow for ingredients to mix with water and for some gas to be released from bottle prior to uncapping - by unscrewing cap just a small amount to hear hissssss. Pour over ice and enjoy!");
 
             var allRecipeScraper = new AllRecipesScraper();
-            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO());
+            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO(logger));
 
             Assert.Equal(recipeDTOExpected.Title, recipeDTOActual.Title);
             Assert.Equal(recipeDTOExpected.Description, recipeDTOActual.Description);
@@ -245,10 +254,11 @@ namespace UnitTests.WebScraper
         [Fact]
         public void ScrapeRecipe_WithValidUrlAndInvalidRecipe_ShouldReturnEmptyRecipeDTO()
         {
+            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
             string InvalidRecipeUrl = "https://www.allrecipes.com/recipe/1100/";
             var allRecipeScraper = new AllRecipesScraper();
 
-            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(InvalidRecipeUrl, new RecipeDTO());
+            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(InvalidRecipeUrl, new RecipeDTO(logger));
 
             Assert.True(String.IsNullOrEmpty(recipeDTOActual.Title));
             Assert.True(String.IsNullOrEmpty(recipeDTOActual.Description));
@@ -259,8 +269,9 @@ namespace UnitTests.WebScraper
         [Fact]
         public void ScrapeRecipe_WithValidRecipeAndBadSummary_ShouldReturnRecipeDTO()
         {
+            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
             string validRecipeUrl = "https://www.allrecipes.com/recipe/12340/watermelon-pie/";
-            IRecipeDTO recipeDTOExpected = new RecipeDTO();
+            IRecipeDTO recipeDTOExpected = new RecipeDTO(logger);
 
             recipeDTOExpected.URL = validRecipeUrl;
             recipeDTOExpected.Title = "Watermelon Pie";
@@ -276,7 +287,7 @@ namespace UnitTests.WebScraper
             recipeDTOExpected.Instructions.Add("Pour mixture into graham cracker crust. Cool in refrigerator for about 3 hours.");
 
             var allRecipeScraper = new AllRecipesScraper();
-            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO());
+            var recipeDTOActual = allRecipeScraper.ScrapeRecipe(validRecipeUrl, new RecipeDTO(logger));
 
             Assert.Equal(recipeDTOExpected.Title, recipeDTOActual.Title);
             Assert.Equal(recipeDTOExpected.Description, recipeDTOActual.Description);

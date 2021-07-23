@@ -23,6 +23,6 @@ namespace PBC.Shared.DOM_Events
         public string ShowTarget { get; set; }
         public void Show();
 
-        public bool isStringPropertyValid(Object obj, string property);
+        public bool isStringPropertyValid(Object obj, string property, string propertyName);
     }
 }

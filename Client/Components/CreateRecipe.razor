@@ -33,11 +33,7 @@
         e.Loading = true;
         e.ErrorMessage = null;
 
-        var validationContext = new ValidationContext(model)
-        {
-            MemberName = "URL"
-        };
-        bool urlIsValid = Validator.TryValidateProperty(model.URL, validationContext, new List<ValidationResult>());
+        bool urlIsValid = e.isStringPropertyValid(model, "URL", model.URL);
 
         if (urlIsValid)
         {

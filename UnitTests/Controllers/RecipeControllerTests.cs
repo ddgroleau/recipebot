@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Logging;
 using PBC.Server.Controllers;
 using PBC.Shared;
+using PBC.Shared.RecipeComponent;
+using PBC.Shared.WebScraper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,22 +16,30 @@ namespace UnitTests.Controllers
     public class RecipeControllerTests
     {
         [Fact]
-        public void PostRecipeURL_WithValidURL_ShouldReturn200()
+        public void PostRecipeURL_WithValidURL_ShouldReturnIRecipeUrlDTO()
         {
-            var logger = new LoggerFactory().CreateLogger<RecipeController>();
-            var controller = new RecipeController(logger);
-            var recipeDTO = new RecipeDTO();
+            var recipeControllerLogger = new LoggerFactory().CreateLogger<RecipeController>();
+            var recipeUrlDtoLogger = new LoggerFactory().CreateLogger<RecipeUrlDTO>();
+            var recipeDtoLogger = new LoggerFactory().CreateLogger<RecipeDTO>();
+            var recipeDTO = new RecipeDTO(recipeDtoLogger);
+            var allRecipesScraper = new AllRecipesScraper();
+            var recipeUrlDTO = new RecipeUrlDTO(recipeUrlDtoLogger);
 
-            var postResult = controller.PostRecipeUrl(recipeDTO);
-            Assert.IsType<OkObjectResult>(postResult);
+            var controller = new RecipeController(recipeControllerLogger, recipeDTO, allRecipesScraper);
+
+            var postResult = controller.PostRecipeUrl(recipeUrlDTO);
+            Assert.IsAssignableFrom<IRecipeDTO>(postResult);
         }
 
         [Fact]
         public void PostNewRecipe_WithValidURL_ShouldReturn200()
         {
             var logger = new LoggerFactory().CreateLogger<RecipeController>();
-            var controller = new RecipeController(logger);
-            var recipeDTO = new RecipeDTO();
+            var recipeDtoLogger = new LoggerFactory().CreateLogger<RecipeDTO>();
+            var recipeDTO = new RecipeDTO(recipeDtoLogger);
+            var allRecipesScraper = new AllRecipesScraper();
+
+            var controller = new RecipeController(logger, recipeDTO, allRecipesScraper);
 
             var postResult = controller.PostNewRecipe(recipeDTO);
             Assert.IsType<OkObjectResult>(postResult);

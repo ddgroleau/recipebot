@@ -8,6 +8,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using PBC.Shared.RecipeComponent;
 
 namespace PBC.Shared
@@ -25,6 +26,12 @@ namespace PBC.Shared
         public string NewIngredient { get; set; }
         [StringLength(350, ErrorMessage = "New instruction is too long.", MinimumLength = 1)]
         public string NewInstruction { get; set; }
+
+        private readonly ILogger<RecipeDTO> _logger;
+        public RecipeDTO(ILogger<RecipeDTO> logger)
+        {
+            _logger = logger;
+        }
         public void AddIngredient()
         {
             var validationContext = new ValidationContext(this)
@@ -65,9 +72,10 @@ namespace PBC.Shared
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogError("Unable to read RecipeDTO object response from RecipeController.PostRecipeURL", e);
             }
             return this;
         }
+
     }
 }

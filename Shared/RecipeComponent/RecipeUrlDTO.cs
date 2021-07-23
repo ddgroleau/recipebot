@@ -1,4 +1,5 @@
-﻿using PBC.Shared.Custom_Validation;
+﻿using Microsoft.Extensions.Logging;
+using PBC.Shared.Custom_Validation;
 using PBC.Shared.DOM_Events;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,12 @@ namespace PBC.Shared.RecipeComponent
 {
     public class RecipeUrlDTO : IRecipeUrlDTO
     {
+        private readonly ILogger<RecipeUrlDTO> _logger;
+        public RecipeUrlDTO(ILogger<RecipeUrlDTO> logger)
+        {
+            _logger = logger;
+        }
+        
         [AcceptableURL]
         public string URL { get; set; } = "";
 
@@ -34,7 +41,7 @@ namespace PBC.Shared.RecipeComponent
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogError("RecipeUrlDTO.PostRecipeUrl failed to send or receive recipe from /api/Recipe/RecipeURL", e);
             }
             return recipeDTO;
         }

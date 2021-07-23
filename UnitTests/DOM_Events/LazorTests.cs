@@ -60,5 +60,41 @@ namespace UnitTests.DOM_Events
             Assert.True(lazor.isShown);
         }
 
+        [Fact]
+        public void isStringPropertyValid_WithValidProperty_ShouldBeTrue()
+        {
+            var lazor = new Lazor();
+            var mockObj = new MockUrlObject();
+            mockObj.URL = "https://www.allrecipes.com/recipe/212400/ginger-ale/";
+
+            bool isValid = lazor.isStringPropertyValid(mockObj, "URL", mockObj.URL);
+
+            Assert.True(isValid);
+        }
+
+        [Fact]
+        public void isStringPropertyValid_WithValidNullProperty_ShouldBeTrue()
+        {
+            var lazor = new Lazor();
+            var mockObj = new MockUrlObject();
+            mockObj.URL = "";
+
+            bool isValid = lazor.isStringPropertyValid(mockObj, "URL", mockObj.URL);
+
+            Assert.True(isValid);
+        }
+
+        [Fact]
+        public void isStringPropertyValid_WithInvalidProperty_ShouldBeFalse()
+        {
+            var lazor = new Lazor();
+            var mockObj = new MockUrlObject();
+            mockObj.URL = "1234";
+
+            bool isValid = lazor.isStringPropertyValid(mockObj, "URL", mockObj.URL);
+
+            Assert.False(isValid);
+        }
+
     }
 }
