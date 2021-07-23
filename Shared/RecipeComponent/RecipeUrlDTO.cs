@@ -25,17 +25,17 @@ namespace PBC.Shared.RecipeComponent
 
         public async Task<IRecipeDTO> PostRecipeUrl(HttpClient Http, IRecipeUrlDTO recipeUrlDTO, IRecipeDTO recipeDTO)
         {
-                try
-                {
+            try
+            {
                 var response = await Http.PostAsJsonAsync<IRecipeUrlDTO>("/api/Recipe/RecipeURL", this);
                 var result = await recipeDTO.ReadRecipe(response.Content);
 
                 recipeDTO = result;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
             return recipeDTO;
         }
     }
