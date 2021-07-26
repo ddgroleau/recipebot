@@ -1,4 +1,5 @@
 ﻿@inject HttpClient Http
+@inject ILogger<IRecipeDTO> logger
 
 <div class="@e.ToggleTarget">
     <div class="l-modal">
@@ -16,40 +17,42 @@
                     }
                     else
                     {
-            <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
-                <DataAnnotationsValidator />
+                        <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+                            <DataAnnotationsValidator />
 
-                <div class="form-group">
-                    <label for="Title">
-                        Title:
-                        <InputText id="Title" @bind-Value="@model.Title" />
-                        <div class="small form-text text-danger">
-                            <ValidationMessage For="@(() => model.Title)" />
-                        </div>
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label for="Description">
-                        Description:
-                        <InputTextArea id="Description" @bind-Value="@model.Description" />
-                    </label>
-                </div>
+                            <div class="form-group">
+                                <label for="Title">
+                                    Title:
+                                    <InputText id="Title" @bind-Value="@model.Title" />
+                                    <div class="small form-text text-danger">
+                                        <ValidationMessage For="@(() => model.Title)" />
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="Description">
+                                    Description:
+                                    <InputTextArea id="Description" @bind-Value="@model.Description" />
+                                </label>
+                            </div>
 
-                <CascadingValue Name="Model" Value="@model">
-                    <IngredientsForm />
-                    <InstructionsForm />
-                </CascadingValue>
+                            <CascadingValue Name="Model" Value="@model">
+                                <IngredientsForm />
+                                <ValidationMessage For="@(() => model.Ingredients)" />
+                                <InstructionsForm />
+                                <ValidationMessage For="@(() => model.Instructions)" />
+                            </CascadingValue>
 
-                    <span class="small form-text text-danger">@e.ErrorMessage</span>
+                            <span class="small form-text text-danger">@e.ErrorMessage</span>
 
-                   
-                        <CascadingValue Name="Loading" Value="@e.Loading">
-                            <LoadingButton>Submit</LoadingButton>
-                        </CascadingValue>
-            </EditForm>
+
+                            <CascadingValue Name="Loading" Value="@e.Loading">
+                                <LoadingButton>Submit</LoadingButton>
+                            </CascadingValue>
+                        </EditForm>
                     }
                 }
-                       
+
             </div>
         </div>
     </div>
@@ -64,37 +67,44 @@
     [CascadingParameter(Name = "RecipeDTO")]
     public IRecipeDTO model { get; set; }
 
-    private async Task HandleValidSubmit()
+    [CascadingParameter(Name = "RecipeUrlDTO")]
+    public IRecipeUrlDTO recipeURLDTO { get; set; }
+
+    [Parameter]
+    public Action HandleClick { get; set; }
+
+    private async Task<IRecipeDTO> HandleValidSubmit()
     {
-        if (model.Ingredients.Any() && model.Instructions.Any())
+        try
         {
-            e.Loading = true;
-            try
+            bool ingredientsAreValid = e.IsPropertyValid(model, "Ingredients", model.Ingredients);
+            bool instructionsAreValid = e.IsPropertyValid(model, "Instructions", model.Instructions);
+
+            if (ingredientsAreValid && instructionsAreValid)
             {
+                e.Loading = true;
+
                 var response = await Http.PostAsJsonAsync<IRecipeDTO>("/api/Recipe/NewRecipe", model);
-
-                e.isSuccess = true;
+                if (response.IsSuccessStatusCode)
+                {
+                    e.isSuccess = true;
+                    logger.LogInformation($"Successfully posted new recipe \"{model.Title}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}");
+                    model.ResetRecipe();
+                    return model;
+                }
+                logger.LogError($"Failed to post new recipe \"{model.Title}\" to RecipeController. Server responded with {response.StatusCode}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}");
+                e.ErrorMessage = $"Sorry, something went wrong. Server responded with {response.StatusCode}.";
+                return model;
             }
-            catch(Exception err)
-            {
-                e.ErrorMessage = "Request failed. Try again later.";
-                throw new HttpRequestException("Could not submit new recipe to RecipeController PostNewRecipe method",err);
-            }
-
-            model.ResetRecipe();
-            e.Loading = false;
         }
-        else
+        catch (Exception err)
         {
-            e.ErrorMessage = "You must include at least one ingredient and one instruction.";
+            e.ErrorMessage = $"Sorry, something went wrong. Error {e.ErrorMessage}.";
+            logger.LogError($"Exception occured when posting new recipe \"{model.Title}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}", err.Message);
         }
-        return;
-    }
-
-    public void HandleClick()
-    {
-        e.isSuccess = false;
-        e.Toggle();
+        e.Loading = false;
+        return model;
     }
 
 }
+

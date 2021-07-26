@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace UnitTests.DOM_Events
 {
-    public class MockUrlObject
+    public class MockObject
     {
         [AcceptableURL]
         public string URL { get; set; }
+        [ListMustContainElements]
+        public List<string> ListString { get; set; } = new List<string>();
     }
 }

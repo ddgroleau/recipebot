@@ -7,8 +7,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PBC.Shared.Custom_Validation
 {
-    using System;
-
     public class AcceptableURLAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value,

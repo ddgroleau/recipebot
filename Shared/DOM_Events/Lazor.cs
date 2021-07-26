@@ -38,17 +38,36 @@ namespace PBC.Shared.Lazor
             isShown = true;
         }
 
-        public bool IsPropertyValid(Object obj, string property, string propertyName)
+        public bool IsPropertyValid(Object obj, string propertyName, string property)
         {
             bool isValid;
             try
             {
                 var validationContext = new ValidationContext(obj)
                 {
-                    MemberName = property
+                    MemberName = propertyName
                 };
                 
-                isValid = Validator.TryValidateProperty(propertyName, validationContext, new List<ValidationResult>());
+                isValid = Validator.TryValidateProperty(property, validationContext, new List<ValidationResult>());
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return isValid;
+        }
+
+        public bool IsPropertyValid(Object obj, string propertyName, List<string> property)
+        {
+            bool isValid;
+            try
+            {
+                var validationContext = new ValidationContext(obj)
+                {
+                    MemberName = propertyName
+                };
+
+                isValid = Validator.TryValidateProperty(property, validationContext, new List<ValidationResult>());
             }
             catch (Exception)
             {

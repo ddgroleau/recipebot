@@ -20,12 +20,15 @@
 
         </EditForm>
     </div>
-
-    <CascadingValue Name="LazorObject" Value="@e">
-        <CascadingValue Name="RecipeDTO" Value="@recipeDTO">
-            <EditRecipeModal />
+   
+        <CascadingValue Name="RecipeUrlDTO" Value="@model">
+            <CascadingValue Name="LazorObject" Value="@e">
+                <CascadingValue Name="RecipeDTO" Value="@recipeDTO">
+                    <EditRecipeModal HandleClick="ResetView"/>
+                </CascadingValue>
+            </CascadingValue>
         </CascadingValue>
-    </CascadingValue>
+  
 </div>
 @code {
     public async Task<IRecipeDTO> HandleSubmit()
@@ -50,8 +53,16 @@
             }
             e.Toggle();
         }
-        e.Loading = !e.Loading;
+        e.Loading = false;
         return recipeDTO;
     }
 
+    public void ResetView()
+    {
+        e.Loading = false;
+        e.isSuccess = false;
+        e.Toggle();
+        recipeDTO.ResetRecipe();
+        model.ResetURL();
+    }
 }

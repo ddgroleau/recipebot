@@ -26,17 +26,10 @@ namespace PBC.Server.Controllers
             _allRecipesScraper = allRecipesScraper;
         }
 
-        [HttpPost("NewRecipe")]
-        public IActionResult PostNewRecipe(RecipeDTO recipeDTO)
-        {
-            Console.WriteLine($"Recipe controller has received a Recipe! Recipe Title is {recipeDTO.Title}");
-            return Ok(recipeDTO);
-        }
-
         [HttpPost("RecipeURL")]
         public IRecipeDTO PostRecipeUrl(RecipeUrlDTO urlDTO)
         {
-            Console.WriteLine($"Recipe controller has received a URL! Recipe URL is {urlDTO.URL}");
+            _logger.LogInformation($"New URL {urlDTO.URL} was submitted to recipe controller. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
             try
             {
                 return _allRecipesScraper.ScrapeRecipe(urlDTO.URL, _recipeDTO);
@@ -46,6 +39,22 @@ namespace PBC.Server.Controllers
                 _logger.LogError($"Failed to scrape {urlDTO.URL} from AllRecipes.com");
             }
             return _recipeDTO;
+        }
+
+        [HttpPost("NewRecipe")]
+        public IActionResult PostNewRecipe(RecipeDTO recipeDTO)
+        {
+            _logger.LogInformation($"New RecipeDTO: \"{recipeDTO.Title}\" was submitted to recipe controller. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+            try
+            {
+                _logger.LogInformation($"Processing RecipeDTO: \"{recipeDTO.Title}\". Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+                // RecipeService (which will perform validation (method), build entity (class), and save entity to repository (class)). Build this deliberately.
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Failed to process RecipeDTO \"{recipeDTO.Title}\". Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.", e.Message);
+            }
+            return Ok(recipeDTO);
         }
     }
 }

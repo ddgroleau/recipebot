@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using PBC.Shared.Custom_Validation;
 using PBC.Shared.RecipeComponent;
 
 namespace PBC.Shared
@@ -20,11 +21,13 @@ namespace PBC.Shared
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }
+        [ListMustContainElements]
         public List<string> Ingredients { get; set; } = new List<string>();
+        [ListMustContainElements]
         public List<string> Instructions { get; set; } = new List<string>();
-        [StringLength(100, ErrorMessage = "New ingredient is too long.", MinimumLength = 1)]
+        [StringLength(100, ErrorMessage = "New ingredient is too long.")]
         public string NewIngredient { get; set; }
-        [StringLength(350, ErrorMessage = "New instruction is too long.", MinimumLength = 1)]
+        [StringLength(350, ErrorMessage = "New instruction is too long.")]
         public string NewInstruction { get; set; }
         public void AddIngredient()
         {

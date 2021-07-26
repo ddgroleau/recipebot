@@ -24,6 +24,7 @@ namespace PBC.Shared.DOM_Events
         public string ShowTarget { get; set; }
         public void Show();
 
-        public bool IsPropertyValid(Object obj, string property, string propertyName);
+        public bool IsPropertyValid(Object obj, string propertyName, string property);
+        public bool IsPropertyValid(Object obj, string propertyName, List<string> property);
     }
 }

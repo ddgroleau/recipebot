@@ -61,11 +61,13 @@ namespace UnitTests.DOM_Events
         }
 
         [Fact]
-        public void IsPropertyValid_WithValidProperty_ShouldBeTrue()
+        public void IsPropertyValid_WithValidStringProperty_ShouldBeTrue()
         {
             var lazor = new Lazor();
-            var mockObj = new MockUrlObject();
-            mockObj.URL = "https://www.allrecipes.com/recipe/212400/ginger-ale/";
+            var mockObj = new MockObject
+            {
+                URL = "https://www.allrecipes.com/recipe/212400/ginger-ale/"
+            };
 
             bool isValid = lazor.IsPropertyValid(mockObj, "URL", mockObj.URL);
 
@@ -73,11 +75,13 @@ namespace UnitTests.DOM_Events
         }
 
         [Fact]
-        public void IsPropertyValid_WithValidNullProperty_ShouldBeTrue()
+        public void IsPropertyValid_WithValidNullStringProperty_ShouldBeTrue()
         {
             var lazor = new Lazor();
-            var mockObj = new MockUrlObject();
-            mockObj.URL = "";
+            var mockObj = new MockObject
+            {
+                URL = ""
+            };
 
             bool isValid = lazor.IsPropertyValid(mockObj, "URL", mockObj.URL);
 
@@ -85,13 +89,62 @@ namespace UnitTests.DOM_Events
         }
 
         [Fact]
-        public void IsPropertyValid_WithInvalidProperty_ShouldBeFalse()
+        public void IsPropertyValid_WithInvalidStringProperty_ShouldBeFalse()
         {
             var lazor = new Lazor();
-            var mockObj = new MockUrlObject();
-            mockObj.URL = "1234";
+            var mockObj = new MockObject
+            {
+                URL = "1234"
+            };
 
             bool isValid = lazor.IsPropertyValid(mockObj, "URL", mockObj.URL);
+
+            Assert.False(isValid);
+        }
+
+        [Fact]
+        public void IsPropertyValid_WithValidListProperty_ShouldBeTrue()
+        {
+            var lazor = new Lazor();
+            var mockObj = new MockObject();
+            mockObj.ListString.Add("TestItem");
+         
+            bool isValid = lazor.IsPropertyValid(mockObj, "ListString", mockObj.ListString);
+
+            Assert.True(isValid);
+        }
+
+        [Fact]
+        public void IsPropertyValid_WithEmptyInvalidListProperty_ShouldBeFalse()
+        {
+            var lazor = new Lazor();
+            var mockObj = new MockObject();
+            mockObj.ListString.Add(string.Empty);
+
+            bool isValid = lazor.IsPropertyValid(mockObj, "ListString", mockObj.ListString);
+
+            Assert.False(isValid);
+        }
+
+        [Fact]
+        public void IsPropertyValid_WithNullInvalidListProperty_ShouldBeFalse()
+        {
+            var lazor = new Lazor();
+            var mockObj = new MockObject();
+            mockObj.ListString.Add(null);
+
+            bool isValid = lazor.IsPropertyValid(mockObj, "ListString", mockObj.ListString);
+
+            Assert.False(isValid);
+        }
+
+        [Fact]
+        public void IsPropertyValid_WithoutListProperty_ShouldBeFalse()
+        {
+            var lazor = new Lazor();
+            var mockObj = new MockObject();
+
+            bool isValid = lazor.IsPropertyValid(mockObj, "ListString", mockObj.ListString);
 
             Assert.False(isValid);
         }

@@ -49,7 +49,7 @@ namespace UnitTests.RecipeComponent
         }
 
         [Fact]
-        public void AddIngredient_WithEmptyString_ShouldNotValidate()
+        public void AddIngredient_WithEmptyString_ShouldValidate()
         {
             var testRecipeDTO = new RecipeDTO();
             var validationContext = new ValidationContext(testRecipeDTO)
@@ -57,13 +57,13 @@ namespace UnitTests.RecipeComponent
                 MemberName = "NewIngredient"
             };
 
-            testRecipeDTO.NewIngredient = "";
+            testRecipeDTO.NewIngredient = null;
 
             testRecipeDTO.AddIngredient();
 
             bool propertyIsValid = Validator.TryValidateProperty(testRecipeDTO.NewIngredient, validationContext, new List<ValidationResult>());
 
-            Assert.False(propertyIsValid);
+            Assert.True(propertyIsValid);
             Assert.Null(testRecipeDTO.Ingredients.FirstOrDefault());
         }
 
@@ -107,7 +107,7 @@ namespace UnitTests.RecipeComponent
         }
 
         [Fact]
-        public void AddInstruction_WithEmptyString_ShouldNotValidate()
+        public void AddInstruction_WithEmptyString_ShouldValidate()
         {
             var testRecipeDTO = new RecipeDTO();
             var validationContext = new ValidationContext(testRecipeDTO)
@@ -115,13 +115,13 @@ namespace UnitTests.RecipeComponent
                 MemberName = "NewInstruction"
             };
 
-            testRecipeDTO.NewInstruction = "";
+            testRecipeDTO.NewInstruction = null;
 
             testRecipeDTO.AddInstruction();
 
             bool propertyIsValid = Validator.TryValidateProperty(testRecipeDTO.NewInstruction, validationContext, new List<ValidationResult>());
 
-            Assert.False(propertyIsValid);
+            Assert.True(propertyIsValid);
             Assert.Null(testRecipeDTO.Instructions.FirstOrDefault());
         }
 
