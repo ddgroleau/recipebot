@@ -21,6 +21,5 @@ namespace PBC.Shared.RecipeComponent
         public void AddIngredient();
         public void AddInstruction();
         public void ResetRecipe();
-        public Task<IRecipeDTO> ReadRecipe(HttpContent content);
     }
 }

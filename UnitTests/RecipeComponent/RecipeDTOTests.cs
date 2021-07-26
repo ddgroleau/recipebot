@@ -19,8 +19,7 @@ namespace UnitTests.RecipeComponent
         [Fact]
         public void AddIngredient_WithValidString_ShouldAddToIngredients()
         {
-            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
-            var testRecipeDTO = new RecipeDTO(logger);
+            var testRecipeDTO = new RecipeDTO();
             testRecipeDTO.NewIngredient = "sugar";
 
             testRecipeDTO.AddIngredient();
@@ -31,8 +30,7 @@ namespace UnitTests.RecipeComponent
         [Fact]
         public void AddIngredient_WithInvalidString_ShouldNotValidate()
         {
-            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
-            var testRecipeDTO = new RecipeDTO(logger);
+            var testRecipeDTO = new RecipeDTO();
             var validationContext = new ValidationContext(testRecipeDTO)
             {
                 MemberName = "NewIngredient"
@@ -53,8 +51,7 @@ namespace UnitTests.RecipeComponent
         [Fact]
         public void AddIngredient_WithEmptyString_ShouldNotValidate()
         {
-            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
-            var testRecipeDTO = new RecipeDTO(logger);
+            var testRecipeDTO = new RecipeDTO();
             var validationContext = new ValidationContext(testRecipeDTO)
             {
                 MemberName = "NewIngredient"
@@ -73,8 +70,7 @@ namespace UnitTests.RecipeComponent
         [Fact]
         public void AddInstruction_WithValidString_ShouldAddToInstructions()
         {
-            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
-            var testRecipeDTO = new RecipeDTO(logger);
+            var testRecipeDTO = new RecipeDTO();
             testRecipeDTO.NewInstruction = "Different pieces of such a program interact with each other through interfaces," +
                                            " limited sets of functions or bindings that provide useful functionality " +
                                            "at a more abstract level, hiding their precise implementation. Such program " +
@@ -90,8 +86,7 @@ namespace UnitTests.RecipeComponent
         [Fact]
         public void AddInstruction_WithInvalidString_ShouldNotValidate()
         {
-            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
-            var testRecipeDTO = new RecipeDTO(logger);
+            var testRecipeDTO = new RecipeDTO();
             var validationContext = new ValidationContext(testRecipeDTO)
             {
                 MemberName = "NewInstruction"
@@ -114,8 +109,7 @@ namespace UnitTests.RecipeComponent
         [Fact]
         public void AddInstruction_WithEmptyString_ShouldNotValidate()
         {
-            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
-            var testRecipeDTO = new RecipeDTO(logger);
+            var testRecipeDTO = new RecipeDTO();
             var validationContext = new ValidationContext(testRecipeDTO)
             {
                 MemberName = "NewInstruction"
@@ -134,9 +128,8 @@ namespace UnitTests.RecipeComponent
         [Fact]
         public void ResetRecipe_WithValidObject_ShouldResetObject()
         {
-            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
-            var expectedRecipeDTO = new RecipeDTO(logger);
-            var actualRecipeDTO = new RecipeDTO(logger);
+            var expectedRecipeDTO = new RecipeDTO();
+            var actualRecipeDTO = new RecipeDTO();
 
             actualRecipeDTO.URL = "https://testrecipe.com";
             actualRecipeDTO.Title = "Test Title";
@@ -155,39 +148,6 @@ namespace UnitTests.RecipeComponent
             Assert.Equal(expectedRecipeDTO.Instructions, actualRecipeDTO.Instructions);
             Assert.Equal(expectedRecipeDTO.NewIngredient, actualRecipeDTO.NewIngredient);
             Assert.Equal(expectedRecipeDTO.NewInstruction, actualRecipeDTO.NewInstruction);
-        }
-
-        [Fact]
-        public void ReadRecipe_WithEmptyContent_ShouldReturnSelf()
-        {
-            var content = new HttpResponseMessage().Content;
-            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
-            
-            var recipeDTO = new RecipeDTO(logger);
-
-            var result = recipeDTO.ReadRecipe(content).Result;
-
-            Assert.Equal(recipeDTO, result);
-        }
-        [Fact]
-        public void ReadRecipe_WithValidObject_ShouldBeEqual()
-        {
-            var logger = new LoggerFactory().CreateLogger<RecipeDTO>();
-            var recipeDTO = new RecipeDTO(logger);
-            var otherRecipeDTO = new RecipeDTO(logger)
-            {
-                Title = "test"
-            };
-            var request = new HttpRequestMessage()
-            {
-                Content = new ObjectContent<RecipeDTO>(otherRecipeDTO, new JsonMediaTypeFormatter()),
-                RequestUri = new Uri("http://www.google.com")
-            };
-            var message = new HttpClient().SendAsync(request);
-
-            var result = recipeDTO.ReadRecipe(message.Result.Content).Result;
-
-            Assert.Equal(otherRecipeDTO, result);
         }
     }
 }

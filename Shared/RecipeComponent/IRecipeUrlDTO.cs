@@ -13,7 +13,5 @@ namespace PBC.Shared.RecipeComponent
         public string URL { get; set; }
 
         public void ResetURL();
-
-        public Task<IRecipeDTO> PostRecipeUrl(HttpClient Http, IRecipeUrlDTO recipeUrlDTO, IRecipeDTO recipeDTO);
     }
 }

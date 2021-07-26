@@ -16,28 +16,13 @@ namespace UnitTests.RecipeComponent
         [Fact]
         public void ResetURL_WithUrlValue_ShouldMakeUrlNull()
         {
-            var logger = new LoggerFactory().CreateLogger<RecipeUrlDTO>();
-            var recipeUrlDTO = new RecipeUrlDTO(logger);
+            var recipeUrlDTO = new RecipeUrlDTO();
 
             recipeUrlDTO.URL = "https://www.google.com";
 
             recipeUrlDTO.ResetURL();
 
             Assert.Null(recipeUrlDTO.URL);
-        }
-
-        [Fact]
-        public void PostRecipeURL_WithValidArguments_ShouldReturnRecipeDTO()
-        {
-            var recipeUrlDtoLogger = new LoggerFactory().CreateLogger<RecipeUrlDTO>();
-            var recipeDtoLogger = new LoggerFactory().CreateLogger<RecipeDTO>();
-            var http = new HttpClient();
-            var recipeUrlDTO = new RecipeUrlDTO(recipeUrlDtoLogger);
-            var recipeDTO = new RecipeDTO(recipeDtoLogger);
-
-            var result = recipeUrlDTO.PostRecipeUrl(http, recipeUrlDTO, recipeDTO);
-
-            Assert.IsType<Task<IRecipeDTO>>(result);
         }
     }
 }

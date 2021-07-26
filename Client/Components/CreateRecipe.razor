@@ -2,6 +2,7 @@
 @inject ILazor e
 @inject IRecipeUrlDTO model
 @inject IRecipeDTO recipeDTO
+@inject ILogger<IRecipeUrlDTO> logger
 
 <div class="card">
     <h4 class="card-header">Add a Recipe</h4>
@@ -22,26 +23,35 @@
 
     <CascadingValue Name="LazorObject" Value="@e">
         <CascadingValue Name="RecipeDTO" Value="@recipeDTO">
-            <AddRecipeModal />
+            <EditRecipeModal />
         </CascadingValue>
     </CascadingValue>
 </div>
 @code {
-
     public async Task<IRecipeDTO> HandleSubmit()
     {
         e.Loading = true;
         e.ErrorMessage = null;
 
-        bool urlIsValid = e.isStringPropertyValid(model, "URL", model.URL);
+        bool urlIsValid = e.IsPropertyValid(model, "URL", model.URL);
 
         if (urlIsValid)
         {
-            recipeDTO = await model.PostRecipeUrl(Http, model, recipeDTO);
+            try
+            {
+                var response = await Http.PostAsJsonAsync<IRecipeUrlDTO>("/api/Recipe/RecipeURL", model);
+
+                var scrapedRecipe = await response.Content.ReadFromJsonAsync<RecipeDTO>();
+                recipeDTO = scrapedRecipe;
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Failed to post RecipeUrlDTO to RecipeController.", e);
+            }
             e.Toggle();
         }
         e.Loading = !e.Loading;
         return recipeDTO;
     }
 
-    }
+}

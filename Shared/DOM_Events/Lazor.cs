@@ -1,8 +1,11 @@
-﻿using PBC.Shared.DOM_Events;
+﻿using Microsoft.Extensions.Logging;
+using PBC.Shared.DOM_Events;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,7 +38,7 @@ namespace PBC.Shared.Lazor
             isShown = true;
         }
 
-        public bool isStringPropertyValid(Object obj, string property, string propertyName)
+        public bool IsPropertyValid(Object obj, string property, string propertyName)
         {
             bool isValid;
             try

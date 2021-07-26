@@ -26,12 +26,6 @@ namespace PBC.Shared
         public string NewIngredient { get; set; }
         [StringLength(350, ErrorMessage = "New instruction is too long.", MinimumLength = 1)]
         public string NewInstruction { get; set; }
-
-        private readonly ILogger<RecipeDTO> _logger;
-        public RecipeDTO(ILogger<RecipeDTO> logger)
-        {
-            _logger = logger;
-        }
         public void AddIngredient()
         {
             var validationContext = new ValidationContext(this)
@@ -62,20 +56,5 @@ namespace PBC.Shared
             NewIngredient = null;
             NewInstruction = null;
         }
-
-        public async Task<IRecipeDTO> ReadRecipe(HttpContent content)
-        {
-            try
-            {
-                var newRecipe = await content.ReadFromJsonAsync<RecipeDTO>();
-                return newRecipe;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Unable to read RecipeDTO object response from RecipeController.PostRecipeURL", e);
-            }
-            return this;
-        }
-
     }
 }

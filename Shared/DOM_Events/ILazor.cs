@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,6 +24,6 @@ namespace PBC.Shared.DOM_Events
         public string ShowTarget { get; set; }
         public void Show();
 
-        public bool isStringPropertyValid(Object obj, string property, string propertyName);
+        public bool IsPropertyValid(Object obj, string property, string propertyName);
     }
 }

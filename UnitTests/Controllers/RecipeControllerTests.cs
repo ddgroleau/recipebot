@@ -18,14 +18,12 @@ namespace UnitTests.Controllers
         [Fact]
         public void PostRecipeURL_WithValidURL_ShouldReturnIRecipeUrlDTO()
         {
-            var recipeControllerLogger = new LoggerFactory().CreateLogger<RecipeController>();
-            var recipeUrlDtoLogger = new LoggerFactory().CreateLogger<RecipeUrlDTO>();
-            var recipeDtoLogger = new LoggerFactory().CreateLogger<RecipeDTO>();
-            var recipeDTO = new RecipeDTO(recipeDtoLogger);
+            var logger = new LoggerFactory().CreateLogger<RecipeController>();
+            var recipeDTO = new RecipeDTO();
             var allRecipesScraper = new AllRecipesScraper();
-            var recipeUrlDTO = new RecipeUrlDTO(recipeUrlDtoLogger);
+            var recipeUrlDTO = new RecipeUrlDTO();
 
-            var controller = new RecipeController(recipeControllerLogger, recipeDTO, allRecipesScraper);
+            var controller = new RecipeController(logger, recipeDTO, allRecipesScraper);
 
             var postResult = controller.PostRecipeUrl(recipeUrlDTO);
             Assert.IsAssignableFrom<IRecipeDTO>(postResult);
@@ -35,8 +33,7 @@ namespace UnitTests.Controllers
         public void PostNewRecipe_WithValidURL_ShouldReturn200()
         {
             var logger = new LoggerFactory().CreateLogger<RecipeController>();
-            var recipeDtoLogger = new LoggerFactory().CreateLogger<RecipeDTO>();
-            var recipeDTO = new RecipeDTO(recipeDtoLogger);
+            var recipeDTO = new RecipeDTO();
             var allRecipesScraper = new AllRecipesScraper();
 
             var controller = new RecipeController(logger, recipeDTO, allRecipesScraper);
