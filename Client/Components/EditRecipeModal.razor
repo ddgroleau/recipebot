@@ -17,7 +17,7 @@
                     }
                     else
                     {
-                        <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+                        <EditForm Model="@model" OnValidSubmit=@(()=>EditRecipeView.HandleValidSubmit(e,model,Http,logger))>
                             <DataAnnotationsValidator />
 
                             <div class="form-group">
@@ -47,7 +47,7 @@
 
 
                             <CascadingValue Name="Loading" Value="@e.Loading">
-                                <LoadingButton>Submit</LoadingButton>
+                                <LoadingButton>Delete</LoadingButton>
                             </CascadingValue>
                         </EditForm>
                     }
@@ -73,38 +73,41 @@
     [Parameter]
     public Action HandleClick { get; set; }
 
-    private async Task<IRecipeDTO> HandleValidSubmit()
+    public static class EditRecipeView
     {
-        try
+        public static async Task<IRecipeDTO> HandleValidSubmit(ILazor e, IRecipeDTO model, HttpClient Http, ILogger<IRecipeDTO> logger)
         {
-            bool ingredientsAreValid = e.IsPropertyValid(model, "Ingredients", model.Ingredients);
-            bool instructionsAreValid = e.IsPropertyValid(model, "Instructions", model.Instructions);
-
-            if (ingredientsAreValid && instructionsAreValid)
+            try
             {
-                e.Loading = true;
+                bool ingredientsAreValid = e.IsPropertyValid(model, "Ingredients", model.Ingredients);
+                bool instructionsAreValid = e.IsPropertyValid(model, "Instructions", model.Instructions);
 
-                var response = await Http.PostAsJsonAsync<IRecipeDTO>("/api/Recipe/NewRecipe", model);
-                if (response.IsSuccessStatusCode)
+                if (ingredientsAreValid && instructionsAreValid)
                 {
-                    e.isSuccess = true;
-                    logger.LogInformation($"Successfully posted new recipe \"{model.Title}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}");
-                    model.ResetRecipe();
+                    e.Loading = true;
+
+                    var response = await Http.PostAsJsonAsync<IRecipeDTO>("/api/Recipe/Recipe", model);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        e.isSuccess = true;
+                        logger.LogInformation($"Successfully posted recipe \"{model.Title}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {model.RecipeDtoId}.");
+                        model.ResetRecipe();
+                        return model;
+                    }
+                    logger.LogError($"Failed to post recipe \"{model.Title}\" to RecipeController. Server responded with {response.StatusCode}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {model.RecipeDtoId}.");
+                    e.ErrorMessage = $"Sorry, something went wrong. Server responded with {response.StatusCode}.";
                     return model;
                 }
-                logger.LogError($"Failed to post new recipe \"{model.Title}\" to RecipeController. Server responded with {response.StatusCode}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}");
-                e.ErrorMessage = $"Sorry, something went wrong. Server responded with {response.StatusCode}.";
-                return model;
             }
+            catch (Exception err)
+            {
+                e.ErrorMessage = $"Sorry, something went wrong. Error {e.ErrorMessage}.";
+                logger.LogError($"Exception occured when posting recipe \"{model.Title}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {model.RecipeDtoId}.", err.Message);
+            }
+            e.Loading = false;
+            return model;
         }
-        catch (Exception err)
-        {
-            e.ErrorMessage = $"Sorry, something went wrong. Error {e.ErrorMessage}.";
-            logger.LogError($"Exception occured when posting new recipe \"{model.Title}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}", err.Message);
-        }
-        e.Loading = false;
-        return model;
-    }
 
+    }
 }
 

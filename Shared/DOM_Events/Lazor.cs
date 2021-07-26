@@ -24,7 +24,7 @@ namespace PBC.Shared.Lazor
         }
 
         public bool isHidden { get; set; } = false;
-        public string HideTarget { get => isHidden ? "l-hide" : null; set { } }
+        public string HideTarget { get => isHidden ? "l-hide" : "l-show"; set { } }
 
         public void Hide()
         {
@@ -32,7 +32,7 @@ namespace PBC.Shared.Lazor
         }
 
         public bool isShown { get; set; } = false;
-        public string ShowTarget { get => isHidden ? "l-show" : null; set { } }
+        public string ShowTarget { get => isShown ? "l-show" : "l-hide"; set { } }
         public void Show()
         {
             isShown = true;

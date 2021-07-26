@@ -1,0 +1,117 @@
+﻿@inject ILazor e
+@inject IRecipeDTO recipeDTO
+
+<div class="col-12">
+    <h5>Table</h5>
+</div>
+
+<div class="col-12">
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Tools</th>
+
+        </tr>
+        @{
+            IEnumerable<IRecipeDTO> recipes = new List<IRecipeDTO>();
+
+            if (IsGlobalCookBook)
+            {
+                recipes = CookbookTableView.GetGlobalRecipes();
+            }
+            else
+            {
+                recipes = CookbookTableView.GetUserRecipes();
+            }
+
+            foreach (var recipe in recipes)
+            {
+                var retrievedRecipe = recipe;
+            
+                <tr>
+                    <td>@recipe.Title</td>
+                    <td>@recipe.Description</td>
+                    <td>
+                        <button @onclick="(()=> {
+                                                  recipeDTO = recipe;
+                                                  CookbookTableView.HandleDetails(e);
+                                                 }
+                                          )">
+                            DetailsButton
+                        </button>
+                        <button @onclick="(()=> {
+                                                  recipeDTO = recipe;
+                                                  CookbookTableView.HandleClick(e);
+                                                 }
+                                          )">
+                            UpdateButton
+                        </button>
+                        <button @onclick="(()=> {
+                                                  recipeDTO = recipe;
+                                                  CookbookTableView.HandleDelete(e);
+                                                 }
+                                          )">
+                            DeleteButton
+                        </button>
+                    </td>
+                </tr>
+            }
+                    <CascadingValue Name="LazorObject" Value="e">
+                        <CascadingValue Name="RecipeDTO" Value="@recipeDTO">
+                            <MessageModal>Are you sure you want to delete "@recipeDTO.Title"?</MessageModal>
+                            <EditRecipeModal HandleClick="e.Toggle" />
+                        </CascadingValue>
+                    </CascadingValue>
+        }
+    </table>
+
+</div>
+
+@code {
+    [Parameter]
+    public bool IsGlobalCookBook { get; set; } = true;
+
+
+    public static class CookbookTableView
+    {
+
+        public static IEnumerable<IRecipeDTO> GetGlobalRecipes()
+        {
+            var recipes = new List<IRecipeDTO>();
+
+            recipes.Add(new RecipeDTO { Title = "GlobalTitle1", Description = "GlobalDescription1" });
+            recipes.Add(new RecipeDTO { Title = "GlobalTitle2", Description = "GlobalDescription2" });
+            recipes.Add(new RecipeDTO { Title = "GlobalTitle3", Description = "GlobalDescription3" });
+
+            return recipes;
+        }
+
+        public static IEnumerable<IRecipeDTO> GetUserRecipes()
+        {
+            var recipes = new List<IRecipeDTO>();
+
+            recipes.Add(new RecipeDTO { Title = "UserTitle1", Description = "UserDescription1" });
+            recipes.Add(new RecipeDTO { Title = "UserTitle2", Description = "UserDescription2" });
+            recipes.Add(new RecipeDTO { Title = "UserTitle3", Description = "UserDescription3" });
+
+            return recipes;
+        }
+
+        public static void HandleClick(ILazor lazorObject)
+        {
+            lazorObject.Toggle();
+        }
+
+
+        public static void HandleDelete(ILazor lazorObject)
+        {
+            lazorObject.Show();
+        }
+
+        public static void HandleDetails(ILazor lazorObject)
+        {
+            lazorObject.Show();
+        }
+    }
+}

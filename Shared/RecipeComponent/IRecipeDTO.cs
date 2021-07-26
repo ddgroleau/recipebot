@@ -10,7 +10,7 @@ namespace PBC.Shared.RecipeComponent
 {
     public interface IRecipeDTO
     {
-        public int Id { get; set; }
+        public Guid RecipeDtoId { get; set; }
         public string URL { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

@@ -1,0 +1,42 @@
+﻿
+
+
+<div class="@e.ShowTarget">
+    <div class="l-message">
+        <div class="card">
+            <h4 class="card-header">
+                @ChildContent
+                <button type="button" @onclick="(()=>MessageModalView.HandleClick(e))" class="btn btn-danger float-right">&times;</button>
+            </h4>
+            <div class="card-body">
+                <h5>Recipe: @recipeDTO.Title</h5>
+                <p>Description @recipeDTO.Description</p>
+
+                <CascadingValue Name="Loading" Value="@e.Loading">
+                    <LoadingButton>Submit</LoadingButton>
+                </CascadingValue>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    [CascadingParameter(Name = "LazorObject")]
+    public ILazor e { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [CascadingParameter(Name = "RecipeDTO")]
+    public IRecipeDTO recipeDTO { get; set; }
+
+    public static class MessageModalView
+    {
+        public static void HandleClick(ILazor e)
+        {
+            e.Hide();
+        }
+    }
+}

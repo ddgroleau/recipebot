@@ -29,30 +29,30 @@ namespace PBC.Server.Controllers
         [HttpPost("RecipeURL")]
         public IRecipeDTO PostRecipeUrl(RecipeUrlDTO urlDTO)
         {
-            _logger.LogInformation($"New URL {urlDTO.URL} was submitted to recipe controller. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+            _logger.LogInformation($"New URL {urlDTO.URL} was submitted to RecipeController, PostRecipeUrl method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {urlDTO.RecipeUrlDtoId}.");
             try
             {
                 return _allRecipesScraper.ScrapeRecipe(urlDTO.URL, _recipeDTO);
             }
             catch (Exception)
             {
-                _logger.LogError($"Failed to scrape {urlDTO.URL} from AllRecipes.com");
+                _logger.LogError($"Failed to scrape {urlDTO.URL} from AllRecipes.com; RecipeController, PostRecipeUrl method. ID: {urlDTO.RecipeUrlDtoId}");
             }
             return _recipeDTO;
         }
 
-        [HttpPost("NewRecipe")]
-        public IActionResult PostNewRecipe(RecipeDTO recipeDTO)
+        [HttpPost("Recipe")]
+        public IActionResult PostRecipe(RecipeDTO recipeDTO)
         {
-            _logger.LogInformation($"New RecipeDTO: \"{recipeDTO.Title}\" was submitted to recipe controller. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+            _logger.LogInformation($"RecipeDTO: \"{recipeDTO.Title}\" was submitted to RecipeController, PostNewRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.");
             try
             {
-                _logger.LogInformation($"Processing RecipeDTO: \"{recipeDTO.Title}\". Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-                // RecipeService (which will perform validation (method), build entity (class), and save entity to repository (class)). Build this deliberately.
+                _logger.LogInformation($"Processing RecipeDTO: \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.");
+                // RecipeService (which will perform validation (method), build entity (class), and save entity to repository (class)) (if not built already). Build this deliberately.
             }
             catch (Exception e)
             {
-                _logger.LogError($"Failed to process RecipeDTO \"{recipeDTO.Title}\". Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.", e.Message);
+                _logger.LogError($"Failed to process RecipeDTO \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.", e.Message);
             }
             return Ok(recipeDTO);
         }

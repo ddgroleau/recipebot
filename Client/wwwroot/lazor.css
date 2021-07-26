@@ -11,6 +11,17 @@
     overflow: auto;
 }
 
+.l-message {
+    position: fixed;
+    top: 40%;
+    left: 10%;
+    right: 10%;
+    justify-items: center;
+    z-index: 1;
+    border: solid blue 1px;
+    background-color: white;
+    padding: 10px;
+}
 
 .l-hide {
     display: none !important;

@@ -30,7 +30,7 @@ namespace UnitTests.Controllers
         }
 
         [Fact]
-        public void PostNewRecipe_WithValidURL_ShouldReturn200()
+        public void PostRecipe_WithValidURL_ShouldReturn200()
         {
             var logger = new LoggerFactory().CreateLogger<RecipeController>();
             var recipeDTO = new RecipeDTO();
@@ -38,7 +38,7 @@ namespace UnitTests.Controllers
 
             var controller = new RecipeController(logger, recipeDTO, allRecipesScraper);
 
-            var postResult = controller.PostNewRecipe(recipeDTO);
+            var postResult = controller.PostRecipe(recipeDTO);
             Assert.IsType<OkObjectResult>(postResult);
         }
 
