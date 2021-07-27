@@ -19,7 +19,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         private readonly HttpClient _http;
 
         
-        public CookbookTableEvent(ILazor lazor, IRecipeUrlDTO recipeUrlDTO, IRecipeDTO recipeDTO, ILogger<IRecipeDTO> logger, HttpClient http, IEnumerable<IRecipeDTO> retrievedRecipes)
+        public CookbookTableEvent(ILazor lazor, IRecipeDTO recipeDTO, ILogger<IRecipeDTO> logger, HttpClient http, IEnumerable<IRecipeDTO> retrievedRecipes)
         {
             Lazor = lazor;
             _logger = logger;

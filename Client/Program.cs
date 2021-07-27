@@ -31,10 +31,10 @@ namespace PBC.Client
             builder.Services.AddScoped<IAccountChangesDTO, AccountChangesDTO>();
             builder.Services.AddScoped<IAccountRegisterDTO, AccountRegisterDTO>();
             builder.Services.AddScoped<IAccountLoginDTO, AccountLoginDTO>();
-            builder.Services.AddScoped<IRecipeDTO, RecipeDTO>();
+          
             builder.Services.AddScoped<IListGeneratorDTO, ListGeneratorDTO>();
             builder.Services.AddScoped<IListDayDTO, ListDayDTO>();
-            builder.Services.AddScoped<IRecipeUrlDTO, RecipeUrlDTO>();
+           
             builder.Services.AddScoped<IMessageModalEvent, MessageModalEvent>();
             builder.Services.AddScoped<ICreateRecipeEvent, CreateRecipeEvent>();
             builder.Services.AddScoped<IEditRecipeEvent, EditRecipeEvent>();
