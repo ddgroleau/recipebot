@@ -15,9 +15,11 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         public IRecipeDTO RecipeDTO { get; set; }
         public IEnumerable<IRecipeDTO> RetrievedRecipes { get; set; }
         public ILazor Lazor { get; set; }
+        public string Message { get; set; }
+        public bool IsDeleteAction { get; set; }
+
         private readonly ILogger<IRecipeDTO> _logger;
         private readonly HttpClient _http;
-
         
         public CookbookTableEvent(ILazor lazor, IRecipeDTO recipeDTO, ILogger<IRecipeDTO> logger, HttpClient http, IEnumerable<IRecipeDTO> retrievedRecipes)
         {
@@ -59,11 +61,15 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
 
         public void HandleDelete()
         {
+            IsDeleteAction = true;
+            Message = $"Are you sure you want to delete \"{RecipeDTO.Title}\"?";
             Lazor.Show();
         }
 
         public void HandleDetails()
         {
+            IsDeleteAction = false;
+            Message = $"{RecipeDTO.Title}";
             Lazor.Show();
         }
 

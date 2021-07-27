@@ -69,5 +69,18 @@ namespace UnitTests.Controllers
             Assert.True(retrievedRecipes.Any());
         }
 
+        [Fact]
+        public void DeleteRecipe_WithValidRecipe_ShouldBeDeleted()
+        {
+            var logger = new LoggerFactory().CreateLogger<RecipeController>();
+            var recipeDTO = new RecipeDTO();
+            var allRecipesScraper = new AllRecipesScraper();
+            var controller = new RecipeController(logger, recipeDTO, allRecipesScraper);
+
+            var result = controller.DeleteRecipe(recipeDTO);
+
+            Assert.IsType<OkResult>(result);
+        }
+
     }
 }

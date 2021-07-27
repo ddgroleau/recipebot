@@ -86,5 +86,28 @@ namespace PBC.Server.Controllers
 
             return recipes;
         }
+
+        [HttpDelete("DeleteRecipe/{recipe}")]
+        public IActionResult DeleteRecipe(IRecipeDTO recipe)
+        {
+            _logger.LogInformation($"Request to delete recipe, ID: {recipe.RecipeDtoId} recieved by RecipeController, DeleteRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+
+            var recipes = new List<IRecipeDTO>
+            {
+                new RecipeDTO { Title = "Title1", Description = "Description1" },
+                new RecipeDTO { Title = "Title2", Description = "Description2" },
+                new RecipeDTO { Title = "Title3", Description = "Description3" }
+            };
+            recipes.Add(recipe);
+
+            recipes.Remove(recipe);
+
+            if (recipes.Contains(recipe))
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
     }
 }

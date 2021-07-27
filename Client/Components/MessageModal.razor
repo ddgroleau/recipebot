@@ -1,19 +1,39 @@
 ﻿@inject IMessageModalEvent Event
 
-<div class="@e.ShowTarget">
+<div class="@Lazor.ShowTarget">
     <div class="l-message">
         <div class="card">
             <h4 class="card-header">
                 @ChildContent
-                <button type="button" @onclick="(()=>Event.HandleClick(e))" class="btn btn-danger float-right">&times;</button>
+                <button type="button" @onclick="(() => Event.HandleClick(Lazor))" class="btn btn-danger float-right">&times;</button>
             </h4>
             <div class="card-body">
-                <h5>Recipe: @recipeDTO.Title</h5>
-                <p>Description @recipeDTO.Description</p>
-
-                <CascadingValue Name="Loading" Value="@e.Loading">
-                    <LoadingButton HandleClick="(()=>Event.HandleClick(e))">Submit</LoadingButton>
-                </CascadingValue>
+                <h5>Recipe: @RecipeDTO.Title</h5>
+                <p>Description @RecipeDTO.Description</p>
+                <ul>
+                    Ingredients
+                    @{ foreach (var ingredient in RecipeDTO.Ingredients)
+                        {
+                            <li>@ingredient</li>
+                        }
+                    }
+                </ul>
+                <ul>
+                    Instructions
+                    @{ foreach (var instructions in RecipeDTO.Instructions)
+                        {
+                            <li>@instructions</li>
+                        }
+                    }
+                </ul>
+                @{
+                    if (IsDeleteAction)
+                    {
+                        <CascadingValue Name="Loading" Value="@Lazor.Loading">
+                            <LoadingButton HandleClick="(()=>Event.DeleteRecipe(RecipeDTO,Lazor))">Submit</LoadingButton>
+                        </CascadingValue>
+                    }
+                }
             </div>
         </div>
     </div>
@@ -23,11 +43,14 @@
 @code {
 
     [CascadingParameter(Name = "LazorObject")]
-    public ILazor e { get; set; }
+    public ILazor Lazor { get; set; }
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
     [CascadingParameter(Name = "RecipeDTO")]
-    public IRecipeDTO recipeDTO { get; set; }
+    public IRecipeDTO RecipeDTO { get; set; }
+
+    [Parameter]
+    public bool IsDeleteAction { get; set; }
 }

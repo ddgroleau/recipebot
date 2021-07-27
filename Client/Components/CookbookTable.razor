@@ -47,7 +47,7 @@
             }
                     <CascadingValue Name="LazorObject" Value="Event.Lazor">
                         <CascadingValue Name="RecipeDTO" Value="@Event.RecipeDTO">
-                            <MessageModal>Are you sure you want to delete "@Event.RecipeDTO.Title"?</MessageModal>
+                            <MessageModal IsDeleteAction="Event.IsDeleteAction">@Event.Message</MessageModal>
                             <EditRecipeModal HandleClick="Event.Lazor.Toggle" />
                         </CascadingValue>
                     </CascadingValue>
