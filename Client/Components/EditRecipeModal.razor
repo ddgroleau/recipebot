@@ -1,7 +1,6 @@
-﻿@inject HttpClient Http
-@inject ILogger<IRecipeDTO> logger
+﻿@inject IEditRecipeEvent Event
 
-<div class="@e.ToggleTarget">
+<div class="@lazor.ToggleTarget">
     <div class="l-modal">
         <div class="card">
             <h4 class="card-header">
@@ -11,43 +10,43 @@
             <div class="card-body">
 
                 @{
-                    if (e.isSuccess)
+                    if (lazor.isSuccess)
                     {
                         <h4 class="text-center text-success">Success!</h4>
                     }
                     else
                     {
-                        <EditForm Model="@model" OnValidSubmit=@(()=>EditRecipeView.HandleValidSubmit(e,model,Http,logger))>
+                        <EditForm Model="@recipeDTO" OnValidSubmit=@(()=>Event.HandleValidSubmit(lazor,recipeDTO))>
                             <DataAnnotationsValidator />
 
                             <div class="form-group">
                                 <label for="Title">
                                     Title:
-                                    <InputText id="Title" @bind-Value="@model.Title" />
+                                    <InputText id="Title" @bind-Value="@recipeDTO.Title" />
                                     <div class="small form-text text-danger">
-                                        <ValidationMessage For="@(() => model.Title)" />
+                                        <ValidationMessage For="@(() => recipeDTO.Title)" />
                                     </div>
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label for="Description">
                                     Description:
-                                    <InputTextArea id="Description" @bind-Value="@model.Description" />
+                                    <InputTextArea id="Description" @bind-Value="@recipeDTO.Description" />
                                 </label>
                             </div>
 
-                            <CascadingValue Name="Model" Value="@model">
+                            <CascadingValue Name="Model" Value="@recipeDTO">
                                 <IngredientsForm />
-                                <ValidationMessage For="@(() => model.Ingredients)" />
+                                <ValidationMessage For="@(() => recipeDTO.Ingredients)" />
                                 <InstructionsForm />
-                                <ValidationMessage For="@(() => model.Instructions)" />
+                                <ValidationMessage For="@(() => recipeDTO.Instructions)" />
                             </CascadingValue>
 
-                            <span class="small form-text text-danger">@e.ErrorMessage</span>
+                            <span class="small form-text text-danger">@lazor.ErrorMessage</span>
 
 
-                            <CascadingValue Name="Loading" Value="@e.Loading">
-                                <LoadingButton>Delete</LoadingButton>
+                            <CascadingValue Name="Loading" Value="@lazor.Loading">
+                                <LoadingButton>Submit</LoadingButton>
                             </CascadingValue>
                         </EditForm>
                     }
@@ -61,11 +60,11 @@
 
 @code {
 
-    [CascadingParameter(Name = "LazorObject")]
-    public ILazor e { get; set; }
+    [CascadingParameter(Name = "lazorObject")]
+    public ILazor lazor { get; set; }
 
     [CascadingParameter(Name = "RecipeDTO")]
-    public IRecipeDTO model { get; set; }
+    public IRecipeDTO recipeDTO { get; set; }
 
     [CascadingParameter(Name = "RecipeUrlDTO")]
     public IRecipeUrlDTO recipeURLDTO { get; set; }
@@ -73,41 +72,6 @@
     [Parameter]
     public Action HandleClick { get; set; }
 
-    public static class EditRecipeView
-    {
-        public static async Task<IRecipeDTO> HandleValidSubmit(ILazor e, IRecipeDTO model, HttpClient Http, ILogger<IRecipeDTO> logger)
-        {
-            try
-            {
-                bool ingredientsAreValid = e.IsPropertyValid(model, "Ingredients", model.Ingredients);
-                bool instructionsAreValid = e.IsPropertyValid(model, "Instructions", model.Instructions);
-
-                if (ingredientsAreValid && instructionsAreValid)
-                {
-                    e.Loading = true;
-
-                    var response = await Http.PostAsJsonAsync<IRecipeDTO>("/api/Recipe/Recipe", model);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        e.isSuccess = true;
-                        logger.LogInformation($"Successfully posted recipe \"{model.Title}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {model.RecipeDtoId}.");
-                        model.ResetRecipe();
-                        return model;
-                    }
-                    logger.LogError($"Failed to post recipe \"{model.Title}\" to RecipeController. Server responded with {response.StatusCode}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {model.RecipeDtoId}.");
-                    e.ErrorMessage = $"Sorry, something went wrong. Server responded with {response.StatusCode}.";
-                    return model;
-                }
-            }
-            catch (Exception err)
-            {
-                e.ErrorMessage = $"Sorry, something went wrong. Error {e.ErrorMessage}.";
-                logger.LogError($"Exception occured when posting recipe \"{model.Title}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {model.RecipeDtoId}.", err.Message);
-            }
-            e.Loading = false;
-            return model;
-        }
-
+    
     }
-}
 

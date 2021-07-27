@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using PBC.Shared;
 using PBC.Shared.AccountComponent;
 using PBC.Shared.DOM_Events;
+using PBC.Shared.DOM_Events.ComponentEvents;
 using PBC.Shared.Lazor;
 using PBC.Shared.ListComponent;
 using PBC.Shared.RecipeComponent;
@@ -34,6 +35,10 @@ namespace PBC.Client
             builder.Services.AddScoped<IListGeneratorDTO, ListGeneratorDTO>();
             builder.Services.AddScoped<IListDayDTO, ListDayDTO>();
             builder.Services.AddScoped<IRecipeUrlDTO, RecipeUrlDTO>();
+            builder.Services.AddScoped<IMessageModalEvent, MessageModalEvent>();
+            builder.Services.AddScoped<ICreateRecipeEvent, CreateRecipeEvent>();
+            builder.Services.AddScoped<IEditRecipeEvent, EditRecipeEvent>();
+            builder.Services.AddScoped<ICookBookTableEvent, CookbookTableEvent>();
 
             await builder.Build().RunAsync();
         }

@@ -1,5 +1,4 @@
-﻿@inject ILazor e
-@inject IRecipeDTO recipeDTO
+﻿@inject ICookBookTableEvent Event
 
 <div class="col-12">
     <h5>Table</h5>
@@ -14,42 +13,31 @@
 
         </tr>
         @{
-            IEnumerable<IRecipeDTO> recipes = new List<IRecipeDTO>();
-
-            if (IsGlobalCookBook)
-            {
-                recipes = CookbookTableView.GetGlobalRecipes();
-            }
-            else
-            {
-                recipes = CookbookTableView.GetUserRecipes();
-            }
-
-            foreach (var recipe in recipes)
+            foreach (var recipe in Event.RetrievedRecipes)
             {
                 var retrievedRecipe = recipe;
-            
+
                 <tr>
                     <td>@recipe.Title</td>
                     <td>@recipe.Description</td>
                     <td>
                         <button @onclick="(()=> {
-                                                  recipeDTO = recipe;
-                                                  CookbookTableView.HandleDetails(e);
+                                                  Event.RecipeDTO = recipe;
+                                                  Event.HandleDetails();
                                                  }
                                           )">
                             DetailsButton
                         </button>
                         <button @onclick="(()=> {
-                                                  recipeDTO = recipe;
-                                                  CookbookTableView.HandleClick(e);
+                                                  Event.RecipeDTO = recipe;
+                                                  Event.HandleClick();
                                                  }
                                           )">
                             UpdateButton
                         </button>
                         <button @onclick="(()=> {
-                                                  recipeDTO = recipe;
-                                                  CookbookTableView.HandleDelete(e);
+                                                  Event.RecipeDTO = recipe;
+                                                  Event.HandleDelete();
                                                  }
                                           )">
                             DeleteButton
@@ -57,10 +45,10 @@
                     </td>
                 </tr>
             }
-                    <CascadingValue Name="LazorObject" Value="e">
-                        <CascadingValue Name="RecipeDTO" Value="@recipeDTO">
-                            <MessageModal>Are you sure you want to delete "@recipeDTO.Title"?</MessageModal>
-                            <EditRecipeModal HandleClick="e.Toggle" />
+                    <CascadingValue Name="LazorObject" Value="Event.Lazor">
+                        <CascadingValue Name="RecipeDTO" Value="@Event.RecipeDTO">
+                            <MessageModal>Are you sure you want to delete "@Event.RecipeDTO.Title"?</MessageModal>
+                            <EditRecipeModal HandleClick="Event.Lazor.Toggle" />
                         </CascadingValue>
                     </CascadingValue>
         }
@@ -70,48 +58,12 @@
 
 @code {
     [Parameter]
-    public bool IsGlobalCookBook { get; set; } = true;
+    public bool IsUserCookBook { get; set; } = true;
 
-
-    public static class CookbookTableView
+    protected override async Task OnInitializedAsync()
     {
-
-        public static IEnumerable<IRecipeDTO> GetGlobalRecipes()
-        {
-            var recipes = new List<IRecipeDTO>();
-
-            recipes.Add(new RecipeDTO { Title = "GlobalTitle1", Description = "GlobalDescription1" });
-            recipes.Add(new RecipeDTO { Title = "GlobalTitle2", Description = "GlobalDescription2" });
-            recipes.Add(new RecipeDTO { Title = "GlobalTitle3", Description = "GlobalDescription3" });
-
-            return recipes;
-        }
-
-        public static IEnumerable<IRecipeDTO> GetUserRecipes()
-        {
-            var recipes = new List<IRecipeDTO>();
-
-            recipes.Add(new RecipeDTO { Title = "UserTitle1", Description = "UserDescription1" });
-            recipes.Add(new RecipeDTO { Title = "UserTitle2", Description = "UserDescription2" });
-            recipes.Add(new RecipeDTO { Title = "UserTitle3", Description = "UserDescription3" });
-
-            return recipes;
-        }
-
-        public static void HandleClick(ILazor lazorObject)
-        {
-            lazorObject.Toggle();
-        }
-
-
-        public static void HandleDelete(ILazor lazorObject)
-        {
-            lazorObject.Show();
-        }
-
-        public static void HandleDetails(ILazor lazorObject)
-        {
-            lazorObject.Show();
-        }
+        Event.RetrievedRecipes = await Event.GetRecipesAsync(IsUserCookBook, "TestUser");
+        StateHasChanged();
     }
+
 }

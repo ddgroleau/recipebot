@@ -28,14 +28,15 @@ namespace PBC.Shared.Lazor
 
         public void Hide()
         {
-                isHidden = true;
+            isHidden = true;
+            isShown = false;
         }
-
         public bool isShown { get; set; } = false;
         public string ShowTarget { get => isShown ? "l-show" : "l-hide"; set { } }
         public void Show()
         {
             isShown = true;
+            isHidden = false;
         }
 
         public bool IsPropertyValid(Object obj, string propertyName, string property)

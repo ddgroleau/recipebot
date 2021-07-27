@@ -29,7 +29,7 @@ namespace PBC.Server.Controllers
         [HttpPost("RecipeURL")]
         public IRecipeDTO PostRecipeUrl(RecipeUrlDTO urlDTO)
         {
-            _logger.LogInformation($"New URL {urlDTO.URL} was submitted to RecipeController, PostRecipeUrl method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {urlDTO.RecipeUrlDtoId}.");
+            _logger.LogInformation($"New URL {urlDTO.URL} recieved by RecipeController, PostRecipeUrl method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {urlDTO.RecipeUrlDtoId}.");
             try
             {
                 return _allRecipesScraper.ScrapeRecipe(urlDTO.URL, _recipeDTO);
@@ -44,7 +44,7 @@ namespace PBC.Server.Controllers
         [HttpPost("Recipe")]
         public IActionResult PostRecipe(RecipeDTO recipeDTO)
         {
-            _logger.LogInformation($"RecipeDTO: \"{recipeDTO.Title}\" was submitted to RecipeController, PostNewRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.");
+            _logger.LogInformation($"RecipeDTO: \"{recipeDTO.Title}\" recieved by RecipeController, PostNewRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.");
             try
             {
                 _logger.LogInformation($"Processing RecipeDTO: \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.");
@@ -55,6 +55,36 @@ namespace PBC.Server.Controllers
                 _logger.LogError($"Failed to process RecipeDTO \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.", e.Message);
             }
             return Ok(recipeDTO);
+        }
+
+        [HttpGet("AllRecipes")]
+        public IEnumerable<IRecipeDTO> GetAllRecipes()
+        {
+            _logger.LogInformation($"Request for all recipes recieved by RecipeController, GetAllRecipes method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+
+            var recipes = new List<IRecipeDTO>
+            {
+                new RecipeDTO { Title = "GlobalTitle1", Description = "GlobalDescription1" },
+                new RecipeDTO { Title = "GlobalTitle2", Description = "GlobalDescription2" },
+                new RecipeDTO { Title = "GlobalTitle3", Description = "GlobalDescription3" },
+            };
+
+            return recipes;
+        }
+
+        [HttpGet("UserRecipes/{UserName}")]
+        public IEnumerable<IRecipeDTO> GetUserRecipes(string UserName)
+        {
+            _logger.LogInformation($"Request for user recipes recieved by RecipeController, GetUserRecipes method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+
+            var recipes = new List<IRecipeDTO>
+            {
+                new RecipeDTO { Title = $"{UserName} Title1", Description = "UserDescription1" },
+                new RecipeDTO { Title = $"{UserName} Title2", Description = "UserDescription2" },
+                new RecipeDTO { Title = $"{UserName} Title3", Description = "UserDescription3" }
+            };
+
+            return recipes;
         }
     }
 }

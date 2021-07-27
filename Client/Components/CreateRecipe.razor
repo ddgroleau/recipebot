@@ -1,73 +1,34 @@
-﻿@inject HttpClient Http
-@inject ILazor e
-@inject IRecipeUrlDTO model
-@inject IRecipeDTO recipeDTO
-@inject ILogger<IRecipeUrlDTO> logger
+﻿@inject ICreateRecipeEvent Event
 
 <div class="card">
-    <h4 class="card-header">Add a Recipe</h4>
+
+    <h4 class="card-header">
+        Add a Recipe
+    </h4>
+
     <div class="card-body">
-        <EditForm Model="@model" OnSubmit=@(()=>CreateRecipeView.HandleSubmit(e,model,recipeDTO,logger,Http))>
+        <EditForm Model="@Event.RecipeUrlDTO" OnSubmit=@(()=>Event.HandleSubmit())>
             <DataAnnotationsValidator />
 
-            <InputText @bind-Value="model.URL" class="form-control" DisplayName="Recipe URL" />
-            <ValidationMessage For="@(() => model.URL)" />
-            <span class="small form-text text-danger">@e.ErrorMessage</span>
+            <InputText @bind-Value="@Event.RecipeUrlDTO.URL" class="form-control" DisplayName="Recipe URL" />
+            <ValidationMessage For="@(() => @Event.RecipeUrlDTO.URL)" />
 
-            <CascadingValue Name="Loading" Value="@e.Loading">
+            <CascadingValue Name="Loading" Value="@Event.Lazor.Loading">
                 <LoadingButton>Add</LoadingButton>
             </CascadingValue>
 
         </EditForm>
     </div>
-   
-        <CascadingValue Name="RecipeUrlDTO" Value="@model">
-            <CascadingValue Name="LazorObject" Value="@e">
-                <CascadingValue Name="RecipeDTO" Value="@recipeDTO">
-                    <EditRecipeModal HandleClick=@(()=>CreateRecipeView.ResetView(e,model,recipeDTO))/>
-                </CascadingValue>
+
+    <CascadingValue Name="RecipeUrlDTO" Value="@Event.RecipeUrlDTO">
+        <CascadingValue Name="LazorObject" Value="@Event.Lazor">
+            <CascadingValue Name="RecipeDTO" Value="@Event.RecipeDTO">
+                <EditRecipeModal HandleClick=@(()=>Event.ResetView()) />
             </CascadingValue>
         </CascadingValue>
-  
+    </CascadingValue>
+
 </div>
 @code {
 
-    public static class CreateRecipeView
-    {
-        public static async Task<IRecipeDTO> HandleSubmit(ILazor e, IRecipeUrlDTO model, IRecipeDTO recipeDTO, ILogger<IRecipeUrlDTO> logger, HttpClient Http)
-        {
-            e.Loading = true;
-            e.ErrorMessage = null;
-
-            bool urlIsValid = e.IsPropertyValid(model, "URL", model.URL);
-
-            if (urlIsValid)
-            {
-                try
-                {
-                    var response = await Http.PostAsJsonAsync<IRecipeUrlDTO>("/api/Recipe/RecipeURL", model);
-
-                    var scrapedRecipe = await response.Content.ReadFromJsonAsync<RecipeDTO>();
-                    recipeDTO = scrapedRecipe;
-                    logger.LogInformation($"URL: {model.URL} sucessfully submitted to RecipeController. New RecipeDTO \"{recipeDTO.Title}\" was scraped and received. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {model.RecipeUrlDtoId}.");
-                }
-                catch (Exception err)
-                {
-                    logger.LogError($"Failed to post RecipeUrlDTO to RecipeController. URL: {model.URL}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {model.RecipeUrlDtoId}.", err);
-                }
-                e.Toggle();
-            }
-            e.Loading = false;
-            return recipeDTO;
-        }
-
-        public static void ResetView(ILazor e, IRecipeUrlDTO model, IRecipeDTO recipeDTO)
-        {
-            e.Loading = false;
-            e.isSuccess = false;
-            e.Toggle();
-            recipeDTO.ResetRecipe();
-            model.ResetURL();
-        }
-    }
 }

@@ -7,6 +7,7 @@ using PBC.Shared.WebScraper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -40,6 +41,32 @@ namespace UnitTests.Controllers
 
             var postResult = controller.PostRecipe(recipeDTO);
             Assert.IsType<OkObjectResult>(postResult);
+        }
+
+        [Fact]
+        public void GetAllRecipes_WithNoParameters_ShouldReturnRecipes()
+        {
+            var logger = new LoggerFactory().CreateLogger<RecipeController>();
+            var recipeDTO = new RecipeDTO();
+            var allRecipesScraper = new AllRecipesScraper();
+            var controller = new RecipeController(logger, recipeDTO, allRecipesScraper);
+
+            var retrievedRecipes = controller.GetAllRecipes();
+
+            Assert.True(retrievedRecipes.Any());
+        }
+
+        [Fact]
+        public void GetUserRecipes_WithValidUserName_ShouldReturnRecipes()
+        {
+            var logger = new LoggerFactory().CreateLogger<RecipeController>();
+            var recipeDTO = new RecipeDTO();
+            var allRecipesScraper = new AllRecipesScraper();
+            var controller = new RecipeController(logger, recipeDTO, allRecipesScraper);
+
+            var retrievedRecipes = controller.GetUserRecipes("UserName");
+
+            Assert.True(retrievedRecipes.Any());
         }
 
     }
