@@ -40,14 +40,18 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
 
                 if (urlIsValid)
                 {
-
+                    if (string.IsNullOrEmpty(RecipeUrlDTO.URL))
+                    {
+                        Lazor.Toggle();
+                    }
+                    else
+                    { 
                     var response = await _http.PostAsJsonAsync("/api/Recipe/RecipeURL", RecipeUrlDTO);
-
                     var scrapedRecipe = await response.Content.ReadFromJsonAsync<RecipeDTO>();
                     RecipeDTO = scrapedRecipe;
                     Lazor.Toggle();
-
                     _logger.LogInformation($"URL: {RecipeUrlDTO.URL} sucessfully submitted to RecipeController. New RecipeDTO \"{RecipeDTO.Title}\" was scraped and received. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {RecipeUrlDTO.RecipeUrlDtoId}.");
+                    }
                 }
             }
             catch (NullReferenceException)

@@ -29,9 +29,9 @@ namespace PBC.Server.Controllers
         [HttpPost("RecipeURL")]
         public IRecipeDTO PostRecipeUrl(RecipeUrlDTO urlDTO)
         {
-            _logger.LogInformation($"New URL {urlDTO.URL} recieved by RecipeController, PostRecipeUrl method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {urlDTO.RecipeUrlDtoId}.");
             try
             {
+                _logger.LogInformation($"New URL {urlDTO.URL} recieved by RecipeController, PostRecipeUrl method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {urlDTO.RecipeUrlDtoId}.");
                 return _allRecipesScraper.ScrapeRecipe(urlDTO.URL, _recipeDTO);
             }
             catch (Exception)

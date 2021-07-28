@@ -31,7 +31,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
                 if (ingredientsAreValid && instructionsAreValid)
                 {
                     lazor.Loading = true;
-
+                    
                     var response = await _http.PostAsJsonAsync<IRecipeDTO>("/api/Recipe/Recipe", recipeDTO);
                     if (response.IsSuccessStatusCode)
                     {
