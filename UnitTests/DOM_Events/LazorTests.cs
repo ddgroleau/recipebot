@@ -1,4 +1,5 @@
-﻿using PBC.Shared.Lazor;
+﻿using PBC.Shared;
+using PBC.Shared.Lazor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace UnitTests.DOM_Events
         {
             var lazor = new Lazor();
             lazor.isToggled = false;
-            
+
             lazor.Toggle();
 
             Assert.True(lazor.isToggled);
@@ -33,7 +34,7 @@ namespace UnitTests.DOM_Events
         public void Toggle_WithToggleMethodRunTwice_ShouldMakeIsToggledTrue()
         {
             var lazor = new Lazor();
-          
+
             lazor.Toggle();
             lazor.Toggle();
 
@@ -108,7 +109,7 @@ namespace UnitTests.DOM_Events
             var lazor = new Lazor();
             var mockObj = new MockObject();
             mockObj.ListString.Add("TestItem");
-         
+
             bool isValid = lazor.IsPropertyValid(mockObj, "ListString", mockObj.ListString);
 
             Assert.True(isValid);
@@ -145,6 +146,52 @@ namespace UnitTests.DOM_Events
             var mockObj = new MockObject();
 
             bool isValid = lazor.IsPropertyValid(mockObj, "ListString", mockObj.ListString);
+
+            Assert.False(isValid);
+        }
+
+        [Fact]
+        public void IsObjectValid_WithValidRecipeDTO_ShouldReturnTrue()
+        {
+
+            var recipeDTO = new RecipeDTO
+            {
+                URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/",
+                Title = "Test",
+                Description = "Test",
+                Ingredients = new List<string>
+                {
+                    "test",
+                    "test"
+                },
+                Instructions = new List<string>
+                {
+                    "test",
+                    "test"
+                }
+            };
+            var lazor = new Lazor();
+
+            var isValid = lazor.IsObjectValid(recipeDTO);
+
+            Assert.True(isValid);
+        }
+
+        [Fact]
+        public void IsObjectValid_WithInvalidRecipeDTO_ShouldReturnFalse()
+        {
+
+            var recipeDTO = new RecipeDTO
+            {
+                URL = "https://www.allrecipes.com/recip",
+                Title = "",
+                Description = "Test",
+                Ingredients = new List<string>(),
+                Instructions = new List<string>()
+            };
+            var lazor = new Lazor();
+
+            var isValid = lazor.IsObjectValid(recipeDTO);
 
             Assert.False(isValid);
         }

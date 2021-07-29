@@ -25,14 +25,13 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         {
             try
             {
-                bool ingredientsAreValid = lazor.IsPropertyValid(recipeDTO, "Ingredients", recipeDTO.Ingredients);
-                bool instructionsAreValid = lazor.IsPropertyValid(recipeDTO, "Instructions", recipeDTO.Instructions);
+                bool recipeDTOIsValid = lazor.IsObjectValid(recipeDTO);
 
-                if (ingredientsAreValid && instructionsAreValid)
+                if (recipeDTOIsValid)
                 {
                     lazor.Loading = true;
                     
-                    var response = await _http.PostAsJsonAsync<IRecipeDTO>("/api/Recipe/Recipe", recipeDTO);
+                    var response = await _http.PostAsJsonAsync("/api/Recipe/Recipe", recipeDTO);
                     if (response.IsSuccessStatusCode)
                     {
                         lazor.isSuccess = true;

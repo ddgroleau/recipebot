@@ -26,5 +26,6 @@ namespace PBC.Shared.DOM_Events
 
         public bool IsPropertyValid(Object obj, string propertyName, string property);
         public bool IsPropertyValid(Object obj, string propertyName, List<string> property);
+        public bool IsObjectValid(Object obj);
     }
 }

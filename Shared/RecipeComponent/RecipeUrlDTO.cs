@@ -16,7 +16,7 @@ namespace PBC.Shared.RecipeComponent
 {
     public class RecipeUrlDTO : IRecipeUrlDTO
     {
-        public Guid RecipeUrlDtoId { get; set; } = Guid.NewGuid();
+        public string RecipeUrlDtoId { get; set; } = Guid.NewGuid().ToString();
         [AcceptableURL]
         public string URL { get; set; } = "";
 

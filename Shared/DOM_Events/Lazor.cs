@@ -76,5 +76,21 @@ namespace PBC.Shared.Lazor
             }
             return isValid;
         }
+
+        public bool IsObjectValid(Object obj)
+        {
+            bool isValid;
+            try
+            {
+                var validationContext = new ValidationContext(obj);
+
+                isValid = Validator.TryValidateObject(obj, validationContext, new List<ValidationResult>());
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return isValid;
+        }
     }
 }
