@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using PBC.Shared;
+using PBC.Shared.DOM_Events;
 using PBC.Shared.DOM_Events.ComponentEvents;
 using PBC.Shared.Lazor;
 using PBC.Shared.RecipeComponent;
@@ -14,59 +15,64 @@ using Xunit;
 
 namespace UnitTests.DOM_Events.ComponentEvents
 {
-    public class CreateRecipeEventTests
+    public class CreateRecipeEventTests : IDisposable
     {
+        IRecipeDTO RecipeDTO;
+        ILogger<IRecipeUrlDTO> Logger;
+        ILazor Lazor;
+        HttpClient Http;
+        ICreateRecipeEvent RecipeEvent;
+        IRecipeUrlDTO RecipeUrlDTO;
+        public CreateRecipeEventTests()
+        {
+            RecipeDTO = new RecipeDTO();
+            Lazor = new Lazor();
+            Logger = new LoggerFactory().CreateLogger<IRecipeUrlDTO>();
+            Http = new HttpClient();
+            RecipeUrlDTO = new RecipeUrlDTO();
+            RecipeEvent = new CreateRecipeEvent(Lazor,RecipeUrlDTO,RecipeDTO,Logger,Http);
+        }
+
+        public void Dispose()
+        {
+            RecipeDTO = new RecipeDTO();
+            Lazor = new Lazor();
+            Logger = new LoggerFactory().CreateLogger<IRecipeUrlDTO>();
+            Http = new HttpClient();
+            RecipeUrlDTO = new RecipeUrlDTO();
+            RecipeEvent = new CreateRecipeEvent(Lazor, RecipeUrlDTO, RecipeDTO, Logger, Http);
+        }
+
         [Fact]
         public async void HandleSubmit_WithValidParameters_ShouldReturnRecipeDTO()
         {
-            var lazor = new Lazor();
-            var recipeUrlDTO = new RecipeUrlDTO();
-            var recipeDTO = new RecipeDTO();
-            var logger = new LoggerFactory().CreateLogger<IRecipeUrlDTO>();
-            var Http = new HttpClient();
-            var createRecipe = new CreateRecipeEvent(lazor, recipeUrlDTO, recipeDTO, logger, Http);
+            var actual = await RecipeEvent.HandleSubmit();
 
-            var actual = await createRecipe.HandleSubmit();
-
-            Assert.Equal(recipeDTO, actual);
+            Assert.Equal(RecipeDTO, actual);
         }
 
         [Fact]
         public void ResetView_WithValidParameters_ShouldResetObjects()
         {
-            var lazor = new Lazor
-            {
-                Loading = true,
-                isSuccess = true
-            };
-            var recipeUrlDTO = new RecipeUrlDTO
-            {
-                URL = "TestURL"
-            };
-            var recipeDTO = new RecipeDTO
-            {
-                Title = "TestTitle",
-                Description = "TestDescription",
-                URL = "TestURL"
-            };
+            Lazor.Loading = true;
+            Lazor.isSuccess = true;
+            RecipeUrlDTO.URL = "TestURL";
+            RecipeDTO.Title = "TestTitle";
+            RecipeDTO.Description = "TestDescription";
+            RecipeDTO.URL = "TestURL";
+            RecipeDTO.Ingredients.Add("TestIngredient");
+            RecipeDTO.Instructions.Add("TestInstruction");
 
-            var logger = new LoggerFactory().CreateLogger<IRecipeUrlDTO>();
-            var Http = new HttpClient();
-            var createRecipe = new CreateRecipeEvent(lazor, recipeUrlDTO, recipeDTO, logger, Http);
+            RecipeEvent.ResetView();
 
-            recipeDTO.Ingredients.Add("TestIngredient");
-            recipeDTO.Instructions.Add("TestInstruction");
-
-            createRecipe.ResetView();
-
-            Assert.False(lazor.Loading);
-            Assert.False(lazor.isSuccess);
-            Assert.Null(recipeUrlDTO.URL);
-            Assert.Null(recipeDTO.Title);
-            Assert.Null(recipeDTO.Description);
-            Assert.Null(recipeDTO.URL);
-            Assert.Equal(recipeDTO.Ingredients, new List<string>());
-            Assert.Equal(recipeDTO.Instructions, new List<string>());
+            Assert.False(Lazor.Loading);
+            Assert.False(Lazor.isSuccess);
+            Assert.Null(RecipeUrlDTO.URL);
+            Assert.Null(RecipeDTO.Title);
+            Assert.Null(RecipeDTO.Description);
+            Assert.Null(RecipeDTO.URL);
+            Assert.Equal(RecipeDTO.Ingredients, new List<string>());
+            Assert.Equal(RecipeDTO.Instructions, new List<string>());
         }
     }
 }

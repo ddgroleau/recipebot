@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using PBC.Shared;
+using PBC.Shared.DOM_Events;
 using PBC.Shared.DOM_Events.ComponentEvents;
 using PBC.Shared.Lazor;
 using PBC.Shared.RecipeComponent;
@@ -13,19 +14,37 @@ using Xunit;
 
 namespace UnitTests.DOM_Events.ComponentEvents
 {
-    public class CookBookTableEventTests
+    public class CookBookTableEventTests : IDisposable
     {
+        IList<IRecipeDTO> RetrievedRecipes;
+        IRecipeDTO RecipeDTO;
+        ILogger<IRecipeDTO> Logger;
+        ILazor Lazor;
+        HttpClient Http;
+        ICookBookTableEvent Cookbook;
+        public CookBookTableEventTests()
+        {
+            RetrievedRecipes = new List<IRecipeDTO>();
+            RecipeDTO = new RecipeDTO();
+            Lazor = new Lazor();
+            Logger = new LoggerFactory().CreateLogger<IRecipeDTO>();
+            Http = new HttpClient();
+            Cookbook = new CookbookTableEvent(Lazor, RecipeDTO, Logger, Http, RetrievedRecipes);
+        }
+
+        public void Dispose()
+        {
+            RetrievedRecipes = new List<IRecipeDTO>();
+            RecipeDTO = new RecipeDTO();
+            Lazor = new Lazor();
+            Logger = new LoggerFactory().CreateLogger<IRecipeDTO>();
+            Http = new HttpClient();
+            Cookbook = new CookbookTableEvent(Lazor, RecipeDTO, Logger, Http, RetrievedRecipes);
+        }
         [Fact]
         public async void GetRecipesAsync_WithValidParameters_ShouldBeCorrectType()
         {
-            var recipeDTO = new RecipeDTO();
-            var retrievedRecipes = new List<IRecipeDTO>();
-            var lazor = new Lazor();
-            var logger = new LoggerFactory().CreateLogger<IRecipeDTO>();
-            var http = new HttpClient();
-            var cookbook = new CookbookTableEvent(lazor, recipeDTO, logger, http, retrievedRecipes);
-
-            var recipes = await cookbook.GetRecipesAsync(false, "TestUser");
+            var recipes = await Cookbook.GetRecipesAsync(false, "TestUser");
 
             Assert.IsAssignableFrom<IEnumerable<IRecipeDTO>>(recipes);
         }
@@ -33,51 +52,29 @@ namespace UnitTests.DOM_Events.ComponentEvents
         [Fact]
         public void HandleClick_WithLazorObject_ShouldChangeIsToggled()
         {
-            var recipeDTO = new RecipeDTO();
-            var retrievedRecipes = new List<IRecipeDTO>();
-            var lazor = new Lazor();
-            var logger = new LoggerFactory().CreateLogger<IRecipeDTO>();
-            var http = new HttpClient();
-            var cookbook = new CookbookTableEvent(lazor, recipeDTO, logger, http, retrievedRecipes);
+            Cookbook.HandleClick();
 
-            cookbook.HandleClick();
-
-            Assert.False(cookbook.Lazor.isToggled);
-
+            Assert.False(Cookbook.Lazor.isToggled);
         }
 
         [Fact]
         public void HandleDelete_WithLazorObject_ShouldChangeIsShown()
         {
-            var recipeDTO = new RecipeDTO();
-            var retrievedRecipes = new List<IRecipeDTO>();
-            var lazor = new Lazor();
-            var logger = new LoggerFactory().CreateLogger<IRecipeDTO>();
-            var http = new HttpClient();
-            var cookbook = new CookbookTableEvent(lazor, recipeDTO, logger, http, retrievedRecipes);
+            Cookbook.HandleDelete();
 
-            cookbook.HandleDelete();
-
-            Assert.True(cookbook.Lazor.isShown);
-            Assert.True(cookbook.IsDeleteAction);
-            Assert.Equal(cookbook.Message, $"Are you sure you want to delete \"{recipeDTO.Title}\"?");
+            Assert.True(Cookbook.Lazor.isShown);
+            Assert.True(Cookbook.IsDeleteAction);
+            Assert.Equal(Cookbook.Message, $"Are you sure you want to delete \"{RecipeDTO.Title}\"?");
         }
 
         [Fact]
         public void HandleDetails_WithLazorObject_ShouldChangeIsShown()
         {
-            var recipeDTO = new RecipeDTO();
-            var retrievedRecipes = new List<IRecipeDTO>();
-            var lazor = new Lazor();
-            var logger = new LoggerFactory().CreateLogger<IRecipeDTO>();
-            var http = new HttpClient();
-            var cookbook = new CookbookTableEvent(lazor, recipeDTO, logger, http, retrievedRecipes);
+            Cookbook.HandleDetails();
 
-            cookbook.HandleDetails();
-            
-            Assert.True(cookbook.Lazor.isShown);
-            Assert.False(cookbook.IsDeleteAction);
-            Assert.Equal(cookbook.Message, $"{recipeDTO.Title}");
+            Assert.True(Cookbook.Lazor.isShown);
+            Assert.False(Cookbook.IsDeleteAction);
+            Assert.Equal(Cookbook.Message, $"{RecipeDTO.Title}");
         }
     }
 }

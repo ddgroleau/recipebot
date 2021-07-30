@@ -19,28 +19,22 @@ namespace PBC.Shared.RecipeComponent
         public bool RecipeIsValid(IRecipeDTO recipeDTO)
         {
             bool isValid;
-            try
-            {
-                var validationContext = new ValidationContext(recipeDTO);
 
-                isValid = Validator.TryValidateObject(recipeDTO, validationContext, new List<ValidationResult>());
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            var validationContext = new ValidationContext(recipeDTO);
+
+            isValid = Validator.TryValidateObject(recipeDTO, validationContext, new List<ValidationResult>());
+
             return isValid;
         }
-
         public IRecipeModel CreateRecipeModel(IRecipeDTO recipeDTO)
         {
-                IRecipeModel recipeModel = null;
-            
-                if (RecipeIsValid(recipeDTO))
-                {
-                    recipeModel = _recipeBuilder.Build(recipeDTO);
-                }
-         
+            IRecipeModel recipeModel = null;
+
+            if (RecipeIsValid(recipeDTO))
+            {
+                recipeModel = _recipeBuilder.Build(recipeDTO);
+            }
+
             return recipeModel;
         }
     }

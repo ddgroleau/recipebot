@@ -1,5 +1,7 @@
 ﻿using PBC.Shared;
+using PBC.Shared.DOM_Events;
 using PBC.Shared.Lazor;
+using PBC.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,68 +11,71 @@ using Xunit;
 
 namespace UnitTests.DOM_Events
 {
-    public class LazorTests
+    public class LazorTests : IDisposable
     {
+        ILazor Lazor;
+        MockObject MockObject;
+        IRecipeDTO RecipeDTO;
+        public LazorTests()
+        {
+            Lazor = new Lazor();
+            MockObject = new MockObject();
+            RecipeDTO = new RecipeDTO();
+        }
+
+        public void Dispose()
+        {
+            Lazor = new Lazor();
+            MockObject = new MockObject();
+            RecipeDTO = new RecipeDTO();
+        }
         [Fact]
         public void Toggle_WithIsToggledDefault_ShouldMakeIsToggledFalse()
         {
-            var lazor = new Lazor();
+            Lazor.Toggle();
 
-            lazor.Toggle();
-
-            Assert.False(lazor.isToggled);
+            Assert.False(Lazor.isToggled);
         }
         [Fact]
         public void Toggle_WithIsToggledAsFalse_ShouldMakeIsToggledTrue()
         {
-            var lazor = new Lazor();
-            lazor.isToggled = false;
+            Lazor.isToggled = false;
 
-            lazor.Toggle();
+            Lazor.Toggle();
 
-            Assert.True(lazor.isToggled);
+            Assert.True(Lazor.isToggled);
         }
         [Fact]
         public void Toggle_WithToggleMethodRunTwice_ShouldMakeIsToggledTrue()
         {
-            var lazor = new Lazor();
+            Lazor.Toggle();
+            Lazor.Toggle();
 
-            lazor.Toggle();
-            lazor.Toggle();
-
-            Assert.True(lazor.isToggled);
+            Assert.True(Lazor.isToggled);
         }
 
         [Fact]
         public void Hide_WithIsHiddenDefault_ShouldMakeIsHiddenTrue()
         {
-            var lazor = new Lazor();
+            Lazor.Hide();
 
-            lazor.Hide();
-
-            Assert.True(lazor.isHidden);
+            Assert.True(Lazor.isHidden);
         }
 
         [Fact]
         public void Show_WithIsShownDefault_ShouldMakeIsShownTrue()
         {
-            var lazor = new Lazor();
+            Lazor.Show();
 
-            lazor.Show();
-
-            Assert.True(lazor.isShown);
+            Assert.True(Lazor.isShown);
         }
 
         [Fact]
         public void IsPropertyValid_WithValidStringProperty_ShouldBeTrue()
         {
-            var lazor = new Lazor();
-            var mockObj = new MockObject
-            {
-                URL = "https://www.allrecipes.com/recipe/212400/ginger-ale/"
-            };
+            MockObject.URL = "https://www.allrecipes.com/recipe/212400/ginger-ale/";
 
-            bool isValid = lazor.IsPropertyValid(mockObj, "URL", mockObj.URL);
+            bool isValid = Lazor.IsPropertyValid(MockObject, "URL", MockObject.URL);
 
             Assert.True(isValid);
         }
@@ -78,13 +83,9 @@ namespace UnitTests.DOM_Events
         [Fact]
         public void IsPropertyValid_WithValidNullStringProperty_ShouldBeTrue()
         {
-            var lazor = new Lazor();
-            var mockObj = new MockObject
-            {
-                URL = ""
-            };
+            MockObject.URL = "";
 
-            bool isValid = lazor.IsPropertyValid(mockObj, "URL", mockObj.URL);
+            bool isValid = Lazor.IsPropertyValid(MockObject, "URL", MockObject.URL);
 
             Assert.True(isValid);
         }
@@ -92,13 +93,9 @@ namespace UnitTests.DOM_Events
         [Fact]
         public void IsPropertyValid_WithInvalidStringProperty_ShouldBeFalse()
         {
-            var lazor = new Lazor();
-            var mockObj = new MockObject
-            {
-                URL = "1234"
-            };
+            MockObject.URL = "1234";
 
-            bool isValid = lazor.IsPropertyValid(mockObj, "URL", mockObj.URL);
+            bool isValid = Lazor.IsPropertyValid(MockObject, "URL", MockObject.URL);
 
             Assert.False(isValid);
         }
@@ -106,11 +103,9 @@ namespace UnitTests.DOM_Events
         [Fact]
         public void IsPropertyValid_WithValidListProperty_ShouldBeTrue()
         {
-            var lazor = new Lazor();
-            var mockObj = new MockObject();
-            mockObj.ListString.Add("TestItem");
+            MockObject.ListString.Add("TestItem");
 
-            bool isValid = lazor.IsPropertyValid(mockObj, "ListString", mockObj.ListString);
+            bool isValid = Lazor.IsPropertyValid(MockObject, "ListString", MockObject.ListString);
 
             Assert.True(isValid);
         }
@@ -118,11 +113,9 @@ namespace UnitTests.DOM_Events
         [Fact]
         public void IsPropertyValid_WithEmptyInvalidListProperty_ShouldBeFalse()
         {
-            var lazor = new Lazor();
-            var mockObj = new MockObject();
-            mockObj.ListString.Add(string.Empty);
+            MockObject.ListString.Add(string.Empty);
 
-            bool isValid = lazor.IsPropertyValid(mockObj, "ListString", mockObj.ListString);
+            bool isValid = Lazor.IsPropertyValid(MockObject, "ListString", MockObject.ListString);
 
             Assert.False(isValid);
         }
@@ -130,11 +123,9 @@ namespace UnitTests.DOM_Events
         [Fact]
         public void IsPropertyValid_WithNullInvalidListProperty_ShouldBeFalse()
         {
-            var lazor = new Lazor();
-            var mockObj = new MockObject();
-            mockObj.ListString.Add(null);
+            MockObject.ListString.Add(null);
 
-            bool isValid = lazor.IsPropertyValid(mockObj, "ListString", mockObj.ListString);
+            bool isValid = Lazor.IsPropertyValid(MockObject, "ListString", MockObject.ListString);
 
             Assert.False(isValid);
         }
@@ -142,10 +133,7 @@ namespace UnitTests.DOM_Events
         [Fact]
         public void IsPropertyValid_WithoutListProperty_ShouldBeFalse()
         {
-            var lazor = new Lazor();
-            var mockObj = new MockObject();
-
-            bool isValid = lazor.IsPropertyValid(mockObj, "ListString", mockObj.ListString);
+            bool isValid = Lazor.IsPropertyValid(MockObject, "ListString", MockObject.ListString);
 
             Assert.False(isValid);
         }
@@ -153,26 +141,17 @@ namespace UnitTests.DOM_Events
         [Fact]
         public void IsObjectValid_WithValidRecipeDTO_ShouldReturnTrue()
         {
+            var recipeDTO = RecipeDTO;
 
-            var recipeDTO = new RecipeDTO
-            {
-                URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/",
-                Title = "Test",
-                Description = "Test",
-                Ingredients = new List<string>
-                {
-                    "test",
-                    "test"
-                },
-                Instructions = new List<string>
-                {
-                    "test",
-                    "test"
-                }
-            };
-            var lazor = new Lazor();
+            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            recipeDTO.Title = "Test";
+            recipeDTO.Description = "Test";
+            recipeDTO.Ingredients = new List<string>();
+            recipeDTO.Instructions = new List<string>();
+            recipeDTO.Instructions.Add("Test");
+            recipeDTO.Ingredients.Add("Test");
 
-            var isValid = lazor.IsObjectValid(recipeDTO);
+            var isValid = Lazor.IsObjectValid(recipeDTO);
 
             Assert.True(isValid);
         }
@@ -180,18 +159,15 @@ namespace UnitTests.DOM_Events
         [Fact]
         public void IsObjectValid_WithInvalidRecipeDTO_ShouldReturnFalse()
         {
+            var recipeDTO = RecipeDTO;
 
-            var recipeDTO = new RecipeDTO
-            {
-                URL = "https://www.allrecipes.com/recip",
-                Title = "",
-                Description = "Test",
-                Ingredients = new List<string>(),
-                Instructions = new List<string>()
-            };
-            var lazor = new Lazor();
+            recipeDTO.URL = "https://www.allrecipes.com/";
+            recipeDTO.Title = "";
+            recipeDTO.Description = "Test";
+            recipeDTO.Ingredients = new List<string>();
+            recipeDTO.Instructions = new List<string>();
 
-            var isValid = lazor.IsObjectValid(recipeDTO);
+            var isValid = Lazor.IsObjectValid(recipeDTO);
 
             Assert.False(isValid);
         }
