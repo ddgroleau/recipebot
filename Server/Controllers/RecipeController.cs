@@ -18,12 +18,14 @@ namespace PBC.Server.Controllers
         private readonly ILogger<RecipeController> _logger;
         private readonly IRecipeDTO _recipeDTO;
         private readonly IAllRecipesScraper _allRecipesScraper;
+        private readonly IRecipeService _recipeService;
 
-        public RecipeController(ILogger<RecipeController> logger, IRecipeDTO recipeDTO, IAllRecipesScraper allRecipesScraper)
+        public RecipeController(ILogger<RecipeController> logger, IRecipeDTO recipeDTO, IAllRecipesScraper allRecipesScraper, IRecipeService recipeService)
         {
             _logger = logger;
             _recipeDTO = recipeDTO;
             _allRecipesScraper = allRecipesScraper;
+            _recipeService = recipeService;
         }
 
         [HttpPost("RecipeURL")]

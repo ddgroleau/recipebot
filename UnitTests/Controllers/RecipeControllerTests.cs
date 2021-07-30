@@ -14,44 +14,65 @@ using Xunit;
 
 namespace UnitTests.Controllers
 {
-    public class RecipeControllerTests
+    public class RecipeControllerTests : IDisposable
     {
+        ILogger<RecipeController> Logger;
+        IFactory<IIngredient> IngredientFactory;
+        IFactory<IInstruction> InstructionFactory;
+        IRecipeDTO RecipeDTO;
+        IAllRecipesScraper Scraper;
+        IRecipeUrlDTO RecipeUrlDTO;
+        RecipeController RecipeController;
+        IRecipeService RecipeService;
+        IRecipeBuilder RecipeBuilder;
+        IRecipeModel RecipeModel;
+
+        public RecipeControllerTests()
+        {
+            RecipeModel = new RecipeModel();
+            InstructionFactory = new InstructionFactory();
+            IngredientFactory = new IngredientFactory();
+            Logger = new LoggerFactory().CreateLogger<RecipeController>();
+            RecipeDTO = new RecipeDTO();
+            RecipeBuilder = new RecipeBuilder(RecipeModel, InstructionFactory, IngredientFactory);
+            Scraper = new AllRecipesScraper();
+            RecipeUrlDTO = new RecipeUrlDTO();
+            RecipeService = new RecipeService(RecipeBuilder);
+            RecipeController = new RecipeController(Logger, RecipeDTO, Scraper, RecipeService);
+        }
+
+        public void Dispose()
+        {
+            RecipeModel = new RecipeModel();
+            InstructionFactory = new InstructionFactory();
+            IngredientFactory = new IngredientFactory();
+            Logger = new LoggerFactory().CreateLogger<RecipeController>();
+            RecipeDTO = new RecipeDTO();
+            RecipeBuilder = new RecipeBuilder(RecipeModel, InstructionFactory, IngredientFactory);
+            Scraper = new AllRecipesScraper();
+            RecipeUrlDTO = new RecipeUrlDTO();
+            RecipeService = new RecipeService(RecipeBuilder);
+            RecipeController = new RecipeController(Logger, RecipeDTO, Scraper, RecipeService);
+        }
+
         [Fact]
         public void PostRecipeURL_WithValidURL_ShouldReturnIRecipeUrlDTO()
         {
-            var logger = new LoggerFactory().CreateLogger<RecipeController>();
-            var recipeDTO = new RecipeDTO();
-            var allRecipesScraper = new AllRecipesScraper();
-            var recipeUrlDTO = new RecipeUrlDTO();
-
-            var controller = new RecipeController(logger, recipeDTO, allRecipesScraper);
-
-            var postResult = controller.PostRecipeUrl(recipeUrlDTO);
+            var postResult = RecipeController.PostRecipeUrl((RecipeUrlDTO)RecipeUrlDTO);
             Assert.IsAssignableFrom<IRecipeDTO>(postResult);
         }
 
         [Fact]
         public void PostRecipe_WithValidURL_ShouldReturn200()
         {
-            var logger = new LoggerFactory().CreateLogger<RecipeController>();
-            var recipeDTO = new RecipeDTO();
-            var allRecipesScraper = new AllRecipesScraper();
-
-            var controller = new RecipeController(logger, recipeDTO, allRecipesScraper);
-
-            var postResult = controller.PostRecipe(recipeDTO);
+            var postResult = RecipeController.PostRecipe((RecipeDTO)RecipeDTO);
             Assert.IsType<OkObjectResult>(postResult);
         }
 
         [Fact]
         public void GetAllRecipes_WithNoParameters_ShouldReturnRecipes()
         {
-            var logger = new LoggerFactory().CreateLogger<RecipeController>();
-            var recipeDTO = new RecipeDTO();
-            var allRecipesScraper = new AllRecipesScraper();
-            var controller = new RecipeController(logger, recipeDTO, allRecipesScraper);
-
-            var retrievedRecipes = controller.GetAllRecipes();
+            var retrievedRecipes = RecipeController.GetAllRecipes();
 
             Assert.True(retrievedRecipes.Any());
         }
@@ -59,12 +80,7 @@ namespace UnitTests.Controllers
         [Fact]
         public void GetUserRecipes_WithValidUserName_ShouldReturnRecipes()
         {
-            var logger = new LoggerFactory().CreateLogger<RecipeController>();
-            var recipeDTO = new RecipeDTO();
-            var allRecipesScraper = new AllRecipesScraper();
-            var controller = new RecipeController(logger, recipeDTO, allRecipesScraper);
-
-            var retrievedRecipes = controller.GetUserRecipes("UserName");
+            var retrievedRecipes = RecipeController.GetUserRecipes("UserName");
 
             Assert.True(retrievedRecipes.Any());
         }
@@ -72,12 +88,7 @@ namespace UnitTests.Controllers
         [Fact]
         public void DeleteRecipe_WithValidRecipe_ShouldBeDeleted()
         {
-            var logger = new LoggerFactory().CreateLogger<RecipeController>();
-            var recipeDTO = new RecipeDTO();
-            var allRecipesScraper = new AllRecipesScraper();
-            var controller = new RecipeController(logger, recipeDTO, allRecipesScraper);
-
-            var result = controller.DeleteRecipe(recipeDTO);
+            var result = RecipeController.DeleteRecipe(RecipeDTO);
 
             Assert.IsType<OkResult>(result);
         }
