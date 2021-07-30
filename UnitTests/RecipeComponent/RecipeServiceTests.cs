@@ -16,6 +16,8 @@ namespace UnitTests.RecipeComponent
         IRecipeModel RecipeModel;
         IRecipeBuilder RecipeBuilder;
         IRecipeDTO RecipeDTO;
+        IRecipeEntity RecipeEntity;
+        IRepository<IRecipeEntity> RecipeRepository;
         IRecipeService RecipeService;
         public RecipeServiceTests()
         {
@@ -24,7 +26,9 @@ namespace UnitTests.RecipeComponent
             RecipeModel = new RecipeModel();
             RecipeBuilder = new RecipeBuilder(RecipeModel, InstructionFactory, IngredientFactory);
             RecipeDTO = new RecipeDTO();
-            RecipeService = new RecipeService(RecipeBuilder);
+            RecipeEntity = new RecipeEntity();
+            RecipeRepository = new RecipeRepository();
+            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository);
         }
 
         public void Dispose()
@@ -34,7 +38,9 @@ namespace UnitTests.RecipeComponent
             RecipeModel = new RecipeModel();
             RecipeBuilder = new RecipeBuilder(RecipeModel, InstructionFactory, IngredientFactory);
             RecipeDTO = new RecipeDTO();
-            RecipeService = new RecipeService(RecipeBuilder);
+            RecipeEntity = new RecipeEntity();
+            RecipeRepository = new RecipeRepository();
+            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository);
         }
         [Fact]
         public void RecipeIsValid_WithValidRecipeDTO_ShouldReturnTrue()
@@ -86,6 +92,19 @@ namespace UnitTests.RecipeComponent
             var result = RecipeService.CreateRecipeModel(recipeDTO);
 
             Assert.IsAssignableFrom<IRecipeModel>(result);
+        }
+
+        [Fact]
+        public void SaveRecipe_WithValidRecipeModel_ShouldSucceed()
+        {
+            RecipeModel.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            RecipeModel.Title = "Test";
+            RecipeModel.Description = "Test";
+            RecipeModel.RecipeModelId = Guid.NewGuid().ToString();
+            RecipeModel.Instructions.Add(InstructionFactory.Make());
+            RecipeModel.Ingredients.Add(IngredientFactory.Make());
+
+            Assert.IsAssignableFrom<IRecipeModel>(RecipeService.SaveRecipe(RecipeModel));
         }
     }
 }

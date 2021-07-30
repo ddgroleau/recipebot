@@ -11,10 +11,11 @@ namespace PBC.Shared.RecipeComponent
     public class RecipeService : IRecipeService
     {
         private readonly IRecipeBuilder _recipeBuilder;
-
-        public RecipeService(IRecipeBuilder recipeBuilder)
+        private readonly IRepository<IRecipeEntity> _recipeRepository;
+        public RecipeService(IRecipeBuilder recipeBuilder, IRepository<IRecipeEntity> recipeRepository)
         {
             _recipeBuilder = recipeBuilder;
+            _recipeRepository = recipeRepository;
         }
         public bool RecipeIsValid(IRecipeDTO recipeDTO)
         {
@@ -28,13 +29,30 @@ namespace PBC.Shared.RecipeComponent
         }
         public IRecipeModel CreateRecipeModel(IRecipeDTO recipeDTO)
         {
-            IRecipeModel recipeModel = null;
+            IRecipeModel recipeModel;
 
             if (RecipeIsValid(recipeDTO))
             {
                 recipeModel = _recipeBuilder.Build(recipeDTO);
             }
+            else
+            {
+                throw new InvalidOperationException();
+            }
 
+            return recipeModel;
+        }
+
+        public IRecipeModel SaveRecipe(IRecipeModel recipeModel)
+        {
+            try
+            {
+                _recipeRepository.InsertOne(recipeModel);
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException("Unable to Add Recipe to Database.",e);
+            }
             return recipeModel;
         }
     }

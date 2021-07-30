@@ -23,6 +23,8 @@ namespace UnitTests.Controllers
         IAllRecipesScraper Scraper;
         IRecipeUrlDTO RecipeUrlDTO;
         RecipeController RecipeController;
+        IRecipeEntity RecipeEntity;
+        IRepository<IRecipeEntity> RecipeRepository;
         IRecipeService RecipeService;
         IRecipeBuilder RecipeBuilder;
         IRecipeModel RecipeModel;
@@ -37,7 +39,9 @@ namespace UnitTests.Controllers
             RecipeBuilder = new RecipeBuilder(RecipeModel, InstructionFactory, IngredientFactory);
             Scraper = new AllRecipesScraper();
             RecipeUrlDTO = new RecipeUrlDTO();
-            RecipeService = new RecipeService(RecipeBuilder);
+            RecipeEntity = new RecipeEntity();
+            RecipeRepository = new RecipeRepository();
+            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository);
             RecipeController = new RecipeController(Logger, RecipeDTO, Scraper, RecipeService);
         }
 
@@ -51,7 +55,9 @@ namespace UnitTests.Controllers
             RecipeBuilder = new RecipeBuilder(RecipeModel, InstructionFactory, IngredientFactory);
             Scraper = new AllRecipesScraper();
             RecipeUrlDTO = new RecipeUrlDTO();
-            RecipeService = new RecipeService(RecipeBuilder);
+            RecipeEntity = new RecipeEntity();
+            RecipeRepository = new RecipeRepository();
+            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository);
             RecipeController = new RecipeController(Logger, RecipeDTO, Scraper, RecipeService);
         }
 
@@ -63,10 +69,23 @@ namespace UnitTests.Controllers
         }
 
         [Fact]
-        public void PostRecipe_WithValidURL_ShouldReturn200()
+        public void PostRecipe_WithValidRecipeDTO_ShouldReturn200()
+        {
+            RecipeDTO.URL = "https://www.allrecipes.com/recipe/264739/lemon-garlic-chicken-kebabs/";
+            RecipeDTO.Title = "test";
+            RecipeDTO.Ingredients.Add("test");
+            RecipeDTO.Instructions.Add("test");
+
+            var postResult = RecipeController.PostRecipe((RecipeDTO)RecipeDTO);
+
+            Assert.IsType<OkResult>(postResult);
+        }
+        [Fact]
+        public void PostRecipe_WithInvalidRecipeDTO_ShouldReturn400()
         {
             var postResult = RecipeController.PostRecipe((RecipeDTO)RecipeDTO);
-            Assert.IsType<OkObjectResult>(postResult);
+
+            Assert.IsType<BadRequestResult>(postResult);
         }
 
         [Fact]

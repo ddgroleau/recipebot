@@ -49,14 +49,17 @@ namespace PBC.Server.Controllers
             _logger.LogInformation($"RecipeDTO: \"{recipeDTO.Title}\" recieved by RecipeController, PostNewRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.");
             try
             {
+                _recipeService.CreateRecipeModel(recipeDTO);
+
                 _logger.LogInformation($"Processing RecipeDTO: \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.");
-                // RecipeService (which will perform validation (method), build entity (class), and save entity to repository (class)) (if not built already). Build this deliberately.
+                
+                return Ok();
             }
             catch (Exception e)
             {
                 _logger.LogError($"Failed to process RecipeDTO \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.", e.Message);
             }
-            return Ok(recipeDTO);
+            return BadRequest();
         }
 
         [HttpGet("AllRecipes")]

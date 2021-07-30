@@ -10,5 +10,6 @@ namespace PBC.Shared.RecipeComponent
     {
         public bool RecipeIsValid(IRecipeDTO recipeDTO);
         public IRecipeModel CreateRecipeModel(IRecipeDTO recipeDTO);
+        public IRecipeModel SaveRecipe(IRecipeModel recipeModel);
     }
 }
