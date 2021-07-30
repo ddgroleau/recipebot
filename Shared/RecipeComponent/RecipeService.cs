@@ -17,23 +17,15 @@ namespace PBC.Shared.RecipeComponent
             _recipeBuilder = recipeBuilder;
             _recipeRepository = recipeRepository;
         }
-        public bool RecipeIsValid(IRecipeDTO recipeDTO)
-        {
-            bool isValid;
 
-            var validationContext = new ValidationContext(recipeDTO);
-
-            isValid = Validator.TryValidateObject(recipeDTO, validationContext, new List<ValidationResult>());
-
-            return isValid;
-        }
-        public IRecipeModel CreateRecipeModel(IRecipeDTO recipeDTO)
+        public IRecipeModel CreateRecipe(IRecipeDTO recipeDTO)
         {
             IRecipeModel recipeModel;
 
             if (RecipeIsValid(recipeDTO))
             {
                 recipeModel = _recipeBuilder.Build(recipeDTO);
+                SaveRecipe(recipeModel);
             }
             else
             {
@@ -43,7 +35,7 @@ namespace PBC.Shared.RecipeComponent
             return recipeModel;
         }
 
-        public IRecipeModel SaveRecipe(IRecipeModel recipeModel)
+        private IRecipeModel SaveRecipe(IRecipeModel recipeModel)
         {
             try
             {
@@ -54,6 +46,17 @@ namespace PBC.Shared.RecipeComponent
                 throw new InvalidOperationException("Unable to Add Recipe to Database.",e);
             }
             return recipeModel;
+        }
+
+        private bool RecipeIsValid(IRecipeDTO recipeDTO)
+        {
+            bool isValid;
+
+            var validationContext = new ValidationContext(recipeDTO);
+
+            isValid = Validator.TryValidateObject(recipeDTO, validationContext, new List<ValidationResult>());
+
+            return isValid;
         }
     }
 }

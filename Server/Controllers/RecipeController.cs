@@ -46,11 +46,10 @@ namespace PBC.Server.Controllers
         [HttpPost("Recipe")]
         public IActionResult PostRecipe(RecipeDTO recipeDTO)
         {
-            _logger.LogInformation($"RecipeDTO: \"{recipeDTO.Title}\" recieved by RecipeController, PostNewRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.");
             try
             {
-                _recipeService.CreateRecipeModel(recipeDTO);
-
+                _recipeService.CreateRecipe(recipeDTO);
+                
                 _logger.LogInformation($"Processing RecipeDTO: \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.");
                 
                 return Ok();

@@ -18,7 +18,8 @@ namespace UnitTests.RecipeComponent
         IRecipeDTO RecipeDTO;
         IRecipeEntity RecipeEntity;
         IRepository<IRecipeEntity> RecipeRepository;
-        IRecipeService RecipeService;
+        RecipeService RecipeService;
+
         public RecipeServiceTests()
         {
             IngredientFactory = new IngredientFactory();
@@ -42,8 +43,9 @@ namespace UnitTests.RecipeComponent
             RecipeRepository = new RecipeRepository();
             RecipeService = new RecipeService(RecipeBuilder, RecipeRepository);
         }
+  
         [Fact]
-        public void RecipeIsValid_WithValidRecipeDTO_ShouldReturnTrue()
+        public void CreateRecipe_WithValidRecipeDTO_ShouldReturnRecipeModel()
         {
             var recipeDTO = RecipeDTO;
 
@@ -56,55 +58,9 @@ namespace UnitTests.RecipeComponent
             recipeDTO.Instructions.Add("Test");
             recipeDTO.Ingredients.Add("Test");
 
-            var isValid = RecipeService.RecipeIsValid(recipeDTO);
-
-            Assert.True(isValid);
-        }
-
-        [Fact]
-        public void RecipeIsValid_WithInvalidRecipeDTO_ShouldReturnFalse()
-        {
-            var recipeDTO = RecipeDTO;
-
-            recipeDTO.URL = "https://www.allrecipes.com/recip";
-            recipeDTO.Title = "";
-            recipeDTO.Description = "Test";
-          
-            var isValid = RecipeService.RecipeIsValid(recipeDTO);
-
-            Assert.False(isValid);
-        }
-
-        [Fact]
-        public void CreateRecipeModel_WithValidRecipeDTO_ShouldReturnRecipeModel()
-        {
-            var recipeDTO = RecipeDTO;
-
-            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
-            recipeDTO.Title = "Test";
-            recipeDTO.Description = "Test";
-            recipeDTO.Ingredients = new List<string>();
-            recipeDTO.Instructions = new List<string>();
-
-            recipeDTO.Instructions.Add("Test");
-            recipeDTO.Ingredients.Add("Test");
-
-            var result = RecipeService.CreateRecipeModel(recipeDTO);
+            var result = RecipeService.CreateRecipe(recipeDTO);
 
             Assert.IsAssignableFrom<IRecipeModel>(result);
-        }
-
-        [Fact]
-        public void SaveRecipe_WithValidRecipeModel_ShouldSucceed()
-        {
-            RecipeModel.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
-            RecipeModel.Title = "Test";
-            RecipeModel.Description = "Test";
-            RecipeModel.RecipeModelId = Guid.NewGuid().ToString();
-            RecipeModel.Instructions.Add(InstructionFactory.Make());
-            RecipeModel.Ingredients.Add(IngredientFactory.Make());
-
-            Assert.IsAssignableFrom<IRecipeModel>(RecipeService.SaveRecipe(RecipeModel));
         }
     }
 }
