@@ -58,14 +58,14 @@ namespace UnitTests.Controllers
         }
 
         [Fact]
-        public void PostRecipeURL_WithValidURL_ShouldReturnIRecipeUrlDTO()
+        public void ProcessRecipeUrl_WithValidURL_ShouldReturnIRecipeUrlDTO()
         {
             var postResult = RecipeController.ProcessRecipeUrl((RecipeUrlDTO)RecipeUrlDTO);
             Assert.IsAssignableFrom<IRecipeDTO>(postResult);
         }
 
         [Fact]
-        public void PostRecipe_WithValidRecipeDTO_ShouldReturn200()
+        public void CreateOrUpdateRecipe_WithValidRecipeDTO_ShouldReturn200()
         {
             RecipeDTO.URL = "https://www.allrecipes.com/recipe/264739/lemon-garlic-chicken-kebabs/";
             RecipeDTO.Title = "test";
@@ -77,7 +77,7 @@ namespace UnitTests.Controllers
             Assert.IsType<OkResult>(postResult);
         }
         [Fact]
-        public void PostRecipe_WithInvalidRecipeDTO_ShouldReturn400()
+        public void CreateOrUpdateRecipe_WithInvalidRecipeDTO_ShouldReturn400()
         {
             var postResult = RecipeController.CreateOrUpdateRecipe((RecipeDTO)RecipeDTO);
 

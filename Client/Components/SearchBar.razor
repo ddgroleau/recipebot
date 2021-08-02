@@ -1,0 +1,9 @@
+﻿
+<div>
+    <input class="border-bottom" @bind-value="SearchText"
+           @bind-value:event="oninput" placeholder="Search Recipes" />
+</div>
+
+@code {
+    public string SearchText { get; set; }
+}
