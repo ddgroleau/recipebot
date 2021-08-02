@@ -42,11 +42,10 @@ namespace PBC.Server
             services.AddScoped<IRepository<IRecipeEntity>, RecipeRepository>();
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<IRecipeEntity, RecipeEntity>();
-
-            services.AddSingleton<IAllRecipesScraper, AllRecipesScraper>();
-            services.AddSingleton<IFactory<IIngredient>, IngredientFactory>();
-            services.AddSingleton<IFactory<IInstruction>, InstructionFactory>();
-            services.AddSingleton<IRecipeBuilder, RecipeBuilder>();
+            services.AddScoped<IAllRecipesScraper, AllRecipesScraper>();
+            services.AddScoped<IFactory<IIngredient>, IngredientFactory>();
+            services.AddScoped<IFactory<IInstruction>, InstructionFactory>();
+            services.AddScoped<IRecipeBuilder, RecipeBuilder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
