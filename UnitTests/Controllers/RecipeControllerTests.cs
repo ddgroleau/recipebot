@@ -5,11 +5,7 @@ using PBC.Shared;
 using PBC.Shared.RecipeComponent;
 using PBC.Shared.WebScraper;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace UnitTests.Controllers
@@ -64,7 +60,7 @@ namespace UnitTests.Controllers
         [Fact]
         public void PostRecipeURL_WithValidURL_ShouldReturnIRecipeUrlDTO()
         {
-            var postResult = RecipeController.PostRecipeUrl((RecipeUrlDTO)RecipeUrlDTO);
+            var postResult = RecipeController.ProcessRecipeUrl((RecipeUrlDTO)RecipeUrlDTO);
             Assert.IsAssignableFrom<IRecipeDTO>(postResult);
         }
 
@@ -76,14 +72,14 @@ namespace UnitTests.Controllers
             RecipeDTO.Ingredients.Add("test");
             RecipeDTO.Instructions.Add("test");
 
-            var postResult = RecipeController.PostRecipe((RecipeDTO)RecipeDTO);
+            var postResult = RecipeController.CreateOrUpdateRecipe((RecipeDTO)RecipeDTO);
 
             Assert.IsType<OkResult>(postResult);
         }
         [Fact]
         public void PostRecipe_WithInvalidRecipeDTO_ShouldReturn400()
         {
-            var postResult = RecipeController.PostRecipe((RecipeDTO)RecipeDTO);
+            var postResult = RecipeController.CreateOrUpdateRecipe((RecipeDTO)RecipeDTO);
 
             Assert.IsType<BadRequestResult>(postResult);
         }

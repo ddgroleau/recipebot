@@ -29,7 +29,7 @@ namespace PBC.Server.Controllers
         }
 
         [HttpPost("RecipeURL")]
-        public IRecipeDTO PostRecipeUrl(RecipeUrlDTO urlDTO)
+        public IRecipeDTO ProcessRecipeUrl(RecipeUrlDTO urlDTO)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace PBC.Server.Controllers
         }
 
         [HttpPost("Recipe")]
-        public IActionResult PostRecipe(RecipeDTO recipeDTO)
+        public IActionResult CreateOrUpdateRecipe(RecipeDTO recipeDTO)
         {
             try
             {
