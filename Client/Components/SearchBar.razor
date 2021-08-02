@@ -2,6 +2,16 @@
 <div>
     <input class="border-bottom" @bind-value="SearchText"
            @bind-value:event="oninput" placeholder="Search Recipes" />
+
+    @{
+        if (!string.IsNullOrEmpty(SearchText))
+        {
+            <div class="position-fixed">
+                <p class="bg-white l-searchResults">@SearchText</p>
+            </div>
+        }
+    }
+
 </div>
 
 @code {

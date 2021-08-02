@@ -4,20 +4,24 @@
 <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light">
 
     <a class="navbar-brand" href="#">RecipeBot</a>
-    <SearchBar />
+
     <button class="btn" type="button" @onclick="e.Toggle">
         <span class="navbar-toggler-icon d-block d-sm-none"></span>
     </button>
+
+    <SearchBar />
+
+    <!--Show if NavBar>sm  -->
+    <div class="col-12 d-none d-sm-block" @onclick="e.Toggle">
+        <NavBarLinks />
+    </div>
 
     <!--Show if NavBar<=sm -->
     <div class="col-12 @e.ToggleTarget d-sm-none" @onclick="e.Toggle">
         <NavBarLinks />
     </div>
 
-    <!--Show if NavBar>sm  -->
-    <div class="col-12 d-none d-sm-block" @onclick="e.Toggle">
-        <NavBarLinks />
-    </div>
+
 </nav>
 
 @code {
