@@ -37,5 +37,27 @@
     border: solid black 1px;
 }
 
+.l-form {
+    display: flex;
+    flex-direction: row;
+}
 
+.l-search-field {
+    padding: 10px 35px 10px 15px;
+    border: none;
+    border-radius: 100px;
+    outline: none;
+}
 
+.l-search-button {
+    background: transparent;
+    border: none;
+    outline: none;
+    margin-left: -33px;
+}
+
+.l-search-button img {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+}
