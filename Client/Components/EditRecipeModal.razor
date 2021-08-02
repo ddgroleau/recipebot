@@ -1,6 +1,6 @@
 ﻿@inject IEditRecipeEvent Event
 
-<div class="@lazor.ToggleTarget">
+<div class="@Lazor.ToggleTarget">
     <div class="l-modal">
         <div class="card">
             <h4 class="card-header">
@@ -10,42 +10,42 @@
             <div class="card-body">
 
                 @{
-                    if (lazor.isSuccess)
+                    if (Lazor.IsSuccess)
                     {
                         <h4 class="text-center text-success">Success!</h4>
                     }
                     else
                     {
-                        <EditForm Model="@recipeDTO" OnValidSubmit=@(()=>Event.HandleValidSubmit(lazor,recipeDTO))>
+                        <EditForm Model="@RecipeDTO" OnValidSubmit=@(()=>Event.HandleValidSubmit(Lazor,RecipeDTO))>
                             <DataAnnotationsValidator />
 
                             <div class="form-group">
                                 <label for="Title">
                                     Title:
-                                    <InputText id="Title" @bind-Value="@recipeDTO.Title" />
+                                    <InputText id="Title" @bind-Value="@RecipeDTO.Title" />
                                     <div class="small form-text text-danger">
-                                        <ValidationMessage For="@(() => recipeDTO.Title)" />
+                                        <ValidationMessage For="@(() => RecipeDTO.Title)" />
                                     </div>
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label for="Description">
                                     Description:
-                                    <InputTextArea id="Description" @bind-Value="@recipeDTO.Description" />
+                                    <InputTextArea id="Description" @bind-Value="@RecipeDTO.Description" />
                                 </label>
                             </div>
 
-                            <CascadingValue Name="Model" Value="@recipeDTO">
+                            <CascadingValue Name="Model" Value="@RecipeDTO">
                                 <IngredientsForm />
-                                <ValidationMessage For="@(() => recipeDTO.Ingredients)" />
+                                <ValidationMessage For="@(() => RecipeDTO.Ingredients)" />
                                 <InstructionsForm />
-                                <ValidationMessage For="@(() => recipeDTO.Instructions)" />
+                                <ValidationMessage For="@(() => RecipeDTO.Instructions)" />
                             </CascadingValue>
 
-                            <span class="small form-text text-danger">@lazor.ErrorMessage</span>
+                            <span class="small form-text text-danger">@Lazor.ErrorMessage</span>
 
 
-                            <CascadingValue Name="Loading" Value="@lazor.Loading">
+                            <CascadingValue Name="Loading" Value="@Lazor.Loading">
                                 <LoadingButton>Submit</LoadingButton>
                             </CascadingValue>
                         </EditForm>
@@ -60,18 +60,14 @@
 
 @code {
 
-    [CascadingParameter(Name = "lazorObject")]
-    public ILazor lazor { get; set; }
+    [CascadingParameter(Name = "LazorObject")]
+    public ILazor Lazor { get; set; }
 
     [CascadingParameter(Name = "RecipeDTO")]
-    public IRecipeDTO recipeDTO { get; set; }
-
-    [CascadingParameter(Name = "RecipeUrlDTO")]
-    public IRecipeUrlDTO recipeURLDTO { get; set; }
+    public IRecipeDTO RecipeDTO { get; set; }
 
     [Parameter]
     public Action HandleClick { get; set; }
 
-    
     }
 

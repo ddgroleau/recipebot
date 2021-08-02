@@ -43,7 +43,7 @@ namespace UnitTests.DOM_Events.ComponentEvents
         {
             MessageEvent.HandleClick(Lazor);
 
-            Assert.True(Lazor.isHidden);
+            Assert.True(Lazor.IsHidden);
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace UnitTests.DOM_Events.ComponentEvents
         {
             MessageEvent.DeleteRecipe(RecipeDTO, Lazor);
 
-            Assert.True(Lazor.isHidden);
+            Assert.True(Lazor.IsHidden);
         }
     }
 }

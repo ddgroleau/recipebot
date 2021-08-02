@@ -14,29 +14,45 @@ namespace PBC.Shared.Lazor
     public class Lazor : ILazor
     {
         public bool Loading { get; set; } = false;
-        public string ErrorMessage { get; set; }
-        public bool isSuccess { get; set; }
-        public bool isToggled { get; set; } = true;
-        public string ToggleTarget { get => isToggled ? "l-hide" : null; set { } }
-        public void Toggle()
+
+        public void SetLoadingStatus(bool isLoading)
         {
-            isToggled = !isToggled;
+            Loading = isLoading;
+        }
+        
+        public string ErrorMessage { get; set; }
+        public void SetErrorMessage(string message)
+        {
+            ErrorMessage = message;
         }
 
-        public bool isHidden { get; set; } = false;
-        public string HideTarget { get => isHidden ? "l-hide" : "l-show"; set { } }
+        public bool IsSuccess { get; set; }
+        public void SetSuccessStatus(bool isSuccess)
+        {
+            IsSuccess = isSuccess;
+        }
+
+        public bool IsToggled { get; set; } = true;
+        public string ToggleTarget { get => IsToggled ? "l-hide" : null; }
+        public void Toggle()
+        {
+            IsToggled = !IsToggled;
+        }
+
+        public bool IsHidden { get; set; } = false;
+        public string HideTarget { get => IsHidden ? "l-hide" : "l-show"; }
 
         public void Hide()
         {
-            isHidden = true;
-            isShown = false;
+            IsHidden = true;
+            IsShown = false;
         }
-        public bool isShown { get; set; } = false;
-        public string ShowTarget { get => isShown ? "l-show" : "l-hide"; set { } }
+        public bool IsShown { get; set; } = false;
+        public string ShowTarget { get => IsShown ? "l-show" : "l-hide"; }
         public void Show()
         {
-            isShown = true;
-            isHidden = false;
+            IsShown = true;
+            IsHidden = false;
         }
 
         public bool IsPropertyValid(Object obj, string propertyName, string property)

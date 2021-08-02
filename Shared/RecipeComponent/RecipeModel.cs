@@ -8,7 +8,12 @@ namespace PBC.Shared.RecipeComponent
 {
     public class RecipeModel : IRecipeModel
     {
-        public string RecipeModelId { get; set; }
+        private string RecipeModelId { get; set; }
+        public void SetRecipeModelId(string id)
+        {
+            RecipeModelId = id;
+        }
+
         public string URL { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

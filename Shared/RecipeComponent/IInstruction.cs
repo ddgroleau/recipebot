@@ -9,7 +9,7 @@ namespace PBC.Shared.RecipeComponent
     public interface IInstruction
     {
         public string InstructionId { get; set; }
-        public string RecipeModelId { get; set; }
+        public void SetRecipeModelId(string id);
         public int StepNumber { get; set; }
         public string InstructionDescription { get; set; }
     }

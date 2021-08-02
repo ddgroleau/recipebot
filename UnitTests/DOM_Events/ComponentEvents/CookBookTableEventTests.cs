@@ -54,7 +54,7 @@ namespace UnitTests.DOM_Events.ComponentEvents
         {
             Cookbook.HandleClick();
 
-            Assert.False(Cookbook.Lazor.isToggled);
+            Assert.False(Cookbook.Lazor.IsToggled);
         }
 
         [Fact]
@@ -62,7 +62,7 @@ namespace UnitTests.DOM_Events.ComponentEvents
         {
             Cookbook.HandleDelete();
 
-            Assert.True(Cookbook.Lazor.isShown);
+            Assert.True(Cookbook.Lazor.IsShown);
             Assert.True(Cookbook.IsDeleteAction);
             Assert.Equal(Cookbook.Message, $"Are you sure you want to delete \"{RecipeDTO.Title}\"?");
         }
@@ -72,7 +72,7 @@ namespace UnitTests.DOM_Events.ComponentEvents
         {
             Cookbook.HandleDetails();
 
-            Assert.True(Cookbook.Lazor.isShown);
+            Assert.True(Cookbook.Lazor.IsShown);
             Assert.False(Cookbook.IsDeleteAction);
             Assert.Equal(Cookbook.Message, $"{RecipeDTO.Title}");
         }

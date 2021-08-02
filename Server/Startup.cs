@@ -29,7 +29,6 @@ namespace PBC.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -39,7 +38,15 @@ namespace PBC.Server
             services.AddScoped<IRecipeDTO, RecipeDTO>();
             services.AddScoped<IListGeneratorDTO, ListGeneratorDTO>();
             services.AddScoped<IListDayDTO, ListDayDTO>();
+            services.AddScoped<IRecipeModel, RecipeModel>();
+            services.AddScoped<IRepository<IRecipeEntity>, RecipeRepository>();
+            services.AddScoped<IRecipeService, RecipeService>();
+            services.AddScoped<IRecipeEntity, RecipeEntity>();
+
             services.AddSingleton<IAllRecipesScraper, AllRecipesScraper>();
+            services.AddSingleton<IFactory<IIngredient>, IngredientFactory>();
+            services.AddSingleton<IFactory<IInstruction>, InstructionFactory>();
+            services.AddSingleton<IRecipeBuilder, RecipeBuilder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

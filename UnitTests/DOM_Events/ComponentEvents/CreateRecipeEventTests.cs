@@ -54,8 +54,8 @@ namespace UnitTests.DOM_Events.ComponentEvents
         [Fact]
         public void ResetView_WithValidParameters_ShouldResetObjects()
         {
-            Lazor.Loading = true;
-            Lazor.isSuccess = true;
+            Lazor.SetLoadingStatus(true);
+            Lazor.SetSuccessStatus(true);
             RecipeUrlDTO.URL = "TestURL";
             RecipeDTO.Title = "TestTitle";
             RecipeDTO.Description = "TestDescription";
@@ -66,7 +66,7 @@ namespace UnitTests.DOM_Events.ComponentEvents
             RecipeEvent.ResetView();
 
             Assert.False(Lazor.Loading);
-            Assert.False(Lazor.isSuccess);
+            Assert.False(Lazor.IsSuccess);
             Assert.Null(RecipeUrlDTO.URL);
             Assert.Null(RecipeDTO.Title);
             Assert.Null(RecipeDTO.Description);

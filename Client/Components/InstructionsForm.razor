@@ -2,10 +2,10 @@
         <label for="Instructions">Instructions:</label>
         <ol>
             @{
-                if (model.Instructions.Any())
+                if (Model.Instructions.Any())
                 {
 
-                    foreach (string instruction in model.Instructions)
+                    foreach (string instruction in Model.Instructions)
                     {
                         <li>
                             <input id="Instructions" value="@instruction" />
@@ -21,12 +21,12 @@
              }
          </ol>
         <div class="form-group">
-            <InputText @bind-Value="@model.NewInstruction" />
-            <button type="button" class="btn btn-dark" @onclick="@model.AddInstruction">Add Instruction</button>
+            <InputText @bind-Value="@Model.NewInstruction" />
+            <button type="button" class="btn btn-dark" @onclick="@Model.AddInstruction">Add Instruction</button>
         </div>
 </div>
 
 @code {
     [CascadingParameter(Name = "Model")]
-    public IRecipeDTO model { get; set; }
+    public IRecipeDTO Model { get; set; }
 }

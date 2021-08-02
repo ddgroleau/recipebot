@@ -22,8 +22,7 @@ namespace PBC.Shared.RecipeComponent
         public IRecipeModel Build(IRecipeDTO recipeDTO)
         {
             IRecipeModel recipeModel = _recipeModel;
-
-            recipeModel.RecipeModelId = recipeDTO.RecipeDtoId;
+            recipeModel.SetRecipeModelId(recipeDTO.RecipeDtoId);
             recipeModel.URL = recipeDTO.URL;
             recipeModel.Title = recipeDTO.Title;
             recipeModel.Description = recipeDTO.Description;
@@ -34,7 +33,7 @@ namespace PBC.Shared.RecipeComponent
                 
                 instruction.StepNumber = i + 1;
                 instruction.InstructionDescription = recipeDTO.Instructions.ElementAt(i);
-                instruction.RecipeModelId = recipeModel.RecipeModelId;
+                instruction.SetRecipeModelId(recipeDTO.RecipeDtoId);
                 
                 recipeModel.Instructions.Add(instruction);
             }
@@ -43,9 +42,9 @@ namespace PBC.Shared.RecipeComponent
             {
                 var ingredient = new Ingredient
                 {
-                    RecipeModelId = recipeModel.RecipeModelId,
                     IngredientDescription = item
                 };
+                ingredient.SetRecipeModelId(recipeDTO.RecipeDtoId);
                 recipeModel.Ingredients.Add(ingredient);
             }
             return recipeModel;

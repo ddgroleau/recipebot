@@ -34,24 +34,16 @@ namespace UnitTests.DOM_Events
         {
             Lazor.Toggle();
 
-            Assert.False(Lazor.isToggled);
+            Assert.False(Lazor.IsToggled);
         }
-        [Fact]
-        public void Toggle_WithIsToggledAsFalse_ShouldMakeIsToggledTrue()
-        {
-            Lazor.isToggled = false;
 
-            Lazor.Toggle();
-
-            Assert.True(Lazor.isToggled);
-        }
         [Fact]
         public void Toggle_WithToggleMethodRunTwice_ShouldMakeIsToggledTrue()
         {
             Lazor.Toggle();
             Lazor.Toggle();
 
-            Assert.True(Lazor.isToggled);
+            Assert.True(Lazor.IsToggled);
         }
 
         [Fact]
@@ -59,7 +51,7 @@ namespace UnitTests.DOM_Events
         {
             Lazor.Hide();
 
-            Assert.True(Lazor.isHidden);
+            Assert.True(Lazor.IsToggled);
         }
 
         [Fact]
@@ -67,7 +59,7 @@ namespace UnitTests.DOM_Events
         {
             Lazor.Show();
 
-            Assert.True(Lazor.isShown);
+            Assert.True(Lazor.IsShown);
         }
 
         [Fact]

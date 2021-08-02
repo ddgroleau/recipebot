@@ -33,8 +33,8 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         {
             try
             {
-                Lazor.Loading = true;
-                Lazor.ErrorMessage = null;
+                Lazor.SetLoadingStatus(true);
+                Lazor.SetErrorMessage(null);
 
                 bool urlIsValid = Lazor.IsPropertyValid(RecipeUrlDTO, "URL", RecipeUrlDTO.URL);
 
@@ -45,12 +45,12 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
                         Lazor.Toggle();
                     }
                     else
-                    { 
-                    var response = await _http.PostAsJsonAsync("/api/Recipe/RecipeURL", RecipeUrlDTO);
-                    var scrapedRecipe = await response.Content.ReadFromJsonAsync<RecipeDTO>();
-                    RecipeDTO = scrapedRecipe;
-                    Lazor.Toggle();
-                    _logger.LogInformation($"URL: {RecipeUrlDTO.URL} sucessfully submitted to RecipeController. New RecipeDTO \"{RecipeDTO.Title}\" was scraped and received. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {RecipeUrlDTO.RecipeUrlDtoId}.");
+                    {
+                        var response = await _http.PostAsJsonAsync("/api/Recipe/RecipeURL", RecipeUrlDTO);
+                        var scrapedRecipe = await response.Content.ReadFromJsonAsync<RecipeDTO>();
+                        RecipeDTO = scrapedRecipe;
+                        Lazor.Toggle();
+                        _logger.LogInformation($"URL: {RecipeUrlDTO.URL} sucessfully submitted to RecipeController. New RecipeDTO \"{RecipeDTO.Title}\" was scraped and received. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
                     }
                 }
             }
@@ -60,20 +60,20 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             }
             catch (Exception err)
             {
-                _logger.LogError($"Failed to post RecipeUrlDTO to RecipeController. URL: {RecipeUrlDTO.URL}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {RecipeUrlDTO.RecipeUrlDtoId}.", err);
+                _logger.LogError($"Failed to post RecipeUrlDTO to RecipeController. URL: {RecipeUrlDTO.URL}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.", err);
             }
-        
-            Lazor.Loading = false;
+
+            Lazor.SetLoadingStatus(false);
             return RecipeDTO;
         }
 
-    public void ResetView()
-    {
-        Lazor.Loading = false;
-        Lazor.isSuccess = false;
-        Lazor.Toggle();
-        RecipeDTO.ResetRecipe();
-        RecipeUrlDTO.ResetURL();
+        public void ResetView()
+        {
+            Lazor.SetLoadingStatus(false);
+            Lazor.SetSuccessStatus(false);
+            Lazor.Toggle();
+            RecipeDTO.ResetRecipe();
+            RecipeUrlDTO.ResetURL();
+        }
     }
-}
 }

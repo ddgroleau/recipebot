@@ -33,12 +33,12 @@ namespace PBC.Server.Controllers
         {
             try
             {
-                _logger.LogInformation($"New URL {urlDTO.URL} recieved by RecipeController, PostRecipeUrl method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {urlDTO.RecipeUrlDtoId}.");
+                _logger.LogInformation($"New URL {urlDTO.URL} recieved by RecipeController, PostRecipeUrl method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
                 return _allRecipesScraper.ScrapeRecipe(urlDTO.URL, _recipeDTO);
             }
             catch (Exception)
             {
-                _logger.LogError($"Failed to scrape {urlDTO.URL} from AllRecipes.com; RecipeController, PostRecipeUrl method. ID: {urlDTO.RecipeUrlDtoId}");
+                _logger.LogError($"Failed to scrape {urlDTO.URL} from AllRecipes.com; RecipeController, PostRecipeUrl method.");
             }
             return _recipeDTO;
         }
@@ -76,16 +76,16 @@ namespace PBC.Server.Controllers
             return recipes;
         }
 
-        [HttpGet("UserRecipes/{UserName}")]
-        public IEnumerable<IRecipeDTO> GetUserRecipes(string UserName)
+        [HttpGet("UserRecipes/{username}")]
+        public IEnumerable<IRecipeDTO> GetUserRecipes(string username)
         {
             _logger.LogInformation($"Request for user recipes recieved by RecipeController, GetUserRecipes method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
 
             var recipes = new List<IRecipeDTO>
             {
-                new RecipeDTO { Title = $"{UserName} Title1", Description = "UserDescription1" },
-                new RecipeDTO { Title = $"{UserName} Title2", Description = "UserDescription2" },
-                new RecipeDTO { Title = $"{UserName} Title3", Description = "UserDescription3" }
+                new RecipeDTO { Title = $"{username} Title1", Description = "UserDescription1" },
+                new RecipeDTO { Title = $"{username} Title2", Description = "UserDescription2" },
+                new RecipeDTO { Title = $"{username} Title3", Description = "UserDescription3" }
             };
 
             return recipes;
@@ -98,9 +98,9 @@ namespace PBC.Server.Controllers
 
             var recipes = new List<IRecipeDTO>
             {
-                new RecipeDTO { Title = "Title1", Description = "Description1" },
-                new RecipeDTO { Title = "Title2", Description = "Description2" },
-                new RecipeDTO { Title = "Title3", Description = "Description3" }
+                new RecipeDTO { Title = $"{recipe.Title}", Description = "Description1" },
+                new RecipeDTO { Title = $"{recipe.Title}", Description = "Description2" },
+                new RecipeDTO { Title = $"{recipe.Title}", Description = "Description3" }
             };
             recipes.Add(recipe);
 

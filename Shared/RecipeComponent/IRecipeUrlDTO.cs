@@ -10,7 +10,6 @@ namespace PBC.Shared.RecipeComponent
 {
     public interface IRecipeUrlDTO
     {
-        public string RecipeUrlDtoId { get; set; }
         public string URL { get; set; }
 
         public void ResetURL();

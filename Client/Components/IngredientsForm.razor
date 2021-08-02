@@ -2,9 +2,9 @@
     <label for="Ingredients">Ingredients:</label>
         <ol>
             @{
-                if (model.Ingredients.Any())
+                if (Model.Ingredients.Any())
                 {
-                    foreach (string ingredient in model.Ingredients)
+                    foreach (string ingredient in Model.Ingredients)
                     {
                         <li>
                             <input id="Ingredients" value="@ingredient" />
@@ -21,12 +21,12 @@
                 </ol>
 
         <div class="form-group">
-            <InputText @bind-Value="@model.NewIngredient" />
-            <button type="button" class="btn btn-dark" @onclick="@model.AddIngredient">Add Ingredient</button>
+            <InputText @bind-Value="@Model.NewIngredient" />
+            <button type="button" class="btn btn-dark" @onclick="@Model.AddIngredient">Add Ingredient</button>
         </div>
 </div>
 
 @code {
     [CascadingParameter(Name = "Model")]
-    public IRecipeDTO model { get; set; }
+    public IRecipeDTO Model { get; set; }
 }

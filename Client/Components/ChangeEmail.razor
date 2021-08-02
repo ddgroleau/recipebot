@@ -1,13 +1,13 @@
-﻿@inject IAccountChangesDTO model
-@inject ILazor e 
+﻿@inject IAccountChangesDTO Model
+@inject ILazor Lazor
 
-<EditForm Model="@model">
+<EditForm Model="@Model">
     <DataAnnotationsValidator />
     <div class="form-group">
         <label>
             Confirm Current Email:
-            <InputText type="email" @bind-Value="model.CurrentEmail" class="form-control" />
-            <ValidationMessage For="@(() => model.CurrentEmail)" />
+            <InputText type="email" @bind-Value="Model.CurrentEmail" class="form-control" />
+            <ValidationMessage For="@(() => Model.CurrentEmail)" />
         </label>
     </div>
 
@@ -15,8 +15,8 @@
         <label>
             Enter New Email:
 
-            <InputText type="email" @bind-Value="model.NewEmail" class="form-control" />
-            <ValidationMessage For="@(() => model.NewEmail)" />
+            <InputText type="email" @bind-Value="Model.NewEmail" class="form-control" />
+            <ValidationMessage For="@(() => Model.NewEmail)" />
 
         </label>
     </div>
@@ -25,13 +25,13 @@
         <label>
             Confirm New Email:
 
-            <InputText type="email" @bind-Value="model.ConfirmNewEmail" class="form-control" />
-            <ValidationMessage For="@(() => model.ConfirmNewEmail)" />
+            <InputText type="email" @bind-Value="Model.ConfirmNewEmail" class="form-control" />
+            <ValidationMessage For="@(() => Model.ConfirmNewEmail)" />
 
         </label>
     </div>
 
-    <CascadingValue Name="loading" Value="@e.Loading">
+    <CascadingValue Name="loading" Value="@Lazor.Loading">
         <LoadingButton>Submit</LoadingButton>
     </CascadingValue>
 

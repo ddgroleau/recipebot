@@ -9,7 +9,11 @@ namespace PBC.Shared.RecipeComponent
     public class Ingredient : IIngredient
     {
         public string IngredientId { get; set; } = Guid.NewGuid().ToString();
-        public string RecipeModelId { get; set; }
+        private string RecipeModelId { get; set; }
+        public void SetRecipeModelId(string id)
+        {
+            RecipeModelId = id;
+        }
         public string IngredientDescription { get; set; }
     }
 }

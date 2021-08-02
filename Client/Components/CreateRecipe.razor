@@ -20,13 +20,11 @@
         </EditForm>
     </div>
 
-    <CascadingValue Name="RecipeUrlDTO" Value="@Event.RecipeUrlDTO">
         <CascadingValue Name="LazorObject" Value="@Event.Lazor">
             <CascadingValue Name="RecipeDTO" Value="@Event.RecipeDTO">
                 <EditRecipeModal HandleClick=@(()=>Event.ResetView()) />
             </CascadingValue>
         </CascadingValue>
-    </CascadingValue>
 
 </div>
 @code {

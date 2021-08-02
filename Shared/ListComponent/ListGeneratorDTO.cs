@@ -17,10 +17,10 @@ namespace PBC.Shared
         public Dictionary<int, ListDayDTO> GeneratedDays { get; set; } = new Dictionary<int, ListDayDTO>();
         public void AddDay(ILazor e)
         {
-            e.ErrorMessage = "";
+            e.SetErrorMessage(null);
             if (Days >= 7)
             {
-                e.ErrorMessage = "Max 7 Days";
+                e.SetErrorMessage("Max 7 Days");
             }
             else
             {
@@ -33,10 +33,10 @@ namespace PBC.Shared
         }
         public void RemoveDay(ILazor e)
         {
-            e.ErrorMessage = "";
+            e.SetErrorMessage(null);
             if (Days <= 0)
             {
-                e.ErrorMessage = "Min 0 Days";
+                e.SetErrorMessage("Min 0 Days");
             }
             else
             {
