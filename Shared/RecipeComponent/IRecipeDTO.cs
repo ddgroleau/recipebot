@@ -13,6 +13,7 @@ namespace PBC.Shared.RecipeComponent
         public string RecipeDtoId { get; }
         public string URL { get; set; }
         public string Title { get; set; }
+        public string RecipeType { get; set; }
         public string Description { get; set; }
         public List<string> Ingredients { get; set; }
         public List<string> Instructions { get; set; }

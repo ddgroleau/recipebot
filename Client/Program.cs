@@ -44,6 +44,8 @@ namespace PBC.Client
             builder.Services.AddScoped<ICookBookTableEvent, CookbookTableEvent>();
             builder.Services.AddScoped<ISearchBarEvent, SearchBarEvent>();
 
+            builder.Services.AddSingleton<RecipeTypes>();
+
             await builder.Build().RunAsync();
         }
     }

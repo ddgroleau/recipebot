@@ -1,10 +1,11 @@
 ﻿@inject IEditRecipeEvent Event
+@inject RecipeTypes RecipeTypes
 
 <div class="@Lazor.ToggleTarget">
     <div class="l-modal">
         <div class="card">
             <h4 class="card-header">
-                Modal
+                Check your Recipe!
                 <button type="button" @onclick="HandleClick" class="btn btn-danger float-right">&times;</button>
             </h4>
             <div class="card-body">
@@ -16,39 +17,52 @@
                     }
                     else
                     {
-                        <EditForm Model="@RecipeDTO" OnValidSubmit=@(()=>Event.HandleValidSubmit(Lazor,RecipeDTO))>
-                            <DataAnnotationsValidator />
+            <EditForm Model="@RecipeDTO" OnValidSubmit=@(()=>Event.HandleValidSubmit(Lazor,RecipeDTO))>
+                <DataAnnotationsValidator />
 
-                            <div class="form-group">
-                                <label for="Title">
-                                    Title:
-                                    <InputText id="Title" @bind-Value="@RecipeDTO.Title" />
-                                    <div class="small form-text text-danger">
-                                        <ValidationMessage For="@(() => RecipeDTO.Title)" />
-                                    </div>
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label for="Description">
-                                    Description:
-                                    <InputTextArea id="Description" @bind-Value="@RecipeDTO.Description" />
-                                </label>
-                            </div>
+                <div class="form-group">
+                    <label for="Title">
+                        Title:
+                        <InputText @bind-Value="@RecipeDTO.Title" />
+                        <div class="small form-text text-danger">
+                            <ValidationMessage For="@(() => RecipeDTO.Title)" />
+                        </div>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="RecipeType">
+                        Recipe Type:
+                        <InputSelect @bind-Value="@RecipeDTO.RecipeType">
+                            <option value="default">Choose a type</option>
+                            <option value="@RecipeTypes.GetRecipeType("Breakfast")">Breakfast</option>
+                            <option value="@RecipeTypes.GetRecipeType("Lunch")">Lunch</option>
+                            <option value="@RecipeTypes.GetRecipeType("Dinner")">Dinner</option>
+                            <option value="@RecipeTypes.GetRecipeType("Snack")">Snack</option>
+                            <option value="@RecipeTypes.GetRecipeType("Beverage")">Beverage</option>
+                        </InputSelect>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="Description">
+                        Description:
+                        <InputTextArea @bind-Value="@RecipeDTO.Description" />
+                    </label>
+                </div>
 
-                            <CascadingValue Name="Model" Value="@RecipeDTO">
-                                <IngredientsForm />
-                                <ValidationMessage For="@(() => RecipeDTO.Ingredients)" />
-                                <InstructionsForm />
-                                <ValidationMessage For="@(() => RecipeDTO.Instructions)" />
-                            </CascadingValue>
+                <CascadingValue Name="Model" Value="@RecipeDTO">
+                    <IngredientsForm />
+                    <ValidationMessage For="@(() => RecipeDTO.Ingredients)" />
+                    <InstructionsForm />
+                    <ValidationMessage For="@(() => RecipeDTO.Instructions)" />
+                </CascadingValue>
 
-                            <span class="small form-text text-danger">@Lazor.ErrorMessage</span>
+                <span class="small form-text text-danger">@Lazor.ErrorMessage</span>
 
 
-                            <CascadingValue Name="Loading" Value="@Lazor.Loading">
-                                <LoadingButton>Submit</LoadingButton>
-                            </CascadingValue>
-                        </EditForm>
+                <CascadingValue Name="Loading" Value="@Lazor.Loading">
+                    <LoadingButton>Submit</LoadingButton>
+                </CascadingValue>
+            </EditForm>
                     }
                 }
 

@@ -20,7 +20,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             _logger = logger;
             _http = http;
         }
-
+        
         public async Task<IRecipeDTO> HandleValidSubmit(ILazor lazor, IRecipeDTO recipeDTO)
         {
             try

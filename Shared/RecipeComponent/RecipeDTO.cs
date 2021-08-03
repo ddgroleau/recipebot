@@ -20,6 +20,7 @@ namespace PBC.Shared
         public string URL { get; set; }
         [Required]
         public string Title { get; set; }
+        public string RecipeType { get; set; }
         public string Description { get; set; }
         [ListMustContainElements]
         public List<string> Ingredients { get; set; } = new List<string>();
