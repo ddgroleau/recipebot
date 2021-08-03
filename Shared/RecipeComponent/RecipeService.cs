@@ -50,13 +50,35 @@ namespace PBC.Shared.RecipeComponent
 
         private bool RecipeIsValid(IRecipeDTO recipeDTO)
         {
-            bool isValid;
+            List<bool> results = new List<bool>();
+            var urlContext = new ValidationContext(recipeDTO)
+            {
+                MemberName = "URL"
+            };
+            var titleContext = new ValidationContext(recipeDTO)
+            {
+                MemberName = "Title"
+            };
+            var typeContext = new ValidationContext(recipeDTO)
+            {
+                MemberName = "RecipeType"
+            };
+            var ingredientsContext = new ValidationContext(recipeDTO)
+            {
+                MemberName = "Ingredients"
+            };
+            var instructionsContext = new ValidationContext(recipeDTO)
+            {
+                MemberName = "Instructions"
+            };
+            
+            results.Add(Validator.TryValidateProperty(recipeDTO.URL, urlContext, new List<ValidationResult>()));
+            results.Add(Validator.TryValidateProperty(recipeDTO.Title, titleContext, new List<ValidationResult>()));
+            results.Add(Validator.TryValidateProperty(recipeDTO.RecipeType, typeContext, new List<ValidationResult>()));
+            results.Add(Validator.TryValidateProperty(recipeDTO.Ingredients, ingredientsContext, new List<ValidationResult>()));
+            results.Add(Validator.TryValidateProperty(recipeDTO.Instructions, instructionsContext, new List<ValidationResult>()));
 
-            var validationContext = new ValidationContext(recipeDTO);
-
-            isValid = Validator.TryValidateObject(recipeDTO, validationContext, new List<ValidationResult>());
-
-            return isValid;
+            return !results.Contains(false);
         }
     }
 }

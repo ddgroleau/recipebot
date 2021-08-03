@@ -27,7 +27,7 @@ namespace UnitTests.RecipeComponent
 
             var recipeTypes = new RecipeTypes();
 
-            Assert.Throws<KeyNotFoundException>(() => recipeTypes.GetRecipeType(type));
+            Assert.Equal("Invalid", recipeTypes.GetRecipeType(type));
         }
     }
 }

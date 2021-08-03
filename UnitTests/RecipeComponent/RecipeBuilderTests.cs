@@ -43,6 +43,7 @@ namespace UnitTests.RecipeComponent
             recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
             recipeDTO.Title = "Test";
             recipeDTO.Description = "Test";
+            recipeDTO.RecipeType = "Breakfast";
             recipeDTO.Ingredients = new List<string>();
             recipeDTO.Instructions = new List<string>();
 
@@ -51,7 +52,11 @@ namespace UnitTests.RecipeComponent
 
             var result = RecipeBuilder.Build(recipeDTO);
 
-            Assert.IsAssignableFrom<IRecipeModel>(result);
+            Assert.Equal(result.URL, recipeDTO.URL);
+            Assert.Equal(result.Title, recipeDTO.Title);
+            Assert.Equal(result.Description, recipeDTO.Description);
+            Assert.IsAssignableFrom<ICollection<IIngredient>>(result.Ingredients);
+            Assert.IsAssignableFrom<ICollection<IInstruction>>(result.Instructions);
         }
     }
 }

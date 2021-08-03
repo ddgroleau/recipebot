@@ -23,9 +23,9 @@ namespace PBC.Shared.RecipeComponent
             {
                 return Types[type];
             }
-            catch (KeyNotFoundException e)
+            catch (KeyNotFoundException)
             {
-                throw new KeyNotFoundException("Invalid recipe type.", e);
+                return "Invalid";
             }
         }
     }

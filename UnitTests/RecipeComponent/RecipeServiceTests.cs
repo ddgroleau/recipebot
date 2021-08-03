@@ -52,6 +52,7 @@ namespace UnitTests.RecipeComponent
             recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
             recipeDTO.Title = "Test";
             recipeDTO.Description = "Test";
+            recipeDTO.RecipeType = "Breakfast";
             recipeDTO.Ingredients = new List<string>();
             recipeDTO.Instructions = new List<string>();
 
@@ -60,7 +61,99 @@ namespace UnitTests.RecipeComponent
 
             var result = RecipeService.CreateRecipe(recipeDTO);
 
-            Assert.IsAssignableFrom<IRecipeModel>(result);
+            Assert.Equal(result.URL, recipeDTO.URL);
+            Assert.Equal(result.Title, recipeDTO.Title);
+            Assert.Equal(result.Description, recipeDTO.Description);
+            Assert.IsAssignableFrom<ICollection<IIngredient>>(result.Ingredients);
+            Assert.IsAssignableFrom<ICollection<IInstruction>>(result.Instructions);
+        }
+
+        [Fact]
+        public void CreateRecipe_WithInvalidRecipeType_ShouldThrowException()
+        {
+            var recipeDTO = RecipeDTO;
+
+            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            recipeDTO.Title = "Test";
+            recipeDTO.Description = "Test";
+            recipeDTO.RecipeType = "Supper";
+            recipeDTO.Ingredients = new List<string>();
+            recipeDTO.Instructions = new List<string>();
+
+            recipeDTO.Instructions.Add("Test");
+            recipeDTO.Ingredients.Add("Test");
+
+            Assert.Throws<InvalidOperationException>(() => RecipeService.CreateRecipe(recipeDTO));
+        }
+
+        [Fact]
+        public void CreateRecipe_WithInvalidRecipeURL_ShouldThrowException()
+        {
+            var recipeDTO = RecipeDTO;
+
+            recipeDTO.URL = "https://www.allrecipes.com";
+            recipeDTO.Title = "Test";
+            recipeDTO.Description = "Test";
+            recipeDTO.RecipeType = "Dinner";
+            recipeDTO.Ingredients = new List<string>();
+            recipeDTO.Instructions = new List<string>();
+
+            recipeDTO.Instructions.Add("Test");
+            recipeDTO.Ingredients.Add("Test");
+
+            Assert.Throws<InvalidOperationException>(() => RecipeService.CreateRecipe(recipeDTO));
+        }
+
+        [Fact]
+        public void CreateRecipe_WithInvalidRecipeTitle_ShouldThrowException()
+        {
+            var recipeDTO = RecipeDTO;
+
+            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            recipeDTO.Title = "";
+            recipeDTO.Description = "Test";
+            recipeDTO.RecipeType = "Dinner";
+            recipeDTO.Ingredients = new List<string>();
+            recipeDTO.Instructions = new List<string>();
+
+            recipeDTO.Instructions.Add("Test");
+            recipeDTO.Ingredients.Add("Test");
+
+            Assert.Throws<InvalidOperationException>(() => RecipeService.CreateRecipe(recipeDTO));
+        }
+
+        [Fact]
+        public void CreateRecipe_WithInvalidIngredients_ShouldThrowException()
+        {
+            var recipeDTO = RecipeDTO;
+
+            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            recipeDTO.Title = "Test";
+            recipeDTO.Description = "Test";
+            recipeDTO.RecipeType = "Dinner";
+            recipeDTO.Ingredients = new List<string>();
+            recipeDTO.Instructions = new List<string>();
+
+            recipeDTO.Instructions.Add("Test");
+
+            Assert.Throws<InvalidOperationException>(() => RecipeService.CreateRecipe(recipeDTO));
+        }
+
+        [Fact]
+        public void CreateRecipe_WithInvalidInstructions_ShouldThrowException()
+        {
+            var recipeDTO = RecipeDTO;
+
+            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            recipeDTO.Title = "Test";
+            recipeDTO.Description = "Test";
+            recipeDTO.RecipeType = "Dinner";
+            recipeDTO.Ingredients = new List<string>();
+            recipeDTO.Instructions = new List<string>();
+
+            recipeDTO.Ingredients.Add("Test");
+
+            Assert.Throws<InvalidOperationException>(() => RecipeService.CreateRecipe(recipeDTO));
         }
     }
 }

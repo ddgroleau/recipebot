@@ -69,6 +69,7 @@ namespace UnitTests.Controllers
         {
             RecipeDTO.URL = "https://www.allrecipes.com/recipe/264739/lemon-garlic-chicken-kebabs/";
             RecipeDTO.Title = "test";
+            RecipeDTO.RecipeType = "BreakFast";
             RecipeDTO.Ingredients.Add("test");
             RecipeDTO.Instructions.Add("test");
 

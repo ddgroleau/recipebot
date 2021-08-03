@@ -26,6 +26,7 @@ namespace PBC.Shared.RecipeComponent
             recipeModel.URL = recipeDTO.URL;
             recipeModel.Title = recipeDTO.Title;
             recipeModel.Description = recipeDTO.Description;
+            recipeModel.RecipeType = recipeDTO.RecipeType;
 
             for (int i = 0; i < recipeDTO.Instructions.Count; i++)
             {
