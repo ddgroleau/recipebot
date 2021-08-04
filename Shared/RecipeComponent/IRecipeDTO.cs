@@ -16,10 +16,5 @@ namespace PBC.Shared.RecipeComponent
         public string Description { get; set; }
         public List<string> Ingredients { get; set; }
         public List<string> Instructions { get; set; }
-        public string NewIngredient { get; set; }
-        public string NewInstruction { get; set; }
-        public void AddIngredient();
-        public void AddInstruction();
-        public void ResetRecipe();
     }
 }

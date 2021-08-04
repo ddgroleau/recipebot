@@ -19,7 +19,6 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         private readonly ILogger<IRecipeUrlDTO> _logger;
         private readonly HttpClient _http;
 
-
         public CreateRecipeEvent(ILazor e, IRecipeUrlDTO recipeUrlDTO, IRecipeDTO recipeDTO, ILogger<IRecipeUrlDTO> logger, HttpClient http)
         {
             Lazor = e;
@@ -72,8 +71,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             Lazor.SetLoadingStatus(false);
             Lazor.SetSuccessStatus(false);
             Lazor.Toggle();
-            RecipeDTO.ResetRecipe();
-            RecipeUrlDTO.ResetURL();
+            RecipeUrlDTO.URL = null;
         }
     }
 }

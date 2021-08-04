@@ -27,39 +27,5 @@ namespace PBC.Shared
         public List<string> Ingredients { get; set; } = new List<string>();
         [ListMustContainElements]
         public List<string> Instructions { get; set; } = new List<string>();
-        [StringLength(100, ErrorMessage = "New ingredient is too long.")]
-        public string NewIngredient { get; set; }
-        [StringLength(350, ErrorMessage = "New instruction is too long.")]
-        public string NewInstruction { get; set; }
-        public void AddIngredient()
-        {
-            var validationContext = new ValidationContext(this)
-            {
-                MemberName = "NewIngredient"
-            };
-            bool newIngredientIsValid = Validator.TryValidateProperty(NewIngredient, validationContext, new List<ValidationResult>());
-
-            if(newIngredientIsValid) { Ingredients.Add(NewIngredient); }
-        }
-        public void AddInstruction()
-        {
-            var validationContext = new ValidationContext(this)
-            {
-                MemberName = "NewInstruction"
-            };
-            bool newInstructionIsValid = Validator.TryValidateProperty(NewInstruction, validationContext, new List<ValidationResult>());
-
-            if (newInstructionIsValid) { Instructions.Add(NewInstruction); }
-        }
-        public void ResetRecipe()
-        {
-            URL = null;
-            Title = null;
-            Description = null;
-            Ingredients = new List<string>();
-            Instructions = new List<string>();
-            NewIngredient = null;
-            NewInstruction = null;
-        }
     }
 }

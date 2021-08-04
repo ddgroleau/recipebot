@@ -11,7 +11,5 @@ namespace PBC.Shared.RecipeComponent
     public interface IRecipeUrlDTO
     {
         public string URL { get; set; }
-
-        public void ResetURL();
     }
 }

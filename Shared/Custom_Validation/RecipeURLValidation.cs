@@ -13,10 +13,17 @@ namespace PBC.Shared.Custom_Validation
         ValidationContext validationContext)
         {
             //To Do: Find a cleaner way to perform validation.
-            bool isValidBlankURL = String.IsNullOrEmpty(value.ToString());
-            bool isValidAllRecipesURL = value.ToString().StartsWith("https://www.allrecipes.com/recipe/");
+            try
+            {
+                bool isValidBlankURL = String.IsNullOrEmpty(value.ToString());
+                bool isValidAllRecipesURL = value.ToString().StartsWith("https://www.allrecipes.com/recipe/");
 
-            if (isValidBlankURL || isValidAllRecipesURL)
+                if (isValidBlankURL || isValidAllRecipesURL)
+                {
+                    return ValidationResult.Success;
+                }
+            }
+            catch (NullReferenceException)
             {
                 return ValidationResult.Success;
             }

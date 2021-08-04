@@ -21,12 +21,15 @@
              }
          </ol>
         <div class="form-group">
-            <InputText @bind-Value="@Model.NewInstruction" />
-            <button type="button" class="btn btn-dark" @onclick="@Model.AddInstruction">Add Instruction</button>
+            <InputText @bind-Value="@Event.NewInstruction" />
+            <button type="button" class="btn btn-dark" @onclick="()=>Event.AddInstruction(Model)">Add Instruction</button>
         </div>
 </div>
 
 @code {
     [CascadingParameter(Name = "Model")]
     public IRecipeDTO Model { get; set; }
+
+    [CascadingParameter(Name = "Event")]
+    public IEditRecipeEvent Event { get; set; }
 }

@@ -57,22 +57,12 @@ namespace UnitTests.DOM_Events.ComponentEvents
             Lazor.SetLoadingStatus(true);
             Lazor.SetSuccessStatus(true);
             RecipeUrlDTO.URL = "TestURL";
-            RecipeDTO.Title = "TestTitle";
-            RecipeDTO.Description = "TestDescription";
-            RecipeDTO.URL = "TestURL";
-            RecipeDTO.Ingredients.Add("TestIngredient");
-            RecipeDTO.Instructions.Add("TestInstruction");
 
             RecipeEvent.ResetView();
 
             Assert.False(Lazor.Loading);
             Assert.False(Lazor.IsSuccess);
             Assert.Null(RecipeUrlDTO.URL);
-            Assert.Null(RecipeDTO.Title);
-            Assert.Null(RecipeDTO.Description);
-            Assert.Null(RecipeDTO.URL);
-            Assert.Equal(RecipeDTO.Ingredients, new List<string>());
-            Assert.Equal(RecipeDTO.Instructions, new List<string>());
         }
     }
 }
