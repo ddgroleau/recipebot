@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace PBC.Shared.RecipeComponent
 {
-    public interface IIngredient
+    public class IngredientEntity
     {
-        public string IngredientId { get; set; }
-        public void SetRecipeModelId(string id);
+        public int IngredientEntityId { get; set; }
+        public int RecipeEntityId { get; set; }
         public string IngredientDescription { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

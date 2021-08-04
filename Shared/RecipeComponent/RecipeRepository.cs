@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PBC.Shared.RecipeComponent
 {
-    public class RecipeRepository : IRepository<IRecipeEntity>
+    public class RecipeRepository : IRepository<RecipeEntity>
     {
         public void InsertOne(Object record) 
         {

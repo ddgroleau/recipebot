@@ -50,13 +50,13 @@ namespace PBC.Server.Controllers
             {
                 _recipeService.CreateRecipe(recipeDTO);
                 
-                _logger.LogInformation($"Processing RecipeDTO: \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.");
+                _logger.LogInformation($"Processing RecipeDTO: \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
                 
                 return Ok();
             }
             catch (Exception e)
             {
-                _logger.LogError($"Failed to process RecipeDTO \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.", e.Message);
+                _logger.LogError($"Failed to process RecipeDTO \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.", e.Message);
             }
             return BadRequest();
         }
@@ -94,7 +94,7 @@ namespace PBC.Server.Controllers
         [HttpDelete("DeleteRecipe/{recipe}")]
         public IActionResult DeleteRecipe(IRecipeDTO recipe)
         {
-            _logger.LogInformation($"Request to delete recipe, ID: {recipe.RecipeDtoId} recieved by RecipeController, DeleteRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+            _logger.LogInformation($"Request to delete recipe recieved by RecipeController, DeleteRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
 
             var recipes = new List<IRecipeDTO>
             {

@@ -33,7 +33,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             }
             catch (Exception e)
             {
-                _logger.LogError($"Failed to delete RecipeDTO. ID: {recipeDTO.RecipeDtoId} at MessageModalEvent, DeleteRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.", e.Message);
+                _logger.LogError($"Failed to delete RecipeDTO at MessageModalEvent, DeleteRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.", e.Message);
             }
 
             lazor.Hide();

@@ -39,12 +39,12 @@ namespace PBC.Server
             services.AddScoped<IListGeneratorDTO, ListGeneratorDTO>();
             services.AddScoped<IListDayDTO, ListDayDTO>();
             services.AddScoped<IRecipeModel, RecipeModel>();
-            services.AddScoped<IRepository<IRecipeEntity>, RecipeRepository>();
+            services.AddScoped<IRepository<RecipeEntity>, RecipeRepository>();
             services.AddScoped<IRecipeService, RecipeService>();
-            services.AddScoped<IRecipeEntity, RecipeEntity>();
+            services.AddScoped<RecipeEntity>();
             services.AddScoped<IAllRecipesScraper, AllRecipesScraper>();
-            services.AddScoped<IFactory<IIngredient>, IngredientFactory>();
-            services.AddScoped<IFactory<IInstruction>, InstructionFactory>();
+            services.AddScoped<IFactory<IngredientEntity>, IngredientFactory>();
+            services.AddScoped<IFactory<InstructionEntity>, InstructionFactory>();
             services.AddScoped<IRecipeBuilder, RecipeBuilder>();
         }
 

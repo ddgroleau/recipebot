@@ -11,8 +11,8 @@ namespace PBC.Shared.RecipeComponent
     public class RecipeService : IRecipeService
     {
         private readonly IRecipeBuilder _recipeBuilder;
-        private readonly IRepository<IRecipeEntity> _recipeRepository;
-        public RecipeService(IRecipeBuilder recipeBuilder, IRepository<IRecipeEntity> recipeRepository)
+        private readonly IRepository<RecipeEntity> _recipeRepository;
+        public RecipeService(IRecipeBuilder recipeBuilder, IRepository<RecipeEntity> recipeRepository)
         {
             _recipeBuilder = recipeBuilder;
             _recipeRepository = recipeRepository;

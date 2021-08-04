@@ -12,8 +12,6 @@ namespace UnitTests.Custom_Validation
     public class RecipeTypesValidationTests : IDisposable
     {
         MustBeValidType Validation;
-        ValidationContext Context;
-
         public RecipeTypesValidationTests()
         {
             Validation = new MustBeValidType();

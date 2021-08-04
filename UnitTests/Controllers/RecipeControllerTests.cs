@@ -13,14 +13,12 @@ namespace UnitTests.Controllers
     public class RecipeControllerTests : IDisposable
     {
         ILogger<RecipeController> Logger;
-        IFactory<IIngredient> IngredientFactory;
-        IFactory<IInstruction> InstructionFactory;
         IRecipeDTO RecipeDTO;
         IAllRecipesScraper Scraper;
         IRecipeUrlDTO RecipeUrlDTO;
         RecipeController RecipeController;
-        IRecipeEntity RecipeEntity;
-        IRepository<IRecipeEntity> RecipeRepository;
+        RecipeEntity RecipeEntity;
+        IRepository<RecipeEntity> RecipeRepository;
         IRecipeService RecipeService;
         IRecipeBuilder RecipeBuilder;
         IRecipeModel RecipeModel;
@@ -28,11 +26,9 @@ namespace UnitTests.Controllers
         public RecipeControllerTests()
         {
             RecipeModel = new RecipeModel();
-            InstructionFactory = new InstructionFactory();
-            IngredientFactory = new IngredientFactory();
             Logger = new LoggerFactory().CreateLogger<RecipeController>();
             RecipeDTO = new RecipeDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeModel, InstructionFactory, IngredientFactory);
+            RecipeBuilder = new RecipeBuilder(RecipeModel);
             Scraper = new AllRecipesScraper();
             RecipeUrlDTO = new RecipeUrlDTO();
             RecipeEntity = new RecipeEntity();
@@ -44,11 +40,9 @@ namespace UnitTests.Controllers
         public void Dispose()
         {
             RecipeModel = new RecipeModel();
-            InstructionFactory = new InstructionFactory();
-            IngredientFactory = new IngredientFactory();
             Logger = new LoggerFactory().CreateLogger<RecipeController>();
             RecipeDTO = new RecipeDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeModel, InstructionFactory, IngredientFactory);
+            RecipeBuilder = new RecipeBuilder(RecipeModel);
             Scraper = new AllRecipesScraper();
             RecipeUrlDTO = new RecipeUrlDTO();
             RecipeEntity = new RecipeEntity();

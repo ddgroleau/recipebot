@@ -11,27 +11,21 @@ namespace UnitTests.RecipeComponent
 {
     public class RecipeBuilderTests : IDisposable
     {
-        IFactory<IIngredient> IngredientFactory;
-        IFactory<IInstruction> InstructionFactory;
         IRecipeModel RecipeModel;
         IRecipeBuilder RecipeBuilder;
         IRecipeDTO RecipeDTO;
 
         public RecipeBuilderTests()
         {
-            IngredientFactory = new IngredientFactory();
-            InstructionFactory = new InstructionFactory();
             RecipeModel = new RecipeModel();
-            RecipeBuilder = new RecipeBuilder(RecipeModel, InstructionFactory, IngredientFactory);
+            RecipeBuilder = new RecipeBuilder(RecipeModel);
             RecipeDTO = new RecipeDTO();
         }
 
         public void Dispose()
         {
-            IngredientFactory = new IngredientFactory();
-            InstructionFactory = new InstructionFactory();
             RecipeModel = new RecipeModel();
-            RecipeBuilder = new RecipeBuilder(RecipeModel, InstructionFactory, IngredientFactory);
+            RecipeBuilder = new RecipeBuilder(RecipeModel);
             RecipeDTO = new RecipeDTO();
         }
 
@@ -55,8 +49,8 @@ namespace UnitTests.RecipeComponent
             Assert.Equal(result.URL, recipeDTO.URL);
             Assert.Equal(result.Title, recipeDTO.Title);
             Assert.Equal(result.Description, recipeDTO.Description);
-            Assert.IsAssignableFrom<ICollection<IIngredient>>(result.Ingredients);
-            Assert.IsAssignableFrom<ICollection<IInstruction>>(result.Instructions);
+            Assert.Equal(result.Ingredients, result.Ingredients);
+            Assert.Equal(result.Instructions, result.Instructions);
         }
     }
 }

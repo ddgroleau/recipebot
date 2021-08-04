@@ -35,11 +35,11 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
                     if (response.IsSuccessStatusCode)
                     {
                         lazor.SetSuccessStatus(true);
-                        _logger.LogInformation($"Successfully posted recipe \"{recipeDTO.Title}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.");
+                        _logger.LogInformation($"Successfully posted recipe \"{recipeDTO.Title}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
                         recipeDTO.ResetRecipe();
                         return recipeDTO;
                     }
-                    _logger.LogError($"Failed to post recipe \"{recipeDTO.Title}\" to RecipeController. Server responded with {response.StatusCode}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.");
+                    _logger.LogError($"Failed to post recipe \"{recipeDTO.Title}\" to RecipeController. Server responded with {response.StatusCode}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
                     lazor.SetErrorMessage($"Sorry, something went wrong. Server responded with {response.StatusCode}.");
                     return recipeDTO;
                 }
@@ -47,7 +47,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             catch (Exception err)
             {
                 lazor.SetErrorMessage($"Sorry, something went wrong. Error {lazor.ErrorMessage}.");
-                _logger.LogError($"Exception occured when posting recipe \"{recipeDTO.Title}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. ID: {recipeDTO.RecipeDtoId}.", err.Message);
+                _logger.LogError($"Exception occured when posting recipe \"{recipeDTO.Title}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.", err.Message);
             }
             lazor.SetLoadingStatus(false);
             return recipeDTO;
