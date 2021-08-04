@@ -85,7 +85,7 @@ namespace UnitTests.DOM_Events
         [Fact]
         public void IsPropertyValid_WithInvalidStringProperty_ShouldBeFalse()
         {
-            MockObject.URL = "1234";
+            MockObject.URL = "https://www.allrecipes.com";
 
             bool isValid = Lazor.IsPropertyValid(MockObject, "URL", MockObject.URL);
 
@@ -138,6 +138,7 @@ namespace UnitTests.DOM_Events
             recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
             recipeDTO.Title = "Test";
             recipeDTO.Description = "Test";
+            recipeDTO.RecipeType = "Dinner";
             recipeDTO.Ingredients = new List<string>();
             recipeDTO.Instructions = new List<string>();
             recipeDTO.Instructions.Add("Test");
@@ -154,10 +155,68 @@ namespace UnitTests.DOM_Events
             var recipeDTO = RecipeDTO;
 
             recipeDTO.URL = "https://www.allrecipes.com/";
+            recipeDTO.RecipeType = "Breakfast";
             recipeDTO.Title = "";
             recipeDTO.Description = "Test";
             recipeDTO.Ingredients = new List<string>();
             recipeDTO.Instructions = new List<string>();
+
+            var isValid = Lazor.IsObjectValid(recipeDTO);
+
+            Assert.False(isValid);
+        }
+
+        [Fact]
+        public void IsObjectValid_WithInvalidRecipeURL_ShouldReturnFalse()
+        {
+            var recipeDTO = RecipeDTO;
+
+            recipeDTO.URL = "https://www.allrecipes.com/";
+            recipeDTO.Title = "Test";
+            recipeDTO.Description = "Test";
+            recipeDTO.Ingredients = new List<string>();
+            recipeDTO.Ingredients.Add("Test");
+            recipeDTO.Instructions = new List<string>();
+            recipeDTO.Instructions.Add("Test");
+            recipeDTO.RecipeType = "Breakfast";
+
+            var isValid = Lazor.IsObjectValid(recipeDTO);
+
+            Assert.False(isValid);
+        }
+
+        [Fact]
+        public void IsObjectValid_WithInvalidTitle_ShouldReturnFalse()
+        {
+            var recipeDTO = RecipeDTO;
+
+            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            recipeDTO.Title = "";
+            recipeDTO.Description = "Test";
+            recipeDTO.Ingredients = new List<string>();
+            recipeDTO.Ingredients.Add("Test");
+            recipeDTO.Instructions = new List<string>();
+            recipeDTO.Instructions.Add("Test");
+            recipeDTO.RecipeType = "Breakfast";
+
+            var isValid = Lazor.IsObjectValid(recipeDTO);
+
+            Assert.False(isValid);
+        }
+        
+        [Fact]
+        public void IsObjectValid_WithInvalidRecipeType_ShouldReturnFalse()
+        {
+            var recipeDTO = RecipeDTO;
+
+            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            recipeDTO.Title = "Test";
+            recipeDTO.Description = "Test";
+            recipeDTO.Ingredients = new List<string>();
+            recipeDTO.Ingredients.Add("Test");
+            recipeDTO.Instructions = new List<string>();
+            recipeDTO.Instructions.Add("Test");
+            recipeDTO.RecipeType = "Supper";
 
             var isValid = Lazor.IsObjectValid(recipeDTO);
 

@@ -2,6 +2,7 @@
 using PBC.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -97,7 +98,6 @@ namespace UnitTests.RecipeComponent
             recipeDTO.RecipeType = "Dinner";
             recipeDTO.Ingredients = new List<string>();
             recipeDTO.Instructions = new List<string>();
-
             recipeDTO.Instructions.Add("Test");
             recipeDTO.Ingredients.Add("Test");
 
@@ -155,5 +155,6 @@ namespace UnitTests.RecipeComponent
 
             Assert.Throws<InvalidOperationException>(() => RecipeService.CreateRecipe(recipeDTO));
         }
+
     }
 }

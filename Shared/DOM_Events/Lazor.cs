@@ -100,11 +100,11 @@ namespace PBC.Shared.Lazor
             {
                 var validationContext = new ValidationContext(obj);
 
-                isValid = Validator.TryValidateObject(obj, validationContext, new List<ValidationResult>());
+                isValid = Validator.TryValidateObject(obj, validationContext, new List<ValidationResult>(), true);
             }
             catch (Exception)
             {
-                throw;
+                isValid = false;
             }
             return isValid;
         }

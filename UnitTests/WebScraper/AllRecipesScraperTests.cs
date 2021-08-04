@@ -226,7 +226,7 @@ namespace UnitTests.WebScraper
             recipeDTOExpected.Ingredients.Add("1 tablespoon pressed fresh ginger juice");
             recipeDTOExpected.Ingredients.Add("1 fresh squeezed lemon (medium-sized)");
             recipeDTOExpected.Ingredients.Add("1 teaspoon pure vanilla extract");
-            recipeDTOExpected.Ingredients.Add("5 packets Stevia Extract In The Raw");
+            recipeDTOExpected.Ingredients.Add("5 packets Stevia Extract In The Raw®");
 
             recipeDTOExpected.Instructions.Add("Cut small pieces of peeled ginger root and place in a press (like the kind used for garlic). Press ginger root to produce 1 tablespoon of juice and place in small bowl. " +
                 "Add strained lemon juice, vanilla extract and Stevia Extract In The Raw. Stir to combine.");

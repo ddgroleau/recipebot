@@ -83,7 +83,7 @@ namespace PBC.Shared.WebScraper
 
                 recipeDTO.Ingredients = page.DocumentNode
                                       .SelectNodes("//span[@class='recipe-ingred_txt added']")
-                                      .Select(x => x.InnerHtml.Trim().Replace("&#174;", "")).ToList();
+                                      .Select(x => x.InnerHtml.Trim()).ToList();
 
                 recipeDTO.Instructions = recipeDTO.Instructions = page.DocumentNode
                                       .SelectNodes("//span[@class='recipe-directions__list--item']")

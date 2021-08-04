@@ -67,13 +67,15 @@ namespace UnitTests.Controllers
         [Fact]
         public void CreateOrUpdateRecipe_WithValidRecipeDTO_ShouldReturn200()
         {
-            RecipeDTO.URL = "https://www.allrecipes.com/recipe/264739/lemon-garlic-chicken-kebabs/";
-            RecipeDTO.Title = "test";
-            RecipeDTO.RecipeType = "BreakFast";
-            RecipeDTO.Ingredients.Add("test");
-            RecipeDTO.Instructions.Add("test");
+            var recipeDTO = RecipeDTO;
 
-            var postResult = RecipeController.CreateOrUpdateRecipe((RecipeDTO)RecipeDTO);
+            recipeDTO.URL = "https://www.allrecipes.com/recipe/264739/lemon-garlic-chicken-kebabs/";
+            recipeDTO.Title = "test";
+            recipeDTO.RecipeType = "Breakfast";
+            recipeDTO.Ingredients.Add("test");
+            recipeDTO.Instructions.Add("test");
+
+            var postResult = RecipeController.CreateOrUpdateRecipe((RecipeDTO)recipeDTO);
 
             Assert.IsType<OkResult>(postResult);
         }
