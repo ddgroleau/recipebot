@@ -105,5 +105,14 @@ namespace UnitTests.Controllers
             Assert.IsType<OkResult>(result);
         }
 
+        [Fact]
+        public void GetRecipesByTitle_WithValidSearchParameter_ShouldReturnRecipes()
+        {
+            string searchText = "Test";
+
+            var results = RecipeController.GetRecipeByTitle(searchText);
+
+            Assert.True(results.Any());
+        }
     }
 }

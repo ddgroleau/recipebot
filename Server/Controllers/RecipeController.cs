@@ -112,6 +112,12 @@ namespace PBC.Server.Controllers
             }
 
             return Ok();
+        }   
+
+        [HttpGet("SearchRecipe/{recipe}")]
+        public IEnumerable<IRecipeDTO> GetRecipeByTitle(string recipe)
+        {
+            return new List<IRecipeDTO>();
         }
     }
 }
