@@ -8,6 +8,6 @@ namespace PBC.Shared.RecipeComponent
 {
     public interface IRecipeBuilder
     {
-        public IRecipeModel Build(IRecipeDTO recipeDTO);
+        public IRecipeServiceDTO Build(IRecipeDTO recipeDTO);
     }
 }

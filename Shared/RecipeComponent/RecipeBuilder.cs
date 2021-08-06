@@ -8,24 +8,24 @@ namespace PBC.Shared.RecipeComponent
 {
     public class RecipeBuilder : IRecipeBuilder
     {
-        private readonly IRecipeModel _recipeModel;
+        private readonly IRecipeServiceDTO _recipeServiceDTO;
 
-        public RecipeBuilder(IRecipeModel recipeModel)
+        public RecipeBuilder(IRecipeServiceDTO recipeServiceDTO)
         {
-            _recipeModel = recipeModel;
+            _recipeServiceDTO = recipeServiceDTO;
         }
 
-        public IRecipeModel Build(IRecipeDTO recipeDTO)
+        public IRecipeServiceDTO Build(IRecipeDTO recipeDTO)
         {
-            IRecipeModel recipeModel = _recipeModel;
-            recipeModel.URL = recipeDTO.URL;
-            recipeModel.Title = recipeDTO.Title;
-            recipeModel.Description = recipeDTO.Description;
-            recipeModel.RecipeType = recipeDTO.RecipeType;
-            recipeModel.Ingredients = recipeDTO.Ingredients;
-            recipeModel.Instructions = recipeDTO.Instructions;
+            IRecipeServiceDTO recipeServiceDTO = _recipeServiceDTO;
+            recipeServiceDTO.URL = recipeDTO.URL;
+            recipeServiceDTO.Title = recipeDTO.Title;
+            recipeServiceDTO.Description = recipeDTO.Description;
+            recipeServiceDTO.RecipeType = recipeDTO.RecipeType;
+            recipeServiceDTO.Ingredients = recipeDTO.Ingredients;
+            recipeServiceDTO.Instructions = recipeDTO.Instructions;
 
-            return recipeModel;
+            return recipeServiceDTO;
         }
     }
 }

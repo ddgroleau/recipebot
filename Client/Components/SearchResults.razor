@@ -1,0 +1,17 @@
+﻿
+<div class="l-modal">
+    <div class="card">
+
+        <h4 class="card-header">Search Results</h4>
+
+        <div class="card-body">
+                <CookbookTable IsUserCookBook="false" IsSearchResults="true"/>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [CascadingParameter(Name ="RecipesFound")]
+    public List<RecipeDTO> RecipesFound { get; set; }
+}

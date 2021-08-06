@@ -32,17 +32,15 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
 
         public async Task<IEnumerable<IRecipeDTO>> GetRecipesAsync(bool isUserCookbook, string userName)
         {
-            IEnumerable<IRecipeDTO> retrievedRecipes = new List<IRecipeDTO>();
-
             try
             {
                 if (isUserCookbook)
                 {
-                    retrievedRecipes = await _http.GetFromJsonAsync<IEnumerable<RecipeDTO>>($"/api/Recipe/UserRecipes/{userName}");
+                    RetrievedRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>($"/api/Recipe/UserRecipes/{userName}");
                 }
                 else
                 {
-                    retrievedRecipes = await _http.GetFromJsonAsync<IEnumerable<RecipeDTO>>("/api/Recipe/AllRecipes");
+                    RetrievedRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>("/api/Recipe/AllRecipes");
                 }
             }
             catch (Exception e)
@@ -50,7 +48,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
                 _logger.LogError($"Could not get recipes from recipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. Error: {e.Message}", e);
             }
 
-            return retrievedRecipes;
+            return RetrievedRecipes;
         }
 
 

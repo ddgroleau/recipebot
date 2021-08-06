@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PBC.Shared.RecipeComponent
 {
-    public class IngredientFactory : IFactory<IngredientEntity>
+    public class IngredientFactory : IFactory<Ingredient>
     {
-        public IngredientEntity Make()
+        public Ingredient Make()
         {
-            return new IngredientEntity();
+            return new Ingredient();
         }
     }
 }

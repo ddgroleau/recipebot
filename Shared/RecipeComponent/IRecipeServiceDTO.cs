@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace PBC.Shared.RecipeComponent
 {
-    public class RecipeModel : IRecipeModel
+    public interface IRecipeServiceDTO
     {
+        public string RecipeId { get; }
         public string RecipeType { get; set; }
+
         public string URL { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

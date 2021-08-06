@@ -12,35 +12,35 @@ namespace UnitTests.RecipeComponent
 {
     public class RecipeServiceTests : IDisposable
     {
-        IRecipeModel RecipeModel;
+        IRecipeServiceDTO RecipeServiceDTO;
         IRecipeBuilder RecipeBuilder;
         IRecipeDTO RecipeDTO;
-        RecipeEntity RecipeEntity;
-        IRepository<RecipeEntity> RecipeRepository;
+        Recipe Recipe;
+        IRepository<Recipe> RecipeRepository;
         RecipeService RecipeService;
 
         public RecipeServiceTests()
         {
-            RecipeModel = new RecipeModel();
-            RecipeBuilder = new RecipeBuilder(RecipeModel);
+            RecipeServiceDTO = new RecipeServiceDTO();
+            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO);
             RecipeDTO = new RecipeDTO();
-            RecipeEntity = new RecipeEntity();
+            Recipe = new Recipe();
             RecipeRepository = new RecipeRepository();
             RecipeService = new RecipeService(RecipeBuilder, RecipeRepository);
         }
 
         public void Dispose()
         {
-            RecipeModel = new RecipeModel();
-            RecipeBuilder = new RecipeBuilder(RecipeModel);
+            RecipeServiceDTO = new RecipeServiceDTO();
+            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO);
             RecipeDTO = new RecipeDTO();
-            RecipeEntity = new RecipeEntity();
+            Recipe = new Recipe();
             RecipeRepository = new RecipeRepository();
             RecipeService = new RecipeService(RecipeBuilder, RecipeRepository);
         }
   
         [Fact]
-        public void CreateRecipe_WithValidRecipeDTO_ShouldReturnRecipeModel()
+        public void CreateRecipe_WithValidRecipeDTO_ShouldReturnRecipeServiceDTO()
         {
             var recipeDTO = RecipeDTO;
 

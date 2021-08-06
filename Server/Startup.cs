@@ -38,13 +38,13 @@ namespace PBC.Server
             services.AddScoped<IRecipeDTO, RecipeDTO>();
             services.AddScoped<IListGeneratorDTO, ListGeneratorDTO>();
             services.AddScoped<IListDayDTO, ListDayDTO>();
-            services.AddScoped<IRecipeModel, RecipeModel>();
-            services.AddScoped<IRepository<RecipeEntity>, RecipeRepository>();
+            services.AddScoped<IRecipeServiceDTO, RecipeServiceDTO>();
+            services.AddScoped<IRepository<Recipe>, RecipeRepository>();
             services.AddScoped<IRecipeService, RecipeService>();
-            services.AddScoped<RecipeEntity>();
+            services.AddScoped<Recipe>();
             services.AddScoped<IAllRecipesScraper, AllRecipesScraper>();
-            services.AddScoped<IFactory<IngredientEntity>, IngredientFactory>();
-            services.AddScoped<IFactory<InstructionEntity>, InstructionFactory>();
+            services.AddScoped<IFactory<Ingredient>, IngredientFactory>();
+            services.AddScoped<IFactory<Instruction>, InstructionFactory>();
             services.AddScoped<IRecipeBuilder, RecipeBuilder>();
         }
 

@@ -5,6 +5,7 @@ using PBC.Shared;
 using PBC.Shared.RecipeComponent;
 using PBC.Shared.WebScraper;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -17,21 +18,19 @@ namespace UnitTests.Controllers
         IAllRecipesScraper Scraper;
         IRecipeUrlDTO RecipeUrlDTO;
         RecipeController RecipeController;
-        RecipeEntity RecipeEntity;
-        IRepository<RecipeEntity> RecipeRepository;
+        IRepository<Recipe> RecipeRepository;
         IRecipeService RecipeService;
         IRecipeBuilder RecipeBuilder;
-        IRecipeModel RecipeModel;
+        IRecipeServiceDTO RecipeServiceDTO;
 
         public RecipeControllerTests()
         {
-            RecipeModel = new RecipeModel();
+            RecipeServiceDTO = new RecipeServiceDTO();
             Logger = new LoggerFactory().CreateLogger<RecipeController>();
             RecipeDTO = new RecipeDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeModel);
+            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO);
             Scraper = new AllRecipesScraper();
             RecipeUrlDTO = new RecipeUrlDTO();
-            RecipeEntity = new RecipeEntity();
             RecipeRepository = new RecipeRepository();
             RecipeService = new RecipeService(RecipeBuilder, RecipeRepository);
             RecipeController = new RecipeController(Logger, RecipeDTO, Scraper, RecipeService);
@@ -39,13 +38,12 @@ namespace UnitTests.Controllers
 
         public void Dispose()
         {
-            RecipeModel = new RecipeModel();
+            RecipeServiceDTO = new RecipeServiceDTO();
             Logger = new LoggerFactory().CreateLogger<RecipeController>();
             RecipeDTO = new RecipeDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeModel);
+            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO);
             Scraper = new AllRecipesScraper();
             RecipeUrlDTO = new RecipeUrlDTO();
-            RecipeEntity = new RecipeEntity();
             RecipeRepository = new RecipeRepository();
             RecipeService = new RecipeService(RecipeBuilder, RecipeRepository);
             RecipeController = new RecipeController(Logger, RecipeDTO, Scraper, RecipeService);
@@ -110,9 +108,9 @@ namespace UnitTests.Controllers
         {
             string searchText = "Test";
 
-            var results = RecipeController.GetRecipeByTitle(searchText);
+            var results = RecipeController.SearchRecipes(searchText);
 
-            Assert.True(results.Any());
+            Assert.IsAssignableFrom<List<RecipeDTO>>(results);
         }
     }
 }

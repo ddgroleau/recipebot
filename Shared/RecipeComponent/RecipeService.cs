@@ -11,16 +11,16 @@ namespace PBC.Shared.RecipeComponent
     public class RecipeService : IRecipeService
     {
         private readonly IRecipeBuilder _recipeBuilder;
-        private readonly IRepository<RecipeEntity> _recipeRepository;
-        public RecipeService(IRecipeBuilder recipeBuilder, IRepository<RecipeEntity> recipeRepository)
+        private readonly IRepository<Recipe> _recipeRepository;
+        public RecipeService(IRecipeBuilder recipeBuilder, IRepository<Recipe> recipeRepository)
         {
             _recipeBuilder = recipeBuilder;
             _recipeRepository = recipeRepository;
         }
 
-        public IRecipeModel CreateRecipe(IRecipeDTO recipeDTO)
+        public IRecipeServiceDTO CreateRecipe(IRecipeDTO recipeDTO)
         {
-            IRecipeModel recipeModel;
+            IRecipeServiceDTO recipeModel;
 
             if (RecipeIsValid(recipeDTO))
             {
@@ -35,7 +35,7 @@ namespace PBC.Shared.RecipeComponent
             return recipeModel;
         }
 
-        private IRecipeModel SaveRecipe(IRecipeModel recipeModel)
+        private IRecipeServiceDTO SaveRecipe(IRecipeServiceDTO recipeModel)
         {
             try
             {

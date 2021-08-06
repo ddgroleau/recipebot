@@ -1,45 +1,47 @@
-﻿
-<ul class="navbar-nav">
+﻿@inject ILazor Lazor
 
-    <li class="nav-item">
-        <SearchBar />
-    </li>
-    <li class="nav-item">
-        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-            Home
-        </NavLink>
-    </li>
-    <li class="nav-item">
-        <NavLink class="nav-link" href="cookbook">
-            Cookbook
-        </NavLink>
-    </li>
-    <li class="nav-item">
-        <NavLink class="nav-link" href="lists">
-            Lists
-        </NavLink>
-    </li>
-    <li class="nav-item">
-        <NavLink class="nav-link" href="account">
-            Account
-        </NavLink>
-    </li>
-    <li class="nav-item">
-        <NavLink class="nav-link" href="login" style=@login>
-            Login
-        </NavLink>
-    </li>
-    <li class="nav-item">
-        <NavLink class="nav-link" href="logout" style=@logout>
-            Logout
-        </NavLink>
-    </li>
+    <ul class="navbar-nav">
 
-</ul>
+        <li class="nav-item">
+            <SearchBar />
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                Home
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="cookbook">
+                Cookbook
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="lists">
+                Lists
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="account">
+                Account
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="login" style=@login>
+                Login
+            </NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="logout" style=@logout>
+                Logout
+            </NavLink>
+        </li>
+    </ul>
 
-@code {
-    private static bool isLoggedIn { get; set; } = true;
-    private string login { get; set; } = $"{ (isLoggedIn ? "display:none" : "display:normal") }";
-    private string logout { get; set; } = $"{ (isLoggedIn ? "display:normal" : "display:none") }";
 
-}
+    @code {
+        private static bool isLoggedIn { get; set; } = true;
+        private string login { get; set; } = $"{ (isLoggedIn ? "display:none" : "display:normal") }";
+        private string logout { get; set; } = $"{ (isLoggedIn ? "display:normal" : "display:none") }";
+
+
+    }

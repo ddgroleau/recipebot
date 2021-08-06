@@ -13,6 +13,7 @@
 
         </tr>
         @{
+            
             foreach (var recipe in Event.RetrievedRecipes)
             {
                 var retrievedRecipe = recipe;
@@ -45,12 +46,12 @@
                     </td>
                 </tr>
             }
-                    <CascadingValue Name="LazorObject" Value="Event.Lazor">
-                        <CascadingValue Name="RecipeDTO" Value="@Event.RecipeDTO">
-                            <MessageModal IsDeleteAction="Event.IsDeleteAction">@Event.Message</MessageModal>
-                            <EditRecipeModal HandleClick="Event.Lazor.Toggle" />
-                        </CascadingValue>
-                    </CascadingValue>
+            <CascadingValue Name="LazorObject" Value="Event.Lazor">
+                <CascadingValue Name="RecipeDTO" Value="@Event.RecipeDTO">
+                    <MessageModal IsDeleteAction="Event.IsDeleteAction">@Event.Message</MessageModal>
+                    <EditRecipeModal HandleClick="Event.Lazor.Toggle" />
+                </CascadingValue>
+            </CascadingValue>
         }
     </table>
 
@@ -60,9 +61,13 @@
     [Parameter]
     public bool IsUserCookBook { get; set; } = true;
 
+    [Parameter]
+    public bool IsSearchResults { get; set; } = false;
+
     protected override async Task OnInitializedAsync()
     {
         Event.RetrievedRecipes = await Event.GetRecipesAsync(IsUserCookBook, "TestUser");
+
         StateHasChanged();
     }
 

@@ -1,13 +1,13 @@
 ﻿@inject ISearchBarEvent Event
 
 <div>
-    <div class="l-form">
+    <form class="l-form" @onsubmit="Event.HandleClick">
         <input class="l-search-field" @bind-value="Event.SearchText"
                @bind-value:event="oninput" @onkeypress="Event.HandleKeyPress" placeholder="Search Recipes" />
-        <button type="button" @onclick="Event.HandleClick" @ontouchenter="Event.HandleClick" class="l-search-button">
+        <button type="submit" class="l-search-button">
             <img src="search.png">
         </button>
-    </div>
+    </form>
     @{
         if (!string.IsNullOrEmpty(Event.SearchText))
         {
@@ -28,6 +28,10 @@
         }
     }
 </div>
+
+<CascadingValue Name="RecipesFound" Value=@Event.RecipesFound>
+    <SearchResults />
+</CascadingValue>
 
 @code {
 

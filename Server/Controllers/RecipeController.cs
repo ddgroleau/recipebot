@@ -114,10 +114,11 @@ namespace PBC.Server.Controllers
             return Ok();
         }   
 
-        [HttpGet("SearchRecipe/{recipe}")]
-        public IEnumerable<IRecipeDTO> GetRecipeByTitle(string recipe)
+        [HttpGet("SearchRecipes/{searchText}")]
+        public IEnumerable<IRecipeDTO> SearchRecipes(string searchText)
         {
-            return new List<IRecipeDTO>();
+            _logger.LogInformation($"Search request received by RecipeController, SearchRecipes method. Search text: {searchText}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+            return new List<RecipeDTO>();
         }
     }
 }

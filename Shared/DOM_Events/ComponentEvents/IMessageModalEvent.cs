@@ -14,3 +14,5 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         public void DeleteRecipe(IRecipeDTO recipeDTO, ILazor lazor);
     }
 }
+
+
