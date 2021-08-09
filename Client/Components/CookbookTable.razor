@@ -58,15 +58,9 @@
 </div>
 
 @code {
-    [Parameter]
-    public bool IsUserCookBook { get; set; } = true;
-
-    [Parameter]
-    public bool IsSearchResults { get; set; } = false;
-
     protected override async Task OnInitializedAsync()
     {
-        Event.RetrievedRecipes = await Event.GetRecipesAsync(IsUserCookBook, "TestUser");
+        Event.RetrievedRecipes = await Event.GetRecipesAsync("TestUser");
 
         StateHasChanged();
     }

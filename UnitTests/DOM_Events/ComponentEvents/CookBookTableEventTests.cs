@@ -44,7 +44,7 @@ namespace UnitTests.DOM_Events.ComponentEvents
         [Fact]
         public async void GetRecipesAsync_WithValidParameters_ShouldBeCorrectType()
         {
-            var recipes = await Cookbook.GetRecipesAsync(false, "TestUser");
+            var recipes = await Cookbook.GetRecipesAsync("TestUser");
 
             Assert.IsAssignableFrom<IEnumerable<IRecipeDTO>>(recipes);
         }

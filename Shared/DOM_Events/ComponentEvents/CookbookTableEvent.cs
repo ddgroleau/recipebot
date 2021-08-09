@@ -30,18 +30,11 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             RetrievedRecipes = retrievedRecipes;
         }
 
-        public async Task<IEnumerable<IRecipeDTO>> GetRecipesAsync(bool isUserCookbook, string userName)
+        public async Task<IEnumerable<IRecipeDTO>> GetRecipesAsync(string userName)
         {
             try
             {
-                if (isUserCookbook)
-                {
                     RetrievedRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>($"/api/Recipe/UserRecipes/{userName}");
-                }
-                else
-                {
-                    RetrievedRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>("/api/Recipe/AllRecipes");
-                }
             }
             catch (Exception e)
             {

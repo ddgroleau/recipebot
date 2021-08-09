@@ -80,14 +80,6 @@ namespace UnitTests.Controllers
         }
 
         [Fact]
-        public void GetAllRecipes_WithNoParameters_ShouldReturnRecipes()
-        {
-            var retrievedRecipes = RecipeController.GetAllRecipes();
-
-            Assert.True(retrievedRecipes.Any());
-        }
-
-        [Fact]
         public void GetUserRecipes_WithValidUserName_ShouldReturnRecipes()
         {
             var retrievedRecipes = RecipeController.GetUserRecipes("UserName");

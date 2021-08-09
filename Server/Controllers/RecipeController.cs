@@ -61,21 +61,6 @@ namespace PBC.Server.Controllers
             return BadRequest();
         }
 
-        [HttpGet("AllRecipes")]
-        public IEnumerable<IRecipeDTO> GetAllRecipes()
-        {
-            _logger.LogInformation($"Request for all recipes recieved by RecipeController, GetAllRecipes method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-
-            var recipes = new List<IRecipeDTO>
-            {
-                new RecipeDTO { Title = "GlobalTitle1", Description = "GlobalDescription1" },
-                new RecipeDTO { Title = "GlobalTitle2", Description = "GlobalDescription2" },
-                new RecipeDTO { Title = "GlobalTitle3", Description = "GlobalDescription3" },
-            };
-
-            return recipes;
-        }
-
         [HttpGet("UserRecipes/{username}")]
         public IEnumerable<IRecipeDTO> GetUserRecipes(string username)
         {
