@@ -14,7 +14,7 @@
             <div class="position-fixed">
                 <ul class="bg-white l-searchResults list-unstyled">
                     @{
-                        @foreach (var recipe in Event.RecipesFound)
+                        @foreach (var recipe in Event.SearchResults)
                         {
                             <li>
                                 <a>
@@ -28,7 +28,11 @@
         }
     }
 </div>
+    
 
+    <CascadingValue Name="SearchBarEvent" Value="Event">
+        <SearchResults />
+    </CascadingValue>
 
 @code {
 

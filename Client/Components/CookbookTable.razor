@@ -13,11 +13,13 @@
 
         </tr>
         @{
-            
-            foreach (var recipe in Event.RetrievedRecipes)
+            var retrievedRecipse = Event.RetrievedRecipes;
+            if (IsSearchResults)
             {
-                var retrievedRecipe = recipe;
-
+                retrievedRecipse = SearchResults;
+            }
+            foreach (var recipe in retrievedRecipse)
+            {
                 <tr>
                     <td>@recipe.Title</td>
                     <td>@recipe.Description</td>
@@ -65,4 +67,9 @@
         StateHasChanged();
     }
 
+    [CascadingParameter(Name ="SearchResults")]
+    public IEnumerable<IRecipeDTO> SearchResults { get; set; } = new List<RecipeDTO>();
+
+    [Parameter]
+    public bool IsSearchResults { get; set; } = false;
 }

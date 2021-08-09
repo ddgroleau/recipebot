@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
+using PBC.Shared.DOM_Events;
 using PBC.Shared.DOM_Events.ComponentEvents;
+using PBC.Shared.Lazor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,20 +16,23 @@ namespace UnitTests.DOM_Events.ComponentEvents
     public class SearchBarEventTests : IDisposable
     {
         HttpClient Http;
+        ILazor Lazor;
         ILogger<ISearchBarEvent> Logger;
         ISearchBarEvent SearchBarEvent;
         public SearchBarEventTests()
         {
+            Lazor = new Lazor();
             Logger = new LoggerFactory().CreateLogger<ISearchBarEvent>();
             Http = new HttpClient();
-            SearchBarEvent = new SearchBarEvent(Http, Logger);
+            SearchBarEvent = new SearchBarEvent(Http, Logger, Lazor);
         }
 
         public void Dispose()
         {
+            Lazor = new Lazor();
             Logger = new LoggerFactory().CreateLogger<ISearchBarEvent>();
             Http = new HttpClient();
-            SearchBarEvent = new SearchBarEvent(Http, Logger);
+            SearchBarEvent = new SearchBarEvent(Http, Logger, Lazor);
         }
 
         [Fact]
@@ -37,7 +42,7 @@ namespace UnitTests.DOM_Events.ComponentEvents
 
             SearchBarEvent.HandleKeyPress();
 
-            Assert.False(SearchBarEvent.RecipesFound.Any());
+            Assert.False(SearchBarEvent.SearchResults.Any());
         }
 
         [Fact]
@@ -47,7 +52,7 @@ namespace UnitTests.DOM_Events.ComponentEvents
 
             SearchBarEvent.HandleClick();
 
-            Assert.False(SearchBarEvent.RecipesFound.Any());
+            Assert.False(SearchBarEvent.SearchResults.Any());
         }
     }
 }

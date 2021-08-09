@@ -1,17 +1,32 @@
-﻿
-<div class="l-modal">
-    <div class="card">
+﻿<div class="@Event.Lazor.ToggleTarget">
+    <div class="l-modal">
+        <div class="card">
 
-        <h4 class="card-header">Search Results</h4>
+            <div class="card-header">
+                <h4>Search Results</h4>
+                <button type="button" @onclick="(() => Event.Lazor.Toggle())" class="btn btn-danger float-right">&times;</button>
+            </div>
+            @{ if (Event.SearchResults.Any())
+                {
+                    <div class="card-body">
+                        <CascadingValue Name="SearchResults" Value="Event.SearchResults">
+                            <CookbookTable IsSearchResults="true" />
+                        </CascadingValue>
+                    </div>
+                }
+                else
+                {
+                    <p>No recipes found.</p>
+                }
 
-        <div class="card-body">
-                <CookbookTable IsUserCookBook="false" IsSearchResults="true"/>
+            }
+
         </div>
     </div>
 </div>
 
 @code {
 
-    [CascadingParameter(Name ="RecipesFound")]
-    public List<RecipeDTO> RecipesFound { get; set; }
+    [CascadingParameter(Name = "SearchBarEvent")]
+    public ISearchBarEvent Event { get; set; }
 }

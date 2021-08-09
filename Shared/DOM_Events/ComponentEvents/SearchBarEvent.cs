@@ -12,49 +12,47 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
 {
     public class SearchBarEvent : ISearchBarEvent
     {
+        public ILazor Lazor { get; set; }
 
         private readonly HttpClient _http;
         private readonly ILogger<ISearchBarEvent> _logger;
 
-        public SearchBarEvent(HttpClient http, ILogger<ISearchBarEvent> logger)
+        public SearchBarEvent(HttpClient http, ILogger<ISearchBarEvent> logger, ILazor lazor)
         {
             _http = http;
             _logger = logger;
+            Lazor = lazor;
         }
 
         public string SearchText { get; set; }
-        public IEnumerable<IRecipeDTO> RecipesFound { get; set; } = new List<RecipeDTO>();
+        public IEnumerable<IRecipeDTO> SearchResults { get; set; } = new List<RecipeDTO>();
 
         public async Task<IEnumerable<IRecipeDTO>> HandleKeyPress()
         {
-            try
-            {
-                if (!String.IsNullOrEmpty(SearchText))
-                {
-                   RecipesFound = await _http.GetFromJsonAsync<List<RecipeDTO>>($"/api/Recipe/SearchRecipes/{SearchText}");
-                }
-            }
-            catch (Exception)
-            {
-                _logger.LogError($"Failure to search recipes on key up at SearchBarEvent. Search text: {SearchText}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-            }
+            await SearchRecipes();
 
-            return RecipesFound;
+            return SearchResults;
         }
 
         public async Task HandleClick()
         {
+            await SearchRecipes();
+
+            Lazor.Toggle();
+        }
+
+        private async Task SearchRecipes()
+        {
             try
             {
                 if (!String.IsNullOrEmpty(SearchText))
                 {
-                    _logger.LogInformation($"Submitting a search for \"{SearchText}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-                    RecipesFound = await _http.GetFromJsonAsync<List<RecipeDTO>>($"/api/Recipe/SearchRecipes/{SearchText}");
+                    SearchResults = await _http.GetFromJsonAsync<List<RecipeDTO>>($"/api/Recipe/SearchRecipes/{SearchText}");
                 }
             }
             catch (Exception)
             {
-                _logger.LogError($"Failure to search recipes on key up at SearchBarEvent. Search text: {SearchText}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+                _logger.LogError($"Failure to search recipes at SearchBarEvent. Search text: {SearchText}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
             }
         }
     }
