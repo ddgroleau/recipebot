@@ -6,7 +6,8 @@
                 <h4>Search Results</h4>
                 <button type="button" @onclick="(() => Event.Lazor.Toggle())" class="btn btn-danger float-right">&times;</button>
             </div>
-            @{ if (Event.SearchResults.Any())
+            @{ 
+                if (Event.SearchResults.Any())
                 {
                     <div class="card-body">
                         <CascadingValue Name="SearchResults" Value="Event.SearchResults">
@@ -18,7 +19,6 @@
                 {
                     <p>No recipes found.</p>
                 }
-
             }
 
         </div>
