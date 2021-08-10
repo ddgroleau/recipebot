@@ -43,6 +43,7 @@ namespace PBC.Client
             builder.Services.AddScoped<IEditRecipeEvent, EditRecipeEvent>();
             builder.Services.AddScoped<ICookBookTableEvent, CookbookTableEvent>();
             builder.Services.AddScoped<ISearchBarEvent, SearchBarEvent>();
+            builder.Services.AddScoped<IListGeneratorEvent, ListGeneratorEvent>();
 
             builder.Services.AddScoped<IEnumerable<IRecipeDTO>, List<RecipeDTO>>();
 

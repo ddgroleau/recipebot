@@ -14,6 +14,6 @@ namespace PBC.Shared
         public int Id { get; set; }
         [Range(0, 7)]
         public int Days { get; set; } = 0;
-        public Dictionary<int, ListDayDTO> GeneratedDays { get; set; } = new Dictionary<int, ListDayDTO>();
+        public Dictionary<int, IListDayDTO> GeneratedDays { get; set; } = new Dictionary<int, IListDayDTO>();
     }
 }

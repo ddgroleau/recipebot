@@ -1,7 +1,10 @@
-﻿using PBC.Shared.ListComponent;
+﻿using Microsoft.Extensions.Logging;
+using PBC.Shared.ListComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,12 +14,19 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
     {
         public ILazor Lazor { get; set; }
         public IListGeneratorDTO ListGeneratorDTO { get; set; }
-        public ListGeneratorEvent(ILazor lazor, IListGeneratorDTO listGeneratorDTO)
+        public IListDayDTO ListDayDTO { get; set; }
+
+        private readonly HttpClient _http;
+        private readonly ILogger<ListGeneratorEvent> _logger;
+        public ListGeneratorEvent(ILazor lazor, IListGeneratorDTO listGeneratorDTO, IListDayDTO listDayDTO, HttpClient http, ILogger<ListGeneratorEvent> logger)
         {
             Lazor = lazor;
             ListGeneratorDTO = listGeneratorDTO;
+            ListDayDTO = listDayDTO;
+            _http = http;
+            _logger = logger;
         }
-        public void AddDay()
+        public async Task AddDay()
         {
             Lazor.SetErrorMessage(null);
             if (ListGeneratorDTO.Days >= 7)
@@ -25,10 +35,17 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             }
             else
             {
-                ListGeneratorDTO.Days += 1;
-                // To do: add functionality to fill in day object.
-                ListDayDTO day = new ListDayDTO();
-                ListGeneratorDTO.GeneratedDays.Add(ListGeneratorDTO.Days, day);
+                try
+                {
+                    ListGeneratorDTO.Days += 1;
+                    var listDay = ListDayDTO;
+                    listDay = await _http.GetFromJsonAsync<ListDayDTO>("/api/list/day");
+                    ListGeneratorDTO.GeneratedDays.Add(ListGeneratorDTO.Days, listDay);
+                }
+                    catch (Exception)
+                {
+                    _logger.LogError($"Could not retrieve random recipe from ListController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}");
+                }
             }
 
         }
