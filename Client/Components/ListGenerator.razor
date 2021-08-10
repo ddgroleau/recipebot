@@ -5,8 +5,10 @@
         Generate List
         <br />
         <label>Days:</label>
-        <button class="btn btn-success" @onclick="() => Event.AddDay()">+</button>
-        <button class="btn btn-danger" @onclick="() => Event.RemoveDay()">(-)</button>
+        <CascadingValue Name="loading" Value="@Event.Lazor.Loading">
+            <LoadingButton HandleClick="() => Event.AddDay()">(+)</LoadingButton>
+            <LoadingButton HandleClick="() => Event.RemoveDay()">(-)</LoadingButton>
+        </CascadingValue>
         <EditForm Model="Event.ListGeneratorDTO">
             <DataAnnotationsValidator />
             <InputNumber @bind-Value=@Event.ListGeneratorDTO.Days />
