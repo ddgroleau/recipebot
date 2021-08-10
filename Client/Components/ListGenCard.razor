@@ -2,13 +2,14 @@
     <div class="card">
         <h4 class="card-header">DayCard</h4>
         <div class="card-body">
-            <p class="card-text">Date</p><br />
-            <p class="card-text">Breakfast</p><br />
-            <p class="card-text">Lunch</p><br />
-            <p class="card-text">Dinner</p><br />
+            <p class="card-text">@GeneratedDay.Date</p><br />
+            <p class="card-text">@GeneratedDay.Breakfast</p><br />
+            <p class="card-text">@GeneratedDay.Lunch</p><br />
+            <p class="card-text">@GeneratedDay.Dinner</p><br />
         </div>
     </div>
 </div>
     @code {
-
+        [CascadingParameter(Name = "GeneratedDay")]
+        public IListDayDTO GeneratedDay { get; set; }
     }

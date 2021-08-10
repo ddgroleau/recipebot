@@ -31,4 +31,8 @@
     <ProjectReference Include="..\Shared\PBC.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ListComponent\" />
+  </ItemGroup>
+
 </Project>

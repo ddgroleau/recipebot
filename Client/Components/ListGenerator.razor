@@ -1,32 +1,33 @@
-﻿@inject IListGeneratorDTO model
-@inject ILazor e
+﻿@inject IListGeneratorEvent Event
 
 <div class="card">
     <h4 class="card-header">
         Generate List
         <br />
         <label>Days:</label>
-        <button class="btn btn-success" @onclick="() => model.AddDay(e)">+</button>
-        <button class="btn btn-danger" @onclick="() => model.RemoveDay(e)">(-)</button>
-        <EditForm Model="model">
+        <button class="btn btn-success" @onclick="() => Event.AddDay()">+</button>
+        <button class="btn btn-danger" @onclick="() => Event.RemoveDay()">(-)</button>
+        <EditForm Model="Event.ListGeneratorDTO">
             <DataAnnotationsValidator />
-            <InputNumber @bind-Value=@model.Days />
+            <InputNumber @bind-Value=@Event.ListGeneratorDTO.Days />
         </EditForm>
-        <span class="small form-text text-danger">@e.ErrorMessage</span>
+        <span class="small form-text text-danger">@Event.Lazor.ErrorMessage</span>
     </h4>
     <div class="card-body">
         <div class="row">
             @{
-                for (int day = 0; day <= model.Days; day++)
+                for (int day = 0; day <= Event.ListGeneratorDTO.Days; day++)
                 {
                     if (day > 0)
                     {
-                        <ListGenCard />
+                        <CascadingValue Name="GeneratedDay" Value="Event.ListGeneratorDTO.GeneratedDays[day]">
+                            <ListGenCard />
+                        </CascadingValue>
                     }
                 }
             }
         </div>
-        <CascadingValue Name="loading" Value="@e.Loading">
+        <CascadingValue Name="loading" Value="@Event.Lazor.Loading">
             <LoadingButton>Submit</LoadingButton>
         </CascadingValue>
     </div>

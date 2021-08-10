@@ -12,7 +12,5 @@ namespace PBC.Shared.ListComponent
         public int Id { get; set; }
         public int Days { get; set; }
         public Dictionary<int, ListDayDTO> GeneratedDays { get; set; }
-        public void AddDay(ILazor lazor);
-        public void RemoveDay(ILazor lazor);
     }
 }

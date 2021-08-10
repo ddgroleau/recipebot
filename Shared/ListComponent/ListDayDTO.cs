@@ -1,4 +1,5 @@
 ﻿using PBC.Shared.ListComponent;
+using PBC.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace PBC.Shared
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public string Breakfast { get; set; }
-        public string Lunch { get; set; }
-        public string Dinner { get; set; }
+        public IRecipeDTO Breakfast { get; set; }
+        public IRecipeDTO Lunch { get; set; }
+        public IRecipeDTO Dinner { get; set; }
     }
 }

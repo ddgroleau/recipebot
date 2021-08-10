@@ -15,35 +15,5 @@ namespace PBC.Shared
         [Range(0, 7)]
         public int Days { get; set; } = 0;
         public Dictionary<int, ListDayDTO> GeneratedDays { get; set; } = new Dictionary<int, ListDayDTO>();
-        public void AddDay(ILazor e)
-        {
-            e.SetErrorMessage(null);
-            if (Days >= 7)
-            {
-                e.SetErrorMessage("Max 7 Days");
-            }
-            else
-            {
-                Days += 1;
-                // To do: add functionality to fill in day object.
-                ListDayDTO day = new ListDayDTO();
-                GeneratedDays.Add(Days, day);
-            }
-
-        }
-        public void RemoveDay(ILazor e)
-        {
-            e.SetErrorMessage(null);
-            if (Days <= 0)
-            {
-                e.SetErrorMessage("Min 0 Days");
-            }
-            else
-            {
-                GeneratedDays.Remove(Days);
-                Days -= 1;
-            }
-        }
-
     }
 }
