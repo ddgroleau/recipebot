@@ -12,5 +12,10 @@ namespace PBC.Shared.RecipeComponent
         {
             
         }
+        public IEnumerable<IRecipeServiceDTO> FindMany(string text)
+        {
+            return new List<RecipeServiceDTO>();
+        }
+
     }
 }

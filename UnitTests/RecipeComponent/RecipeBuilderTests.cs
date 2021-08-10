@@ -17,16 +17,16 @@ namespace UnitTests.RecipeComponent
 
         public RecipeBuilderTests()
         {
-            RecipeServiceDTO = new RecipeServiceDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO);
             RecipeDTO = new RecipeDTO();
+            RecipeServiceDTO = new RecipeServiceDTO();
+            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
         }
 
         public void Dispose()
         {
-            RecipeServiceDTO = new RecipeServiceDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO);
             RecipeDTO = new RecipeDTO();
+            RecipeServiceDTO = new RecipeServiceDTO();
+            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
         }
 
         [Fact]
@@ -51,6 +51,31 @@ namespace UnitTests.RecipeComponent
             Assert.Equal(result.Description, recipeDTO.Description);
             Assert.Equal(result.Ingredients, result.Ingredients);
             Assert.Equal(result.Instructions, result.Instructions);
+        }
+
+        [Fact]
+        public void Build_WithValidRecipeServiceDTO_ShouldReturnRecipeDTO()
+        {
+            var recipeDTO = RecipeServiceDTO;
+
+            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            recipeDTO.Title = "Test";
+            recipeDTO.Description = "Test";
+            recipeDTO.RecipeType = "Breakfast";
+            recipeDTO.Ingredients = new List<string>();
+            recipeDTO.Instructions = new List<string>();
+
+            recipeDTO.Instructions.Add("Test");
+            recipeDTO.Ingredients.Add("Test");
+
+            var result = RecipeBuilder.Build(recipeDTO);
+
+            Assert.Equal(result.URL, recipeDTO.URL);
+            Assert.Equal(result.Title, recipeDTO.Title);
+            Assert.Equal(result.Description, recipeDTO.Description);
+            Assert.Equal(result.Ingredients, result.Ingredients);
+            Assert.Equal(result.Instructions, result.Instructions);
+            Assert.IsAssignableFrom<IRecipeDTO>(result);
         }
     }
 }

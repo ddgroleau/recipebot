@@ -9,5 +9,6 @@ namespace PBC.Shared.RecipeComponent
     public interface IRepository<T> where T : class
      {
         public void InsertOne(Object record);
+        public IEnumerable<IRecipeServiceDTO> FindMany(string text);
     }
 }

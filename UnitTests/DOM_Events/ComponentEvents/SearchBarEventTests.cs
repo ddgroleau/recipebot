@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using PBC.Shared.DOM_Events;
 using PBC.Shared.DOM_Events.ComponentEvents;
 using PBC.Shared.Lazor;
+using PBC.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +53,17 @@ namespace UnitTests.DOM_Events.ComponentEvents
 
             SearchBarEvent.HandleClick();
 
+            Assert.False(SearchBarEvent.SearchResults.Any());
+        }
+
+        [Fact]
+        public void HandleClick_WithValidSearchText_ShouldReturnRecipeDTOList()
+        {
+            SearchBarEvent.SearchText = "test";
+
+            SearchBarEvent.HandleClick();
+
+            Assert.IsAssignableFrom<IEnumerable<IRecipeDTO>>(SearchBarEvent.SearchResults);
             Assert.False(SearchBarEvent.SearchResults.Any());
         }
     }

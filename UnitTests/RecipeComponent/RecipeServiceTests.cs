@@ -15,16 +15,14 @@ namespace UnitTests.RecipeComponent
         IRecipeServiceDTO RecipeServiceDTO;
         IRecipeBuilder RecipeBuilder;
         IRecipeDTO RecipeDTO;
-        Recipe Recipe;
         IRepository<Recipe> RecipeRepository;
         RecipeService RecipeService;
 
         public RecipeServiceTests()
         {
             RecipeServiceDTO = new RecipeServiceDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO);
+            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
             RecipeDTO = new RecipeDTO();
-            Recipe = new Recipe();
             RecipeRepository = new RecipeRepository();
             RecipeService = new RecipeService(RecipeBuilder, RecipeRepository);
         }
@@ -32,9 +30,8 @@ namespace UnitTests.RecipeComponent
         public void Dispose()
         {
             RecipeServiceDTO = new RecipeServiceDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO);
+            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO,RecipeDTO);
             RecipeDTO = new RecipeDTO();
-            Recipe = new Recipe();
             RecipeRepository = new RecipeRepository();
             RecipeService = new RecipeService(RecipeBuilder, RecipeRepository);
         }
@@ -148,6 +145,35 @@ namespace UnitTests.RecipeComponent
             recipeDTO.Ingredients.Add("Test");
 
             Assert.Throws<InvalidOperationException>(() => RecipeService.CreateRecipe(recipeDTO));
+        }
+
+        [Fact]
+        public void CreateRecipe_WithInvalidDescription_ShouldThrowException()
+        {
+            var recipeDTO = RecipeDTO;
+
+            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            recipeDTO.Title = "Test";
+            recipeDTO.Description = "The central part of a computer, the part that carries out the individual steps that make up our programs," +
+                                    " is called the processor. The programs we have seen so far are things that will keep the processor busy " +
+                                    "until they have finished their work. The speed at which something like a loop that manipulates numbers can " +
+                                    "be executed depends pretty much entirely on the speed of the processor";
+            recipeDTO.RecipeType = "Dinner";
+            recipeDTO.Ingredients = new List<string>();
+            recipeDTO.Instructions = new List<string>();
+
+            recipeDTO.Ingredients.Add("Test");
+            recipeDTO.Instructions.Add("Test");
+
+            Assert.Throws<InvalidOperationException>(() => RecipeService.CreateRecipe(recipeDTO));
+        }
+
+        [Fact]
+        public void SearchRecipes_WithSearchText_ShouldReturnRecipeServiceDTOList()
+        {
+            var results = RecipeService.SearchRecipes("Test");
+
+            Assert.IsAssignableFrom<IEnumerable<IRecipeDTO>>(results);
         }
 
     }

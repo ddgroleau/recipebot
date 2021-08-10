@@ -28,7 +28,7 @@ namespace UnitTests.Controllers
             RecipeServiceDTO = new RecipeServiceDTO();
             Logger = new LoggerFactory().CreateLogger<RecipeController>();
             RecipeDTO = new RecipeDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO);
+            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
             Scraper = new AllRecipesScraper();
             RecipeUrlDTO = new RecipeUrlDTO();
             RecipeRepository = new RecipeRepository();
@@ -41,7 +41,7 @@ namespace UnitTests.Controllers
             RecipeServiceDTO = new RecipeServiceDTO();
             Logger = new LoggerFactory().CreateLogger<RecipeController>();
             RecipeDTO = new RecipeDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO);
+            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
             Scraper = new AllRecipesScraper();
             RecipeUrlDTO = new RecipeUrlDTO();
             RecipeRepository = new RecipeRepository();
@@ -96,7 +96,7 @@ namespace UnitTests.Controllers
         }
 
         [Fact]
-        public void GetRecipesByTitle_WithValidSearchParameter_ShouldReturnRecipes()
+        public void SearchRecipes_WithValidSearchParameter_ShouldReturnRecipes()
         {
             string searchText = "Test";
 

@@ -23,6 +23,7 @@ namespace PBC.Shared
         public string Title { get; set; }
         [MustBeValidType]
         public string RecipeType { get; set; }
+        [MaxLength(250)]
         public string Description { get; set; }
         [ListMustContainElements]
         public List<string> Ingredients { get; set; } = new List<string>();

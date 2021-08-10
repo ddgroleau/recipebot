@@ -63,5 +63,20 @@ namespace PBC.Shared.RecipeComponent
             }
             return isValid;
         }
+
+        public IEnumerable<IRecipeDTO> SearchRecipes(string searchText)
+        {
+            var recipeResults = new List<IRecipeDTO>();
+            var searchResults = _recipeRepository.FindMany(searchText);
+            
+            foreach(var recipe in searchResults)
+            {
+                var recipeResult =_recipeBuilder.Build(recipe);
+                recipeResults.Add(recipeResult);
+            }
+
+            return recipeResults;        
+        }
+
     }
 }

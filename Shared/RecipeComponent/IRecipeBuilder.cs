@@ -9,5 +9,6 @@ namespace PBC.Shared.RecipeComponent
     public interface IRecipeBuilder
     {
         public IRecipeServiceDTO Build(IRecipeDTO recipeDTO);
+        public IRecipeDTO Build(IRecipeServiceDTO recipeServiceDTO);
     }
 }

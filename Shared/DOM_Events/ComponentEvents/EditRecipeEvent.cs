@@ -21,10 +21,10 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             _logger = logger;
             _http = http;
         }
-        [StringLength(100, ErrorMessage = "New ingredient is too long.")]
+        [MaxLength(100, ErrorMessage = "New ingredient is too long.")]
         public string NewIngredient { get; set; }
 
-        [StringLength(350, ErrorMessage = "New instruction is too long.")]
+        [MaxLength(350, ErrorMessage = "New instruction is too long.")]
         public string NewInstruction { get; set; }
         public async Task<IRecipeDTO> HandleValidSubmit(ILazor lazor, IRecipeDTO recipeDTO)
         {
