@@ -35,20 +35,15 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             }
             else
             {
-                try
+                var listDay = await GenerateRandomDay();
+                if (!listDay.ListId.Equals(0))
                 {
                     ListGeneratorDTO.Days += 1;
-                    var listDay = ListDayDTO;
-                    listDay = await _http.GetFromJsonAsync<ListDayDTO>("/api/list/day");
                     ListGeneratorDTO.GeneratedDays.Add(ListGeneratorDTO.Days, listDay);
                 }
-                    catch (Exception)
-                {
-                    _logger.LogError($"Could not retrieve random recipe from ListController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}");
-                }
             }
-
         }
+
         public void RemoveDay()
         {
             Lazor.SetErrorMessage(null);
@@ -61,6 +56,20 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
                 ListGeneratorDTO.GeneratedDays.Remove(ListGeneratorDTO.Days);
                 ListGeneratorDTO.Days -= 1;
             }
+        }
+
+        private async Task<IListDayDTO> GenerateRandomDay()
+        {
+            var listDay = ListDayDTO;
+            try
+            {
+                listDay = await _http.GetFromJsonAsync<ListDayDTO>("/api/List/Day");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($" Could not retrieve random recipe from ListController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. {e.Message}.");
+            }
+            return listDay;
         }
     }
 }
