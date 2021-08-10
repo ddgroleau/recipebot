@@ -13,6 +13,7 @@ using PBC.Shared.ListComponent;
 using PBC.Shared.RecipeComponent;
 using PBC.Shared.WebScraper;
 using System.Linq;
+using System.Net.Http;
 
 namespace PBC.Server
 {
@@ -46,7 +47,10 @@ namespace PBC.Server
             services.AddScoped<IFactory<Ingredient>, IngredientFactory>();
             services.AddScoped<IFactory<Instruction>, InstructionFactory>();
             services.AddScoped<IRecipeBuilder, RecipeBuilder>();
+            services.AddScoped<IListService, ListService>();
+            services.AddScoped<IListBuilder, ListBuilder>();
 
+            services.AddScoped<HttpClient>();
             services.AddScoped<Recipe>();
             services.AddScoped<Ingredient>();
             services.AddScoped<Instruction>();

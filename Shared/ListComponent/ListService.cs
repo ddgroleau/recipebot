@@ -22,7 +22,10 @@ namespace PBC.Shared.ListComponent
 
         public async Task<IListDayDTO> GenerateDayOfRecipes()
         {
-            var userRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>("/api/Recipe/UserRecipes/{username}");
+            string userName = "Test";
+            
+            var userRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>($"https://localhost:4001/api/Recipe/UserRecipes/{userName}");
+            
             return _listBuilder.Build(userRecipes);
         }
 

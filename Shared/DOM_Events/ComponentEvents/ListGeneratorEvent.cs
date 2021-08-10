@@ -36,11 +36,8 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             else
             {
                 var listDay = await GenerateRandomDay();
-                if (!listDay.ListId.Equals(0))
-                {
-                    ListGeneratorDTO.Days += 1;
-                    ListGeneratorDTO.GeneratedDays.Add(ListGeneratorDTO.Days, listDay);
-                }
+                ListGeneratorDTO.Days += 1;
+                ListGeneratorDTO.GeneratedDays.Add(ListGeneratorDTO.Days, listDay);
             }
         }
 

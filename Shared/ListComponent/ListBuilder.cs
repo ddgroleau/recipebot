@@ -17,17 +17,24 @@ namespace PBC.Shared.ListComponent
 
         public IListDayDTO Build(IEnumerable<IRecipeDTO> userRecipes)
         {
-            var breakfast = GenerateRandomRecipeByType(userRecipes, "Breakfast");
-            var lunch = GenerateRandomRecipeByType(userRecipes, "Lunch");
-            var dinner = GenerateRandomRecipeByType(userRecipes, "Dinner");
+            var dayDTO = _listDayDTO;
+
+            dayDTO.Date = DateTime.Today.Date;
+            dayDTO.Breakfast = GenerateRandomRecipeByType(userRecipes, "Breakfast");
+            dayDTO.Lunch = GenerateRandomRecipeByType(userRecipes, "Lunch");
+            dayDTO.Dinner = GenerateRandomRecipeByType(userRecipes, "Dinner");
+            
             return _listDayDTO;
         }
 
         public IRecipeDTO GenerateRandomRecipeByType(IEnumerable<IRecipeDTO> userRecipes, string recipeType)
         {
             var typeRecipes = userRecipes.Where(x => x.RecipeType == recipeType);
-            int typeCount = typeRecipes.Count() - 1;
+            
+            int typeCount = Math.Max(typeRecipes.Count() - 1,0);
+            
             var recipe = typeRecipes.ElementAt(new Random().Next(0, typeCount));
+            
             return recipe;
         }
     }

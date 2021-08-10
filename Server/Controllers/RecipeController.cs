@@ -48,12 +48,11 @@ namespace PBC.Server.Controllers
         {
             try
             {
-                if (string.IsNullOrEmpty(recipeDTO.RecipeId))
+                if (recipeDTO.RecipeId.Equals(0))
                 {
                     _recipeService.CreateRecipe(recipeDTO);
+                    _logger.LogInformation($"Processing RecipeDTO: \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
                 }
-                _logger.LogInformation($"Processing RecipeDTO: \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-                
                 return Ok();
             }
             catch (Exception e)
@@ -70,9 +69,9 @@ namespace PBC.Server.Controllers
 
             var recipes = new List<IRecipeDTO>
             {
-                new RecipeDTO { Title = $"{username} Title1", Description = "UserDescription1" },
-                new RecipeDTO { Title = $"{username} Title2", Description = "UserDescription2" },
-                new RecipeDTO { Title = $"{username} Title3", Description = "UserDescription3" }
+               new RecipeDTO { Title = $"Title of the Recipe", Description = "Description1", RecipeType="Breakfast" },
+                new RecipeDTO { Title = $"Title of the Recipe", Description = "Description2", RecipeType="Lunch"},
+                new RecipeDTO { Title = $"Title of the Recipe", Description = "Description3", RecipeType="Dinner"}
             };
 
             return recipes;
@@ -85,9 +84,9 @@ namespace PBC.Server.Controllers
 
             var recipes = new List<IRecipeDTO>
             {
-                new RecipeDTO { Title = $"{recipe.Title}", Description = "Description1" },
-                new RecipeDTO { Title = $"{recipe.Title}", Description = "Description2" },
-                new RecipeDTO { Title = $"{recipe.Title}", Description = "Description3" }
+                new RecipeDTO { Title = $"{recipe.Title}", Description = "Description1", RecipeType="Breakfast" },
+                new RecipeDTO { Title = $"{recipe.Title}", Description = "Description2", RecipeType="Lunch"},
+                new RecipeDTO { Title = $"{recipe.Title}", Description = "Description3", RecipeType="Dinner"}
             };
             recipes.Add(recipe);
 

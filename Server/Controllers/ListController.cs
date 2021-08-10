@@ -31,26 +31,9 @@ namespace PBC.Server.Controllers
         {
             _logger.LogInformation($"Received request for Random Day at ListController, GenerateRandomDay method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
 
-          
+            var listDay = await _listService.GenerateDayOfRecipes();
 
-
-            return new ListDayDTO
-            {
-                ListId = 1,
-                Date = new DateTime().Date,
-                Breakfast = new RecipeDTO
-                {
-                    Title = "breakfast recipe"
-                },
-                Lunch = new RecipeDTO
-                {
-                    Title = "lunch recipe"
-                },
-                Dinner = new RecipeDTO
-                {
-                    Title = "dinner recipe"
-                },
-            };
+            return listDay;
     }
 
 }

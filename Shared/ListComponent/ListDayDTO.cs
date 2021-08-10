@@ -12,8 +12,9 @@ namespace PBC.Shared
     {
         public int ListId { get; set; }
         public DateTime Date { get; set; }
-        public RecipeDTO Breakfast { get; set; }
-        public RecipeDTO Lunch { get; set; }
-        public RecipeDTO Dinner { get; set; }
+        public IRecipeDTO Breakfast { get; set; }
+        public IRecipeDTO Lunch { get; set; }
+        public IRecipeDTO Dinner { get; set; }
+
     }
 }
