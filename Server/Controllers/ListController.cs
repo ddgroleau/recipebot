@@ -19,22 +19,31 @@ namespace PBC.Server.Controllers
     {
         private readonly ILogger<ListController> _logger;
         private readonly IListService _listService;
+        private readonly IListDayDTO _listDayDTO;
 
-        public ListController(ILogger<ListController> logger, IListService listService)
+        public ListController(ILogger<ListController> logger, IListService listService, IListDayDTO listDayDTO)
         {
             _logger = logger;
             _listService = listService;
+            _listDayDTO = listDayDTO;
         }
-        
+
         [HttpGet("Day")]
         public async Task<IListDayDTO> GenerateRandomDay()
         {
             _logger.LogInformation($"Received request for Random Day at ListController, GenerateRandomDay method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
 
-            var listDay = await _listService.GenerateDayOfRecipes();
+            try
+            {
+                var listDay = await _listService.GenerateDayOfRecipes();
+                return listDay;
+            }
+            catch (Exception)
+            {
+                _logger.LogInformation($"Failed to process request for Random Day at ListController, GenerateRandomDay method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+                return _listDayDTO;
+            }
 
-            return listDay;
+        }
     }
-
-}
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using PBC.Server.Controllers;
-using PBC.Shared;
+﻿using PBC.Shared;
 using PBC.Shared.ListComponent;
 using PBC.Shared.RecipeComponent;
 using System;
@@ -11,27 +9,23 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace UnitTests.Controllers
+namespace UnitTests.ListComponent
 {
-    public class ListControllerTests : IDisposable
+    public class ListServiceTests : IDisposable
     {
         IRecipeDTO RecipeDTO;
         IListService ListService;
         IListDayDTO ListDayDTO;
         IListBuilder ListBuilder;
         HttpClient Http;
-        ILogger<ListController> Logger;
-        ListController ListController;
-
-        public ListControllerTests()
+  
+        public ListServiceTests()
         {
             RecipeDTO = new RecipeDTO();
             Http = new HttpClient();
             ListDayDTO = new ListDayDTO();
             ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO);
             ListService = new ListService(ListBuilder, Http, ListDayDTO);
-            Logger = new LoggerFactory().CreateLogger<ListController>();
-            ListController = new ListController(Logger, ListService, ListDayDTO);
         }
 
         public void Dispose()
@@ -41,17 +35,13 @@ namespace UnitTests.Controllers
             ListDayDTO = new ListDayDTO();
             ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO);
             ListService = new ListService(ListBuilder, Http, ListDayDTO);
-            Logger = new LoggerFactory().CreateLogger<ListController>();
-            ListController = new ListController(Logger, ListService, ListDayDTO);
         }
-
         [Fact]
-        public async void GenerateRandomDay_NoParameters_ShouldReturnDayDTO()
+        public async void GenerateDayOfRecipes_NoParameters_ShouldReturnDayDTO()
         {
-            var result = await ListController.GenerateRandomDay();
+            var result = await ListService.GenerateDayOfRecipes();
 
             Assert.IsAssignableFrom<IListDayDTO>(result);
         }
-
     }
 }
