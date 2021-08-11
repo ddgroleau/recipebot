@@ -26,9 +26,10 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             _http = http;
             _logger = logger;
         }
-        public async Task AddDay()
+        public async Task<IListGeneratorDTO> AddDay()
         {
             Lazor.SetErrorMessage(null);
+            Lazor.SetLoadingStatus(true);
             if (ListGeneratorDTO.Days >= 7)
             {
                 Lazor.SetErrorMessage("Max 7 Days");
@@ -39,11 +40,14 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
                 ListGeneratorDTO.Days += 1;
                 ListGeneratorDTO.GeneratedDays.Add(ListGeneratorDTO.Days, listDay);
             }
+            Lazor.SetLoadingStatus(false);
+            return ListGeneratorDTO;
         }
 
-        public void RemoveDay()
+        public IListGeneratorDTO RemoveDay()
         {
             Lazor.SetErrorMessage(null);
+            Lazor.SetLoadingStatus(true);
             if (ListGeneratorDTO.Days <= 0)
             {
                 Lazor.SetErrorMessage("Min 0 Days");
@@ -53,6 +57,8 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
                 ListGeneratorDTO.GeneratedDays.Remove(ListGeneratorDTO.Days);
                 ListGeneratorDTO.Days -= 1;
             }
+            Lazor.SetLoadingStatus(false);
+            return ListGeneratorDTO;
         }
 
         private async Task<IListDayDTO> GenerateRandomDay()
@@ -64,7 +70,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             }
             catch (Exception e)
             {
-                _logger.LogError($" Could not retrieve random recipe from ListController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. {e.Message}.");
+                _logger.LogError($" Could not retrieve random recipe from ListController at ListGeneratorEvent. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. {e.Message}.");
             }
             return listDay;
         }

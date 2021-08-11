@@ -56,6 +56,7 @@ namespace UnitTests.ListComponent
 
             Assert.IsAssignableFrom<IRecipeDTO>(actual);
             Assert.Equal("Breakfast", actual.RecipeType);
+            Assert.StartsWith("Recipe", actual.Title);
         }
         [Fact]
         public void GenerateRandomRecipeByType_WithLunchParameter_ShouldReturnRandomRecipe()

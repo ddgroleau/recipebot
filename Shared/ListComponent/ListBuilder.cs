@@ -29,7 +29,7 @@ namespace PBC.Shared.ListComponent
             return _listDayDTO;
         }
 
-        public IRecipeDTO GenerateRandomRecipeByType(IEnumerable<IRecipeDTO> userRecipes, string recipeType)
+        public RecipeDTO GenerateRandomRecipeByType(IEnumerable<IRecipeDTO> userRecipes, string recipeType)
         {
             try
             {
@@ -39,11 +39,11 @@ namespace PBC.Shared.ListComponent
 
                 var recipe = typeRecipes.ElementAt(new Random().Next(0, typeCount));
 
-                return recipe;
+                return (RecipeDTO)recipe;
             }
             catch (Exception)
             {
-                return _recipeDTO;
+                return (RecipeDTO)_recipeDTO;
             }
         }
     }

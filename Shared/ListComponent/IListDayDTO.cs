@@ -11,8 +11,9 @@ namespace PBC.Shared.ListComponent
     {
         public int ListId { get; set; }
         public DateTime Date { get; set; }
-        public IRecipeDTO Breakfast { get; set; }
-        public IRecipeDTO Lunch { get; set; }
-        public IRecipeDTO Dinner { get; set; }
+        // I had to use concrete implementation types here else I could not deserialize this object from JSON.
+        public RecipeDTO Breakfast { get; set; }
+        public RecipeDTO Lunch { get; set; }
+        public RecipeDTO Dinner { get; set; }
     }
 }

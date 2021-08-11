@@ -11,7 +11,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
     {
         public ILazor Lazor { get; set; }
         public IListGeneratorDTO ListGeneratorDTO { get; set; }
-        public Task AddDay();
-        public void RemoveDay();
+        public Task<IListGeneratorDTO> AddDay();
+        public IListGeneratorDTO RemoveDay();
     }
 }

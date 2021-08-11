@@ -6,7 +6,7 @@
         <br />
         <label>Days:</label>
         <CascadingValue Name="loading" Value="@Event.Lazor.Loading">
-            <LoadingButton HandleClick="() => Event.AddDay()">(+)</LoadingButton>
+            <LoadingButton HandleClick="() => HandleAdd()">(+)</LoadingButton>
             <LoadingButton HandleClick="() => Event.RemoveDay()">(-)</LoadingButton>
         </CascadingValue>
         <EditForm Model="Event.ListGeneratorDTO">
@@ -20,9 +20,9 @@
             @{
                 for (int day = 0; day <= Event.ListGeneratorDTO.Days; day++)
                 {
-                    if (day > 0)
+                    if (day > 0 && Event.ListGeneratorDTO.Days > 0)
                     {
-                        <CascadingValue Name="GeneratedDay" Value="Event.ListGeneratorDTO.GeneratedDays[day]">
+                        <CascadingValue Name="GeneratedDay" Value="Event.ListGeneratorDTO.GeneratedDays[Event.ListGeneratorDTO.Days]">
                             <ListGenCard />
                         </CascadingValue>
                     }
@@ -36,7 +36,12 @@
 </div>
 
 @code {
-
+    // This was added because the UI was -1 behind the current days count. This call will re-render the component to display the current value of days.
+    public async Task HandleAdd()
+    {
+        await Event.AddDay();
+        StateHasChanged();
+    }
 }
 
 
