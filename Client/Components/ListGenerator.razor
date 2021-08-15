@@ -17,17 +17,16 @@
     </h4>
     <div class="card-body">
         <div class="row">
+            
             @{
-                for (int day = 0; day <= Event.ListGeneratorDTO.Days; day++)
+                foreach (var day in Event.ListGeneratorDTO.GeneratedDays)
                 {
-                    if (day > 0 && Event.ListGeneratorDTO.Days > 0)
-                    {
-                        <CascadingValue Name="GeneratedDay" Value="Event.ListGeneratorDTO.GeneratedDays[Event.ListGeneratorDTO.Days]">
-                            <ListGenCard />
-                        </CascadingValue>
-                    }
+                    <CascadingValue Name="GeneratedDay" Value="day">
+                        <ListGenCard />
+                    </CascadingValue>
                 }
             }
+            
         </div>
         <CascadingValue Name="loading" Value="@Event.Lazor.Loading">
             <LoadingButton>Submit</LoadingButton>
@@ -42,6 +41,7 @@
         await Event.AddDay();
         StateHasChanged();
     }
+
 }
 
 

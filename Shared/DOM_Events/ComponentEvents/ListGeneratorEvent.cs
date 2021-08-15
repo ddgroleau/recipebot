@@ -38,7 +38,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             {
                 var listDay = await GenerateRandomDay();
                 ListGeneratorDTO.Days += 1;
-                ListGeneratorDTO.GeneratedDays.Add(ListGeneratorDTO.Days, listDay);
+                ListGeneratorDTO.GeneratedDays.Add(listDay);
             }
             Lazor.SetLoadingStatus(false);
             return ListGeneratorDTO;
@@ -54,7 +54,9 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             }
             else
             {
-                ListGeneratorDTO.GeneratedDays.Remove(ListGeneratorDTO.Days);
+                ListGeneratorDTO.GeneratedDays.Remove(ListGeneratorDTO.GeneratedDays
+                                              .ElementAt(ListGeneratorDTO.GeneratedDays
+                                              .Count - 1));
                 ListGeneratorDTO.Days -= 1;
             }
             Lazor.SetLoadingStatus(false);
@@ -63,16 +65,18 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
 
         private async Task<IListDayDTO> GenerateRandomDay()
         {
-            var listDay = ListDayDTO;
             try
             {
-                listDay = await _http.GetFromJsonAsync<ListDayDTO>("/api/List/Day");
+                var listDay = await _http.GetFromJsonAsync<ListDayDTO>("/api/List/Day");
+                listDay.Date = listDay.Date.AddDays(ListGeneratorDTO.Days+1);
+                listDay.SequenceNumber = ListGeneratorDTO.Days+1;
+                return listDay;
             }
             catch (Exception e)
             {
                 _logger.LogError($" Could not retrieve random recipe from ListController at ListGeneratorEvent. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. {e.Message}.");
             }
-            return listDay;
+            return ListDayDTO;
         }
     }
 }
