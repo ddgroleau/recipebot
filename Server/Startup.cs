@@ -50,7 +50,7 @@ namespace PBC.Server
             services.AddScoped<IListService, ListService>();
             services.AddScoped<IListBuilder, ListBuilder>();
             services.AddScoped<IListDTO, ListDTO>();
-
+            services.AddScoped<IListRepository, ListRepository>();
 
             services.AddScoped<HttpClient>();
             services.AddScoped<Recipe>();
