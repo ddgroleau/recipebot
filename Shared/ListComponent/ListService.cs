@@ -1,6 +1,7 @@
 ﻿using PBC.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -16,11 +17,15 @@ namespace PBC.Shared.ListComponent
         private readonly IListBuilder _listBuilder;
         private readonly HttpClient _http;
         private readonly IListDayDTO _listDayDTO;
-        public ListService(IListBuilder listBuilder, HttpClient http, IListDayDTO listDayDTO)
+        private readonly IListDTO _listDTO;
+        private readonly IListRepository _listRepository;
+        public ListService(IListBuilder listBuilder, HttpClient http, IListDayDTO listDayDTO, IListDTO listDTO, IListRepository listRepository)
         {
             _listBuilder = listBuilder;
             _http = http;
             _listDayDTO = listDayDTO;
+            _listDTO = listDTO;
+            _listRepository = listRepository;
         }
 
         
@@ -39,7 +44,46 @@ namespace PBC.Shared.ListComponent
             {
                 return _listDayDTO;
             }
-            
+        }
+
+        public IListDTO CreateList(IListGeneratorDTO listGeneratorDTO)
+        {
+            if (ListIsValid(listGeneratorDTO))
+            {
+                var list = _listBuilder.Build(listGeneratorDTO);
+                SaveList(list);
+                return list;
+            }
+            return _listDTO;
+        }
+
+        private bool ListIsValid(IListGeneratorDTO listGeneratorDTO)
+        {
+            bool isValid;
+            try
+            {
+                var validationContext = new ValidationContext(listGeneratorDTO);
+
+                isValid = Validator.TryValidateObject(listGeneratorDTO, validationContext, new List<ValidationResult>(), true);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return isValid;
+        }
+
+        private IListDTO SaveList(IListDTO listDTO)
+        {
+            try
+            {
+                _listRepository.InsertOne(listDTO);
+            }
+            catch (Exception e)
+            {
+                throw new InvalidOperationException("Unable to Add List to Database.", e);
+            }
+            return listDTO;
         }
     }
 }

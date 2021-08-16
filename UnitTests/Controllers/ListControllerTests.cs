@@ -18,8 +18,10 @@ namespace UnitTests.Controllers
 {
     public class ListControllerTests : IDisposable
     {
+        IListRepository ListRepository;
         IRecipeDTO RecipeDTO;
         IListService ListService;
+        IListDTO ListDTO;
         IListDayDTO ListDayDTO;
         IListBuilder ListBuilder;
         HttpClient Http;
@@ -29,11 +31,13 @@ namespace UnitTests.Controllers
 
         public ListControllerTests()
         {
+            ListRepository = new ListRepository();
             RecipeDTO = new RecipeDTO();
             Http = new HttpClient();
             ListDayDTO = new ListDayDTO();
-            ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO);
-            ListService = new ListService(ListBuilder, Http, ListDayDTO);
+            ListDTO = new ListDTO();
+            ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO, ListDTO);
+            ListService = new ListService(ListBuilder, Http, ListDayDTO, ListDTO, ListRepository);
             Logger = new LoggerFactory().CreateLogger<ListController>();
             ListController = new ListController(Logger, ListService, ListDayDTO);
             GeneratedList = new MockListObject().GeneratedList;
@@ -41,11 +45,13 @@ namespace UnitTests.Controllers
 
         public void Dispose()
         {
+            ListRepository = new ListRepository();
             RecipeDTO = new RecipeDTO();
             Http = new HttpClient();
             ListDayDTO = new ListDayDTO();
-            ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO);
-            ListService = new ListService(ListBuilder, Http, ListDayDTO);
+            ListDTO = new ListDTO();
+            ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO, ListDTO);
+            ListService = new ListService(ListBuilder, Http, ListDayDTO, ListDTO, ListRepository);
             Logger = new LoggerFactory().CreateLogger<ListController>();
             ListController = new ListController(Logger, ListService, ListDayDTO);
             GeneratedList = new MockListObject().GeneratedList;

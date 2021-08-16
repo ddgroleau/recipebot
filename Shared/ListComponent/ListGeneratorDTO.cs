@@ -12,7 +12,7 @@ namespace PBC.Shared
 {
     public class ListGeneratorDTO : IListGeneratorDTO
     {
-        public int Id { get; set; }
+        public int ListId { get; set; }
         [Range(1,7)]
         public int Days { get; set; }
         [ListMustContainDays]

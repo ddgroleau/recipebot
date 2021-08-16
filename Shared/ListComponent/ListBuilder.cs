@@ -11,10 +11,12 @@ namespace PBC.Shared.ListComponent
     {
         private readonly IListDayDTO _listDayDTO;
         private readonly IRecipeDTO _recipeDTO;
-        public ListBuilder(IListDayDTO listDayDTO, IRecipeDTO recipeDTO)
+        private readonly IListDTO _listDTO;
+        public ListBuilder(IListDayDTO listDayDTO, IRecipeDTO recipeDTO, IListDTO listDTO)
         {
             _listDayDTO = listDayDTO;
             _recipeDTO = recipeDTO;
+            _listDTO = listDTO;
         }
 
         public IListDayDTO Build(IEnumerable<IRecipeDTO> userRecipes)
@@ -25,8 +27,20 @@ namespace PBC.Shared.ListComponent
             dayDTO.Breakfast = GenerateRandomRecipeByType(userRecipes, "Breakfast");
             dayDTO.Lunch = GenerateRandomRecipeByType(userRecipes, "Lunch");
             dayDTO.Dinner = GenerateRandomRecipeByType(userRecipes, "Dinner");
-            
+
             return _listDayDTO;
+        }
+
+        public IListDTO Build(IListGeneratorDTO listGeneratorDTO)
+        {
+            IListDTO listDTO = _listDTO;
+            listDTO.Days = listGeneratorDTO.Days;
+            foreach(var day in listGeneratorDTO.GeneratedDays)
+            {
+                var appendedList = listDTO.ListDays.Append(day);
+                listDTO.ListDays = appendedList;
+            }
+            return listDTO;
         }
 
         public RecipeDTO GenerateRandomRecipeByType(IEnumerable<IRecipeDTO> userRecipes, string recipeType)

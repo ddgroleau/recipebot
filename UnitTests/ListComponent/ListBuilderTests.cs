@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnitTests.MockObjects;
 using Xunit;
 
 namespace UnitTests.ListComponent
@@ -14,14 +15,17 @@ namespace UnitTests.ListComponent
     {
         IRecipeDTO RecipeDTO;
         IListDayDTO ListDayDTO;
+        IListDTO ListDTO;
         ListBuilder ListBuilder;
         IEnumerable<IRecipeDTO> UserRecipes;
         IEnumerable<IRecipeDTO> EmptyUserRecipes;
+        IListGeneratorDTO MockList;
         public ListBuilderTests()
         {
             RecipeDTO = new RecipeDTO();
             ListDayDTO = new ListDayDTO();
-            ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO);
+            ListDTO = new ListDTO();
+            ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO,ListDTO);
             UserRecipes = new List<IRecipeDTO>
             {
                new RecipeDTO { Title = $"Recipe1",  Description = "Description1",  RecipeType="Breakfast", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
@@ -38,15 +42,18 @@ namespace UnitTests.ListComponent
                new RecipeDTO { Title = $"Recipe12", Description = "Description12", RecipeType="Dinner",    Ingredients={ "Salt" }, Instructions={"Combine and cook."} }
             };
             EmptyUserRecipes = new List<IRecipeDTO>();
+            MockList = new MockListObject().GeneratedList;
         }
 
         public void Dispose()
         {
             RecipeDTO = new RecipeDTO();
             ListDayDTO = new ListDayDTO();
-            ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO);
+            ListDTO = new ListDTO();
+            ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO, ListDTO);
             UserRecipes = new List<IRecipeDTO>();
             EmptyUserRecipes = new List<IRecipeDTO>();
+            MockList = new MockListObject().GeneratedList;
         }
 
         [Fact]
@@ -95,6 +102,13 @@ namespace UnitTests.ListComponent
             Assert.Null(listDay.Breakfast.Title);
             Assert.Null(listDay.Lunch.Title);
             Assert.Null(listDay.Dinner.Title);
+        }
+        [Fact]
+        public void Build_WithListGeneratorDTO_ShouldReturnListDTO()
+        {
+            var list = ListBuilder.Build(MockList);
+
+            Assert.IsAssignableFrom<IListDTO>(list);
         }
     }
 }

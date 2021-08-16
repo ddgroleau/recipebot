@@ -15,7 +15,7 @@ namespace UnitTests.RecipeComponent
         IRecipeServiceDTO RecipeServiceDTO;
         IRecipeBuilder RecipeBuilder;
         IRecipeDTO RecipeDTO;
-        IRepository<Recipe> RecipeRepository;
+        IRecipeRepository RecipeRepository;
         RecipeService RecipeService;
 
         public RecipeServiceTests()

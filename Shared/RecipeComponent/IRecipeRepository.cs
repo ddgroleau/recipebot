@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PBC.Shared.RecipeComponent
 {
-    public interface IRepository<T> where T : class
+    public interface IRecipeRepository
      {
         public void InsertOne(Object record);
         public IEnumerable<IRecipeServiceDTO> FindMany(string text);

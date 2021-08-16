@@ -10,5 +10,6 @@ namespace PBC.Shared.ListComponent
     public interface IListBuilder
     {
         public IListDayDTO Build(IEnumerable<IRecipeDTO> userRecipes);
+        public IListDTO Build(IListGeneratorDTO listGeneratorDTO);
     }
 }

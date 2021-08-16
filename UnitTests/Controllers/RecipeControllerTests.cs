@@ -18,7 +18,7 @@ namespace UnitTests.Controllers
         IAllRecipesScraper Scraper;
         IRecipeUrlDTO RecipeUrlDTO;
         RecipeController RecipeController;
-        IRepository<Recipe> RecipeRepository;
+        IRecipeRepository RecipeRepository;
         IRecipeService RecipeService;
         IRecipeBuilder RecipeBuilder;
         IRecipeServiceDTO RecipeServiceDTO;

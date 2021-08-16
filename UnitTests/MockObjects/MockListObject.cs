@@ -11,9 +11,11 @@ namespace UnitTests.MockObjects
     public class MockListObject
     {
         public IListGeneratorDTO GeneratedList { get; }
+        public IListGeneratorDTO InvalidList {get;}
 
         public MockListObject()
         {
+            InvalidList = new ListGeneratorDTO();
             GeneratedList = new ListGeneratorDTO
             {
                 Days = 3,

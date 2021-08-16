@@ -41,7 +41,7 @@ namespace PBC.Server
             services.AddScoped<IListDayDTO, ListDayDTO>();
             services.AddScoped<IRecipeServiceDTO, RecipeServiceDTO>();
             
-            services.AddScoped<IRepository<Recipe>, RecipeRepository>();
+            services.AddScoped<IRecipeRepository, RecipeRepository>();
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<IAllRecipesScraper, AllRecipesScraper>();
             services.AddScoped<IFactory<Ingredient>, IngredientFactory>();
@@ -49,6 +49,8 @@ namespace PBC.Server
             services.AddScoped<IRecipeBuilder, RecipeBuilder>();
             services.AddScoped<IListService, ListService>();
             services.AddScoped<IListBuilder, ListBuilder>();
+            services.AddScoped<IListDTO, ListDTO>();
+
 
             services.AddScoped<HttpClient>();
             services.AddScoped<Recipe>();
