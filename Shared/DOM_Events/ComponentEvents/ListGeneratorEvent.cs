@@ -35,16 +35,23 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             {
                 PrepareInstanceState();
                 Lazor.SetLoadingStatus(true);
-                var response = await _http.PostAsJsonAsync("/api/List/NewList", ListGeneratorDTO);
-                if (response.IsSuccessStatusCode)
+                if (Lazor.IsObjectValid(ListGeneratorDTO))
                 {
-                    Lazor.SetSuccessStatus(true);
-                    ResetView();
+                    var response = await _http.PostAsJsonAsync("/api/List/NewList", ListGeneratorDTO);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Lazor.SetSuccessStatus(true);
+                        ResetView();
+                    }
+                    else
+                    {
+                        _logger.LogError($"Failure to post new list to ListController. Server responded with {response.StatusCode}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+                        Lazor.SetErrorMessage("List submission failed. Please try again.");
+                    }
                 }
                 else
                 {
-                    _logger.LogError($"Failure to post new list to ListController. Server responded with {response.StatusCode}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-                    Lazor.SetErrorMessage("List submission failed. Please try again.");
+                    Lazor.SetErrorMessage("You must have at least 1 and no more than 7 days in your list.");
                 }
             }
             catch (Exception e)
@@ -116,7 +123,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             Lazor.SetSuccessStatus(false);
         }
 
-        public void ResetView()
+        private void ResetView()
         {
             Lazor.SetLoadingStatus(false);
             Lazor.SetErrorMessage(null);

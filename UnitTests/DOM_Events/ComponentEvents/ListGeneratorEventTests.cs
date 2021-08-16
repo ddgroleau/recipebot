@@ -88,5 +88,15 @@ namespace UnitTests.DOM_Events.ComponentEvents
 
             Assert.False(String.IsNullOrEmpty(Event.Lazor.ErrorMessage));
         }
+
+        [Fact]
+        public void SubmitList_WithInvalidGeneratedDays_ShouldReturnError()
+        {
+            Event.ListGeneratorDTO.GeneratedDays = ListGeneratorDTO.GeneratedDays;
+
+            Event.SubmitList();
+
+            Assert.Equal("You must have at least 1 and no more than 7 days in your list.",Event.Lazor.ErrorMessage);
+        }
     }
 }

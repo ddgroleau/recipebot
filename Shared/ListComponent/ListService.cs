@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PBC.Shared.ListComponent
 {
-  
+
     public class ListService : IListService
     {
         private readonly IListBuilder _listBuilder;
@@ -23,6 +23,7 @@ namespace PBC.Shared.ListComponent
             _listDayDTO = listDayDTO;
         }
 
+        
         public async Task<IListDayDTO> GenerateDayOfRecipes()
         {
             string userName = "Test"; //Remove this once auth is implemented
@@ -40,6 +41,5 @@ namespace PBC.Shared.ListComponent
             }
             
         }
-
     }
 }
