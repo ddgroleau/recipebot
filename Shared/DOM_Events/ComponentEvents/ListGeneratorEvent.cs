@@ -41,6 +41,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
                 }
                 else
                 {
+                    _logger.LogError($"Failure to post new list to ListController. Server responded with {response.StatusCode}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
                     Lazor.SetErrorMessage("List submission failed. Please try again.");
                 }
             }
