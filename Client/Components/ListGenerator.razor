@@ -6,7 +6,7 @@
         <br />
         <label>Days:</label>
         <CascadingValue Name="loading" Value="@Event.Lazor.Loading">
-            <LoadingButton HandleClick="() => HandleAdd()">(+)</LoadingButton>
+            <LoadingButton HandleClick="async () => await HandleAdd()">(+)</LoadingButton>
             <LoadingButton HandleClick="() => Event.RemoveDay()">(-)</LoadingButton>
         </CascadingValue>
         <EditForm Model="Event.ListGeneratorDTO">
@@ -17,19 +17,26 @@
     </h4>
     <div class="card-body">
         <div class="row">
-            
+
             @{
-                foreach (var day in Event.ListGeneratorDTO.GeneratedDays)
+                if (Event.Lazor.IsSuccess)
                 {
-                    <CascadingValue Name="GeneratedDay" Value="day">
-                        <ListGenCard />
-                    </CascadingValue>
+                    <h4 class="text-center text-success">Success!</h4>
+                }
+                else
+                {
+                    foreach (var day in Event.ListGeneratorDTO.GeneratedDays)
+                    {
+                        <CascadingValue Name="GeneratedDay" Value="day">
+                            <ListGenCard />
+                        </CascadingValue>
+                    }
                 }
             }
-            
+
         </div>
         <CascadingValue Name="loading" Value="@Event.Lazor.Loading">
-            <LoadingButton>Submit</LoadingButton>
+            <LoadingButton HandleClick="async()=> await Event.SubmitList()">Submit List</LoadingButton>
         </CascadingValue>
     </div>
 </div>

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using UnitTests.MockObjects;
 using Xunit;
 
 namespace UnitTests.DOM_Events.ComponentEvents
@@ -22,7 +23,7 @@ namespace UnitTests.DOM_Events.ComponentEvents
         IListGeneratorDTO ListGeneratorDTO;
         IListDayDTO ListDayDTO;
         IListGeneratorEvent Event;
-
+        IListGeneratorDTO GeneratedList;
         public ListGeneratorEventTests()
         {
             Logger = new LoggerFactory().CreateLogger<ListGeneratorEvent>();
@@ -31,6 +32,7 @@ namespace UnitTests.DOM_Events.ComponentEvents
             ListGeneratorDTO = new ListGeneratorDTO();
             ListDayDTO = new ListDayDTO();
             Event = new ListGeneratorEvent(Lazor, ListGeneratorDTO, ListDayDTO, Http, Logger);
+            GeneratedList = new MockListObject().GeneratedList;
         }
 
         public void Dispose()
@@ -41,13 +43,14 @@ namespace UnitTests.DOM_Events.ComponentEvents
             ListGeneratorDTO = new ListGeneratorDTO();
             ListDayDTO = new ListDayDTO();
             Event = new ListGeneratorEvent(Lazor, ListGeneratorDTO, ListDayDTO, Http, Logger);
+            GeneratedList = new MockListObject().GeneratedList;
         }
 
         [Fact]
         public void RemoveDay_WithDaysEqualsSix_ShouldRemoveDayAndListDayDTO()
         {
             Event.ListGeneratorDTO.Days = 6;
-            Event.ListGeneratorDTO.GeneratedDays.Add(Event.ListGeneratorDTO.Days, new ListDayDTO());
+            Event.ListGeneratorDTO.GeneratedDays.Add(new ListDayDTO());
 
             Event.RemoveDay();
 
@@ -74,6 +77,16 @@ namespace UnitTests.DOM_Events.ComponentEvents
             Event.AddDay();
 
             Assert.Equal(3, Event.ListGeneratorDTO.Days);
+        }
+
+        [Fact]
+        public void SubmitList_WithValidGeneratedDays_ShouldReturnError()
+        {
+            Event.ListGeneratorDTO.GeneratedDays = GeneratedList.GeneratedDays;
+            
+            Event.SubmitList();
+
+            Assert.False(String.IsNullOrEmpty(Event.Lazor.ErrorMessage));
         }
     }
 }

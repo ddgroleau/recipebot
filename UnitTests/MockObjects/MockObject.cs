@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UnitTests.DOM_Events
+namespace UnitTests.MockObjects
 {
     public class MockObject
     {

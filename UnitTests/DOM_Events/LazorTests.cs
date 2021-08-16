@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnitTests.MockObjects;
 using Xunit;
 
 namespace UnitTests.DOM_Events

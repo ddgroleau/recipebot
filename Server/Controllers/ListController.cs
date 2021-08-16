@@ -43,7 +43,21 @@ namespace PBC.Server.Controllers
                 _logger.LogInformation($"Failed to process request for Random Day at ListController, GenerateRandomDay method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
                 return _listDayDTO;
             }
+        }
 
+        [HttpPost("NewList")]
+        public IActionResult CreateList(List<ListDayDTO> listDays)
+        {
+            try
+            {
+                _logger.LogInformation($"Received new List at ListController, CreateList method. Day count equals {listDays.Count}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Error when receiving new List at ListController, CreateList method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. {e.Message}.");
+            }
+            return BadRequest();
         }
     }
 }

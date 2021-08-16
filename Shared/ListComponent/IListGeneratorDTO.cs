@@ -11,6 +11,6 @@ namespace PBC.Shared.ListComponent
     {
         public int Id { get; set; }
         public int Days { get; set; }
-        public ICollection<IListDayDTO> GeneratedDays { get; set; }
+        public List<ListDayDTO> GeneratedDays { get; set; }
     }
 }

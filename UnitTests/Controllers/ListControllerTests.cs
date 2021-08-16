@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using PBC.Server.Controllers;
 using PBC.Shared;
 using PBC.Shared.ListComponent;
@@ -9,6 +11,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using UnitTests.MockObjects;
 using Xunit;
 
 namespace UnitTests.Controllers
@@ -22,6 +25,7 @@ namespace UnitTests.Controllers
         HttpClient Http;
         ILogger<ListController> Logger;
         ListController ListController;
+        IListGeneratorDTO GeneratedList;
 
         public ListControllerTests()
         {
@@ -32,6 +36,7 @@ namespace UnitTests.Controllers
             ListService = new ListService(ListBuilder, Http, ListDayDTO);
             Logger = new LoggerFactory().CreateLogger<ListController>();
             ListController = new ListController(Logger, ListService, ListDayDTO);
+            GeneratedList = new MockListObject().GeneratedList;
         }
 
         public void Dispose()
@@ -43,6 +48,7 @@ namespace UnitTests.Controllers
             ListService = new ListService(ListBuilder, Http, ListDayDTO);
             Logger = new LoggerFactory().CreateLogger<ListController>();
             ListController = new ListController(Logger, ListService, ListDayDTO);
+            GeneratedList = new MockListObject().GeneratedList;
         }
 
         [Fact]
@@ -51,6 +57,14 @@ namespace UnitTests.Controllers
             var result = await ListController.GenerateRandomDay();
 
             Assert.IsAssignableFrom<IListDayDTO>(result);
+        }
+
+        [Fact]
+        public void CreateList_WithValidListGeneratorDTO_ShouldReturnHttpResponse()
+        {
+            var result = ListController.CreateList((ListGeneratorDTO)GeneratedList);
+
+            Assert.IsType<OkResult>(result);
         }
 
     }
