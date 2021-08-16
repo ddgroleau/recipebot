@@ -12,7 +12,6 @@ namespace PBC.Shared
     public class ListGeneratorDTO : IListGeneratorDTO
     {
         public int Id { get; set; }
-        [Range(0, 7)]
         public int Days { get; set; } = 0;
         public List<ListDayDTO> GeneratedDays { get; set; } = new List<ListDayDTO>();
     }

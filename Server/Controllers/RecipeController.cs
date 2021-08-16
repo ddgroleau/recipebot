@@ -69,18 +69,18 @@ namespace PBC.Server.Controllers
 
             var recipes = new List<IRecipeDTO>
             {
-               new RecipeDTO { Title = $"Recipe1", Description = "Description1", RecipeType="Breakfast" },
-               new RecipeDTO { Title = $"Recipe2", Description = "Description2", RecipeType="Breakfast" },
-               new RecipeDTO { Title = $"Recipe3", Description = "Description3", RecipeType="Breakfast" },
-               new RecipeDTO { Title = $"Recipe4", Description = "Description4", RecipeType="Breakfast" },
-                new RecipeDTO { Title = $"Recipe5", Description = "Description5", RecipeType="Lunch"},
-                new RecipeDTO { Title = $"Recipe6", Description = "Description6", RecipeType="Lunch"},
-                new RecipeDTO { Title = $"Recipe7", Description = "Description7", RecipeType="Lunch"},
-                new RecipeDTO { Title = $"Recipe8", Description = "Description8", RecipeType="Lunch"},
-                new RecipeDTO { Title = $"Recipe9", Description = "Description9", RecipeType="Dinner"},
-                new RecipeDTO { Title = $"Recipe10", Description = "Description10", RecipeType="Dinner"},
-                new RecipeDTO { Title = $"Recipe11", Description = "Description11", RecipeType="Dinner"},
-                new RecipeDTO { Title = $"Recipe12", Description = "Description12", RecipeType="Dinner"},
+               new RecipeDTO { Title = $"Recipe1", Description = "Description1", RecipeType="Breakfast", Ingredients = { "Salt"}, Instructions={ "Combine and cook."} },
+               new RecipeDTO { Title = $"Recipe2", Description = "Description2", RecipeType="Breakfast", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+               new RecipeDTO { Title = $"Recipe3", Description = "Description3", RecipeType="Breakfast", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+               new RecipeDTO { Title = $"Recipe4", Description = "Description4", RecipeType="Breakfast", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { Title = $"Recipe5", Description = "Description5", RecipeType="Lunch", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { Title = $"Recipe6", Description = "Description6", RecipeType="Lunch", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { Title = $"Recipe7", Description = "Description7", RecipeType="Lunch", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { Title = $"Recipe8", Description = "Description8", RecipeType="Lunch", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { Title = $"Recipe9", Description = "Description9", RecipeType="Dinner", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { Title = $"Recipe10", Description = "Description10", RecipeType="Dinner", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { Title = $"Recipe11", Description = "Description11", RecipeType="Dinner", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { Title = $"Recipe12", Description = "Description12", RecipeType="Dinner", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
             };
             return recipes;
         }

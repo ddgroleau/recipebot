@@ -29,15 +29,17 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             _logger = logger;
         }
 
-        public async Task SubmitList()
+        public async Task<IListGeneratorDTO> SubmitList()
         {
             try
             {
                 PrepareInstanceState();
-                var response = await _http.PostAsJsonAsync("/api/List/NewList", new List<ListDayDTO>()); // Need to determne why the concrete imp is returning 400.
+                Lazor.SetLoadingStatus(true);
+                var response = await _http.PostAsJsonAsync("/api/List/NewList", ListGeneratorDTO);
                 if (response.IsSuccessStatusCode)
                 {
                     Lazor.SetSuccessStatus(true);
+                    ResetView();
                 }
                 else
                 {
@@ -50,15 +52,14 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
                 Lazor.SetErrorMessage("List submission failed. Please try again.");
                 _logger.LogError($"Failure to post new list to ListController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. {e.Message}.");
             }
-            finally
-            {
                 Lazor.SetLoadingStatus(false);
-            }
+                return ListGeneratorDTO;
         }
 
         public async Task<IListGeneratorDTO> AddDay()
         {
             PrepareInstanceState();
+            Lazor.SetLoadingStatus(true);
             if (ListGeneratorDTO.Days >= 7)
             {
                 Lazor.SetErrorMessage("Max 7 Days");
@@ -76,6 +77,8 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         public IListGeneratorDTO RemoveDay()
         {
             PrepareInstanceState();
+            Lazor.SetLoadingStatus(true);
+
             if (ListGeneratorDTO.Days <= 0)
             {
                 Lazor.SetErrorMessage("Min 0 Days");
@@ -96,8 +99,8 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             try
             {
                 var listDay = await _http.GetFromJsonAsync<ListDayDTO>("/api/List/Day");
-                listDay.Date = listDay.Date.AddDays(ListGeneratorDTO.Days+1);
-                listDay.SequenceNumber = ListGeneratorDTO.Days+1;
+                listDay.Date = listDay.Date.AddDays(ListGeneratorDTO.Days + 1);
+                listDay.SequenceNumber = ListGeneratorDTO.Days + 1;
                 return listDay;
             }
             catch (Exception e)
@@ -109,9 +112,16 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
 
         private void PrepareInstanceState()
         {
-            Lazor.SetLoadingStatus(true);
             Lazor.SetErrorMessage(null);
             Lazor.SetSuccessStatus(false);
+        }
+
+        public void ResetView()
+        {
+            Lazor.SetLoadingStatus(false);
+            Lazor.SetErrorMessage(null);
+            ListGeneratorDTO.GeneratedDays.RemoveRange(0, ListGeneratorDTO.GeneratedDays.Count);
+            ListGeneratorDTO.Days = 0;
         }
     }
 }

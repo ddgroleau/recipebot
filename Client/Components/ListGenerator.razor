@@ -22,9 +22,11 @@
                 if (Event.Lazor.IsSuccess)
                 {
                     <h4 class="text-center text-success">Success!</h4>
+                    <button type="button" @onclick="()=>Event.Lazor.SetSuccessStatus(false)" class="btn btn-danger float-right">&times;</button>
                 }
                 else
                 {
+
                     foreach (var day in Event.ListGeneratorDTO.GeneratedDays)
                     {
                         <CascadingValue Name="GeneratedDay" Value="day">
@@ -36,7 +38,7 @@
 
         </div>
         <CascadingValue Name="loading" Value="@Event.Lazor.Loading">
-            <LoadingButton HandleClick="async()=> await Event.SubmitList()">Submit List</LoadingButton>
+            <LoadingButton HandleClick="async()=> await HandleClick()">Submit List</LoadingButton>
         </CascadingValue>
     </div>
 </div>
@@ -48,7 +50,12 @@
         await Event.AddDay();
         StateHasChanged();
     }
-
+    // The component needed to be re-rendered or the Loading button would not change state on the UI.
+    public async Task HandleClick()
+    {
+        await Event.SubmitList();
+        StateHasChanged();
+    }
 }
 
 

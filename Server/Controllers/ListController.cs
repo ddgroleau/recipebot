@@ -46,11 +46,11 @@ namespace PBC.Server.Controllers
         }
 
         [HttpPost("NewList")]
-        public IActionResult CreateList(List<ListDayDTO> listDays)
+        public IActionResult CreateList(ListGeneratorDTO listDays)
         {
             try
             {
-                _logger.LogInformation($"Received new List at ListController, CreateList method. Day count equals {listDays.Count}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+                _logger.LogInformation($"Received new List at ListController, CreateList method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
                 return Ok();
             }
             catch (Exception e)
