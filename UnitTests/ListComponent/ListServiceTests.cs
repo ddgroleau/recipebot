@@ -82,5 +82,14 @@ namespace UnitTests.ListComponent
 
             Assert.Equal(0,list.Days);
         }
+
+        [Fact]
+        public async Task GenerateRandomRecipeByType_WithValidRecipeType_ShouldReturnRecipeDTO()
+        {
+            var recipe = await ListService.GenerateRandomRecipeByType("Breakfast");
+
+            Assert.IsAssignableFrom<IRecipeDTO>(recipe);
+            Assert.Null(recipe.Title);
+        }
     }
 }

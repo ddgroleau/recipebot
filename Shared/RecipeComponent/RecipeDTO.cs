@@ -16,7 +16,7 @@ namespace PBC.Shared
 {
     public class RecipeDTO : IRecipeDTO
     {
-        public int RecipeId { get; }
+        public int RecipeId { get; set; }
         [AcceptableURL]
         public string URL { get; set; }
         [Required]

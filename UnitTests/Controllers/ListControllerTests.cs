@@ -73,5 +73,19 @@ namespace UnitTests.Controllers
             Assert.IsType<OkResult>(result);
         }
 
+        [Fact]
+        public async Task GetRandomRecipeByType_WithValidType_ShouldReturnRecipeDTO()
+        {
+            var result = await ListController.GetRandomRecipeByType("Breakfast");
+
+            Assert.IsAssignableFrom<IRecipeDTO>(result);
+        }
+        [Fact]
+        public async Task GetRandomRecipeByType_WithInvalidType_ShouldReturnRecipeDTO()
+        {
+            var result = await ListController.GetRandomRecipeByType("Supper");
+
+            Assert.IsAssignableFrom<IRecipeDTO>(result);
+        }
     }
 }

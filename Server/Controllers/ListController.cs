@@ -59,5 +59,11 @@ namespace PBC.Server.Controllers
             }
             return BadRequest();
         }
+
+        [HttpGet("RandomRecipe/{recipeType}")]
+        public async Task<IRecipeDTO> GetRandomRecipeByType(string recipeType)
+        {
+            return await _listService.GenerateRandomRecipeByType(recipeType);
+        }
     }
 }

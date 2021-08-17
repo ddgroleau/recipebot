@@ -1,0 +1,119 @@
+﻿@inject IGeneratedDayEvent Event
+
+<div class="col">
+    <div class="card">
+        <h4 class="card-header">Day @ListDay.SequenceNumber</h4>
+        <div class="card-body">
+            <p class="card-text">@ListDay.Date.ToShortDateString()</p>
+            <br />
+            <p class="card-text">@ListDay.Breakfast.Title</p>
+            <CascadingValue Name="loading" Value=@Event.Loading["Breakfast"]>
+                <LoadingButton HandleClick="@(async ()=> await RegenerateRecipe("Breakfast"))">@Event.RefreshSymbol["Breakfast"]</LoadingButton>
+            </CascadingValue>
+            <br />
+            <p class="card-text">@ListDay.Lunch.Title</p>
+            <CascadingValue Name="loading" Value=@Event.Loading["Lunch"]>
+                <LoadingButton HandleClick="@(async ()=> await RegenerateRecipe("Lunch"))">@Event.RefreshSymbol["Lunch"]</LoadingButton>
+            </CascadingValue>
+            <br />
+            <p class="card-text">@ListDay.Dinner.Title</p>
+            <CascadingValue Name="loading" Value=@Event.Loading["Dinner"]>
+                <LoadingButton HandleClick="@(async ()=> await RegenerateRecipe("Dinner"))">@Event.RefreshSymbol["Dinner"]</LoadingButton>
+            </CascadingValue>
+            <br />
+            <br />
+            <CascadingValue Name="loading" Value=@Event.Loading["AllThree"]>
+                <LoadingButton HandleClick="@(async ()=> await RegenerateRecipe("AllThree"))">Regenerate Day</LoadingButton>
+            </CascadingValue>
+        </div>
+    </div>
+</div>
+    @code {
+        [CascadingParameter(Name = "GeneratedDay")]
+        public IListDayDTO ListDay { get; set; }
+
+        // The switch and if/else statements prevent the method from returning the same recipe that the user wants to regenerate.
+        public async Task<IRecipeDTO> RegenerateRecipe(string recipeType)
+        {
+            var NewRecipe = (RecipeDTO)await Event.RegenerateRecipe(recipeType);
+            switch(recipeType)
+            {
+                case "Breakfast":
+
+                    if(RecipeIsRegenerationTarget(NewRecipe.RecipeId))
+                    {
+                        await RegenerateRecipe(recipeType);
+                    }
+                    else
+                    {
+                        ListDay.Breakfast = NewRecipe;
+                    }
+
+                    break;
+
+                case "Lunch":
+                    if (RecipeIsRegenerationTarget(NewRecipe.RecipeId))
+                    {
+                        await RegenerateRecipe(recipeType);
+                    }
+                    else
+                    {
+                        ListDay.Lunch = NewRecipe;
+
+                    }
+                    break;
+
+                case "Dinner":
+                    if (RecipeIsRegenerationTarget(NewRecipe.RecipeId))
+                    {
+                        await RegenerateRecipe(recipeType);
+                    }
+                    else
+                    {
+                        ListDay.Dinner = NewRecipe;
+                    }
+                    break;
+                case "AllThree":
+                    var breakfast = (RecipeDTO)await Event.RegenerateRecipe("Breakfast");
+                    var lunch = (RecipeDTO)await Event.RegenerateRecipe("Lunch");
+                    var dinner = (RecipeDTO)await Event.RegenerateRecipe("Dinner");
+                    if (RegeneratedAnyDuplicateRecipes(breakfast.RecipeId,lunch.RecipeId,dinner.RecipeId))
+                    {
+                        await RegenerateRecipe(recipeType);
+                    }
+                    else
+                    {
+                        ListDay.Breakfast = breakfast;
+                        ListDay.Lunch = lunch;
+                        ListDay.Dinner = dinner;
+                    }
+                    break;
+            }
+            StateHasChanged();
+            return NewRecipe;
+        }
+
+        public bool RecipeIsRegenerationTarget(int id)
+        {
+            List<bool> RecipeChecks = new List<bool>()
+            {
+                ListDay.Dinner.RecipeId.Equals(id),
+                ListDay.Lunch.RecipeId.Equals(id),
+                ListDay.Breakfast.RecipeId.Equals(id)
+            };
+
+            return RecipeChecks.Contains(true);
+        }
+
+        public bool RegeneratedAnyDuplicateRecipes(int breakfastId, int lunchId, int dinnerId)
+        {
+            List<bool> RecipeChecks = new List<bool>()
+            {
+                ListDay.Dinner.RecipeId.Equals(dinnerId),
+                ListDay.Lunch.RecipeId.Equals(lunchId),
+                ListDay.Breakfast.RecipeId.Equals(breakfastId)
+            };
+            return RecipeChecks.Contains(true);
+        }
+
+    }

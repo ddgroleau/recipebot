@@ -44,6 +44,23 @@ namespace PBC.Shared.ListComponent
                 return _listDayDTO;
             }
         }
+
+        public async Task<IRecipeDTO> GenerateRandomRecipeByType(string recipeType)
+        {
+            string userName = "Test"; //Remove this once auth is implemented
+            IRecipeDTO recipe;
+            try
+            {
+                var userRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>($"https://localhost:4001/api/Recipe/UserRecipes/{userName}");
+                recipe = _listBuilder.GenerateRandomRecipeByType(userRecipes, recipeType);
+            }
+            catch (Exception)
+            {
+                var userRecipes = new List<RecipeDTO>();
+                recipe = _listBuilder.GenerateRandomRecipeByType(userRecipes, recipeType);
+            }
+            return recipe;
+        }
         
         public IListDTO CreateList(IListGeneratorDTO listGeneratorDTO)
         {
