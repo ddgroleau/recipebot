@@ -2,14 +2,61 @@
     <div class="card">
         <h4 class="card-header">Day @GeneratedDay.SequenceNumber</h4>
         <div class="card-body">
-            <p class="card-text">@GeneratedDay.Date.Date</p><br />
-            <p class="card-text">@GeneratedDay.Breakfast.Title</p><br />
-            <p class="card-text">@GeneratedDay.Lunch.Title</p><br />
-            <p class="card-text">@GeneratedDay.Dinner.Title</p><br />
+            <p class="card-text">@GeneratedDay.Date.ToShortDateString()</p>
+            <br />
+            <p class="card-text">@GeneratedDay.Breakfast.Title</p>
+            <CascadingValue Name="loading" Value=@Loading["Breakfast"]>
+                <LoadingButton HandleClick="@(async ()=> await RegenerateRecipe("Breakfast"))">@RefreshSymbol["Breakfast"]</LoadingButton>
+            </CascadingValue>
+            <br />
+            <p class="card-text">@GeneratedDay.Lunch.Title</p>
+            <CascadingValue Name="loading" Value=@Loading["Lunch"]>
+                <LoadingButton HandleClick="@(async ()=> await RegenerateRecipe("Lunch"))">@RefreshSymbol["Lunch"]</LoadingButton>
+            </CascadingValue>
+            <br />
+            <p class="card-text">@GeneratedDay.Dinner.Title</p>
+            <CascadingValue Name="loading" Value=@Loading["Dinner"]>
+                <LoadingButton HandleClick="@(async ()=> await RegenerateRecipe("Dinner"))">@RefreshSymbol["Dinner"]</LoadingButton>
+            </CascadingValue>
+            <br />
+            <br />
+            <CascadingValue Name="loading" Value=@Loading["AllThree"]>
+                <LoadingButton HandleClick="@(async ()=> await RegenerateRecipe("AllThree"))">Regenerate Day</LoadingButton>
+            </CascadingValue>
         </div>
     </div>
 </div>
     @code {
         [CascadingParameter(Name = "GeneratedDay")]
         public IListDayDTO GeneratedDay { get; set; }
+
+
+        public Dictionary<string, bool> Loading { get; set; } = new Dictionary<string, bool>() {
+                { "Breakfast", false },
+                { "Lunch", false },
+                { "Dinner", false },
+                { "AllThree", false }
+            };
+
+        public Dictionary<string, string> RefreshSymbol { get; set; } = new Dictionary<string, string>() {
+                { "Breakfast", "↻" },
+                { "Lunch", "↻" },
+                { "Dinner", "↻" },
+                { "AllThree", "↻" }
+            };
+
+        public async Task<bool> RegenerateRecipe(string recipeType)
+        {
+            Loading[recipeType] = true;
+            RefreshSymbol[recipeType] = null;
+            //replace task.delay with code to update the GenerateDay.recipeType
+            await Task.Delay(600).ContinueWith(delegate
+            {
+                Loading[recipeType] = false;
+                RefreshSymbol[recipeType] = "↻";
+                StateHasChanged();
+                return;
+            });
+            return false;
+        }
     }

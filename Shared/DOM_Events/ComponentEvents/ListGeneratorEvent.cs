@@ -112,7 +112,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             }
             catch (Exception e)
             {
-                _logger.LogError($" Could not retrieve random recipe from ListController at ListGeneratorEvent. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. {e.Message}.");
+                _logger.LogError($"Could not retrieve random recipe from ListController at ListGeneratorEvent. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. {e.Message}.");
             }
             return (ListDayDTO)ListDayDTO;
         }

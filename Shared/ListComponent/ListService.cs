@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PBC.Shared.ListComponent
@@ -15,37 +16,35 @@ namespace PBC.Shared.ListComponent
     public class ListService : IListService
     {
         private readonly IListBuilder _listBuilder;
-        private readonly HttpClient _http;
         private readonly IListDayDTO _listDayDTO;
         private readonly IListDTO _listDTO;
         private readonly IListRepository _listRepository;
+        private readonly HttpClient _http;
+
         public ListService(IListBuilder listBuilder, HttpClient http, IListDayDTO listDayDTO, IListDTO listDTO, IListRepository listRepository)
         {
             _listBuilder = listBuilder;
-            _http = http;
             _listDayDTO = listDayDTO;
             _listDTO = listDTO;
             _listRepository = listRepository;
+            _http = http;
         }
 
-        
+
         public async Task<IListDayDTO> GenerateDayOfRecipes()
         {
             string userName = "Test"; //Remove this once auth is implemented
-
             try
             {
-                var userRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>($"https://localhost:4001/api/Recipe/UserRecipes/{userName}");
-
-                return _listBuilder.Build(userRecipes);
-
+                    var userRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>($"https://localhost:4001/api/Recipe/UserRecipes/{userName}");
+                    return _listBuilder.Build(userRecipes);
             }
             catch (Exception)
             {
                 return _listDayDTO;
             }
         }
-
+        
         public IListDTO CreateList(IListGeneratorDTO listGeneratorDTO)
         {
             if (ListIsValid(listGeneratorDTO))
@@ -85,5 +84,6 @@ namespace PBC.Shared.ListComponent
             }
             return listDTO;
         }
+
     }
 }
