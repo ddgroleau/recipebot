@@ -18,6 +18,8 @@ namespace UnitTests.Controllers
 {
     public class ListControllerTests : IDisposable
     {
+        ILogger<IRecipeMemento> MementoLogger;
+        IRecipeMemento RecipeMemento;
         IListRepository ListRepository;
         IRecipeDTO RecipeDTO;
         IListService ListService;
@@ -31,13 +33,15 @@ namespace UnitTests.Controllers
 
         public ListControllerTests()
         {
+            MementoLogger = new LoggerFactory().CreateLogger<IRecipeMemento>();
+            RecipeMemento = new RecipeMemento(MementoLogger);
             ListRepository = new ListRepository();
             RecipeDTO = new RecipeDTO();
             Http = new HttpClient();
             ListDayDTO = new ListDayDTO();
             ListDTO = new ListDTO();
             ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO, ListDTO);
-            ListService = new ListService(ListBuilder, Http, ListDayDTO, ListDTO, ListRepository);
+            ListService = new ListService(ListBuilder, Http, ListDayDTO, ListDTO, ListRepository, RecipeMemento);
             Logger = new LoggerFactory().CreateLogger<ListController>();
             ListController = new ListController(Logger, ListService, ListDayDTO);
             GeneratedList = new MockListObject().GeneratedList;
@@ -45,13 +49,15 @@ namespace UnitTests.Controllers
 
         public void Dispose()
         {
+            MementoLogger = new LoggerFactory().CreateLogger<IRecipeMemento>();
+            RecipeMemento = new RecipeMemento(MementoLogger);
             ListRepository = new ListRepository();
             RecipeDTO = new RecipeDTO();
             Http = new HttpClient();
             ListDayDTO = new ListDayDTO();
             ListDTO = new ListDTO();
             ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO, ListDTO);
-            ListService = new ListService(ListBuilder, Http, ListDayDTO, ListDTO, ListRepository);
+            ListService = new ListService(ListBuilder, Http, ListDayDTO, ListDTO, ListRepository, RecipeMemento);
             Logger = new LoggerFactory().CreateLogger<ListController>();
             ListController = new ListController(Logger, ListService, ListDayDTO);
             GeneratedList = new MockListObject().GeneratedList;

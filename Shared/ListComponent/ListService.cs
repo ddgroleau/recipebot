@@ -20,24 +20,25 @@ namespace PBC.Shared.ListComponent
         private readonly IListDTO _listDTO;
         private readonly IListRepository _listRepository;
         private readonly HttpClient _http;
+        private readonly IRecipeMemento _recipeMemento;
 
-        public ListService(IListBuilder listBuilder, HttpClient http, IListDayDTO listDayDTO, IListDTO listDTO, IListRepository listRepository)
+        public ListService(IListBuilder listBuilder, HttpClient http, IListDayDTO listDayDTO, IListDTO listDTO, IListRepository listRepository, IRecipeMemento recipeMemento)
         {
             _listBuilder = listBuilder;
             _listDayDTO = listDayDTO;
             _listDTO = listDTO;
             _listRepository = listRepository;
             _http = http;
+            _recipeMemento = recipeMemento;
         }
-
 
         public async Task<IListDayDTO> GenerateDayOfRecipes()
         {
             string userName = "Test"; //Remove this once auth is implemented
             try
             {
-                    var userRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>($"https://localhost:4001/api/Recipe/UserRecipes/{userName}");
-                    return _listBuilder.Build(userRecipes);
+                var userRecipes = await _recipeMemento.GetUserRecipesAsync(userName);
+               return _listBuilder.Build(userRecipes);
             }
             catch (Exception)
             {
@@ -51,7 +52,7 @@ namespace PBC.Shared.ListComponent
             IRecipeDTO recipe;
             try
             {
-                var userRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>($"https://localhost:4001/api/Recipe/UserRecipes/{userName}");
+                var userRecipes = await _recipeMemento.GetUserRecipesAsync(userName);
                 recipe = _listBuilder.GenerateRandomRecipeByType(userRecipes, recipeType);
             }
             catch (Exception)

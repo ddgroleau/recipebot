@@ -56,6 +56,8 @@ namespace PBC.Server
             services.AddScoped<Recipe>();
             services.AddScoped<Ingredient>();
             services.AddScoped<Instruction>();
+
+            services.AddSingleton<IRecipeMemento, RecipeMemento>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

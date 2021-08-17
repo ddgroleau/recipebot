@@ -1,4 +1,5 @@
-﻿using PBC.Shared;
+﻿using Microsoft.Extensions.Logging;
+using PBC.Shared;
 using PBC.Shared.ListComponent;
 using PBC.Shared.RecipeComponent;
 using System;
@@ -14,6 +15,8 @@ namespace UnitTests.ListComponent
 {
     public class ListServiceTests : IDisposable
     {
+        ILogger<IRecipeMemento> MementoLogger;
+        IRecipeMemento RecipeMemento;
         IListRepository ListRepository;
         IRecipeDTO RecipeDTO;
         IListService ListService;
@@ -26,26 +29,30 @@ namespace UnitTests.ListComponent
   
         public ListServiceTests()
         {
+            MementoLogger = new LoggerFactory().CreateLogger<IRecipeMemento>();
+            RecipeMemento = new RecipeMemento(MementoLogger);
             ListRepository = new ListRepository();
             RecipeDTO = new RecipeDTO();
             Http = new HttpClient();
             ListDayDTO = new ListDayDTO();
             ListDTO = new ListDTO();
             ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO, ListDTO);
-            ListService = new ListService(ListBuilder, Http, ListDayDTO, ListDTO, ListRepository);
+            ListService = new ListService(ListBuilder, Http, ListDayDTO, ListDTO, ListRepository, RecipeMemento);
             ListGeneratorDTO = new ListGeneratorDTO();
             MockList = new MockListObject();
         }
 
         public void Dispose()
         {
+            MementoLogger = new LoggerFactory().CreateLogger<IRecipeMemento>();
+            RecipeMemento = new RecipeMemento(MementoLogger);
             ListRepository = new ListRepository();
             RecipeDTO = new RecipeDTO();
             Http = new HttpClient();
             ListDayDTO = new ListDayDTO();
             ListDTO = new ListDTO();
             ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO, ListDTO);
-            ListService = new ListService(ListBuilder, Http, ListDayDTO, ListDTO, ListRepository);
+            ListService = new ListService(ListBuilder, Http, ListDayDTO, ListDTO, ListRepository, RecipeMemento);
             ListGeneratorDTO = new ListGeneratorDTO();
             MockList = new MockListObject();
         }
