@@ -14,9 +14,11 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         public ILazor Lazor { get; set; }
         public string Message { get; set; }
         public bool IsDeleteAction { get; set; }
+        public Dictionary<int, bool> Loading { get; set; }
         public Task<IEnumerable<IRecipeDTO>> GetRecipesAsync(string userName);
-        public void HandleClick();
+        public void HandleUpdate();
         public void HandleDelete();
         public void HandleDetails();
+        public Task<bool> HandleSubscribe();
     }
 }

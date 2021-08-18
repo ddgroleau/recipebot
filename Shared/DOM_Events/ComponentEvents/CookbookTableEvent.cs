@@ -17,7 +17,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         public ILazor Lazor { get; set; }
         public string Message { get; set; }
         public bool IsDeleteAction { get; set; }
-
+        public Dictionary<int, bool> Loading { get; set; } = new Dictionary<int, bool>();
         private readonly ILogger<IRecipeDTO> _logger;
         private readonly HttpClient _http;
         
@@ -34,7 +34,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         {
             try
             {
-                    RetrievedRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>($"/api/Recipe/UserRecipes/{userName}");
+                RetrievedRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>($"/api/Recipe/UserRecipes/{userName}");
             }
             catch (Exception e)
             {
@@ -45,7 +45,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         }
 
 
-        public void HandleClick()
+        public void HandleUpdate()
         {
             Lazor.Toggle();
         }
@@ -63,6 +63,20 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             Message = $"{RecipeDTO.Title}";
             Lazor.Show();
         }
-
+       
+        public async Task<bool> HandleSubscribe()
+        {
+            try
+            {
+                    var response = await _http.PostAsJsonAsync("/api/Subscription/NewSubscription", RecipeDTO.RecipeId);
+                    Lazor.SetSuccessStatus(response.IsSuccessStatusCode);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Could not post new subscription SubscriptionController at CookbookTableEvent, HandleSubscribe method,. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. Error: {e.Message}", e);
+            }
+            Loading.Remove(RecipeDTO.RecipeId);
+            return Lazor.IsSuccess;
+        }
     }
 }

@@ -50,9 +50,9 @@ namespace UnitTests.DOM_Events.ComponentEvents
         }
 
         [Fact]
-        public void HandleClick_WithLazorObject_ShouldChangeIsToggled()
+        public void HandleUpdate_WithLazorObject_ShouldChangeIsToggled()
         {
-            Cookbook.HandleClick();
+            Cookbook.HandleUpdate();
 
             Assert.False(Cookbook.Lazor.IsToggled);
         }
@@ -75,6 +75,14 @@ namespace UnitTests.DOM_Events.ComponentEvents
             Assert.True(Cookbook.Lazor.IsShown);
             Assert.False(Cookbook.IsDeleteAction);
             Assert.Equal(Cookbook.Message, $"{RecipeDTO.Title}");
+        }
+
+        [Fact]
+        public void HandleSubscribe()
+        {
+            bool result = Cookbook.HandleSubscribe();
+
+            Assert.IsType<bool>(result);
         }
     }
 }

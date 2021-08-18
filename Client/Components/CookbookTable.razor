@@ -24,36 +24,60 @@
                     <td>@recipe.Title</td>
                     <td>@recipe.Description</td>
                     <td>
-                        <button @onclick="(()=> {
-                                                  Event.RecipeDTO = recipe;
-                                                  Event.HandleDetails();
-                                                 }
-                                          )">
+                        <button @onclick="(() =>
+                                          {
+                                              Event.RecipeDTO = recipe;
+                                              Event.HandleDetails();
+                                          }
+                              )">
                             DetailsButton
                         </button>
-                        <button @onclick="(()=> {
-                                                  Event.RecipeDTO = recipe;
-                                                  Event.HandleClick();
-                                                 }
-                                          )">
-                            UpdateButton
-                        </button>
-                        <button @onclick="(()=> {
-                                                  Event.RecipeDTO = recipe;
-                                                  Event.HandleDelete();
-                                                 }
-                                          )">
-                            DeleteButton
-                        </button>
+                        @{
+                            if (IsSearchResults)
+                            {
+                                bool isSubscribed = Event.RetrievedRecipes.Select(x => x.RecipeId)
+                                                              .Contains(recipe.RecipeId);
+                                <CascadingValue Name="loading" Value=@Event.Loading.TryGetValue(recipe.RecipeId, out _)>
+                                    <LoadingButton HandleClick=@(async () =>
+                                                                 {
+                                                                     if(!isSubscribed)
+                                                                     {
+                                                                         await HandleSubscribe(recipe);
+                                                                     }
+                                                                 })>
+                                     @(isSubscribed ? "Unsubscribe" : "Subscribe")
+                                    </LoadingButton>
+                                </CascadingValue>
+                            }
+                            else
+                                {
+                                <button @onclick="(() =>
+                                                     {
+                                        Event.RecipeDTO = recipe;
+                                        Event.HandleUpdate();
+                                    })">
+                                    UpdateButton
+                                </button>
+                                <button @onclick="(() =>
+                                                     {
+                                                          Event.RecipeDTO = recipe;
+                                                          Event.HandleDelete();
+                                                     })">
+                                    DeleteButton
+                                </button>
+                            }
+                        }
+
                     </td>
                 </tr>
-            }
-            <CascadingValue Name="LazorObject" Value="Event.Lazor">
-                <CascadingValue Name="RecipeDTO" Value="@Event.RecipeDTO">
-                    <MessageModal IsDeleteAction="Event.IsDeleteAction">@Event.Message</MessageModal>
-                    <EditRecipeModal HandleClick="Event.Lazor.Toggle" />
+
+                <CascadingValue Name="LazorObject" Value="Event.Lazor">
+                    <CascadingValue Name="RecipeDTO" Value="@Event.RecipeDTO">
+                        <MessageModal IsDeleteAction="Event.IsDeleteAction">@Event.Message</MessageModal>
+                        <EditRecipeModal HandleClick="Event.Lazor.Toggle" />
+                    </CascadingValue>
                 </CascadingValue>
-            </CascadingValue>
+            }
         }
     </table>
 
@@ -67,9 +91,23 @@
         StateHasChanged();
     }
 
-    [CascadingParameter(Name ="SearchResults")]
+    [CascadingParameter(Name = "SearchResults")]
     public IEnumerable<IRecipeDTO> SearchResults { get; set; } = new List<RecipeDTO>();
 
     [Parameter]
     public bool IsSearchResults { get; set; } = false;
+
+    public async Task HandleSubscribe(IRecipeDTO recipe)
+    {
+        Event.RecipeDTO = recipe;
+        Event.Loading.Add(Event.RecipeDTO.RecipeId, true);
+        StateHasChanged();
+        await Event.HandleSubscribe();
+        Event.RetrievedRecipes = Event.RetrievedRecipes.Append(recipe);//Remove this once subscription component is complete.
+        StateHasChanged();
+        /* 2 calls to StateHasChanged() to re-render loading button, first call to initiate loading animation and
+        then second to show recipe has been unsubscribed. */
+    }
 }
+
+

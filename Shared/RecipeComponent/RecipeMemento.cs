@@ -12,7 +12,7 @@ namespace PBC.Shared.RecipeComponent
     public class RecipeMemento : IRecipeMemento
     {
         private bool UserRecipesHaveBeenChanged = true;
-        private List<RecipeDTO> UserRecipes;
+        private List<RecipeDTO> UserRecipes = new();
         private HttpClient Http = new();
         private ILogger<IRecipeMemento> _logger;
 

@@ -112,7 +112,22 @@ namespace PBC.Server.Controllers
         public IEnumerable<IRecipeDTO> SearchRecipes(string searchText)
         {
             _logger.LogInformation($"Search request received by RecipeController, SearchRecipes method. Search text: {searchText}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-            return new List<RecipeDTO>();
+            var recipes = new List<IRecipeDTO>
+            {
+                new RecipeDTO { RecipeId = 11,Title =  $"Recipe11", Description = "Description11",  RecipeType="Dinner",    Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { RecipeId = 12,Title =  $"Recipe12", Description = "Description12",  RecipeType="Dinner",    Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { RecipeId = 13, Title = $"Recipe13", Description = "Description13",  RecipeType="Breakfast", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { RecipeId = 14, Title = $"Recipe14", Description = "Description14",  RecipeType="Breakfast", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { RecipeId = 15, Title = $"Recipe15", Description = "Description15",  RecipeType="Lunch",     Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { RecipeId = 16, Title = $"Recipe16", Description = "Description16",  RecipeType="Lunch",     Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { RecipeId = 17, Title = $"Recipe17", Description = "Description17",  RecipeType="Lunch",     Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { RecipeId = 18, Title = $"Recipe18", Description = "Description18",  RecipeType="Lunch",     Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { RecipeId = 19, Title = $"Recipe19", Description = "Description19",  RecipeType="Dinner",    Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { RecipeId = 20, Title = $"Recipe20", Description = "Description20",  RecipeType="Dinner",    Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { RecipeId = 21, Title = $"Recipe21", Description = "Description21",  RecipeType="Dinner",    Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+                new RecipeDTO { RecipeId = 22, Title = $"Recipe22", Description = "Description22",  RecipeType="Dinner",    Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
+            };
+            return recipes;
         }
     }
 }
