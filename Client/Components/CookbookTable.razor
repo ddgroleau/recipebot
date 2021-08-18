@@ -105,8 +105,9 @@
         await Event.HandleSubscribe();
         Event.RetrievedRecipes = Event.RetrievedRecipes.Append(recipe);//Remove this once subscription component is complete.
         StateHasChanged();
-        /* 2 calls to StateHasChanged() to re-render loading button, first call to initiate loading animation and
-        then second to show recipe has been unsubscribed. */
+        /* 2 calls to StateHasChanged() to re-render loading button:
+           first call is to initiate loading animation,
+           second is to show recipe has been unsubscribed. */
     }
 }
 

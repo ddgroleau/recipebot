@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PBC.Shared.SubscriptionComponent
 {
-    public interface ISubscriberMemento
+    public interface ISubscriberState
     {
         public void UpdateState(int id);
-        public Dictionary<int, bool> GetRecipeSubscriptions();
+        public Task<Dictionary<int, bool>> GetRecipeSubscriptions();
     }
 }

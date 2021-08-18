@@ -8,27 +8,27 @@ using Xunit;
 
 namespace UnitTests.SubscriptionComponent
 {
-    public class SubscriberMementoTests : IDisposable
+    public class SubscriberStateTests : IDisposable
     {
-        ISubscriberMemento SubscriberMemento;
+        ISubscriberState SubscriberState;
 
-        public SubscriberMementoTests()
+        public SubscriberStateTests()
         {
-            SubscriberMemento = new SubscriberMemento();
+            SubscriberState = new SubscriberState();
         }
         public void Dispose()
         {
-            SubscriberMemento = new SubscriberMemento();
+            SubscriberState = new SubscriberState();
         }
             
         [Fact]
         public void UpdateState_WithKeyThatDoesNotExist_ShouldAddKeyValuePair()
         {
             int id = 1111;
+
+            SubscriberState.UpdateState(id);
             
-            SubscriberMemento.UpdateState(id);
-            
-            var subscriptions = SubscriberMemento.GetRecipeSubscriptions();
+            var subscriptions = SubscriberState.GetRecipeSubscriptions();
 
             Assert.True(subscriptions[id]);
         }

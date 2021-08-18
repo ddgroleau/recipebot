@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PBC.Shared.SubscriptionComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,18 +21,33 @@ namespace PBC.Server.Controllers
         }
 
         [HttpGet("Subscriptions")]
-        public async Task<IEnumerable<int>> GetSubscriptions()
+        public async Task<Dictionary<int, bool>> GetSubscriptions()
         {
-            return new List<int>()
+            await Task.Delay(100); // Remove this once implemented
+            return new Dictionary<int, bool>()
             {
-                1,2,3,4,5,6,7,8,9,10,11,12
+                {  1,true },
+                {  2,true },
+                {  3,true },
+                {  4,true },
+                {  5,true },
+                {  6,true },
+                {  7,true },
+                {  8,true },
+                {  9,true },
+                { 10,true },
+                { 11,true },
+                { 12,true },
             };
         }
 
         [HttpPost("NewSubscription")]
-        public IActionResult CreateSubscription()
+        public IActionResult CreateSubscription(int id)
         {
             _logger.LogInformation($"Recieved new subscription at SubscriptionController, CreateSubscription method,. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+            // SubscriptionService -
+                // _state.UpdateState(id);
+                // _repository.InsertOne?
             return Ok();
         }
     }
