@@ -1,4 +1,5 @@
-﻿using PBC.Shared;
+﻿using Microsoft.Extensions.Logging;
+using PBC.Shared;
 using PBC.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace UnitTests.RecipeComponent
 {
     public class RecipeServiceTests : IDisposable
     {
+        ILogger<IRecipeMemento> MementoLogger;
+        IRecipeMemento RecipeMemento;
         IRecipeServiceDTO RecipeServiceDTO;
         IRecipeBuilder RecipeBuilder;
         IRecipeDTO RecipeDTO;
@@ -20,20 +23,24 @@ namespace UnitTests.RecipeComponent
 
         public RecipeServiceTests()
         {
+            MementoLogger = new LoggerFactory().CreateLogger<IRecipeMemento>();
+            RecipeMemento = new RecipeMemento(MementoLogger);
             RecipeServiceDTO = new RecipeServiceDTO();
             RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
             RecipeDTO = new RecipeDTO();
             RecipeRepository = new RecipeRepository();
-            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository);
+            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, RecipeMemento);
         }
 
         public void Dispose()
         {
+            MementoLogger = new LoggerFactory().CreateLogger<IRecipeMemento>();
+            RecipeMemento = new RecipeMemento(MementoLogger);
             RecipeServiceDTO = new RecipeServiceDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO,RecipeDTO);
+            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
             RecipeDTO = new RecipeDTO();
             RecipeRepository = new RecipeRepository();
-            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository);
+            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, RecipeMemento);
         }
   
         [Fact]

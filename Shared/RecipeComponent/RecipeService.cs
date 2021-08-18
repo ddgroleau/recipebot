@@ -12,12 +12,15 @@ namespace PBC.Shared.RecipeComponent
     {
         private readonly IRecipeBuilder _recipeBuilder;
         private readonly IRecipeRepository _recipeRepository;
-        public RecipeService(IRecipeBuilder recipeBuilder, IRecipeRepository recipeRepository)
+        private readonly IRecipeMemento _recipeMemento;
+
+        public RecipeService(IRecipeBuilder recipeBuilder, IRecipeRepository recipeRepository, IRecipeMemento recipeMemento)
         {
             _recipeBuilder = recipeBuilder;
             _recipeRepository = recipeRepository;
+            _recipeMemento = recipeMemento;
         }
-
+  
         public IRecipeServiceDTO CreateRecipe(IRecipeDTO recipeDTO)
         {
             IRecipeServiceDTO recipeModel;
@@ -40,6 +43,7 @@ namespace PBC.Shared.RecipeComponent
             try
             {
                 _recipeRepository.InsertOne(recipeModel);
+                _recipeMemento.UpdateState();
             }
             catch (Exception e)
             {

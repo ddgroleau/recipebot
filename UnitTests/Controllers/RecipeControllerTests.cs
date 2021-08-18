@@ -13,6 +13,8 @@ namespace UnitTests.Controllers
 {
     public class RecipeControllerTests : IDisposable
     {
+        ILogger<IRecipeMemento> MementoLogger;
+        IRecipeMemento RecipeMemento;
         ILogger<RecipeController> Logger;
         IRecipeDTO RecipeDTO;
         IAllRecipesScraper Scraper;
@@ -25,6 +27,8 @@ namespace UnitTests.Controllers
 
         public RecipeControllerTests()
         {
+            MementoLogger = new LoggerFactory().CreateLogger<IRecipeMemento>();
+            RecipeMemento = new RecipeMemento(MementoLogger);
             RecipeServiceDTO = new RecipeServiceDTO();
             Logger = new LoggerFactory().CreateLogger<RecipeController>();
             RecipeDTO = new RecipeDTO();
@@ -32,12 +36,14 @@ namespace UnitTests.Controllers
             Scraper = new AllRecipesScraper();
             RecipeUrlDTO = new RecipeUrlDTO();
             RecipeRepository = new RecipeRepository();
-            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository);
+            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, RecipeMemento);
             RecipeController = new RecipeController(Logger, RecipeDTO, Scraper, RecipeService);
         }
 
         public void Dispose()
         {
+            MementoLogger = new LoggerFactory().CreateLogger<IRecipeMemento>();
+            RecipeMemento = new RecipeMemento(MementoLogger);
             RecipeServiceDTO = new RecipeServiceDTO();
             Logger = new LoggerFactory().CreateLogger<RecipeController>();
             RecipeDTO = new RecipeDTO();
@@ -45,7 +51,7 @@ namespace UnitTests.Controllers
             Scraper = new AllRecipesScraper();
             RecipeUrlDTO = new RecipeUrlDTO();
             RecipeRepository = new RecipeRepository();
-            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository);
+            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, RecipeMemento);
             RecipeController = new RecipeController(Logger, RecipeDTO, Scraper, RecipeService);
         }
 
