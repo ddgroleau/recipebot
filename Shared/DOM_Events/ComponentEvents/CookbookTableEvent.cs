@@ -17,17 +17,18 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         public ILazor Lazor { get; set; }
         public string Message { get; set; }
         public bool IsDeleteAction { get; set; }
-        public Dictionary<int, bool> Loading { get; set; } = new Dictionary<int, bool>();
+        public Dictionary<int, bool> Loading { get; set; } = new();
+
         private readonly ILogger<IRecipeDTO> _logger;
         private readonly HttpClient _http;
-        
-        public CookbookTableEvent(ILazor lazor, IRecipeDTO recipeDTO, ILogger<IRecipeDTO> logger, HttpClient http, IEnumerable<IRecipeDTO> retrievedRecipes)
+
+        public CookbookTableEvent(ILazor lazor, IRecipeDTO recipeDTO, ILogger<IRecipeDTO> logger, HttpClient http, IEnumerable<IRecipeDTO> userRecipes)
         {
             Lazor = lazor;
             _logger = logger;
             _http = http;
             RecipeDTO = recipeDTO;
-            RetrievedRecipes = retrievedRecipes;
+            RetrievedRecipes = userRecipes;
         }
 
         public async Task<IEnumerable<IRecipeDTO>> GetRecipesAsync(string userName)
@@ -68,8 +69,23 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         {
             try
             {
-                    var response = await _http.PostAsJsonAsync("/api/Subscription/NewSubscription", RecipeDTO.RecipeId);
-                    Lazor.SetSuccessStatus(response.IsSuccessStatusCode);
+                var response = await _http.PostAsJsonAsync("/api/Subscription/Subscribe", RecipeDTO.RecipeId);
+                Lazor.SetSuccessStatus(response.IsSuccessStatusCode);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Could not post new subscription SubscriptionController at CookbookTableEvent, HandleSubscribe method,. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}. Error: {e.Message}", e);
+            }
+            Loading.Remove(RecipeDTO.RecipeId);
+            return Lazor.IsSuccess;
+        }
+
+        public async Task<bool> HandleUnsubscribe()
+        {
+            try
+            {
+                var response = await _http.PostAsJsonAsync("/api/Subscription/Unsubscribe", RecipeDTO.RecipeId);
+                Lazor.SetSuccessStatus(response.IsSuccessStatusCode);
             }
             catch (Exception e)
             {

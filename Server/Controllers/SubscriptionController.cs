@@ -41,13 +41,23 @@ namespace PBC.Server.Controllers
             };
         }
 
-        [HttpPost("NewSubscription")]
+        [HttpPost("Subscribe")]
         public IActionResult CreateSubscription(int id)
         {
             _logger.LogInformation($"Recieved new subscription at SubscriptionController, CreateSubscription method,. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
             // SubscriptionService -
                 // _state.UpdateState(id);
                 // _repository.InsertOne?
+            return Ok();
+        }
+
+        [HttpPost("Unsubscribe")]
+        public IActionResult Unsubscribe(int id)
+        {
+            _logger.LogInformation($"Recieved unsubscribe request at SubscriptionController, Unsubscribe method,. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+            // SubscriptionService -
+            // _state.UpdateState(id);
+            // _repository.InsertOne?
             return Ok();
         }
     }

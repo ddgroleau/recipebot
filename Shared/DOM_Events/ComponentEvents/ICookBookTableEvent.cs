@@ -20,5 +20,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         public void HandleDelete();
         public void HandleDetails();
         public Task<bool> HandleSubscribe();
+        public Task<bool> HandleUnsubscribe();
+
     }
 }

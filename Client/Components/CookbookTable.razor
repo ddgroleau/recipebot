@@ -40,7 +40,11 @@
                                 <CascadingValue Name="loading" Value=@Event.Loading.TryGetValue(recipe.RecipeId, out _)>
                                     <LoadingButton HandleClick=@(async () =>
                                                                  {
-                                                                     if(!isSubscribed)
+                                                                     if(isSubscribed)
+                                                                     {
+                                                                         await HandleUnsubscribe(recipe);
+                                                                     }
+                                                                     else
                                                                      {
                                                                          await HandleSubscribe(recipe);
                                                                      }
@@ -104,6 +108,18 @@
         StateHasChanged();
         await Event.HandleSubscribe();
         Event.RetrievedRecipes = Event.RetrievedRecipes.Append(recipe);//Remove this once subscription component is complete.
+        StateHasChanged();
+        /* 2 calls to StateHasChanged() to re-render loading button:
+           first call is to initiate loading animation,
+           second is to show recipe has been unsubscribed. */
+    }
+    public async Task HandleUnsubscribe(IRecipeDTO recipe)
+    {
+        Event.RecipeDTO = recipe;
+        Event.Loading.Add(Event.RecipeDTO.RecipeId, true);
+        StateHasChanged();
+        await Event.HandleUnsubscribe();
+        Event.RetrievedRecipes = Event.RetrievedRecipes.Where(x => !x.Equals(recipe));//Remove this once subscription component is complete.
         StateHasChanged();
         /* 2 calls to StateHasChanged() to re-render loading button:
            first call is to initiate loading animation,
