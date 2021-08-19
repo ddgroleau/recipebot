@@ -26,7 +26,7 @@ namespace UnitTests.ListComponent
         HttpClient Http;
         IListGeneratorDTO ListGeneratorDTO;
         MockListObject MockList;
-  
+
         public ListServiceTests()
         {
             MementoLogger = new LoggerFactory().CreateLogger<IRecipeMemento>();
@@ -87,7 +87,7 @@ namespace UnitTests.ListComponent
         {
             var list = ListService.CreateList(MockList.InvalidList);
 
-            Assert.Equal(0,list.Days);
+            Assert.Equal(0, list.Days);
         }
 
         [Fact]

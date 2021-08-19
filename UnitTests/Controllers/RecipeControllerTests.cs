@@ -7,25 +7,26 @@ using PBC.Shared.WebScraper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace UnitTests.Controllers
 {
-    public class RecipeControllerTests : IDisposable
+    public class RecipeControllerFixture : IDisposable
     {
-        ILogger<IRecipeMemento> MementoLogger;
-        IRecipeMemento RecipeMemento;
-        ILogger<RecipeController> Logger;
-        IRecipeDTO RecipeDTO;
-        IAllRecipesScraper Scraper;
-        IRecipeUrlDTO RecipeUrlDTO;
-        RecipeController RecipeController;
-        IRecipeRepository RecipeRepository;
-        IRecipeService RecipeService;
-        IRecipeBuilder RecipeBuilder;
-        IRecipeServiceDTO RecipeServiceDTO;
+        public ILogger<IRecipeMemento> MementoLogger;
+        public IRecipeMemento RecipeMemento;
+        public ILogger<RecipeController> Logger;
+        public IRecipeDTO RecipeDTO;
+        public IAllRecipesScraper Scraper;
+        public IRecipeUrlDTO RecipeUrlDTO;
+        public RecipeController RecipeController;
+        public IRecipeRepository RecipeRepository;
+        public IRecipeService RecipeService;
+        public IRecipeBuilder RecipeBuilder;
+        public IRecipeServiceDTO RecipeServiceDTO;
 
-        public RecipeControllerTests()
+        public RecipeControllerFixture()
         {
             MementoLogger = new LoggerFactory().CreateLogger<IRecipeMemento>();
             RecipeMemento = new RecipeMemento(MementoLogger);
@@ -54,18 +55,27 @@ namespace UnitTests.Controllers
             RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, RecipeMemento);
             RecipeController = new RecipeController(Logger, RecipeDTO, Scraper, RecipeService);
         }
+    }
+
+    public class RecipeControllerTests : IClassFixture<RecipeControllerFixture>
+    {
+        private readonly RecipeControllerFixture Fixture;
+        public RecipeControllerTests(RecipeControllerFixture fixture)
+        {
+            Fixture = fixture;
+        }
 
         [Fact]
         public void ProcessRecipeUrl_WithValidURL_ShouldReturnIRecipeUrlDTO()
         {
-            var postResult = RecipeController.ProcessRecipeUrl((RecipeUrlDTO)RecipeUrlDTO);
+            var postResult = Fixture.RecipeController.ProcessRecipeUrl((RecipeUrlDTO)Fixture.RecipeUrlDTO);
             Assert.IsAssignableFrom<IRecipeDTO>(postResult);
         }
 
         [Fact]
         public void CreateOrUpdateRecipe_WithValidRecipeDTO_ShouldReturn200()
         {
-            var recipeDTO = RecipeDTO;
+            var recipeDTO = Fixture.RecipeDTO;
 
             recipeDTO.URL = "https://www.allrecipes.com/recipe/264739/lemon-garlic-chicken-kebabs/";
             recipeDTO.Title = "test";
@@ -73,14 +83,14 @@ namespace UnitTests.Controllers
             recipeDTO.Ingredients.Add("test");
             recipeDTO.Instructions.Add("test");
 
-            var postResult = RecipeController.CreateOrUpdateRecipe((RecipeDTO)recipeDTO);
+            var postResult = Fixture.RecipeController.CreateOrUpdateRecipe((RecipeDTO)recipeDTO);
 
             Assert.IsType<OkResult>(postResult);
         }
         [Fact]
         public void CreateOrUpdateRecipe_WithInvalidRecipeDTO_ShouldReturn400()
         {
-            var postResult = RecipeController.CreateOrUpdateRecipe((RecipeDTO)RecipeDTO);
+            var postResult = Fixture.RecipeController.CreateOrUpdateRecipe((RecipeDTO)Fixture.RecipeDTO);
 
             Assert.IsType<BadRequestResult>(postResult);
         }
@@ -88,7 +98,7 @@ namespace UnitTests.Controllers
         [Fact]
         public void GetUserRecipes_WithValidUserName_ShouldReturnRecipes()
         {
-            var retrievedRecipes = RecipeController.GetUserRecipes("UserName");
+            var retrievedRecipes = Fixture.RecipeController.GetUserRecipes("UserName");
 
             Assert.True(retrievedRecipes.Any());
         }
@@ -96,7 +106,7 @@ namespace UnitTests.Controllers
         [Fact]
         public void DeleteRecipe_WithValidRecipe_ShouldBeDeleted()
         {
-            var result = RecipeController.DeleteRecipe(RecipeDTO);
+            var result = Fixture.RecipeController.DeleteRecipe(Fixture.RecipeDTO);
 
             Assert.IsType<OkResult>(result);
         }
@@ -106,9 +116,9 @@ namespace UnitTests.Controllers
         {
             string searchText = "Test";
 
-            var results = RecipeController.SearchRecipes(searchText);
+            var results = Fixture.RecipeController.SearchRecipes(searchText);
 
-            Assert.IsAssignableFrom<List<RecipeDTO>>(results);
+            Assert.IsAssignableFrom<IEnumerable<IRecipeDTO>>(results);
         }
     }
 }

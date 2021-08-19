@@ -78,9 +78,17 @@ namespace UnitTests.DOM_Events.ComponentEvents
         }
 
         [Fact]
-        public void HandleSubscribe()
+        public async Task HandleSubscribe_WithValidRecipeDTO_ShouldReturnBool()
         {
-            bool result = Cookbook.HandleSubscribe();
+            bool result = await Cookbook.HandleSubscribe();
+
+            Assert.IsType<bool>(result);
+        }
+
+        [Fact]
+        public async Task HandleUnsubscribee_WithValidRecipeDTO_ShouldReturnBool()
+        {
+            bool result = await Cookbook.HandleUnsubscribe();
 
             Assert.IsType<bool>(result);
         }

@@ -57,7 +57,7 @@ namespace PBC.Server.Controllers
             _logger.LogInformation($"Recieved unsubscribe request at SubscriptionController, Unsubscribe method,. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
             // SubscriptionService -
             // _state.UpdateState(id);
-            // _repository.InsertOne?
+            // _repository.UpdateOne?
             return Ok();
         }
     }
