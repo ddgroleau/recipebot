@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PBC.Server.Controllers;
+using PBC.Shared.Common;
 using PBC.Shared.SubscriptionComponent;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace UnitTests.Controllers
 {
     public class SubscriptionControllerFixture : IDisposable
     {
+        RecipeSubscription Subscription;
+        IFactory<RecipeSubscription> SubscriptionFactory;
         public ILogger<ISubscriberState> StateLogger;
         public ISubscriptionRepository SubscriptionRepository;
         public ISubscriberState SubscriberState;
@@ -22,8 +25,10 @@ namespace UnitTests.Controllers
             
         public SubscriptionControllerFixture()
         {
+            Subscription = new RecipeSubscription();
+            SubscriptionFactory = new SubscriptionFactory(Subscription);
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
-            SubscriptionRepository = new SubscriptionRepository();
+            SubscriptionRepository = new SubscriptionRepository(SubscriptionFactory);
             SubscriberState = new SubscriberState(StateLogger);
             SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository);
             Logger = new LoggerFactory().CreateLogger<SubscriptionController>();
@@ -32,8 +37,10 @@ namespace UnitTests.Controllers
 
         public void Dispose()
         {
+            Subscription = new RecipeSubscription();
+            SubscriptionFactory = new SubscriptionFactory(Subscription);
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
-            SubscriptionRepository = new SubscriptionRepository();
+            SubscriptionRepository = new SubscriptionRepository(SubscriptionFactory);
             SubscriberState = new SubscriberState(StateLogger);
             SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository);
             Logger = new LoggerFactory().CreateLogger<SubscriptionController>();

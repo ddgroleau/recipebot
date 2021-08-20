@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using PBC.Shared.Common;
 using PBC.Shared.SubscriptionComponent;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace UnitTests.SubscriptionComponent
 {
     public class SubscriptionServiceFixture : IDisposable
     {
+        RecipeSubscription Subscription;
+        IFactory<RecipeSubscription> SubscriptionFactory;
         public ILogger<ISubscriberState> StateLogger;
         public ISubscriptionRepository SubscriptionRepository;
         public ISubscriberState SubscriberState;
@@ -18,16 +21,20 @@ namespace UnitTests.SubscriptionComponent
 
         public SubscriptionServiceFixture()
         {
+            Subscription = new RecipeSubscription();
+            SubscriptionFactory = new SubscriptionFactory(Subscription);
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
-            SubscriptionRepository = new SubscriptionRepository();
+            SubscriptionRepository = new SubscriptionRepository(SubscriptionFactory);
             SubscriberState = new SubscriberState(StateLogger);
             SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository);
         }
 
         public void Dispose()
         {
+            Subscription = new RecipeSubscription();
+            SubscriptionFactory = new SubscriptionFactory(Subscription);
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
-            SubscriptionRepository = new SubscriptionRepository();
+            SubscriptionRepository = new SubscriptionRepository(SubscriptionFactory);
             SubscriberState = new SubscriberState(StateLogger);
             SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository);
         }

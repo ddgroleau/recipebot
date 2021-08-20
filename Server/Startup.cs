@@ -12,6 +12,7 @@ using PBC.Shared.DOM_Events;
 using PBC.Shared.Lazor;
 using PBC.Shared.ListComponent;
 using PBC.Shared.RecipeComponent;
+using PBC.Shared.SubscriptionComponent;
 using PBC.Shared.WebScraper;
 using System.Linq;
 using System.Net.Http;
@@ -57,6 +58,7 @@ namespace PBC.Server
             services.AddScoped<Recipe>();
             services.AddScoped<Ingredient>();
             services.AddScoped<Instruction>();
+            services.AddScoped<RecipeSubscription>();
 
             services.AddSingleton<IRecipeMemento, RecipeMemento>();
         }
