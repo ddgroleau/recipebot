@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using PBC.Server.Controllers;
 using PBC.Shared;
+using PBC.Shared.Common;
 using PBC.Shared.RecipeComponent;
 using PBC.Shared.WebScraper;
 using System;
@@ -23,7 +24,7 @@ namespace UnitTests.Controllers
         public RecipeController RecipeController;
         public IRecipeRepository RecipeRepository;
         public IRecipeService RecipeService;
-        public IRecipeBuilder RecipeBuilder;
+        public IBuilder<IRecipeServiceDTO, IRecipeDTO> RecipeBuilder;
         public IRecipeServiceDTO RecipeServiceDTO;
 
         public RecipeControllerFixture()

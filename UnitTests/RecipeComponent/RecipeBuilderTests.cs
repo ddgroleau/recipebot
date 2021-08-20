@@ -1,4 +1,5 @@
 ﻿using PBC.Shared;
+using PBC.Shared.Common;
 using PBC.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace UnitTests.RecipeComponent
     public class RecipeBuilderTests : IDisposable
     {
         IRecipeServiceDTO RecipeServiceDTO;
-        IRecipeBuilder RecipeBuilder;
+        IBuilder<IRecipeServiceDTO, IRecipeDTO> RecipeBuilder;
         IRecipeDTO RecipeDTO;
 
         public RecipeBuilderTests()

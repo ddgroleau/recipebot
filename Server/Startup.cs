@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PBC.Shared;
 using PBC.Shared.AccountComponent;
+using PBC.Shared.Common;
 using PBC.Shared.DOM_Events;
 using PBC.Shared.Lazor;
 using PBC.Shared.ListComponent;
@@ -46,7 +47,7 @@ namespace PBC.Server
             services.AddScoped<IAllRecipesScraper, AllRecipesScraper>();
             services.AddScoped<IFactory<Ingredient>, IngredientFactory>();
             services.AddScoped<IFactory<Instruction>, InstructionFactory>();
-            services.AddScoped<IRecipeBuilder, RecipeBuilder>();
+            services.AddScoped<IBuilder<IRecipeServiceDTO, IRecipeDTO>, RecipeBuilder>();
             services.AddScoped<IListService, ListService>();
             services.AddScoped<IListBuilder, ListBuilder>();
             services.AddScoped<IListDTO, ListDTO>();

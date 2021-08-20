@@ -1,4 +1,5 @@
-﻿using PBC.Shared.DOM_Events;
+﻿using PBC.Shared.Common;
+using PBC.Shared.DOM_Events;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,11 +11,11 @@ namespace PBC.Shared.RecipeComponent
 {
     public class RecipeService : IRecipeService
     {
-        private readonly IRecipeBuilder _recipeBuilder;
+        private readonly IBuilder<IRecipeServiceDTO, IRecipeDTO> _recipeBuilder;
         private readonly IRecipeRepository _recipeRepository;
         private readonly IRecipeMemento _recipeMemento;
 
-        public RecipeService(IRecipeBuilder recipeBuilder, IRecipeRepository recipeRepository, IRecipeMemento recipeMemento)
+        public RecipeService(IBuilder<IRecipeServiceDTO, IRecipeDTO> recipeBuilder, IRecipeRepository recipeRepository, IRecipeMemento recipeMemento)
         {
             _recipeBuilder = recipeBuilder;
             _recipeRepository = recipeRepository;

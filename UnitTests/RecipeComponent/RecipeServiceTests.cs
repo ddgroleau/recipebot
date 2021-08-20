@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using PBC.Shared;
+using PBC.Shared.Common;
 using PBC.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace UnitTests.RecipeComponent
         ILogger<IRecipeMemento> MementoLogger;
         IRecipeMemento RecipeMemento;
         IRecipeServiceDTO RecipeServiceDTO;
-        IRecipeBuilder RecipeBuilder;
+        IBuilder<IRecipeServiceDTO, IRecipeDTO> RecipeBuilder;
         IRecipeDTO RecipeDTO;
         IRecipeRepository RecipeRepository;
         RecipeService RecipeService;
