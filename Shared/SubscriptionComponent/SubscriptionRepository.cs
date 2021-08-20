@@ -18,7 +18,7 @@ namespace PBC.Shared.SubscriptionComponent
         public void CreateSubscription(int id)
         {
             RecipeSubscription subscription = _subscriptionFactory.Make();
-            subscription.RecipeId = id;
+            subscription.Recipe.RecipeId = id;
         }
         public void UpdateSubscription(int id)
         {

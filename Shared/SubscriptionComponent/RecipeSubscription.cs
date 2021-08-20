@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PBC.Shared.RecipeComponent;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace PBC.Shared.SubscriptionComponent
     public class RecipeSubscription
     {
         public int RecipeSubscriptionId { get; set; }
-        public int RecipeId { get; set; }
+        public Recipe Recipe { get; set; }
         public int ApplicationUserId { get; set; }
         public bool IsSubscribed { get; set; }
         public DateTime CreationDate { get; set; }

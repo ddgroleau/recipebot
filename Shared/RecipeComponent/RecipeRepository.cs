@@ -10,7 +10,8 @@ namespace PBC.Shared.RecipeComponent
     {
         public void InsertOne(Object record) 
         {
-            
+            // Add a recipe to recipe table
+            // Add a recipe to RecipeSubscriptions
         }
         public IEnumerable<IRecipeServiceDTO> FindMany(string text)
         {
