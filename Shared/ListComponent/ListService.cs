@@ -1,4 +1,5 @@
 ﻿using PBC.Shared.RecipeComponent;
+using PBC.Shared.SubscriptionComponent;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,25 +21,24 @@ namespace PBC.Shared.ListComponent
         private readonly IListDTO _listDTO;
         private readonly IListRepository _listRepository;
         private readonly HttpClient _http;
-        private readonly IRecipeMemento _recipeMemento;
+        private readonly ISubscriberState _subscriberState;
 
-        public ListService(IListBuilder listBuilder, HttpClient http, IListDayDTO listDayDTO, IListDTO listDTO, IListRepository listRepository, IRecipeMemento recipeMemento)
+        public ListService(IListBuilder listBuilder, HttpClient http, IListDayDTO listDayDTO, IListDTO listDTO, IListRepository listRepository, ISubscriberState subscriberState)
         {
             _listBuilder = listBuilder;
             _listDayDTO = listDayDTO;
             _listDTO = listDTO;
             _listRepository = listRepository;
             _http = http;
-            _recipeMemento = recipeMemento;
+            _subscriberState = subscriberState;
         }
 
         public async Task<IListDayDTO> GenerateDayOfRecipes()
         {
-            string userName = "Test"; //Remove this once auth is implemented
             try
             {
-                var userRecipes = await _recipeMemento.GetUserRecipesAsync(userName);
-               return _listBuilder.Build(userRecipes);
+                var userRecipes = await _subscriberState.GetRecipeSubscriptions(123);//Change this once auth is implemented
+                return _listBuilder.Build(userRecipes);
             }
             catch (Exception)
             {
@@ -48,11 +48,10 @@ namespace PBC.Shared.ListComponent
 
         public async Task<IRecipeDTO> GenerateRandomRecipeByType(string recipeType)
         {
-            string userName = "Test"; //Remove this once auth is implemented
             IRecipeDTO recipe;
             try
             {
-                var userRecipes = await _recipeMemento.GetUserRecipesAsync(userName);
+                var userRecipes = await _subscriberState.GetRecipeSubscriptions(123);//Change this once auth is implemented
                 recipe = _listBuilder.GenerateRandomRecipeByType(userRecipes, recipeType);
             }
             catch (Exception)

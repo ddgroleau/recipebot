@@ -68,7 +68,7 @@
                             <span class="small form-text text-danger">@Lazor.ErrorMessage</span>
 
 
-                            <CascadingValue Name="Loading" Value="@Lazor.Loading">
+                            <CascadingValue Name="loading" Value="@Lazor.Loading">
                                 <LoadingButton>Submit</LoadingButton>
                             </CascadingValue>
                         </EditForm>
@@ -83,7 +83,7 @@
 
 @code {
 
-    [CascadingParameter(Name = "LazorObject")]
+    [CascadingParameter(Name = "Lazor")]
     public ILazor Lazor { get; set; }
 
     [CascadingParameter(Name = "RecipeDTO")]

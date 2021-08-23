@@ -8,7 +8,7 @@ namespace PBC.Shared.RecipeComponent
 {
     public class RecipeRepository : IRecipeRepository
     {
-        public void InsertOne(Object record) 
+        public void CreateRecipe(IRecipeServiceDTO recipe) 
         {
             // Add a recipe to recipe table
             // Add a recipe to RecipeSubscriptions
@@ -17,6 +17,15 @@ namespace PBC.Shared.RecipeComponent
         {
             return new List<RecipeServiceDTO>();
         }
+        public IRecipeServiceDTO FindOne(int id)
+        {
+            return new RecipeServiceDTO();
+        }
+        public void UpdateRecipe(IRecipeServiceDTO recipe)
+        {
+            // Update a recipe in RecipeSubscriptions
+        }
+
 
     }
 }

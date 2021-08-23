@@ -15,7 +15,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         public string Message { get; set; }
         public bool IsDeleteAction { get; set; }
         public Dictionary<int, bool> Loading { get; set; }
-        public Task<IEnumerable<IRecipeDTO>> GetRecipesAsync(string userName);
+        public Task<IEnumerable<IRecipeDTO>> GetRecipesAsync(int userId);
         public void HandleUpdate();
         public void HandleDelete();
         public void HandleDetails();

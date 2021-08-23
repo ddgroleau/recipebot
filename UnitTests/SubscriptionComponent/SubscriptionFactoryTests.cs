@@ -1,4 +1,5 @@
 ﻿using PBC.Shared.Common;
+using PBC.Shared.RecipeComponent;
 using PBC.Shared.SubscriptionComponent;
 using System;
 using System.Collections.Generic;
@@ -11,19 +12,22 @@ namespace UnitTests.SubscriptionComponent
 {
     public class SubscriptionFactoryFixture : IDisposable
     {
-       public RecipeSubscription RecipeSubscription;
+        Recipe Recipe;
+        public RecipeSubscription RecipeSubscription;
         public IFactory<RecipeSubscription> SubscriptionFactory;
 
         public SubscriptionFactoryFixture()
         {
+            Recipe = new Recipe();
             RecipeSubscription = new RecipeSubscription();
-            SubscriptionFactory = new SubscriptionFactory(RecipeSubscription);
+            SubscriptionFactory = new SubscriptionFactory(RecipeSubscription, Recipe);
         }
 
         public void Dispose()
         {
+            Recipe = new Recipe();
             RecipeSubscription = new RecipeSubscription();
-            SubscriptionFactory = new SubscriptionFactory(RecipeSubscription);
+            SubscriptionFactory = new SubscriptionFactory(RecipeSubscription, Recipe);
         }
     }
 

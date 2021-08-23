@@ -18,13 +18,13 @@ namespace PBC.Shared.SubscriptionComponent
         }
         public void CreateSubscription(int id)
         {
-            _subscriberState.UpdateState(id);
+            _subscriberState.UpdateState();
             _subscriptionRepository.CreateSubscription(id);
         }
 
         public void UpdateSubscription(int id)
         {
-            _subscriberState.UpdateState(id);
+            _subscriberState.UpdateState();
             _subscriptionRepository.UpdateSubscription(id);
         }
     }

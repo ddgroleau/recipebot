@@ -2,6 +2,7 @@
 using PBC.Shared;
 using PBC.Shared.ListComponent;
 using PBC.Shared.RecipeComponent;
+using PBC.Shared.SubscriptionComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +16,8 @@ namespace UnitTests.ListComponent
 {
     public class ListServiceTests : IDisposable
     {
-        ILogger<IRecipeMemento> MementoLogger;
-        IRecipeMemento RecipeMemento;
+        ILogger<ISubscriberState> StateLogger;
+        ISubscriberState SubscriberState;
         IListRepository ListRepository;
         IRecipeDTO RecipeDTO;
         IListService ListService;
@@ -29,30 +30,30 @@ namespace UnitTests.ListComponent
 
         public ListServiceTests()
         {
-            MementoLogger = new LoggerFactory().CreateLogger<IRecipeMemento>();
-            RecipeMemento = new RecipeMemento(MementoLogger);
+            StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
+            SubscriberState = new SubscriberState(StateLogger);
             ListRepository = new ListRepository();
             RecipeDTO = new RecipeDTO();
             Http = new HttpClient();
             ListDayDTO = new ListDayDTO();
             ListDTO = new ListDTO();
             ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO, ListDTO);
-            ListService = new ListService(ListBuilder, Http, ListDayDTO, ListDTO, ListRepository, RecipeMemento);
+            ListService = new ListService(ListBuilder, Http, ListDayDTO, ListDTO, ListRepository, SubscriberState);
             ListGeneratorDTO = new ListGeneratorDTO();
             MockList = new MockListObject();
         }
 
         public void Dispose()
         {
-            MementoLogger = new LoggerFactory().CreateLogger<IRecipeMemento>();
-            RecipeMemento = new RecipeMemento(MementoLogger);
+            StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
+            SubscriberState = new SubscriberState(StateLogger);
             ListRepository = new ListRepository();
             RecipeDTO = new RecipeDTO();
             Http = new HttpClient();
             ListDayDTO = new ListDayDTO();
             ListDTO = new ListDTO();
             ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO, ListDTO);
-            ListService = new ListService(ListBuilder, Http, ListDayDTO, ListDTO, ListRepository, RecipeMemento);
+            ListService = new ListService(ListBuilder, Http, ListDayDTO, ListDTO, ListRepository, SubscriberState);
             ListGeneratorDTO = new ListGeneratorDTO();
             MockList = new MockListObject();
         }

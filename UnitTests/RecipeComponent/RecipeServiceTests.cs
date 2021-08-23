@@ -2,6 +2,7 @@
 using PBC.Shared;
 using PBC.Shared.Common;
 using PBC.Shared.RecipeComponent;
+using PBC.Shared.SubscriptionComponent;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,8 +15,8 @@ namespace UnitTests.RecipeComponent
 {
     public class RecipeServiceTests : IDisposable
     {
-        ILogger<IRecipeMemento> MementoLogger;
-        IRecipeMemento RecipeMemento;
+        ILogger<ISubscriberState> StateLogger;
+        ISubscriberState SubscriberState;
         IRecipeServiceDTO RecipeServiceDTO;
         IBuilder<IRecipeServiceDTO, IRecipeDTO> RecipeBuilder;
         IRecipeDTO RecipeDTO;
@@ -24,24 +25,24 @@ namespace UnitTests.RecipeComponent
 
         public RecipeServiceTests()
         {
-            MementoLogger = new LoggerFactory().CreateLogger<IRecipeMemento>();
-            RecipeMemento = new RecipeMemento(MementoLogger);
+            StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
+            SubscriberState = new SubscriberState(StateLogger);
             RecipeServiceDTO = new RecipeServiceDTO();
             RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
             RecipeDTO = new RecipeDTO();
             RecipeRepository = new RecipeRepository();
-            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, RecipeMemento);
+            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, SubscriberState);
         }
 
         public void Dispose()
         {
-            MementoLogger = new LoggerFactory().CreateLogger<IRecipeMemento>();
-            RecipeMemento = new RecipeMemento(MementoLogger);
+            StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
+            SubscriberState = new SubscriberState(StateLogger);
             RecipeServiceDTO = new RecipeServiceDTO();
             RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
             RecipeDTO = new RecipeDTO();
             RecipeRepository = new RecipeRepository();
-            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, RecipeMemento);
+            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, SubscriberState);
         }
   
         [Fact]

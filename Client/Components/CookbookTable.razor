@@ -37,7 +37,7 @@
                             {
                                 bool isSubscribed = Event.RetrievedRecipes.Select(x => x.RecipeId)
                                                               .Contains(recipe.RecipeId);
-                                <CascadingValue Name="loading" Value=@Event.Loading.TryGetValue(recipe.RecipeId, out _)>
+                                <CascadingValue Name="Loading" Value=@Event.Loading.TryGetValue(recipe.RecipeId, out _)>
                                     <LoadingButton HandleClick=@(async () =>
                                                                  {
                                                                      if(isSubscribed)
@@ -49,12 +49,12 @@
                                                                          await HandleSubscribe(recipe);
                                                                      }
                                                                  })>
-                                     @(isSubscribed ? "Unsubscribe" : "Subscribe")
+                                        @(isSubscribed ? "Unsubscribe" : "Subscribe")
                                     </LoadingButton>
                                 </CascadingValue>
                             }
                             else
-                                {
+                            {
                                 <button @onclick="(() =>
                                                      {
                                         Event.RecipeDTO = recipe;
@@ -75,7 +75,7 @@
                     </td>
                 </tr>
 
-                <CascadingValue Name="LazorObject" Value="Event.Lazor">
+                <CascadingValue Name="Lazor" Value="Event.Lazor">
                     <CascadingValue Name="RecipeDTO" Value="@Event.RecipeDTO">
                         <MessageModal IsDeleteAction="Event.IsDeleteAction">@Event.Message</MessageModal>
                         <EditRecipeModal HandleClick="Event.Lazor.Toggle" />
@@ -90,7 +90,7 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
-        Event.RetrievedRecipes = await Event.GetRecipesAsync("TestUser");
+        Event.RetrievedRecipes = await Event.GetRecipesAsync(123);
 
         StateHasChanged();
     }

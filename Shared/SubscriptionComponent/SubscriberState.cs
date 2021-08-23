@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using PBC.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,36 +13,28 @@ namespace PBC.Shared.SubscriptionComponent
     public class SubscriberState : ISubscriberState
     {
         private HttpClient Http = new();
-        private Dictionary<int, bool> RecipeSubscriptions { get; set; } = new();
-        private bool SubscriptionsHaveChanged { get; set; }
+        private IEnumerable<IRecipeDTO> RecipeSubscriptions { get; set; } = new List<IRecipeDTO>();
+        private bool SubscriptionsHaveChanged { get; set; } = true;
         private ILogger<ISubscriberState> _logger;
 
         public SubscriberState(ILogger<ISubscriberState> logger)
         {
             _logger = logger;
         }
-        public void UpdateState(int id)
+        public bool UpdateState()
         {
-            bool isSubscribed = RecipeSubscriptions.TryGetValue(id,out _);
-            if(isSubscribed)
-            {
-                RecipeSubscriptions[id] = !RecipeSubscriptions[id];
-            }
-            else
-            {
-                RecipeSubscriptions.Add(id, true);
-            }
-            SubscriptionsHaveChanged = true;
+            SubscriptionsHaveChanged = !SubscriptionsHaveChanged;
+            return SubscriptionsHaveChanged;
         }
 
-        public async Task<Dictionary<int, bool>> GetRecipeSubscriptions()
+        public async Task<IEnumerable<IRecipeDTO>> GetRecipeSubscriptions(int userId)
         {
             try
             {
                 if (SubscriptionsHaveChanged)
                 {
-                    RecipeSubscriptions = await Http.GetFromJsonAsync<Dictionary<int, bool>>("https://localhost:4001/api/Subscription/Subscriptions");
-                    SubscriptionsHaveChanged = false;
+                    RecipeSubscriptions = await Http.GetFromJsonAsync<List<RecipeDTO>>($"https://localhost:4001/api/Subscription/Subscriptions/{userId}");
+                    UpdateState();
                     return RecipeSubscriptions;
                 }
             }

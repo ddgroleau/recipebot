@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using PBC.Server.Controllers;
 using PBC.Shared.Common;
+using PBC.Shared.RecipeComponent;
 using PBC.Shared.SubscriptionComponent;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace UnitTests.Controllers
 {
     public class SubscriptionControllerFixture : IDisposable
     {
+        Recipe Recipe;
         RecipeSubscription Subscription;
         IFactory<RecipeSubscription> SubscriptionFactory;
         public ILogger<ISubscriberState> StateLogger;
@@ -25,8 +27,9 @@ namespace UnitTests.Controllers
             
         public SubscriptionControllerFixture()
         {
+            Recipe = new Recipe();
             Subscription = new RecipeSubscription();
-            SubscriptionFactory = new SubscriptionFactory(Subscription);
+            SubscriptionFactory = new SubscriptionFactory(Subscription, Recipe);
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriptionRepository = new SubscriptionRepository(SubscriptionFactory);
             SubscriberState = new SubscriberState(StateLogger);
@@ -37,8 +40,9 @@ namespace UnitTests.Controllers
 
         public void Dispose()
         {
+            Recipe = new Recipe();
             Subscription = new RecipeSubscription();
-            SubscriptionFactory = new SubscriptionFactory(Subscription);
+            SubscriptionFactory = new SubscriptionFactory(Subscription, Recipe);
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriptionRepository = new SubscriptionRepository(SubscriptionFactory);
             SubscriberState = new SubscriberState(StateLogger);

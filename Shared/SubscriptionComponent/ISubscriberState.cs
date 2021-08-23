@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PBC.Shared.RecipeComponent;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace PBC.Shared.SubscriptionComponent
 {
     public interface ISubscriberState
     {
-        public void UpdateState(int id);
-        public Task<Dictionary<int, bool>> GetRecipeSubscriptions();
+        public bool UpdateState();
+        public Task<IEnumerable<IRecipeDTO>> GetRecipeSubscriptions(int userId);
     }
 }

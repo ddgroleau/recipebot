@@ -1,5 +1,6 @@
 ﻿using PBC.Shared.Common;
 using PBC.Shared.DOM_Events;
+using PBC.Shared.SubscriptionComponent;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,13 +14,13 @@ namespace PBC.Shared.RecipeComponent
     {
         private readonly IBuilder<IRecipeServiceDTO, IRecipeDTO> _recipeBuilder;
         private readonly IRecipeRepository _recipeRepository;
-        private readonly IRecipeMemento _recipeMemento;
+        private readonly ISubscriberState _subscriberState;
 
-        public RecipeService(IBuilder<IRecipeServiceDTO, IRecipeDTO> recipeBuilder, IRecipeRepository recipeRepository, IRecipeMemento recipeMemento)
+        public RecipeService(IBuilder<IRecipeServiceDTO, IRecipeDTO> recipeBuilder, IRecipeRepository recipeRepository, ISubscriberState subscriberState)
         {
             _recipeBuilder = recipeBuilder;
             _recipeRepository = recipeRepository;
-            _recipeMemento = recipeMemento;
+            _subscriberState = subscriberState;
         }
   
         public IRecipeServiceDTO CreateRecipe(IRecipeDTO recipeDTO)
@@ -39,18 +40,24 @@ namespace PBC.Shared.RecipeComponent
             return recipeModel;
         }
 
-        private IRecipeServiceDTO SaveRecipe(IRecipeServiceDTO recipeModel)
+        private void SaveRecipe(IRecipeServiceDTO recipeModel)
         {
             try
             {
-                _recipeRepository.InsertOne(recipeModel);
-                _recipeMemento.UpdateState();
+                if(RecipeExists(recipeModel))
+                {
+                    _recipeRepository.UpdateRecipe(recipeModel);
+                }
+                else
+                {
+                    _recipeRepository.CreateRecipe(recipeModel);
+                }
+                _subscriberState.UpdateState();
             }
             catch (Exception e)
             {
                 throw new InvalidOperationException("Unable to Add Recipe to Database.",e);
             }
-            return recipeModel;
         }
 
         private bool RecipeIsValid(IRecipeDTO recipeDTO)
@@ -81,6 +88,11 @@ namespace PBC.Shared.RecipeComponent
             }
 
             return recipeResults;        
+        }
+
+        private bool RecipeExists(IRecipeServiceDTO recipeServiceDTO)
+        {
+            return _recipeRepository.FindOne(recipeServiceDTO.RecipeId) != null;
         }
 
     }

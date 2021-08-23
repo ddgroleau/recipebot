@@ -1,4 +1,5 @@
 ﻿using PBC.Shared.Common;
+using PBC.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,10 @@ namespace PBC.Shared.SubscriptionComponent
     {
         private readonly RecipeSubscription _recipeSubscription;
 
-        public SubscriptionFactory(RecipeSubscription recipeSubscription)
+        public SubscriptionFactory(RecipeSubscription recipeSubscription, Recipe recipe)
         {
             _recipeSubscription = recipeSubscription;
+            _recipeSubscription.Recipe = recipe;
         }
         public RecipeSubscription Make()
         {

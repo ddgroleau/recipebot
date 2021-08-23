@@ -5,7 +5,7 @@
         Generate List
         <br />
         <label>Days:</label>
-        <CascadingValue Name="loading" Value="@Event.Lazor.Loading">
+        <CascadingValue Name="Loading" Value="@Event.Lazor.Loading">
             <LoadingButton HandleClick="async () => await HandleAdd()">(+)</LoadingButton>
             <LoadingButton HandleClick="() => Event.RemoveDay()">(-)</LoadingButton>
         </CascadingValue>
@@ -37,7 +37,7 @@
             }
 
         </div>
-        <CascadingValue Name="loading" Value="@Event.Lazor.Loading">
+        <CascadingValue Name="Loading" Value="@Event.Lazor.Loading">
             <LoadingButton HandleClick="async()=> await HandleClick()">Submit List</LoadingButton>
         </CascadingValue>
     </div>

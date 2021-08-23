@@ -42,17 +42,19 @@ namespace PBC.Server
             services.AddScoped<IListGeneratorDTO, ListGeneratorDTO>();
             services.AddScoped<IListDayDTO, ListDayDTO>();
             services.AddScoped<IRecipeServiceDTO, RecipeServiceDTO>();
-            
             services.AddScoped<IRecipeRepository, RecipeRepository>();
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<IAllRecipesScraper, AllRecipesScraper>();
             services.AddScoped<IFactory<Ingredient>, IngredientFactory>();
             services.AddScoped<IFactory<Instruction>, InstructionFactory>();
+            services.AddScoped<IFactory<RecipeSubscription>, SubscriptionFactory>();
             services.AddScoped<IBuilder<IRecipeServiceDTO, IRecipeDTO>, RecipeBuilder>();
             services.AddScoped<IListService, ListService>();
             services.AddScoped<IListBuilder, ListBuilder>();
             services.AddScoped<IListDTO, ListDTO>();
             services.AddScoped<IListRepository, ListRepository>();
+            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+            services.AddScoped<ISubscriptionService, SubscriptionService>();
 
             services.AddScoped<HttpClient>();
             services.AddScoped<Recipe>();
@@ -60,7 +62,7 @@ namespace PBC.Server
             services.AddScoped<Instruction>();
             services.AddScoped<RecipeSubscription>();
 
-            services.AddSingleton<IRecipeMemento, RecipeMemento>();
+            services.AddSingleton<ISubscriberState, SubscriberState>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

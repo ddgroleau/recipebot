@@ -30,11 +30,9 @@ namespace UnitTests.SubscriptionComponent
         {
             int id = 1111;
 
-            SubscriberState.UpdateState(id);
+            bool result = SubscriberState.UpdateState();
             
-            var subscriptions = await SubscriberState.GetRecipeSubscriptions();
-
-            Assert.True(subscriptions[id]);
+            Assert.True(result);
         }
     }
 }

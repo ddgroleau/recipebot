@@ -48,11 +48,8 @@ namespace PBC.Server.Controllers
         {
             try
             {
-                if (recipeDTO.RecipeId.Equals(0))
-                {
-                    _recipeService.CreateRecipe(recipeDTO);
-                    _logger.LogInformation($"Processing RecipeDTO: \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-                }
+                _recipeService.CreateRecipe(recipeDTO);
+                _logger.LogInformation($"Processing RecipeDTO: \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
                 return Ok();
             }
             catch (Exception e)

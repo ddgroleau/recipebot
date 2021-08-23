@@ -4,6 +4,7 @@ using PBC.Server.Controllers;
 using PBC.Shared;
 using PBC.Shared.Common;
 using PBC.Shared.RecipeComponent;
+using PBC.Shared.SubscriptionComponent;
 using PBC.Shared.WebScraper;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,8 @@ namespace UnitTests.Controllers
 {
     public class RecipeControllerFixture : IDisposable
     {
-        public ILogger<IRecipeMemento> MementoLogger;
-        public IRecipeMemento RecipeMemento;
+        public ILogger<ISubscriberState> StateLogger;
+        public ISubscriberState SubscriberState;
         public ILogger<RecipeController> Logger;
         public IRecipeDTO RecipeDTO;
         public IAllRecipesScraper Scraper;
@@ -29,8 +30,8 @@ namespace UnitTests.Controllers
 
         public RecipeControllerFixture()
         {
-            MementoLogger = new LoggerFactory().CreateLogger<IRecipeMemento>();
-            RecipeMemento = new RecipeMemento(MementoLogger);
+            StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
+            SubscriberState = new SubscriberState(StateLogger);
             RecipeServiceDTO = new RecipeServiceDTO();
             Logger = new LoggerFactory().CreateLogger<RecipeController>();
             RecipeDTO = new RecipeDTO();
@@ -38,14 +39,14 @@ namespace UnitTests.Controllers
             Scraper = new AllRecipesScraper();
             RecipeUrlDTO = new RecipeUrlDTO();
             RecipeRepository = new RecipeRepository();
-            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, RecipeMemento);
+            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, SubscriberState);
             RecipeController = new RecipeController(Logger, RecipeDTO, Scraper, RecipeService);
         }
 
         public void Dispose()
         {
-            MementoLogger = new LoggerFactory().CreateLogger<IRecipeMemento>();
-            RecipeMemento = new RecipeMemento(MementoLogger);
+            StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
+            SubscriberState = new SubscriberState(StateLogger);
             RecipeServiceDTO = new RecipeServiceDTO();
             Logger = new LoggerFactory().CreateLogger<RecipeController>();
             RecipeDTO = new RecipeDTO();
@@ -53,7 +54,7 @@ namespace UnitTests.Controllers
             Scraper = new AllRecipesScraper();
             RecipeUrlDTO = new RecipeUrlDTO();
             RecipeRepository = new RecipeRepository();
-            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, RecipeMemento);
+            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, SubscriberState);
             RecipeController = new RecipeController(Logger, RecipeDTO, Scraper, RecipeService);
         }
     }

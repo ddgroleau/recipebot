@@ -31,11 +31,11 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             RetrievedRecipes = userRecipes;
         }
 
-        public async Task<IEnumerable<IRecipeDTO>> GetRecipesAsync(string userName)
+        public async Task<IEnumerable<IRecipeDTO>> GetRecipesAsync(int userId)
         {
             try
             {
-                RetrievedRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>($"/api/Recipe/UserRecipes/{userName}");
+                RetrievedRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>($"https://localhost:4001/api/Subscription/Subscriptions/{userId}");
             }
             catch (Exception e)
             {

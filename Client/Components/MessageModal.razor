@@ -5,7 +5,9 @@
         <div class="card">
             <h4 class="card-header">
                 @ChildContent
-                <button type="button" @onclick="(() => Event.HandleClick(Lazor))" class="btn btn-danger float-right">&times;</button>
+                <button type="button" @onclick="() => {
+                                                    Event.HandleClick(Lazor);
+                                                    }" class="btn btn-danger float-right">&times;</button>
             </h4>
             <div class="card-body">
                 <h5>Recipe: @RecipeDTO.Title</h5>
@@ -43,7 +45,7 @@
 
 @code {
 
-    [CascadingParameter(Name = "LazorObject")]
+    [CascadingParameter(Name = "Lazor")]
     public ILazor Lazor { get; set; }
 
     [Parameter]
