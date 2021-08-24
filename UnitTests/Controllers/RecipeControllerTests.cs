@@ -75,6 +75,16 @@ namespace UnitTests.Controllers
         }
 
         [Fact]
+        public void CreateOrUpdateRecipe_WithInvalidRecipeDTO_ShouldReturn400()
+        {
+            var recipe = Fixture.RecipeDTO;
+            recipe.Title = null;
+            var postResult = Fixture.RecipeController.CreateOrUpdateRecipe((RecipeDTO)recipe);
+
+            Assert.IsType<BadRequestResult>(postResult);
+        }
+
+        [Fact]
         public void CreateOrUpdateRecipe_WithValidRecipeDTO_ShouldReturn200()
         {
             var recipeDTO = Fixture.RecipeDTO;
@@ -89,14 +99,7 @@ namespace UnitTests.Controllers
 
             Assert.IsType<OkResult>(postResult);
         }
-        [Fact]
-        public void CreateOrUpdateRecipe_WithInvalidRecipeDTO_ShouldReturn400()
-        {
-            var postResult = Fixture.RecipeController.CreateOrUpdateRecipe((RecipeDTO)Fixture.RecipeDTO);
-
-            Assert.IsType<BadRequestResult>(postResult);
-        }
-
+  
         [Fact]
         public void SearchRecipes_WithValidSearchParameter_ShouldReturnRecipes()
         {

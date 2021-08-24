@@ -43,7 +43,7 @@ namespace PBC.Shared.RecipeComponent
             recipeDTO.Ingredients = recipeServiceDTO.Ingredients;
             recipeDTO.Instructions = recipeServiceDTO.Instructions;
 
-            return recipeDTO;        
+            return recipeDTO;
         }
     }
 }

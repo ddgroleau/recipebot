@@ -78,13 +78,13 @@ namespace PBC.Shared.RecipeComponent
 
         public IEnumerable<IRecipeDTO> SearchRecipes(string searchText)
         {
-            var recipeResults = new List<IRecipeDTO>();
-            var searchResults = _recipeRepository.FindMany(searchText);
+            IEnumerable<IRecipeDTO> recipeResults = new List<IRecipeDTO>();
+            IEnumerable<IRecipeServiceDTO> searchResults = _recipeRepository.SearchRecipes(searchText);
             
             foreach(var recipe in searchResults)
             {
                 var recipeResult =_recipeBuilder.Build(recipe);
-                recipeResults.Add(recipeResult);
+                recipeResults = recipeResults.Append(recipeResult);
             }
 
             return recipeResults;        
