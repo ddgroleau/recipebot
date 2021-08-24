@@ -46,12 +46,5 @@ namespace UnitTests.DOM_Events.ComponentEvents
             Assert.True(Lazor.IsHidden);
         }
 
-        [Fact]
-        public void DeleteRecipe_WithValidRecipeDTO_ShouldHide()
-        {
-            MessageEvent.DeleteRecipe(RecipeDTO, Lazor);
-
-            Assert.True(Lazor.IsHidden);
-        }
     }
 }

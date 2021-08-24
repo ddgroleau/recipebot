@@ -58,22 +58,11 @@ namespace UnitTests.DOM_Events.ComponentEvents
         }
 
         [Fact]
-        public void HandleDelete_WithLazorObject_ShouldChangeIsShown()
-        {
-            Cookbook.HandleDelete();
-
-            Assert.True(Cookbook.Lazor.IsShown);
-            Assert.True(Cookbook.IsDeleteAction);
-            Assert.Equal(Cookbook.Message, $"Are you sure you want to delete \"{RecipeDTO.Title}\"?");
-        }
-
-        [Fact]
         public void HandleDetails_WithLazorObject_ShouldChangeIsShown()
         {
             Cookbook.HandleDetails();
 
             Assert.True(Cookbook.Lazor.IsShown);
-            Assert.False(Cookbook.IsDeleteAction);
             Assert.Equal(Cookbook.Message, $"{RecipeDTO.Title}");
         }
 

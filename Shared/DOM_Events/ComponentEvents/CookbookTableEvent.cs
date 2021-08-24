@@ -16,7 +16,6 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         public IEnumerable<IRecipeDTO> RetrievedRecipes { get; set; }
         public ILazor Lazor { get; set; }
         public string Message { get; set; }
-        public bool IsDeleteAction { get; set; }
         public Dictionary<int, bool> Loading { get; set; } = new();
 
         private readonly ILogger<IRecipeDTO> _logger;
@@ -51,16 +50,8 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             Lazor.Toggle();
         }
 
-        public void HandleDelete()
-        {
-            IsDeleteAction = true;
-            Message = $"Are you sure you want to delete \"{RecipeDTO.Title}\"?";
-            Lazor.Show();
-        }
-
         public void HandleDetails()
         {
-            IsDeleteAction = false;
             Message = $"{RecipeDTO.Title}";
             Lazor.Show();
         }

@@ -24,19 +24,5 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         {
             lazor.Hide();
         }
-
-        public async void DeleteRecipe(IRecipeDTO recipeDTO, ILazor lazor)
-        {
-            try
-            {
-                var response = await _http.DeleteAsync($"/api/Recipe/DeleteRecipe/{recipeDTO}");
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Failed to delete RecipeDTO at MessageModalEvent, DeleteRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.", e.Message);
-            }
-
-            lazor.Hide();
-        }
     }
 }

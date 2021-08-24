@@ -11,7 +11,6 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
     public interface IMessageModalEvent
     {
         public void HandleClick(ILazor e);
-        public void DeleteRecipe(IRecipeDTO recipeDTO, ILazor lazor);
     }
 }
 

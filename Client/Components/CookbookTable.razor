@@ -33,12 +33,10 @@
                             DetailsButton
                         </button>
                         @{
-                            if (IsSearchResults)
-                            {
-                                bool isSubscribed = Event.RetrievedRecipes.Select(x => x.RecipeId)
-                                                              .Contains(recipe.RecipeId);
-                                <CascadingValue Name="Loading" Value=@Event.Loading.TryGetValue(recipe.RecipeId, out _)>
-                                    <LoadingButton HandleClick=@(async () =>
+                            bool isSubscribed = Event.RetrievedRecipes.Select(x => x.RecipeId)
+                                                          .Contains(recipe.RecipeId);
+                            <CascadingValue Name="Loading" Value=@Event.Loading.TryGetValue(recipe.RecipeId, out _)>
+                                <LoadingButton HandleClick=@(async () =>
                                                                  {
                                                                      if(isSubscribed)
                                                                      {
@@ -49,11 +47,10 @@
                                                                          await HandleSubscribe(recipe);
                                                                      }
                                                                  })>
-                                        @(isSubscribed ? "Unsubscribe" : "Subscribe")
-                                    </LoadingButton>
-                                </CascadingValue>
-                            }
-                            else
+                                    @(isSubscribed ? "Unsubscribe" : "Subscribe")
+                                </LoadingButton>
+                            </CascadingValue>
+                            if (isSubscribed)
                             {
                                 <button @onclick="(() =>
                                                      {
@@ -62,14 +59,8 @@
                                     })">
                                     UpdateButton
                                 </button>
-                                <button @onclick="(() =>
-                                                     {
-                                                          Event.RecipeDTO = recipe;
-                                                          Event.HandleDelete();
-                                                     })">
-                                    DeleteButton
-                                </button>
                             }
+
                         }
 
                     </td>
@@ -78,7 +69,7 @@
         }
         <CascadingValue Name="Lazor" Value="Event.Lazor">
             <CascadingValue Name="RecipeDTO" Value="@Event.RecipeDTO">
-                <MessageModal IsDeleteAction="Event.IsDeleteAction">@Event.Message</MessageModal>
+                <MessageModal>@Event.Message</MessageModal>
                 <EditRecipeModal HandleClick="Event.Lazor.Toggle" />
             </CascadingValue>
         </CascadingValue>

@@ -98,22 +98,6 @@ namespace UnitTests.Controllers
         }
 
         [Fact]
-        public void GetUserRecipes_WithValidUserName_ShouldReturnRecipes()
-        {
-            var retrievedRecipes = Fixture.RecipeController.GetUserRecipes("UserName");
-
-            Assert.True(retrievedRecipes.Any());
-        }
-
-        [Fact]
-        public void DeleteRecipe_WithValidRecipe_ShouldBeDeleted()
-        {
-            var result = Fixture.RecipeController.DeleteRecipe(Fixture.RecipeDTO);
-
-            Assert.IsType<OkResult>(result);
-        }
-
-        [Fact]
         public void SearchRecipes_WithValidSearchParameter_ShouldReturnRecipes()
         {
             string searchText = "Test";

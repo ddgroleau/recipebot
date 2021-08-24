@@ -30,14 +30,6 @@
                         }
                     }
                 </ul>
-                @{
-                    if (IsDeleteAction)
-                    {
-                        <CascadingValue Name="Loading" Value="@Lazor.Loading">
-                            <LoadingButton HandleClick="(()=>Event.DeleteRecipe(RecipeDTO,Lazor))">Submit</LoadingButton>
-                        </CascadingValue>
-                    }
-                }
             </div>
         </div>
     </div>
@@ -55,6 +47,4 @@
     [CascadingParameter(Name = "RecipeDTO")]
     public IRecipeDTO RecipeDTO { get; set; }
 
-    [Parameter]
-    public bool IsDeleteAction { get; set; }
 }
