@@ -26,13 +26,11 @@ namespace UnitTests.SubscriptionComponent
         }
             
         [Fact]
-        public async Task UpdateState_WithKeyThatDoesNotExist_ShouldAddKeyValuePair()
+        public void UpdateState_WithKeyThatDoesNotExist_ShouldAddKeyValuePair()
         {
-            int id = 1111;
-
             bool result = SubscriberState.UpdateState();
             
-            Assert.True(result);
+            Assert.False(result);
         }
     }
 }

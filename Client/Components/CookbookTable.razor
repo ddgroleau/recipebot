@@ -74,15 +74,14 @@
 
                     </td>
                 </tr>
-
-                <CascadingValue Name="Lazor" Value="Event.Lazor">
-                    <CascadingValue Name="RecipeDTO" Value="@Event.RecipeDTO">
-                        <MessageModal IsDeleteAction="Event.IsDeleteAction">@Event.Message</MessageModal>
-                        <EditRecipeModal HandleClick="Event.Lazor.Toggle" />
-                    </CascadingValue>
-                </CascadingValue>
             }
         }
+        <CascadingValue Name="Lazor" Value="Event.Lazor">
+            <CascadingValue Name="RecipeDTO" Value="@Event.RecipeDTO">
+                <MessageModal IsDeleteAction="Event.IsDeleteAction">@Event.Message</MessageModal>
+                <EditRecipeModal HandleClick="Event.Lazor.Toggle" />
+            </CascadingValue>
+        </CascadingValue>
     </table>
 
 </div>

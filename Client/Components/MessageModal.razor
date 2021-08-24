@@ -6,6 +6,7 @@
             <h4 class="card-header">
                 @ChildContent
                 <button type="button" @onclick="() => {
+                                                    Console.WriteLine(Lazor.IsShown);
                                                     Event.HandleClick(Lazor);
                                                     }" class="btn btn-danger float-right">&times;</button>
             </h4>
