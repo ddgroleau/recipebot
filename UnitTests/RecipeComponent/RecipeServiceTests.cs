@@ -28,8 +28,8 @@ namespace UnitTests.RecipeComponent
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriberState = new SubscriberState(StateLogger);
             RecipeServiceDTO = new RecipeServiceDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
             RecipeDTO = new RecipeDTO();
+            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
             RecipeRepository = new RecipeRepository();
             RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, SubscriberState);
         }
