@@ -55,6 +55,7 @@ namespace PBC.Server
             services.AddScoped<IListRepository, ListRepository>();
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
             services.AddScoped<ISubscriptionService, SubscriptionService>();
+            services.AddScoped<ISubscriptionServiceDTO, SubscriptionServiceDTO>();
 
             services.AddScoped<HttpClient>();
             services.AddScoped<Recipe>();

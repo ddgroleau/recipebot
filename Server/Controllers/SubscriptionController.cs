@@ -25,56 +25,41 @@ namespace PBC.Server.Controllers
         }
 
         [HttpGet("Subscriptions/{userId}")]
-        public async Task<IEnumerable<IRecipeDTO>> GetSubscriptions(int userId)
+        public async Task<IEnumerable<IRecipeDTO>> GetUserRecipes(int userId)
         {
             _logger.LogInformation($"Request for user recipes recieved by RecipeController, GetUserRecipes method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
 
-            var recipes = new List<IRecipeDTO>
-            {
-                new RecipeDTO { RecipeId = 1, Title = $"Recipe1",  Description = "Description1",  RecipeType="Breakfast", Ingredients ={ "Salt"}, Instructions={"Combine and cook."} },
-                new RecipeDTO { RecipeId = 2, Title = $"Recipe2",  Description = "Description2",  RecipeType="Breakfast", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
-                new RecipeDTO { RecipeId = 3, Title = $"Recipe3",  Description = "Description3",  RecipeType="Breakfast", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
-                new RecipeDTO { RecipeId = 4, Title = $"Recipe4",  Description = "Description4",  RecipeType="Breakfast", Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
-                new RecipeDTO { RecipeId = 5, Title = $"Recipe5",  Description = "Description5",  RecipeType="Lunch",     Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
-                new RecipeDTO { RecipeId = 6, Title = $"Recipe6",  Description = "Description6",  RecipeType="Lunch",     Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
-                new RecipeDTO { RecipeId = 7, Title = $"Recipe7",  Description = "Description7",  RecipeType="Lunch",     Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
-                new RecipeDTO { RecipeId = 8, Title = $"Recipe8",  Description = "Description8",  RecipeType="Lunch",     Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
-                new RecipeDTO { RecipeId = 9, Title = $"Recipe9",  Description = "Description9",  RecipeType="Dinner",    Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
-                new RecipeDTO { RecipeId = 10,Title = $"Recipe10", Description = "Description10", RecipeType="Dinner",    Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
-                new RecipeDTO { RecipeId = 11,Title = $"Recipe11", Description = "Description11", RecipeType="Dinner",    Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
-                new RecipeDTO { RecipeId = 12,Title = $"Recipe12", Description = "Description12", RecipeType="Dinner",    Ingredients={ "Salt" }, Instructions={"Combine and cook."} },
-            };
-            return recipes;
+            return _subscriptionService.GetUserRecipes(userId);
         }
 
         [HttpPost("Subscribe")]
-        public IActionResult Subscribe(int id)
+        public IActionResult Subscribe(int recipeId)
         {
             try
             {
                 _logger.LogInformation($"Recieved new subscription at SubscriptionController, Subscribe method,. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-                _subscriptionService.CreateSubscription(id);
+                _subscriptionService.CreateSubscription(recipeId);
                 return Ok();
             }
             catch (Exception)
             {
-                _logger.LogError($"Could not subscribe to recipe id: {id} at SubscriptionController, Subscribe method,. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+                _logger.LogError($"Could not subscribe to recipe id: {recipeId} at SubscriptionController, Subscribe method,. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
             }
             return BadRequest();
         }
 
         [HttpPost("Unsubscribe")]
-        public IActionResult Unsubscribe(int id)
+        public IActionResult Unsubscribe(int recipeId)
         {
             try
             {
             _logger.LogInformation($"Recieved unsubscribe request at SubscriptionController, Unsubscribe method,. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-            _subscriptionService.UpdateSubscription(id);
+            _subscriptionService.UpdateSubscription(recipeId);
             return Ok();
             }
             catch (Exception)
             {
-                _logger.LogError($"Could not unsubscribe from recipe id: {id} at SubscriptionController, Unsubscribe method,. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+                _logger.LogError($"Could not unsubscribe from recipe id: {recipeId} at SubscriptionController, Unsubscribe method,. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
             }
             return BadRequest();
         }

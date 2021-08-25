@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace PBC.Shared.SubscriptionComponent
 {
-    public interface ISubscriptionService
+    public interface ISubscriptionServiceDTO
     {
-        public void CreateSubscription(int id);
-        public void UpdateSubscription(int id);
-        public IEnumerable<IRecipeDTO> GetUserRecipes(int userId);
+        public int RecipeSubscriptionId { get; set; }
 
+        public IRecipeServiceDTO Recipe { get; set; }
     }
 }

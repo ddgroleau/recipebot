@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using PBC.Shared;
 using PBC.Shared.Common;
 using PBC.Shared.RecipeComponent;
 using PBC.Shared.SubscriptionComponent;
@@ -13,6 +14,9 @@ namespace UnitTests.SubscriptionComponent
 {
     public class SubscriptionServiceFixture : IDisposable
     {
+        IRecipeServiceDTO RecipeServiceDTO;
+        IBuilder<IRecipeServiceDTO, IRecipeDTO> RecipeBuilder;
+        IRecipeDTO RecipeDTO;
         Recipe Recipe;
         RecipeSubscription Subscription;
         IFactory<RecipeSubscription> SubscriptionFactory;
@@ -23,24 +27,30 @@ namespace UnitTests.SubscriptionComponent
 
         public SubscriptionServiceFixture()
         {
+            RecipeDTO = new RecipeDTO();
+            RecipeServiceDTO = new RecipeServiceDTO();
+            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
             Recipe = new Recipe();
             Subscription = new RecipeSubscription();
             SubscriptionFactory = new SubscriptionFactory(Subscription, Recipe);
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriptionRepository = new SubscriptionRepository(SubscriptionFactory);
             SubscriberState = new SubscriberState(StateLogger);
-            SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository);
+            SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository, RecipeBuilder);
         }
 
         public void Dispose()
         {
+            RecipeDTO = new RecipeDTO();
+            RecipeServiceDTO = new RecipeServiceDTO();
+            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
             Recipe = new Recipe();
             Subscription = new RecipeSubscription();
             SubscriptionFactory = new SubscriptionFactory(Subscription, Recipe);
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriptionRepository = new SubscriptionRepository(SubscriptionFactory);
             SubscriberState = new SubscriberState(StateLogger);
-            SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository);
+            SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository, RecipeBuilder);
         }
     }
 
@@ -65,6 +75,13 @@ namespace UnitTests.SubscriptionComponent
             Fixture.SubscriptionService.UpdateSubscription(1);
             Task result = Fixture.SubscriberState.GetRecipeSubscriptions(1);
             Assert.ThrowsAsync<HttpRequestException>(() => result);
+        }
+
+        [Fact]
+        public void GetSubscriptions_WithValidId_ShouldReturnRecipes()
+        {
+            var result = Fixture.SubscriptionService.GetUserRecipes(123);
+            Assert.IsAssignableFrom<IEnumerable<IRecipeDTO>>(result);
         }
 
     }
