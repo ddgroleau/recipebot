@@ -36,7 +36,6 @@ namespace PBC.Shared.RecipeComponent
             {
                 throw new InvalidOperationException();
             }
-
             return recipeModel;
         }
 
@@ -86,7 +85,6 @@ namespace PBC.Shared.RecipeComponent
                 var recipeResult =_recipeBuilder.Build(recipe);
                 recipeResults = recipeResults.Append(recipeResult);
             }
-
             return recipeResults;        
         }
 
