@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PBC.Server.Controllers;
+using PBC.Shared;
 using PBC.Shared.Common;
 using PBC.Shared.RecipeComponent;
 using PBC.Shared.SubscriptionComponent;
@@ -15,6 +16,9 @@ namespace UnitTests.Controllers
 {
     public class SubscriptionControllerFixture : IDisposable
     {
+        IRecipeServiceDTO RecipeServiceDTO;
+        IBuilder<IRecipeServiceDTO, IRecipeDTO> RecipeBuilder;
+        IRecipeDTO RecipeDTO;
         Recipe Recipe;
         RecipeSubscription Subscription;
         IFactory<RecipeSubscription> SubscriptionFactory;
@@ -27,26 +31,32 @@ namespace UnitTests.Controllers
             
         public SubscriptionControllerFixture()
         {
+            RecipeDTO = new RecipeDTO();
+            RecipeServiceDTO = new RecipeServiceDTO();
+            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
             Recipe = new Recipe();
             Subscription = new RecipeSubscription();
             SubscriptionFactory = new SubscriptionFactory(Subscription, Recipe);
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriptionRepository = new SubscriptionRepository(SubscriptionFactory);
             SubscriberState = new SubscriberState(StateLogger);
-            SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository);
+            SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository, RecipeBuilder);
             Logger = new LoggerFactory().CreateLogger<SubscriptionController>();
             Controller = new SubscriptionController(Logger, SubscriptionService);
         }
 
         public void Dispose()
         {
+            RecipeDTO = new RecipeDTO();
+            RecipeServiceDTO = new RecipeServiceDTO();
+            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
             Recipe = new Recipe();
             Subscription = new RecipeSubscription();
             SubscriptionFactory = new SubscriptionFactory(Subscription, Recipe);
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriptionRepository = new SubscriptionRepository(SubscriptionFactory);
             SubscriberState = new SubscriberState(StateLogger);
-            SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository);
+            SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository, RecipeBuilder);
             Logger = new LoggerFactory().CreateLogger<SubscriptionController>();
             Controller = new SubscriptionController(Logger, SubscriptionService);
         }
