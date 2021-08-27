@@ -34,12 +34,12 @@ namespace PBC.Shared.SubscriptionComponent
 
         public IEnumerable<IRecipeDTO> GetUserRecipes(int userId)
         {
-            IEnumerable<IRecipeDTO> userRecipes = new List<IRecipeDTO>();
+            List<IRecipeDTO> userRecipes = new List<IRecipeDTO>();
             var subscriptions = _subscriptionRepository.GetUserRecipes(userId);
             foreach(var recipe in subscriptions)
             {
                 var recipeDTO =_recipeBuilder.Build(recipe.Recipe);
-                userRecipes = userRecipes.Append(recipeDTO);
+                userRecipes.Add(recipeDTO);
             }
             return userRecipes;
         }

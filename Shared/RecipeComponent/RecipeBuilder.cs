@@ -21,7 +21,8 @@ namespace PBC.Shared.RecipeComponent
         public IRecipeServiceDTO Build(IRecipeDTO recipeDTO)
         {
             IRecipeServiceDTO recipeServiceDTO = _recipeServiceDTO;
-            
+
+            recipeServiceDTO.RecipeId = recipeDTO.RecipeId;
             recipeServiceDTO.URL = recipeDTO.URL;
             recipeServiceDTO.Title = recipeDTO.Title;
             recipeServiceDTO.Description = recipeDTO.Description;
@@ -35,7 +36,8 @@ namespace PBC.Shared.RecipeComponent
         public IRecipeDTO Build(IRecipeServiceDTO recipeServiceDTO)
         {
             IRecipeDTO recipeDTO = _recipeDTO;
-            
+           
+            recipeServiceDTO.RecipeId = recipeDTO.RecipeId;
             recipeDTO.URL = recipeServiceDTO.URL;
             recipeDTO.Title = recipeServiceDTO.Title;
             recipeDTO.Description = recipeServiceDTO.Description;
