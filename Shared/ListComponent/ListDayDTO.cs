@@ -11,6 +11,7 @@ namespace PBC.Shared
 {
     public class ListDayDTO : IListDayDTO
     {
+        public int ListDayId { get; set; }
         public int ListId { get; set; }
         [Range(1,7)]
         public int SequenceNumber { get; set; }

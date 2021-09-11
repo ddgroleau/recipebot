@@ -20,6 +20,7 @@ namespace PBC.Shared.RecipeComponent
         public string Description { get; set; }
         public ICollection<Ingredient> Ingredients { get; set; }
         public ICollection<Instruction> Instructions { get; set; }
+        [MaxLength(90)]
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
     }
