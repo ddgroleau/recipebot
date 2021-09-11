@@ -8,7 +8,7 @@ namespace PBC.Shared.ListComponent
 {
     public interface IListRepository
     {
-        public void InsertOne(Object record);
+        public void InsertOne(IListDTO list);
       
     }
 }
