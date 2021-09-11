@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace PBC.Shared.ListComponent
 {
-    public class List
+    public class ListEntity
     {
-        public int ListId { get; set; }
+        public int ListEntityId { get; set; }
         [Range(1,7)]
         public int Days { get; set; }
         public ICollection<ListDay> ListDays { get; set; }

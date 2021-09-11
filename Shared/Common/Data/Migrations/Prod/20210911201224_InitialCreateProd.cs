@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PBC.Server.Migrations
+namespace PBC.Shared.Common.Data.Migrations.Prod
 {
-    public partial class sqliteInit : Migration
+    public partial class InitialCreateProd : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,13 +50,13 @@ namespace PBC.Server.Migrations
                 name: "Lists",
                 columns: table => new
                 {
-                    ListId = table.Column<int>(type: "INTEGER", nullable: false)
+                    ListEntityId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Days = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Lists", x => x.ListId);
+                    table.PrimaryKey("PK_Lists", x => x.ListEntityId);
                 });
 
             migrationBuilder.CreateTable(
@@ -234,7 +234,7 @@ namespace PBC.Server.Migrations
                 {
                     ListDayId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ListId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ListEntityId = table.Column<int>(type: "INTEGER", nullable: false),
                     SequenceNumber = table.Column<int>(type: "INTEGER", nullable: false),
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false),
                     BreakfastRecipeId = table.Column<int>(type: "INTEGER", nullable: true),
@@ -245,10 +245,10 @@ namespace PBC.Server.Migrations
                 {
                     table.PrimaryKey("PK_ListDays", x => x.ListDayId);
                     table.ForeignKey(
-                        name: "FK_ListDays_Lists_ListId",
-                        column: x => x.ListId,
+                        name: "FK_ListDays_Lists_ListEntityId",
+                        column: x => x.ListEntityId,
                         principalTable: "Lists",
-                        principalColumn: "ListId",
+                        principalColumn: "ListEntityId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ListDays_Recipes_BreakfastRecipeId",
@@ -351,9 +351,9 @@ namespace PBC.Server.Migrations
                 column: "DinnerRecipeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ListDays_ListId",
+                name: "IX_ListDays_ListEntityId",
                 table: "ListDays",
-                column: "ListId");
+                column: "ListEntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ListDays_LunchRecipeId",

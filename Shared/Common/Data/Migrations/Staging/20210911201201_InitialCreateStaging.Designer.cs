@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PBC.Server.Data;
+using PBC.Shared.Common.Data;
 
-namespace PBC.Server.Migrations
+namespace PBC.Shared.Common.Data.Migrations.Staging
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210911014729_sqliteInit")]
-    partial class sqliteInit
+    [DbContext(typeof(StagingDbContext))]
+    [Migration("20210911201201_InitialCreateStaging")]
+    partial class InitialCreateStaging
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -210,20 +210,6 @@ namespace PBC.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("PBC.Shared.ListComponent.List", b =>
-                {
-                    b.Property<int>("ListId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Days")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ListId");
-
-                    b.ToTable("Lists");
-                });
-
             modelBuilder.Entity("PBC.Shared.ListComponent.ListDay", b =>
                 {
                     b.Property<int>("ListDayId")
@@ -239,7 +225,7 @@ namespace PBC.Server.Migrations
                     b.Property<int?>("DinnerRecipeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ListId")
+                    b.Property<int>("ListEntityId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("LunchRecipeId")
@@ -254,11 +240,25 @@ namespace PBC.Server.Migrations
 
                     b.HasIndex("DinnerRecipeId");
 
-                    b.HasIndex("ListId");
+                    b.HasIndex("ListEntityId");
 
                     b.HasIndex("LunchRecipeId");
 
                     b.ToTable("ListDays");
+                });
+
+            modelBuilder.Entity("PBC.Shared.ListComponent.ListEntity", b =>
+                {
+                    b.Property<int>("ListEntityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Days")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ListEntityId");
+
+                    b.ToTable("Lists");
                 });
 
             modelBuilder.Entity("PBC.Shared.RecipeComponent.Ingredient", b =>
@@ -442,9 +442,9 @@ namespace PBC.Server.Migrations
                         .WithMany()
                         .HasForeignKey("DinnerRecipeId");
 
-                    b.HasOne("PBC.Shared.ListComponent.List", null)
+                    b.HasOne("PBC.Shared.ListComponent.ListEntity", null)
                         .WithMany("ListDays")
-                        .HasForeignKey("ListId")
+                        .HasForeignKey("ListEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -486,7 +486,7 @@ namespace PBC.Server.Migrations
                     b.Navigation("Recipe");
                 });
 
-            modelBuilder.Entity("PBC.Shared.ListComponent.List", b =>
+            modelBuilder.Entity("PBC.Shared.ListComponent.ListEntity", b =>
                 {
                     b.Navigation("ListDays");
                 });
