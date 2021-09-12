@@ -35,8 +35,7 @@
                         @{
                             bool isSubscribed = Event.RetrievedRecipes.Select(x => x.RecipeId)
                                                           .Contains(recipe.RecipeId);
-                            <CascadingValue Name="Loading" Value=@Event.Loading.TryGetValue(recipe.RecipeId, out _)>
-                                <LoadingButton HandleClick=@(async () =>
+                                <LoadingButton Loading="@Event.Loading.TryGetValue(recipe.RecipeId, out _)" HandleClick=@(async () =>
                                                                  {
                                                                      if(isSubscribed)
                                                                      {
@@ -49,7 +48,6 @@
                                                                  })>
                                     @(isSubscribed ? "Unsubscribe" : "Subscribe")
                                 </LoadingButton>
-                            </CascadingValue>
                             if (isSubscribed)
                             {
                                 <button @onclick="(() =>

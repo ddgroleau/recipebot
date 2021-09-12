@@ -1,6 +1,6 @@
 ﻿@page "/logout"
-@inject NavigationManager navigationManager
-@inject ILazor e
+@inject NavigationManager NavigationManager
+@inject ILazor Lazor
 
 <div class="col-12">
     <h3>Logout</h3>
@@ -11,9 +11,7 @@
         Are you sure you want to log out?
     </div>
     <div class="card-body">
-        <CascadingValue Name="loading" Value="@e.Loading">
-            <LoadingButton HandleClick="HandleLogout">Logout</LoadingButton>
-        </CascadingValue>
+            <LoadingButton Loading=@Lazor.Loading HandleClick="HandleLogout">Logout</LoadingButton>
     </div>
     <div class="card-footer">
         <a href="/">
@@ -27,6 +25,6 @@
 
     public void HandleLogout()
     {
-        navigationManager.NavigateTo("login");
+        NavigationManager.NavigateTo("login");
     }
 }

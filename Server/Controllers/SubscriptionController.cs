@@ -25,7 +25,7 @@ namespace PBC.Server.Controllers
         }
 
         [HttpGet("Subscriptions/{userId}")]
-        public async Task<IEnumerable<IRecipeDTO>> GetUserRecipes(int userId)
+        public IEnumerable<IRecipeDTO> GetUserRecipes(int userId)
         {
             _logger.LogInformation($"Request for user recipes recieved by RecipeController, GetUserRecipes method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
 

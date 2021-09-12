@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -72,9 +73,8 @@ namespace PBC.Server
                 options.UseSqlite(
                     Configuration.GetConnectionString("SQLiteProd")));
 
-            //services.AddIdentityCore<ApplicationUser>()(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<StagingDbContext>();
-
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+           .AddEntityFrameworkStores<DevDbContext>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -96,6 +96,9 @@ namespace PBC.Server
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -13,18 +13,6 @@ namespace PBC.Shared
         public int Id { get; set; }
 
         [Required]
-        public string Username { get; set; }
-
-        [Required]
-        public string CurrentEmail { get; set; }
-
-        [Required]
-        public string NewEmail { get; set; }
-
-        [Required]
-        public string ConfirmNewEmail { get; set; }
-
-        [Required]
         public string CurrentPassword { get; set; }
 
         [Required]

@@ -7,24 +7,16 @@
             <p class="card-text">@ListDay.Date.ToShortDateString()</p>
             <br />
             <p class="card-text">@ListDay.Breakfast.Title</p>
-            <CascadingValue Name="loading" Value=@Event.Loading["Breakfast"]>
-                <LoadingButton HandleClick="@(async ()=> await RegenerateRecipe("Breakfast"))">@Event.RefreshSymbol["Breakfast"]</LoadingButton>
-            </CascadingValue>
+                <LoadingButton Loading=@Event.Loading["Breakfast"] HandleClick="@(async ()=> await RegenerateRecipe("Breakfast"))">@Event.RefreshSymbol["Breakfast"]</LoadingButton>
             <br />
             <p class="card-text">@ListDay.Lunch.Title</p>
-            <CascadingValue Name="loading" Value=@Event.Loading["Lunch"]>
-                <LoadingButton HandleClick="@(async ()=> await RegenerateRecipe("Lunch"))">@Event.RefreshSymbol["Lunch"]</LoadingButton>
-            </CascadingValue>
+                <LoadingButton Loading=@Event.Loading["Lunch"] HandleClick="@(async ()=> await RegenerateRecipe("Lunch"))">@Event.RefreshSymbol["Lunch"]</LoadingButton>
             <br />
             <p class="card-text">@ListDay.Dinner.Title</p>
-            <CascadingValue Name="loading" Value=@Event.Loading["Dinner"]>
-                <LoadingButton HandleClick="@(async ()=> await RegenerateRecipe("Dinner"))">@Event.RefreshSymbol["Dinner"]</LoadingButton>
-            </CascadingValue>
+                <LoadingButton Loading=@Event.Loading["Dinner"] HandleClick="@(async ()=> await RegenerateRecipe("Dinner"))">@Event.RefreshSymbol["Dinner"]</LoadingButton>
             <br />
             <br />
-            <CascadingValue Name="loading" Value=@Event.Loading["AllThree"]>
-                <LoadingButton HandleClick="@(async ()=> await RegenerateRecipe("AllThree"))">Regenerate Day</LoadingButton>
-            </CascadingValue>
+                <LoadingButton Loading=@Event.Loading["AllThree"] HandleClick="@(async ()=> await RegenerateRecipe("AllThree"))">Regenerate Day</LoadingButton>
         </div>
     </div>
 </div>

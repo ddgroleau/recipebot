@@ -1,33 +1,30 @@
 ﻿@page "/register"
-@inject IAccountRegisterDTO model
-@inject ILazor e
+@inject IAccountRegisterDTO Model
+@inject ILazor Lazor
+@inject HttpClient Http
+
 <div class="card">
     <h4 class="card-header">Register</h4>
     <div class="card-body">
-        <EditForm Model="@model">
+        <EditForm Model="@Model">
             <DataAnnotationsValidator />
             <div class="form-group">
-                <label>Username</label>
-                <InputText @bind-Value="model.Username" class="form-control" />
-                <ValidationMessage For="@(() => model.Username)" />
-            </div>
-            <div class="form-group">
                 <label>Email</label>
-                <InputText @bind-Value="model.Username" class="form-control" />
-                <ValidationMessage For="@(() => model.Email)" />
+                <InputText @bind-Value="Model.Email" class="form-control" />
+                <ValidationMessage For="@(() => Model.Email)" />
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <InputText @bind-Value="model.Password" type="password" class="form-control" />
-                <ValidationMessage For="@(() => model.Password)" />
+                <InputText @bind-Value="Model.Password" class="form-control" />
+                <ValidationMessage For="@(() => Model.Password)" />
             </div>
             <div class="form-group">
-                <label>Re-Enter Password</label>
-                <input type="password" class="form-control" />
+                <label>Password</label>
+                <InputText @bind-Value="Model.ConfirmPassword" type="password" class="form-control" />
+                <ValidationMessage For="@(() => Model.ConfirmPassword)" />
             </div>
-            <CascadingValue Name="loading" Value="@e.Loading">
-                <LoadingButton>Register</LoadingButton>
-            </CascadingValue>
+
+                <LoadingButton HandleClick="async ()=> await HandleRegister()" Loading="@Lazor.Loading">Register</LoadingButton>
 
             <NavLink href="login" class="btn btn-link">Login</NavLink>
         </EditForm>
@@ -36,5 +33,16 @@
 
 
 @code {
-
+ public async Task<bool> HandleRegister()
+    {
+        try
+        {
+        var response = await Http.PostAsJsonAsync("/api/Account/Register", Model);
+        return response.IsSuccessStatusCode;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }

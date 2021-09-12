@@ -1,29 +1,28 @@
 ﻿@page "/login"
-@inject IAccountLoginDTO model
-@inject ILazor e
+@inject IAccountLoginDTO Model
+@inject ILazor Lazor
+@inject HttpClient Http;
 
 <div class="card">
     <h4 class="card-header">Login</h4>
     <div class="card-body">
-        <EditForm Model="@model">
+        <EditForm Model="@Model">
             <DataAnnotationsValidator />
             <div class="form-group">
                 <label>Username</label>
-                <InputText @bind-Value="model.Username" class="form-control" />
+                <InputText @bind-Value="Model.Email" class="form-control" />
                 <div class="small form-text text-danger">
-                    <ValidationMessage For="@(() => model.Username)" />
+                    <ValidationMessage For="@(() => Model.Email)" />
                 </div>
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <InputText @bind-Value="model.Password" type="password" class="form-control" />
+                <InputText @bind-Value="Model.Password" type="password" class="form-control" />
                 <div class="small form-text text-danger">
-                    <ValidationMessage For="@(() => model.Password)" />
+                    <ValidationMessage For="@(() => Model.Password)" />
                 </div>
             </div>
-            <CascadingValue Name="loading" Value="@e.Loading">
-                <LoadingButton>Login</LoadingButton>
-            </CascadingValue>
+                <LoadingButton HandleClick="async () => await HandleLogin()" Loading="@Lazor.Loading">Login</LoadingButton>
             <NavLink href="register" class="btn btn-link">Register</NavLink>
         </EditForm>
     </div>
@@ -31,5 +30,17 @@
 
 
 @code {
-
+    public async Task<bool> HandleLogin()
+    {
+        try
+        {
+        var response = await Http.PostAsJsonAsync("/api/Account/Login", Model);
+        
+        return response.IsSuccessStatusCode;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }
