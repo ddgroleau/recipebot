@@ -12,8 +12,9 @@ namespace PBC.Shared.AccountComponent
         [Required]
         public string Email { get; set; }
         [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
-        [Required, Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
+        [Required, Compare("Password", ErrorMessage = "Password and Confirmation Password must match."), DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
     }
 }
