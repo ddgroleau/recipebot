@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PBC.Shared.Common.Data;
 
-namespace PBC.Shared.Common.Data.Migrations.Staging
+namespace PBC.Shared.Common.Data.Migrations
 {
-    [DbContext(typeof(StagingDbContext))]
-    [Migration("20210911201201_InitialCreateStaging")]
-    partial class InitialCreateStaging
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20210912145755_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -157,9 +157,11 @@ namespace PBC.Shared.Common.Data.Migrations.Staging
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderKey")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderDisplayName")
@@ -197,9 +199,11 @@ namespace PBC.Shared.Common.Data.Migrations.Staging
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Value")

@@ -14,18 +14,7 @@ namespace PBC.Shared.Common
 
         public DbFactory(IHostingEnvironment env)
         {
-            if(env.IsProduction())
-            {
-                _dbContext = new ProdDbContext();
-            }
-            else if (env.IsStaging())
-            {
-                _dbContext = new StagingDbContext();
-            }
-            else 
-            {
-                _dbContext = new DevDbContext();
-            }
+            _dbContext = new ApplicationDbContext();
         }
 
 

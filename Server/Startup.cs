@@ -61,20 +61,12 @@ namespace PBC.Server
 
             services.AddSingleton<ISubscriberState, SubscriberState>();
 
-            services.AddDbContext<StagingDbContext>(options =>
+            services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseSqlite(
-                     Configuration.GetConnectionString("SQLiteStaging")));
+                     Configuration.GetConnectionString("SQLite")));
       
-            services.AddDbContext<DevDbContext>(options =>
-                  options.UseSqlite(
-                      Configuration.GetConnectionString("SQLiteDev")));
-
-            services.AddDbContext<ProdDbContext>(options =>
-                options.UseSqlite(
-                    Configuration.GetConnectionString("SQLiteProd")));
-
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-           .AddEntityFrameworkStores<DevDbContext>();
+           .AddEntityFrameworkStores<ApplicationDbContext>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
