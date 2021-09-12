@@ -2,11 +2,12 @@
 @inject IAccountLoginDTO Model
 @inject ILazor Lazor
 @inject HttpClient Http;
+@inject NavigationManager NavigationManager
 
 <div class="card">
     <h4 class="card-header">Login</h4>
     <div class="card-body">
-        <EditForm Model="@Model">
+        <EditForm Model="@Model" OnSubmit="async () => await HandleLogin()">
             <DataAnnotationsValidator />
             <div class="form-group">
                 <label>Username</label>
@@ -22,7 +23,8 @@
                     <ValidationMessage For="@(() => Model.Password)" />
                 </div>
             </div>
-                <LoadingButton HandleClick="async () => await HandleLogin()" Loading="@Lazor.Loading">Login</LoadingButton>
+                <LoadingButton Loading="@Lazor.Loading">Login</LoadingButton>
+                <span class="small form-text text-danger">@Lazor.ErrorMessage</span>
             <NavLink href="register" class="btn btn-link">Register</NavLink>
         </EditForm>
     </div>
@@ -30,17 +32,30 @@
 
 
 @code {
-    public async Task<bool> HandleLogin()
+    public async Task HandleLogin()
     {
+        Lazor.SetLoadingStatus(true);
         try
         {
         var response = await Http.PostAsJsonAsync("/api/Account/Login", Model);
+        bool isLoggedIn = response.IsSuccessStatusCode;
         
-        return response.IsSuccessStatusCode;
+            if(isLoggedIn)
+            {
+                NavigationManager.NavigateTo("/");
+            }
+            else
+            {
+                Lazor.SetErrorMessage("Invalid login attempt.");
+            }
+
         }
         catch
         {
-            return false;
+            Lazor.SetErrorMessage("There was an error. Please try again.");
         }
+        Lazor.SetLoadingStatus(false);
+        StateHasChanged();
+        return;
     }
 }

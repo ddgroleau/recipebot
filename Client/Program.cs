@@ -1,3 +1,9 @@
+using System;
+using System.Net.Http;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Text;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,11 +15,7 @@ using PBC.Shared.DOM_Events.ComponentEvents;
 using PBC.Shared.Lazor;
 using PBC.Shared.ListComponent;
 using PBC.Shared.RecipeComponent;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PBC.Client
 {
@@ -25,6 +27,13 @@ namespace PBC.Client
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+            builder.Services.AddHttpClient("PBC.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+            .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+
+            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("PBC.ServerAPI"));
+
+            builder.Services.AddApiAuthorization();
 
             builder.Services.AddTransient<ILazor, Lazor>();
             

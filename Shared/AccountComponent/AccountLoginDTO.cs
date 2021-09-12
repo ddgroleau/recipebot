@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +10,6 @@ namespace PBC.Shared.AccountComponent
 {
     public class AccountLoginDTO : IAccountLoginDTO
     {
-   
 
         [Required, EmailAddress]
         public string Email { get; set; }

@@ -1,30 +1,50 @@
 ﻿@page "/logout"
 @inject NavigationManager NavigationManager
+@inject HttpClient Http
 @inject ILazor Lazor
 
 <div class="col-12">
     <h3>Logout</h3>
 </div>
-
-<div class="card text-center">
-    <div class="card-header">
-        Are you sure you want to log out?
-    </div>
-    <div class="card-body">
-            <LoadingButton Loading=@Lazor.Loading HandleClick="HandleLogout">Logout</LoadingButton>
-    </div>
-    <div class="card-footer">
-        <a href="/">
-            Return to Home
-        </a>
-    </div>
-</div>
-
+@{
+        <div class="card text-center">
+            <div class="card-header">
+                Are you sure you want to log out?
+            </div>
+            <div class="card-body">
+                <LoadingButton Loading=@Lazor.Loading HandleClick="async ()=> await HandleLogout()">Logout</LoadingButton>
+            </div>
+            <div class="card-footer">
+                <a href="/">
+                    Return to Home
+                </a>
+            </div>
+        </div>
+    }
 
 @code {
 
-    public void HandleLogout()
+    public async Task HandleLogout()
     {
-        NavigationManager.NavigateTo("login");
+        Lazor.SetLoadingStatus(true);
+        try
+        {
+            var response = await Http.PostAsJsonAsync("/api/Account/Logout", true);
+            if (response.IsSuccessStatusCode)
+            {
+                NavigationManager.NavigateTo("login");
+            }
+            else
+            {
+                Lazor.SetErrorMessage("Logout failed. Try again.");
+            }
+        }
+        catch (Exception)
+        {
+            Lazor.SetErrorMessage("Logout failed. Try again.");
+        }
+        Lazor.SetLoadingStatus(true);
+        StateHasChanged();
+        return;
     }
 }

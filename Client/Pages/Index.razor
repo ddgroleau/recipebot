@@ -1,40 +1,39 @@
 ﻿@page "/"
 
-<div class="col-12">
+            <div class="col-12">
+                <div class="row bg-white">
+                    <h3>Welcome Home, @userName !</h3>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <SearchBar />
+                    </div>
+                </div>
 
-    <div class="row bg-white">
-        <h3>Welcome Home, @userName !</h3>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <SearchBar />
-        </div>
-    </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h5>UserAccountOverview</h5>
+                        <ul>
+                            <li>Last Visit</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <h5>UserCatalogOverview</h5>
+                        <ul>
+                            <li>Recent Items</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <h5>UserListOverview</h5>
+                        <ul>
+                            <li>Recent Items</li>
+                        </ul>
+                    </div>
+                </div>
 
-    <div class="row">
-        <div class="col-lg-4">
-            <h5>UserAccountOverview</h5>
-            <ul>
-                <li>Last Visit</li>
-            </ul>
-        </div>
-        <div class="col-lg-4">
-            <h5>UserCatalogOverview</h5>
-            <ul>
-                <li>Recent Items</li>
-            </ul>
-        </div>
-        <div class="col-lg-4">
-            <h5>UserListOverview</h5>
-            <ul>
-                <li>Recent Items</li>
-            </ul>
-        </div>
-    </div>
-
-</div>
-
-@code {
-    private string userName { get; set; } = "Dev";
-}
+            </div>
+      
+    @code {
+        private string userName { get; set; } = "Dev";
+    }
 

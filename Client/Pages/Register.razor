@@ -6,7 +6,7 @@
 <div class="card">
     <h4 class="card-header">Register</h4>
     <div class="card-body">
-        <EditForm Model="@Model">
+        <EditForm Model="@Model" OnSubmit="async ()=> await HandleRegister()">
             <DataAnnotationsValidator />
             <div class="form-group">
                 <label>Email</label>
@@ -23,9 +23,10 @@
                 <InputText @bind-Value="Model.ConfirmPassword" type="password" class="form-control" />
                 <ValidationMessage For="@(() => Model.ConfirmPassword)" />
             </div>
-
-                <LoadingButton HandleClick="async ()=> await HandleRegister()" Loading="@Lazor.Loading">Register</LoadingButton>
+                
+                <LoadingButton Loading="@Lazor.Loading">Register</LoadingButton>
                 <span class="small form-text text-danger">@Lazor.ErrorMessage</span>
+           
             <NavLink href="login" class="btn btn-link">Login</NavLink>
         </EditForm>
     </div>
@@ -33,24 +34,34 @@
 
 
 @code {
- public async Task<bool> HandleRegister()
+ public async Task HandleRegister()
     {
+        Lazor.SetLoadingStatus(true);
         try
         {
-        var response = await Http.PostAsJsonAsync("/api/Account/Register", Model);
-        bool isRegistered = response.IsSuccessStatusCode;
-
-            if(!isRegistered)
+            if (Lazor.IsObjectValid(Model))
             {
-                Lazor.SetErrorMessage("Registration failed. Try again.");
-            }
+                var response = await Http.PostAsJsonAsync("/api/Account/Register", Model);
+                bool isRegistered = response.IsSuccessStatusCode;
 
-        return isRegistered;
+                if(!isRegistered)
+                {
+                    Lazor.SetErrorMessage("Registration failed. Try again.");
+                }
+            }
+            else
+            {
+                Lazor.SetErrorMessage("Check you username and password for errors.");
+            }
+        
         }
         catch
         {
             Lazor.SetErrorMessage("An error occurred. Try again.");
-            return false;
         }
+        Lazor.SetLoadingStatus(false);
+        StateHasChanged();
+        return;
     }
+
 }

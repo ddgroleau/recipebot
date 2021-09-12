@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
 using System.Text.Encodings.Web;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PBC.Server.Controllers
 {
@@ -31,6 +32,7 @@ namespace PBC.Server.Controllers
             _emailSender = emailSender;
         }
 
+        [AllowAnonymous]
         [HttpPost, Route("Register")]
         public async Task<IActionResult> Register(AccountRegisterDTO accountRegisterDTO)
         {
@@ -84,6 +86,7 @@ namespace PBC.Server.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost, Route("Login")]
         public async Task<IActionResult> Login(AccountLoginDTO accountLoginDTO)
         {
@@ -107,6 +110,22 @@ namespace PBC.Server.Controllers
             catch (Exception e) 
             {
                 _logger.LogError($"Login attempt error thrown for Email: {accountLoginDTO.Email} at {DateTime.Now:MM/dd/yyyy HH:mm:ss}. Error: {e.Message}.");
+                return BadRequest();
+            }
+        }
+
+        [HttpPost, Route("Logout")]
+        public async Task<IActionResult> Logout(bool logout)
+        {
+            try
+            {
+                await _signInManager.SignOutAsync();
+                _logger.LogError($"{HttpContext.User.Identity.Name} logged out at {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Failed to logout at {DateTime.Now:MM/dd/yyyy HH:mm:ss}. Error: {e.Message}.");
                 return BadRequest();
             }
         }
