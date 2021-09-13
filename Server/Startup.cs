@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
 using PBC.Shared;
-using PBC.Shared.AccountComponent;
+using PBC.Server.Models;
 using PBC.Shared.Common;
 using PBC.Shared.ListComponent;
 using PBC.Shared.RecipeComponent;
@@ -50,9 +50,6 @@ namespace PBC.Server
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddScoped<IAccountChangesDTO, AccountChangesDTO>();
-            services.AddScoped<IAccountRegisterDTO, AccountRegisterDTO>();
-            services.AddScoped<IAccountLoginDTO, AccountLoginDTO>();
             services.AddScoped<IRecipeDTO, RecipeDTO>();
             services.AddScoped<IListGeneratorDTO, ListGeneratorDTO>();
             services.AddScoped<IListDayDTO, ListDayDTO>();

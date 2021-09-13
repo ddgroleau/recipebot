@@ -9,13 +9,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PBC.Shared;
-using PBC.Shared.AccountComponent;
 using PBC.Shared.DOM_Events;
 using PBC.Shared.DOM_Events.ComponentEvents;
 using PBC.Shared.Lazor;
 using PBC.Shared.ListComponent;
 using PBC.Shared.RecipeComponent;
-
 
 namespace PBC.Client
 {
@@ -37,10 +35,6 @@ namespace PBC.Client
 
             builder.Services.AddTransient<ILazor, Lazor>();
             
-            builder.Services.AddScoped<IAccountChangesDTO, AccountChangesDTO>();
-            builder.Services.AddScoped<IAccountRegisterDTO, AccountRegisterDTO>();
-            builder.Services.AddScoped<IAccountLoginDTO, AccountLoginDTO>();
-          
             builder.Services.AddScoped<IListGeneratorDTO, ListGeneratorDTO>();
             builder.Services.AddScoped<IListDayDTO, ListDayDTO>();
             

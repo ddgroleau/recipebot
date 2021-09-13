@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PBC.Shared.AccountComponent;
+using PBC.Server.Models;
 using PBC.Shared.ListComponent;
 using PBC.Shared.RecipeComponent;
 using PBC.Shared.SubscriptionComponent;
@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace PBC.Server.Data
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<IdentityUser>
+    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
         
         public ApplicationDbContext(
