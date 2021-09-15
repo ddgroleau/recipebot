@@ -18,6 +18,7 @@ using PBC.Shared.WebScraper;
 using System.Net.Http;
 using Microsoft.AspNetCore.Identity;
 using PBC.Server.Data;
+using PBC.Server.Data.Repositories;
 
 namespace PBC.Server
 {
