@@ -9,18 +9,16 @@ namespace PBC.Shared.RecipeComponent
 {
     public class RecipeBuilder : IBuilder<IRecipeServiceDTO, IRecipeDTO>
     {
-        private readonly IRecipeServiceDTO _recipeServiceDTO;
-        private readonly IRecipeDTO _recipeDTO;
+        AbstractRecipeFactory _recipeFactory;
 
-        public RecipeBuilder(IRecipeServiceDTO recipeServiceDTO, IRecipeDTO recipeDTO)
+        public RecipeBuilder(AbstractRecipeFactory recipeFactory)
         {
-            _recipeServiceDTO = recipeServiceDTO;
-            _recipeDTO = recipeDTO;
+            _recipeFactory = recipeFactory;
         }
 
         public IRecipeServiceDTO Build(IRecipeDTO recipeDTO)
         {
-            IRecipeServiceDTO recipeServiceDTO = _recipeServiceDTO;
+            IRecipeServiceDTO recipeServiceDTO = _recipeFactory.MakeRecipeServiceDTO();
 
             recipeServiceDTO.RecipeId = recipeDTO.RecipeId;
             recipeServiceDTO.URL = recipeDTO.URL;
@@ -35,9 +33,9 @@ namespace PBC.Shared.RecipeComponent
 
         public IRecipeDTO Build(IRecipeServiceDTO recipeServiceDTO)
         {
-            IRecipeDTO recipeDTO = _recipeDTO;
-           
-            recipeServiceDTO.RecipeId = recipeDTO.RecipeId;
+            var recipeDTO = _recipeFactory.MakeRecipeDTO();
+
+            recipeDTO.RecipeId = recipeServiceDTO.RecipeId;
             recipeDTO.URL = recipeServiceDTO.URL;
             recipeDTO.Title = recipeServiceDTO.Title;
             recipeDTO.Description = recipeServiceDTO.Description;

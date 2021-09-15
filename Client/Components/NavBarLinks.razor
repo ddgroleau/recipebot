@@ -1,43 +1,52 @@
 ﻿@inject ILazor Lazor
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
 
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                Home
-            </NavLink>
-        </li>
-        <li class="nav-item">
-            <NavLink class="nav-link" href="cookbook">
-                Cookbook
-            </NavLink>
-        </li>
-        <li class="nav-item">
-            <NavLink class="nav-link" href="lists">
-                Lists
-            </NavLink>
-        </li>
-        <li class="nav-item">
-            <NavLink class="nav-link" href="account">
-                Account
-            </NavLink>
-        </li>
-        <li class="nav-item">
-            <NavLink class="nav-link" href="login" style=@login>
-                Login
-            </NavLink>
-        </li>
-        <li class="nav-item">
-            <NavLink class="nav-link" href="logout" style=@logout>
-                Logout
-            </NavLink>
-        </li>
-    </ul>
+<ul class="navbar-nav">
+    <AuthorizeView>
+        <Authorized>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    Home
+                </NavLink>
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="cookbook">
+                    Cookbook
+                </NavLink>
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="lists">
+                    Lists
+                </NavLink>
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="authentication/profile">Hello, @context.User.Identity.Name!</NavLink>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link btn btn-link" @onclick="BeginSignOut">Logout</button>
+            </li>
+        </Authorized>
+        <NotAuthorized>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="authentication/register">Register</NavLink>
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="authentication/login">Login</NavLink>
+            </li>
+        </NotAuthorized>
+    </AuthorizeView>
+</ul>
 
 
-    @code {
-        private static bool isLoggedIn { get; set; } = true;
-        private string login { get; set; } = $"{ (isLoggedIn ? "display:none" : "display:normal") }";
-        private string logout { get; set; } = $"{ (isLoggedIn ? "display:normal" : "display:none") }";
+@code {
 
 
+    private async Task BeginSignOut(MouseEventArgs args)
+    {
+        await SignOutManager.SetSignOutState();
+        Navigation.NavigateTo("authentication/logout");
     }
+}
+
+

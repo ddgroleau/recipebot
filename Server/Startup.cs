@@ -1,18 +1,23 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Linq;
 using PBC.Shared;
-using PBC.Shared.AccountComponent;
+using PBC.Server.Models;
 using PBC.Shared.Common;
-using PBC.Shared.Common.Data;
 using PBC.Shared.ListComponent;
 using PBC.Shared.RecipeComponent;
 using PBC.Shared.SubscriptionComponent;
 using PBC.Shared.WebScraper;
 using System.Net.Http;
+using Microsoft.AspNetCore.Identity;
+using PBC.Server.Data;
 
 namespace PBC.Server
 {
@@ -27,12 +32,24 @@ namespace PBC.Server
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(options =>
+             options.UseSqlite(
+                 Configuration.GetConnectionString("SQLite")));
+
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddDefaultIdentity<ApplicationUser>() //options => options.SignIn.RequireConfirmedAccount = true
+                    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddIdentityServer()
+                    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+
+            services.AddAuthentication()
+                    .AddIdentityServerJwt();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddScoped<IAccountChangesDTO, AccountChangesDTO>();
-            services.AddScoped<IAccountRegisterDTO, AccountRegisterDTO>();
-            services.AddScoped<IAccountLoginDTO, AccountLoginDTO>();
             services.AddScoped<IRecipeDTO, RecipeDTO>();
             services.AddScoped<IListGeneratorDTO, ListGeneratorDTO>();
             services.AddScoped<IListDayDTO, ListDayDTO>();
@@ -42,6 +59,7 @@ namespace PBC.Server
             services.AddScoped<IAllRecipesScraper, AllRecipesScraper>();
             services.AddScoped<IFactory<Ingredient>, IngredientFactory>();
             services.AddScoped<IFactory<Instruction>, InstructionFactory>();
+            services.AddScoped<AbstractRecipeFactory, RecipeFactory>();
             services.AddScoped<IFactory<RecipeSubscription>, SubscriptionFactory>();
             services.AddScoped<IBuilder<IRecipeServiceDTO, IRecipeDTO>, RecipeBuilder>();
             services.AddScoped<IListService, ListService>();
@@ -59,22 +77,6 @@ namespace PBC.Server
             services.AddScoped<RecipeSubscription>();
 
             services.AddSingleton<ISubscriberState, SubscriberState>();
-
-            services.AddDbContext<StagingDbContext>(options =>
-                 options.UseSqlite(
-                     Configuration.GetConnectionString("SQLiteStaging")));
-      
-            services.AddDbContext<DevDbContext>(options =>
-                  options.UseSqlite(
-                      Configuration.GetConnectionString("SQLiteDev")));
-
-            services.AddDbContext<ProdDbContext>(options =>
-                options.UseSqlite(
-                    Configuration.GetConnectionString("SQLiteProd")));
-
-            //services.AddIdentityCore<ApplicationUser>()(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<StagingDbContext>();
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -83,6 +85,7 @@ namespace PBC.Server
             {
                 app.UseDeveloperExceptionPage();
                 app.UseWebAssemblyDebugging();
+                app.UseMigrationsEndPoint();
             }
             else
             {
@@ -96,6 +99,10 @@ namespace PBC.Server
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseIdentityServer();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -7,12 +7,14 @@
 </button>
 
 @code {
-    [CascadingParameter(Name = "Loading")]
-    private bool Loading { get; set; } = false;
+
+    [Parameter]
+    public bool Loading { get; set; } = false;
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
     [Parameter]
     public Action HandleClick { get; set; }
+
 }

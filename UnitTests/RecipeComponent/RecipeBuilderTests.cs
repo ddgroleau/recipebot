@@ -12,22 +12,25 @@ namespace UnitTests.RecipeComponent
 {
     public class RecipeBuilderTests : IDisposable
     {
+        AbstractRecipeFactory RecipeFactory;
         IRecipeServiceDTO RecipeServiceDTO;
         IBuilder<IRecipeServiceDTO, IRecipeDTO> RecipeBuilder;
         IRecipeDTO RecipeDTO;
 
         public RecipeBuilderTests()
         {
+            RecipeFactory = new RecipeFactory();
             RecipeDTO = new RecipeDTO();
             RecipeServiceDTO = new RecipeServiceDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
+            RecipeBuilder = new RecipeBuilder(RecipeFactory);
         }
 
         public void Dispose()
         {
+            RecipeFactory = new RecipeFactory();
             RecipeDTO = new RecipeDTO();
             RecipeServiceDTO = new RecipeServiceDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
+            RecipeBuilder = new RecipeBuilder(RecipeFactory);
         }
 
         [Fact]

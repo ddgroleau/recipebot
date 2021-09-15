@@ -1,10 +1,8 @@
 ﻿@page "/"
+@attribute [Authorize]
 
 <div class="col-12">
 
-    <div class="row bg-white">
-        <h3>Welcome Home, @userName !</h3>
-    </div>
     <div class="row">
         <div class="col-12">
             <SearchBar />
@@ -35,6 +33,5 @@
 </div>
 
 @code {
-    private string userName { get; set; } = "Dev";
 }
 

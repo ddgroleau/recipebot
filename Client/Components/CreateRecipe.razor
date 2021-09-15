@@ -13,9 +13,7 @@
             <InputText @bind-Value="@Event.RecipeUrlDTO.URL" class="form-control" DisplayName="Recipe URL" />
             <ValidationMessage For="@(() => @Event.RecipeUrlDTO.URL)" />
 
-            <CascadingValue Name="Loading" Value="@Event.Lazor.Loading">
-                <LoadingButton>Create Recipe</LoadingButton>
-            </CascadingValue>
+                <LoadingButton Loading="@Event.Lazor.Loading">Create Recipe</LoadingButton>
 
         </EditForm>
     </div>

@@ -16,12 +16,13 @@ namespace UnitTests.Controllers
 {
     public class SubscriptionControllerFixture : IDisposable
     {
-        IRecipeServiceDTO RecipeServiceDTO;
-        IBuilder<IRecipeServiceDTO, IRecipeDTO> RecipeBuilder;
-        IRecipeDTO RecipeDTO;
-        Recipe Recipe;
-        RecipeSubscription Subscription;
-        IFactory<RecipeSubscription> SubscriptionFactory;
+        public AbstractRecipeFactory RecipeFactory;
+        public IRecipeServiceDTO RecipeServiceDTO;
+        public IBuilder<IRecipeServiceDTO, IRecipeDTO> RecipeBuilder;
+        public IRecipeDTO RecipeDTO;
+        public Recipe Recipe;
+        public RecipeSubscription Subscription;
+        public IFactory<RecipeSubscription> SubscriptionFactory;
         public ILogger<ISubscriberState> StateLogger;
         public ISubscriptionRepository SubscriptionRepository;
         public ISubscriberState SubscriberState;
@@ -31,9 +32,10 @@ namespace UnitTests.Controllers
             
         public SubscriptionControllerFixture()
         {
+            RecipeFactory = new RecipeFactory();
             RecipeDTO = new RecipeDTO();
             RecipeServiceDTO = new RecipeServiceDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
+            RecipeBuilder = new RecipeBuilder(RecipeFactory);
             Recipe = new Recipe();
             Subscription = new RecipeSubscription();
             SubscriptionFactory = new SubscriptionFactory(Subscription, Recipe);
@@ -47,9 +49,10 @@ namespace UnitTests.Controllers
 
         public void Dispose()
         {
+            RecipeFactory = new RecipeFactory();
             RecipeDTO = new RecipeDTO();
             RecipeServiceDTO = new RecipeServiceDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
+            RecipeBuilder = new RecipeBuilder(RecipeFactory);
             Recipe = new Recipe();
             Subscription = new RecipeSubscription();
             SubscriptionFactory = new SubscriptionFactory(Subscription, Recipe);
