@@ -59,6 +59,7 @@ namespace PBC.Server
             services.AddScoped<IAllRecipesScraper, AllRecipesScraper>();
             services.AddScoped<IFactory<Ingredient>, IngredientFactory>();
             services.AddScoped<IFactory<Instruction>, InstructionFactory>();
+            services.AddScoped<AbstractRecipeFactory, RecipeFactory>();
             services.AddScoped<IFactory<RecipeSubscription>, SubscriptionFactory>();
             services.AddScoped<IBuilder<IRecipeServiceDTO, IRecipeDTO>, RecipeBuilder>();
             services.AddScoped<IListService, ListService>();

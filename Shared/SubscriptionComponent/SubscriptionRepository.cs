@@ -29,80 +29,174 @@ namespace PBC.Shared.SubscriptionComponent
         public IEnumerable<ISubscriptionServiceDTO> GetUserRecipes(int userId)
         {
 
-            var recipes = new List<ISubscriptionServiceDTO>();
-                    recipes.Add(
+            var recipes = new List<ISubscriptionServiceDTO>
+            {
+
+                new SubscriptionServiceDTO
+                {
+                    Recipe = new RecipeServiceDTO
+                    {
+                        RecipeId = 11,
+                        Title = $"Recipe11",
+                        Description = "Description11",
+                        RecipeType = "Breakfast",
+                        Ingredients = { "Salt" },
+                        Instructions = { "Combine and cook." }
+                    }
+                },
                     new SubscriptionServiceDTO
                     {
                         Recipe = new RecipeServiceDTO
                         {
-                            RecipeId = 1, Title = $"Recipe1", Description = "Description1", RecipeType = "Breakfast", Ingredients = { "Salt" }, Instructions = { "Combine and cook." }
+                            RecipeId = 12,
+                            Title = $"Recipe12",
+                            Description = "Description12",
+                            RecipeType = "Breakfast",
+                            Ingredients = { "Salt" },
+                            Instructions = { "Combine and cook." }
                         }
-                    });
-                    recipes.Add(
-                    new SubscriptionServiceDTO
-                    {
-                        Recipe =  new RecipeServiceDTO
-                                  {
-                                        RecipeId = 2, Title = $"Recipe2",  Description = "Description2",  RecipeType="Breakfast", Ingredients ={ "Salt"}, Instructions={"Combine and cook."}
-                                  }
-                    });
-            recipes.Add(
-                    new SubscriptionServiceDTO
-                    {
-                        Recipe =  new RecipeServiceDTO
-                                  {
-                                        RecipeId = 3, Title = $"Recipe3",  Description = "Description3",  RecipeType="Breakfast", Ingredients ={ "Salt"}, Instructions={"Combine and cook."}
-                                  }
-                    });
-                    recipes.Add(
-                    new SubscriptionServiceDTO
-                    {
-                        Recipe =  new RecipeServiceDTO
-                                  {
-                                        RecipeId = 4, Title = $"Recipe4",  Description = "Description4",  RecipeType="Dinner", Ingredients ={ "Salt"}, Instructions={"Combine and cook."}
-                                  }
-                    });
-                    recipes.Add(
-                    new SubscriptionServiceDTO
-                    {
-                        Recipe =  new RecipeServiceDTO
-                                  {
-                                        RecipeId = 5, Title = $"Recipe5",  Description = "Description5",  RecipeType="Dinner", Ingredients ={ "Salt"}, Instructions={"Combine and cook."}
-                                  }
-                    });
-                    recipes.Add(
-                    new SubscriptionServiceDTO
-                    {
-                        Recipe =  new RecipeServiceDTO
-                                  {
-                                        RecipeId = 6, Title = $"Recipe6",  Description = "Description6",  RecipeType="Lunch", Ingredients ={ "Salt"}, Instructions={"Combine and cook."}
-                                  }
-                    });
-                    recipes.Add(
-                    new SubscriptionServiceDTO
-                    {
-                        Recipe =  new RecipeServiceDTO
-                                  {
-                                        RecipeId = 7, Title = $"Recipe7",  Description = "Description7",  RecipeType="Lunch", Ingredients ={ "Salt"}, Instructions={"Combine and cook."}
-                                  }
-                    });
-                    recipes.Add(
-                    new SubscriptionServiceDTO
-                    {
-                        Recipe =  new RecipeServiceDTO
-                                  {
-                                        RecipeId = 8, Title = $"Recipe8",  Description = "Description8",  RecipeType="Lunch", Ingredients ={ "Salt"}, Instructions={"Combine and cook."}
-                                  }
-                    });
-                    recipes.Add(
-                    new SubscriptionServiceDTO
-                    {
-                        Recipe =  new RecipeServiceDTO
-                                  {
-                                        RecipeId = 9, Title = $"Recipe9",  Description = "Description9",  RecipeType="Dinner", Ingredients ={ "Salt"}, Instructions={"Combine and cook."}
-                                  }
-                    });
-       
+                    },
+            new SubscriptionServiceDTO
+            {
+                Recipe = new RecipeServiceDTO
+                {
+                    RecipeId = 13,
+                    Title = $"Recipe13",
+                    Description = "Description13",
+                    RecipeType = "Breakfast",
+                    Ingredients = { "Salt" },
+                    Instructions = { "Combine and cook." }
+                }
+            },
+            new SubscriptionServiceDTO
+            {
+                Recipe = new RecipeServiceDTO
+                {
+                    RecipeId = 14,
+                    Title = $"Recipe14",
+                    Description = "Description14",
+                    RecipeType = "Breakfast",
+                    Ingredients = { "Salt" },
+                    Instructions = { "Combine and cook." }
+                }
+            },
+            new SubscriptionServiceDTO
+            {
+                Recipe = new RecipeServiceDTO
+                {
+                    RecipeId = 15,
+                    Title = $"Recipe15",
+                    Description = "Description15",
+                    RecipeType = "Breakfast",
+                    Ingredients = { "Salt" },
+                    Instructions = { "Combine and cook." }
+                }
+            },
+            new SubscriptionServiceDTO
+            {
+                Recipe = new RecipeServiceDTO
+                {
+                    RecipeId = 16,
+                    Title = $"Recipe16",
+                    Description = "Description16",
+                    RecipeType = "Lunch",
+                    Ingredients = { "Salt" },
+                    Instructions = { "Combine and cook." }
+                }
+            },
+
+            new SubscriptionServiceDTO
+            {
+                Recipe = new RecipeServiceDTO
+                {
+                    RecipeId = 17,
+                    Title = $"Recipe17",
+                    Description = "Description17",
+                    RecipeType = "Lunch",
+                    Ingredients = { "Salt" },
+                    Instructions = { "Combine and cook." }
+                }
+            },
+
+            new SubscriptionServiceDTO
+            {
+                Recipe = new RecipeServiceDTO
+                {
+                    RecipeId = 18,
+                    Title = $"Recipe18",
+                    Description = "Description18",
+                    RecipeType = "Lunch",
+                    Ingredients = { "Salt" },
+                    Instructions = { "Combine and cook." }
+                }
+            },
+
+            new SubscriptionServiceDTO
+            {
+                Recipe = new RecipeServiceDTO
+                {
+                    RecipeId = 19,
+                    Title = $"Recipe19",
+                    Description = "Description19",
+                    RecipeType = "Dinner",
+                    Ingredients = { "Salt" },
+                    Instructions = { "Combine and cook." }
+                }
+            },
+
+            new SubscriptionServiceDTO
+            {
+                Recipe = new RecipeServiceDTO
+                {
+                    RecipeId = 20,
+                    Title = $"Recipe20",
+                    Description = "Description20",
+                    RecipeType = "Dinner",
+                    Ingredients = { "Salt" },
+                    Instructions = { "Combine and cook." }
+                }
+            },
+
+            new SubscriptionServiceDTO
+            {
+                Recipe = new RecipeServiceDTO
+                {
+                    RecipeId = 21,
+                    Title = $"Recipe21",
+                    Description = "Description21",
+                    RecipeType = "Dinner",
+                    Ingredients = { "Salt" },
+                    Instructions = { "Combine and cook." }
+                }
+            },
+
+            new SubscriptionServiceDTO
+            {
+                Recipe = new RecipeServiceDTO
+                {
+                    RecipeId = 22,
+                    Title = $"Recipe22",
+                    Description = "Description22",
+                    RecipeType = "Dinner",
+                    Ingredients = { "Salt" },
+                    Instructions = { "Combine and cook." }
+                }
+            },
+
+            new SubscriptionServiceDTO
+            {
+                Recipe = new RecipeServiceDTO
+                {
+                    RecipeId = 23,
+                    Title = $"Recipe23",
+                    Description = "Description23",
+                    RecipeType = "Dinner",
+                    Ingredients = { "Salt" },
+                    Instructions = { "Combine and cook." }
+                }
+            } };
+
+
             return recipes;
         }
 

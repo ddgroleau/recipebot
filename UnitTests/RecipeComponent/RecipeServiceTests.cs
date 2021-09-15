@@ -15,6 +15,7 @@ namespace UnitTests.RecipeComponent
 {
     public class RecipeServiceTests : IDisposable
     {
+        AbstractRecipeFactory RecipeFactory;
         ILogger<ISubscriberState> StateLogger;
         ISubscriberState SubscriberState;
         IRecipeServiceDTO RecipeServiceDTO;
@@ -25,22 +26,24 @@ namespace UnitTests.RecipeComponent
 
         public RecipeServiceTests()
         {
+            RecipeFactory = new RecipeFactory();
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriberState = new SubscriberState(StateLogger);
             RecipeServiceDTO = new RecipeServiceDTO();
             RecipeDTO = new RecipeDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
+            RecipeBuilder = new RecipeBuilder(RecipeFactory);
             RecipeRepository = new RecipeRepository();
             RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, SubscriberState);
         }
 
         public void Dispose()
         {
+            RecipeFactory = new RecipeFactory();
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriberState = new SubscriberState(StateLogger);
             RecipeServiceDTO = new RecipeServiceDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeServiceDTO, RecipeDTO);
             RecipeDTO = new RecipeDTO();
+            RecipeBuilder = new RecipeBuilder(RecipeFactory);
             RecipeRepository = new RecipeRepository();
             RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, SubscriberState);
         }
