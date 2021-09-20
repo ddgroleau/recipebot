@@ -1,4 +1,5 @@
-﻿using PBC.Shared.Common;
+﻿using Microsoft.EntityFrameworkCore;
+using PBC.Shared.Common;
 using PBC.Shared.RecipeComponent;
 using PBC.Shared.SubscriptionComponent;
 using System;
@@ -12,19 +13,30 @@ namespace PBC.Server.Data.Repositories
     public class SubscriptionRepository : ISubscriptionRepository
     {
         private readonly IFactory<RecipeSubscription> _subscriptionFactory;
+        private readonly ApplicationDbContext _context;
 
-        public SubscriptionRepository(IFactory<RecipeSubscription> subscriptionFactory)
+        public SubscriptionRepository(IFactory<RecipeSubscription> subscriptionFactory, ApplicationDbContext context)
         {
             _subscriptionFactory = subscriptionFactory;
+            _context = context;
         }
         public void CreateSubscription(int id)
         {
             RecipeSubscription subscription = _subscriptionFactory.Make();
             subscription.Recipe.RecipeId = id;
         }
-        public void UpdateSubscription(int id)
+        public async Task UpdateSubscription(int id)
         {
-
+            var entity = await _context.RecipeSubscriptions.FindAsync(id);
+            if(entity != null)
+            {
+                entity.IsSubscribed = false;
+                _context.SaveChanges();
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
         }
 
         public IEnumerable<ISubscriptionServiceDTO> GetUserRecipes(int userId)

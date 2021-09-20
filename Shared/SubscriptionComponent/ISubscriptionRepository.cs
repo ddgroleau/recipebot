@@ -9,7 +9,7 @@ namespace PBC.Shared.SubscriptionComponent
     public interface ISubscriptionRepository
     {
         public void CreateSubscription(int id);
-        public void UpdateSubscription(int id);
+        public Task UpdateSubscription(int id);
         public IEnumerable<ISubscriptionServiceDTO> GetUserRecipes(int userId);
     }
 }
