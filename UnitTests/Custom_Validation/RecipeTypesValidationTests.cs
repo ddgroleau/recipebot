@@ -19,6 +19,7 @@ namespace UnitTests.Custom_Validation
 
         public void Dispose()
         {
+            GC.SuppressFinalize(this);
         }
         [Fact]
         public void IsValid_WithValidObject_ShouldReturnTrue()

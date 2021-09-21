@@ -28,10 +28,8 @@ namespace UnitTests.DOM_Events.ComponentEvents
         }
         public void Dispose()
         {
-            Logger = new LoggerFactory().CreateLogger<GeneratedDayEvent>();
-            Http = new HttpClient();
-            RecipeDTO = new RecipeDTO();
-            GeneratedDayEvent = new GeneratedDayEvent(RecipeDTO, Http, Logger);
+            Http.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         [Fact]

@@ -18,6 +18,7 @@
 //        public void Dispose()
 //        {
 //            // Assign Objects
+//              GC.SuppressFinalize(this);
 //        }
 //    }
 
@@ -32,7 +33,7 @@
 //        [Fact]
 //        public void MethodName_WithParamters_ShouldDoSomething()
 //        {
-            
+
 //        }
 
 //    }

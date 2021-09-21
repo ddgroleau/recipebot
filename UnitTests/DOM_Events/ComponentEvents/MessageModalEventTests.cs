@@ -32,11 +32,8 @@ namespace UnitTests.DOM_Events.ComponentEvents
         }
         public void Dispose()
         {
-            RecipeDTO = new RecipeDTO();
-            Logger = new LoggerFactory().CreateLogger<IRecipeDTO>();
-            Lazor = new Lazor();
-            Http = new HttpClient();
-            MessageEvent = new MessageModalEvent(Http, Logger);
+            Http.Dispose();
+            GC.SuppressFinalize(this);
         }
         [Fact]
         public void HandleClick_WithLazorObject_ShouldMakeIsHiddenTrue()

@@ -35,12 +35,8 @@ namespace UnitTests.DOM_Events.ComponentEvents
 
         public void Dispose()
         {
-            RecipeDTO = new RecipeDTO();
-            Lazor = new Lazor();
-            Logger = new LoggerFactory().CreateLogger<IRecipeUrlDTO>();
-            Http = new HttpClient();
-            RecipeUrlDTO = new RecipeUrlDTO();
-            RecipeEvent = new CreateRecipeEvent(Lazor, RecipeUrlDTO, RecipeDTO, Logger, Http);
+            Http.Dispose();
+            GC.SuppressFinalize(this); ;
         }
 
         [Fact]

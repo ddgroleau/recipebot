@@ -30,10 +30,8 @@ namespace UnitTests.DOM_Events.ComponentEvents
 
         public void Dispose()
         {
-            Lazor = new Lazor();
-            Logger = new LoggerFactory().CreateLogger<ISearchBarEvent>();
-            Http = new HttpClient();
-            SearchBarEvent = new SearchBarEvent(Http, Logger, Lazor);
+            Http.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         [Fact]

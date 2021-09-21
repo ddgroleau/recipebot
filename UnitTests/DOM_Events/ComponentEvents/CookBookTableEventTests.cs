@@ -34,12 +34,8 @@ namespace UnitTests.DOM_Events.ComponentEvents
 
         public void Dispose()
         {
-            RetrievedRecipes = new List<IRecipeDTO>();
-            RecipeDTO = new RecipeDTO();
-            Lazor = new Lazor();
-            Logger = new LoggerFactory().CreateLogger<IRecipeDTO>();
-            Http = new HttpClient();
-            Cookbook = new CookbookTableEvent(Lazor, RecipeDTO, Logger, Http, RetrievedRecipes);
+            Http.Dispose();
+            GC.SuppressFinalize(this);
         }
         [Fact]
         public async void GetRecipesAsync_WithValidParameters_ShouldBeCorrectType()

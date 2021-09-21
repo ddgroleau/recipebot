@@ -47,7 +47,7 @@ namespace UnitTests.ListComponent
 
         public void Dispose()
         {
-
+            GC.SuppressFinalize(this);
         }
 
         [Fact]

@@ -48,7 +48,7 @@ namespace UnitTests.Controllers
 
         public void Dispose()
         {
-
+            GC.SuppressFinalize(this);
         }
     }
 

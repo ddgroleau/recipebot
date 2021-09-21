@@ -55,6 +55,7 @@ namespace UnitTests.Controllers
         public void Dispose()
         {
             Db.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 

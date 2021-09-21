@@ -37,13 +37,8 @@ namespace UnitTests.DOM_Events.ComponentEvents
 
         public void Dispose()
         {
-            Logger = new LoggerFactory().CreateLogger<ListGeneratorEvent>();
-            Http = new HttpClient();
-            Lazor = new Lazor();
-            ListGeneratorDTO = new ListGeneratorDTO();
-            ListDayDTO = new ListDayDTO();
-            Event = new ListGeneratorEvent(Lazor, ListGeneratorDTO, ListDayDTO, Http, Logger);
-            GeneratedList = new MockListObject().GeneratedList;
+            Http.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         [Fact]

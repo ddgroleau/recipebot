@@ -26,9 +26,7 @@ namespace UnitTests.DOM_Events
 
         public void Dispose()
         {
-            Lazor = new Lazor();
-            MockObject = new MockObject();
-            RecipeDTO = new RecipeDTO();
+            GC.SuppressFinalize(this);
         }
         [Fact]
         public void Toggle_WithIsToggledDefault_ShouldMakeIsToggledFalse()

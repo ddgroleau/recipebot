@@ -52,6 +52,7 @@ namespace UnitTests.Controllers
         public void Dispose()
         {
             Http.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         [Fact]

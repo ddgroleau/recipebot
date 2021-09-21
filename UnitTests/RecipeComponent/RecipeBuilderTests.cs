@@ -27,7 +27,7 @@ namespace UnitTests.RecipeComponent
 
         public void Dispose()
         {
-
+            GC.SuppressFinalize(this);
         }
 
         [Fact]

@@ -25,7 +25,7 @@ namespace UnitTests.SubscriptionComponent
 
         public void Dispose()
         {
-
+            GC.SuppressFinalize(this);
         }
     }
 

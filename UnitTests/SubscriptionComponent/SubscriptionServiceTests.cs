@@ -49,6 +49,7 @@ namespace UnitTests.SubscriptionComponent
         public void Dispose()
         {
             Db.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 

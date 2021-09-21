@@ -38,6 +38,7 @@ namespace UnitTests.Data
         public void Dispose()
         {
             Db.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         [Fact]
