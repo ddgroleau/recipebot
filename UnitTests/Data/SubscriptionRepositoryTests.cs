@@ -37,20 +37,17 @@ namespace UnitTests.Data
 
         public void Dispose()
         {
-            Db = null;
-            MockObject = null;
-            SubscriptionFactory = null;
-            SubscriptionRepository = null;
+            Db.Dispose();
         }
 
         [Fact]
-        public async Task UpdateSubscription()
+        public async Task Unsubscribe()
         {
             var subscription = MockObject.RecipeSubscription;
 
             await Db.RecipeSubscriptions.AddAsync(subscription);
             
-            await SubscriptionRepository.UpdateSubscription(subscription.RecipeSubscriptionId);
+            await SubscriptionRepository.Unsubscribe(subscription.RecipeSubscriptionId);
 
             var changedEntity = await Db.RecipeSubscriptions.FindAsync(subscription.RecipeSubscriptionId);
 

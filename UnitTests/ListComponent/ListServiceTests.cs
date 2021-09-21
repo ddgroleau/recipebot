@@ -46,17 +46,7 @@ namespace UnitTests.ListComponent
 
         public void Dispose()
         {
-            StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
-            SubscriberState = new SubscriberState(StateLogger);
-            ListRepository = new ListRepository();
-            RecipeDTO = new RecipeDTO();
-            Http = new HttpClient();
-            ListDayDTO = new ListDayDTO();
-            ListDTO = new ListDTO();
-            ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO, ListDTO);
-            ListService = new ListService(ListBuilder, Http, ListDayDTO, ListDTO, ListRepository, SubscriberState);
-            ListGeneratorDTO = new ListGeneratorDTO();
-            MockList = new MockListObject();
+            Http.Dispose();
         }
 
         [Fact]

@@ -19,7 +19,6 @@ namespace UnitTests.Custom_Validation
 
         public void Dispose()
         {
-            Validation = new MustBeValidType();
         }
         [Fact]
         public void IsValid_WithValidObject_ShouldReturnTrue()

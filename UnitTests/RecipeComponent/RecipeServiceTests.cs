@@ -39,14 +39,7 @@ namespace UnitTests.RecipeComponent
 
         public void Dispose()
         {
-            RecipeFactory = new RecipeFactory();
-            StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
-            SubscriberState = new SubscriberState(StateLogger);
-            RecipeServiceDTO = new RecipeServiceDTO();
-            RecipeDTO = new RecipeDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeFactory);
-            RecipeRepository = new RecipeRepository();
-            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, SubscriberState);
+
         }
   
         [Fact]

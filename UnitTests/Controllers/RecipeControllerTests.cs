@@ -48,18 +48,7 @@ namespace UnitTests.Controllers
 
         public void Dispose()
         {
-            RecipeFactory = new RecipeFactory();
-            StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
-            SubscriberState = new SubscriberState(StateLogger);
-            RecipeServiceDTO = new RecipeServiceDTO();
-            Logger = new LoggerFactory().CreateLogger<RecipeController>();
-            RecipeDTO = new RecipeDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeFactory);
-            Scraper = new AllRecipesScraper();
-            RecipeUrlDTO = new RecipeUrlDTO();
-            RecipeRepository = new RecipeRepository();
-            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, SubscriberState);
-            RecipeController = new RecipeController(Logger, RecipeDTO, Scraper, RecipeService);
+
         }
     }
 

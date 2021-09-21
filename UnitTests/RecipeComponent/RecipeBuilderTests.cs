@@ -27,10 +27,7 @@ namespace UnitTests.RecipeComponent
 
         public void Dispose()
         {
-            RecipeFactory = new RecipeFactory();
-            RecipeDTO = new RecipeDTO();
-            RecipeServiceDTO = new RecipeServiceDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeFactory);
+
         }
 
         [Fact]

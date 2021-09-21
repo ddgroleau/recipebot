@@ -48,7 +48,7 @@ namespace PBC.Server.Controllers
             try
             {
                 _logger.LogInformation($"Recieved new subscription at SubscriptionController, Subscribe method,. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-                _subscriptionService.CreateSubscription(recipeId);
+                _subscriptionService.Subscribe(recipeId);
                 return Ok();
             }
             catch (Exception)
@@ -64,7 +64,7 @@ namespace PBC.Server.Controllers
             try
             {
             _logger.LogInformation($"Recieved unsubscribe request at SubscriptionController, Unsubscribe method,. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-            _subscriptionService.UpdateSubscription(recipeId);
+            _subscriptionService.Unsubscribe(recipeId);
             return Ok();
             }
             catch (Exception)

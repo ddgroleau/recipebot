@@ -47,13 +47,7 @@ namespace UnitTests.ListComponent
 
         public void Dispose()
         {
-            RecipeDTO = new RecipeDTO();
-            ListDayDTO = new ListDayDTO();
-            ListDTO = new ListDTO();
-            ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO, ListDTO);
-            UserRecipes = new List<IRecipeDTO>();
-            EmptyUserRecipes = new List<IRecipeDTO>();
-            MockList = new MockListObject().GeneratedList;
+
         }
 
         [Fact]

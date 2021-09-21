@@ -20,12 +20,12 @@ namespace PBC.Server.Data.Repositories
             _subscriptionFactory = subscriptionFactory;
             _context = context;
         }
-        public void CreateSubscription(int id)
+        public void Subscribe(int id)
         {
             RecipeSubscription subscription = _subscriptionFactory.Make();
             subscription.Recipe.RecipeId = id;
         }
-        public async Task UpdateSubscription(int id)
+        public async Task Unsubscribe(int id)
         {
             var entity = await _context.RecipeSubscriptions.FindAsync(id);
             if(entity != null)

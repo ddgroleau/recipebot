@@ -20,16 +20,16 @@ namespace PBC.Shared.SubscriptionComponent
             _subscriptionRepository = subscriptionRepository;
             _recipeBuilder = recipeBuilder;
         }
-        public void CreateSubscription(int recipeId)
+        public void Subscribe(int recipeId)
         {
             _subscriberState.UpdateState();
-            _subscriptionRepository.CreateSubscription(recipeId);
+            _subscriptionRepository.Subscribe(recipeId);
         }
 
-        public void UpdateSubscription(int recipeId)
+        public void Unsubscribe(int recipeId)
         {
             _subscriberState.UpdateState();
-            _subscriptionRepository.UpdateSubscription(recipeId);
+            _subscriptionRepository.Unsubscribe(recipeId);
         }
 
         public IEnumerable<IRecipeDTO> GetUserRecipes(int userId)

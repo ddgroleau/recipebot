@@ -25,9 +25,7 @@ namespace UnitTests.SubscriptionComponent
 
         public void Dispose()
         {
-            Recipe = new Recipe();
-            RecipeSubscription = new RecipeSubscription();
-            SubscriptionFactory = new SubscriptionFactory(RecipeSubscription, Recipe);
+
         }
     }
 

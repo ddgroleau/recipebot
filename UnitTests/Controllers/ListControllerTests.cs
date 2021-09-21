@@ -51,18 +51,7 @@ namespace UnitTests.Controllers
 
         public void Dispose()
         {
-            StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
-            SubscriberState = new SubscriberState(StateLogger);
-            ListRepository = new ListRepository();
-            RecipeDTO = new RecipeDTO();
-            Http = new HttpClient();
-            ListDayDTO = new ListDayDTO();
-            ListDTO = new ListDTO();
-            ListBuilder = new ListBuilder(ListDayDTO, RecipeDTO, ListDTO);
-            ListService = new ListService(ListBuilder, Http, ListDayDTO, ListDTO, ListRepository, SubscriberState);
-            Logger = new LoggerFactory().CreateLogger<ListController>();
-            ListController = new ListController(Logger, ListService, ListDayDTO);
-            GeneratedList = new MockListObject().GeneratedList;
+            Http.Dispose();
         }
 
         [Fact]

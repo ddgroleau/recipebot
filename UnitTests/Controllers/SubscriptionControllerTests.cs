@@ -54,19 +54,7 @@ namespace UnitTests.Controllers
 
         public void Dispose()
         {
-            RecipeFactory = null;
-            RecipeDTO = null;
-            RecipeServiceDTO = null;
-            RecipeBuilder = null;
-            Recipe = null;
-            Subscription = null;
-            SubscriptionFactory = null;
-            StateLogger = null;
-            SubscriptionRepository = null;
-            SubscriberState = null;
-            SubscriptionService = null;
-            Logger = null;
-            Controller = null;
+            Db.Dispose();
         }
     }
 

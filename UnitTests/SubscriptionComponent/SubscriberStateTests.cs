@@ -21,8 +21,7 @@ namespace UnitTests.SubscriptionComponent
         }
         public void Dispose()
         {
-            Logger = new LoggerFactory().CreateLogger<ISubscriberState>();
-            SubscriberState = new SubscriberState(Logger);
+
         }
             
         [Fact]
