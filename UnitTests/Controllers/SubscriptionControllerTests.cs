@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnitTests.Data;
+using UnitTests.MockObjects;
 using Xunit;
 
 namespace UnitTests.Controllers
@@ -21,11 +22,10 @@ namespace UnitTests.Controllers
     {
         public ApplicationDbContext Db;
         public AbstractRecipeFactory RecipeFactory;
+        public IUserState UserState;
         public IRecipeServiceDTO RecipeServiceDTO;
         public IBuilder<IRecipeServiceDTO, IRecipeDTO> RecipeBuilder;
         public IRecipeDTO RecipeDTO;
-        public Recipe Recipe;
-        public RecipeSubscription Subscription;
         public IFactory<RecipeSubscription> SubscriptionFactory;
         public ILogger<ISubscriberState> StateLogger;
         public ISubscriptionRepository SubscriptionRepository;
@@ -37,15 +37,14 @@ namespace UnitTests.Controllers
         public SubscriptionControllerFixture()
         {
             Db = new MockDbContext().Context;
+            UserState = new MockUserState();
             RecipeFactory = new RecipeFactory();
             RecipeDTO = new RecipeDTO();
             RecipeServiceDTO = new RecipeServiceDTO();
             RecipeBuilder = new RecipeBuilder(RecipeFactory);
-            Recipe = new Recipe();
-            Subscription = new RecipeSubscription();
-            SubscriptionFactory = new SubscriptionFactory(Subscription, Recipe);
+            SubscriptionFactory = new SubscriptionFactory();
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
-            SubscriptionRepository = new SubscriptionRepository(SubscriptionFactory,Db);
+            SubscriptionRepository = new SubscriptionRepository(SubscriptionFactory,Db, UserState);
             SubscriberState = new SubscriberState(StateLogger);
             SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository, RecipeBuilder);
             Logger = new LoggerFactory().CreateLogger<SubscriptionController>();

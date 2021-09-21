@@ -12,15 +12,11 @@ namespace UnitTests.SubscriptionComponent
 {
     public class SubscriptionFactoryFixture : IDisposable
     {
-        Recipe Recipe;
-        public RecipeSubscription RecipeSubscription;
         public IFactory<RecipeSubscription> SubscriptionFactory;
 
         public SubscriptionFactoryFixture()
         {
-            Recipe = new Recipe();
-            RecipeSubscription = new RecipeSubscription();
-            SubscriptionFactory = new SubscriptionFactory(RecipeSubscription, Recipe);
+            SubscriptionFactory = new SubscriptionFactory();
         }
 
         public void Dispose()
@@ -41,7 +37,7 @@ namespace UnitTests.SubscriptionComponent
         public void Make_WithNoParameters_ShouldReturnRecipeSubscriptionObject()
         {
             var newSubscription = Fixture.SubscriptionFactory.Make();
-            Assert.Equal(Fixture.RecipeSubscription, newSubscription);
+            Assert.IsAssignableFrom<RecipeSubscription>(newSubscription);
         }
     }
 }

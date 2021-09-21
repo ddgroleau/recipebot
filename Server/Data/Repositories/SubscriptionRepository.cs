@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using PBC.Server.Models;
 using PBC.Shared.Common;
 using PBC.Shared.RecipeComponent;
 using PBC.Shared.SubscriptionComponent;
@@ -13,31 +16,56 @@ namespace PBC.Server.Data.Repositories
     public class SubscriptionRepository : ISubscriptionRepository
     {
         private readonly IFactory<RecipeSubscription> _subscriptionFactory;
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _dbContext;
+        private readonly IUserState _userState;
 
-        public SubscriptionRepository(IFactory<RecipeSubscription> subscriptionFactory, ApplicationDbContext context)
+        public SubscriptionRepository(IFactory<RecipeSubscription> subscriptionFactory, ApplicationDbContext context, IUserState userState)
         {
             _subscriptionFactory = subscriptionFactory;
-            _context = context;
+            _dbContext = context;
+            _userState = userState;
         }
-        public void Subscribe(int id)
+
+        public async Task Subscribe(int id)
         {
-            RecipeSubscription subscription = _subscriptionFactory.Make();
-            subscription.Recipe.RecipeId = id;
+            Recipe recipe = await _dbContext.Recipes.FindAsync(id);
+            
+            if(recipe != null)
+            {
+                RecipeSubscription recipeSubscription = await BuildSubscription(recipe.RecipeId);
+                
+                bool previousSubscription = await _dbContext.RecipeSubscriptions.Where(s => s.RecipeId.Equals(recipeSubscription.RecipeId) &&
+                                            s.ApplicationUserId.Equals(recipeSubscription.ApplicationUserId)).AnyAsync();
+
+                if (previousSubscription)
+                {
+                    var entity = await _dbContext.RecipeSubscriptions.FirstOrDefaultAsync(s => s.RecipeId == recipeSubscription.RecipeId &&
+                                    s.ApplicationUserId == recipeSubscription.ApplicationUserId);
+                    entity.IsSubscribed = true;
+                }
+                else
+                {
+                    await _dbContext.RecipeSubscriptions.AddAsync(recipeSubscription);
+                }
+                await _dbContext.SaveChangesAsync();
+            }
+            return;
         }
+
         public async Task Unsubscribe(int id)
         {
-            var entity = await _context.RecipeSubscriptions.FindAsync(id);
+            var entity = await _dbContext.RecipeSubscriptions.FindAsync(id);
             if(entity != null)
             {
                 entity.IsSubscribed = false;
-                _context.SaveChanges();
+                _dbContext.SaveChanges();
             }
             else
             {
                 throw new InvalidOperationException();
             }
         }
+
 
         public IEnumerable<ISubscriptionServiceDTO> GetUserRecipes(int userId)
         {
@@ -211,6 +239,19 @@ namespace PBC.Server.Data.Repositories
 
 
             return recipes;
+        }
+
+        private async Task<RecipeSubscription> BuildSubscription(int recipeId)
+        {
+            RecipeSubscription subscription = _subscriptionFactory.Make();
+
+            subscription.RecipeId = recipeId;
+            subscription.ApplicationUserId = await _userState.CurrentUserIdAsync();
+            subscription.IsSubscribed = true;
+            subscription.CreationDate = DateTime.Now;
+            subscription.LastModifed = DateTime.Now;
+            
+            return subscription;
         }
 
 

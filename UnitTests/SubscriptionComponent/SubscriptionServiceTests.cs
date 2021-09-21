@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using UnitTests.Data;
+using UnitTests.MockObjects;
 using Xunit;
 
 namespace UnitTests.SubscriptionComponent
@@ -18,12 +19,11 @@ namespace UnitTests.SubscriptionComponent
     public class SubscriptionServiceFixture : IDisposable
     {
         public ApplicationDbContext Db;
+        public IUserState UserState;
         public AbstractRecipeFactory RecipeFactory;
         public IRecipeServiceDTO RecipeServiceDTO;
         public IBuilder<IRecipeServiceDTO, IRecipeDTO> RecipeBuilder;
         public IRecipeDTO RecipeDTO;
-        public Recipe Recipe;
-        public RecipeSubscription Subscription;
         public IFactory<RecipeSubscription> SubscriptionFactory;
         public ILogger<ISubscriberState> StateLogger;
         public ISubscriptionRepository SubscriptionRepository;
@@ -35,13 +35,12 @@ namespace UnitTests.SubscriptionComponent
             Db = new MockDbContext().Context;
             RecipeFactory = new RecipeFactory();
             RecipeDTO = new RecipeDTO();
+            UserState = new MockUserState();
             RecipeServiceDTO = new RecipeServiceDTO();
             RecipeBuilder = new RecipeBuilder(RecipeFactory);
-            Recipe = new Recipe();
-            Subscription = new RecipeSubscription();
-            SubscriptionFactory = new SubscriptionFactory(Subscription, Recipe);
+            SubscriptionFactory = new SubscriptionFactory();
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
-            SubscriptionRepository = new SubscriptionRepository(SubscriptionFactory, Db);
+            SubscriptionRepository = new SubscriptionRepository(SubscriptionFactory, Db, UserState);
             SubscriberState = new SubscriberState(StateLogger);
             SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository, RecipeBuilder);
         }

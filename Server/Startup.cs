@@ -51,6 +51,8 @@ namespace PBC.Server
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            services.AddHttpContextAccessor();
+
             services.AddScoped<IRecipeDTO, RecipeDTO>();
             services.AddScoped<IListGeneratorDTO, ListGeneratorDTO>();
             services.AddScoped<IListDayDTO, ListDayDTO>();
@@ -78,6 +80,7 @@ namespace PBC.Server
             services.AddScoped<RecipeSubscription>();
 
             services.AddSingleton<ISubscriberState, SubscriberState>();
+            services.AddSingleton<IUserState, UserState>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

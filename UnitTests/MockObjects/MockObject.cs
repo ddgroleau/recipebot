@@ -17,47 +17,51 @@ namespace UnitTests.MockObjects
         [ListMustContainElements]
         public List<string> ListString { get; set; } = new List<string>();
 
-        public RecipeSubscription RecipeSubscription =
-            new RecipeSubscription
-            {
-                ApplicationUserId = 1,
-                CreationDate = DateTime.Now,
-                IsSubscribed = true,
-                RecipeSubscriptionId = 1,
-                LastModifed = DateTime.Now,
-                Recipe = new Recipe
-                {
-                    RecipeId = 1,
-                    Title = $"Recipe1",
-                    Description = "Description1",
-                    RecipeType = "Breakfast",
-                    CreatedBy = "Test",
-                    CreatedOn = DateTime.Now,
-                    Ingredients = new List<Ingredient>
-                {
-                    new Ingredient
-                    {
-                        IngredientId = 1,
-                        RecipeId = 1,
-                        CreatedBy = "Test",
-                        CreatedOn = DateTime.Now,
-                        Description = "Salt"
-                    }
-                },
-                    Instructions = new List<Instruction>
-                {
-                    new Instruction
-                    {
-                        InstructionId = 1,
-                        RecipeId = 1,
-                        CreatedBy = "Test",
-                        CreatedOn = DateTime.Now,
-                        StepNumber = 1,
-                        Description = "Combine and cook."
-                    }
-                }
-                }
-            };
+
+        public RecipeSubscription RecipeSubscription = new RecipeSubscription
+        {
+            ApplicationUserId = "TestUserId",
+            CreationDate = DateTime.Now,
+            IsSubscribed = true,
+            RecipeSubscriptionId = 1,
+            LastModifed = DateTime.Now,
+            RecipeId = 1
+        };
+
+
+        public Recipe Recipe = new Recipe
+        {
+            RecipeId = 1,
+            Title = $"Recipe1",
+            Description = "Description1",
+            URL = "https://allrecipes.com/1234",
+            RecipeType = "Breakfast",
+            CreatedBy = "Test",
+            CreatedOn = DateTime.Now,
+            Ingredients = new List<Ingredient>
+                        {
+                            new Ingredient
+                            {
+                                IngredientId = 1,
+                                RecipeId = 1,
+                                CreatedBy = "Test",
+                                CreatedOn = DateTime.Now,
+                                Description = "Salt"
+                            }
+                        },
+            Instructions = new List<Instruction>
+                        {
+                            new Instruction
+                            {
+                                InstructionId = 1,
+                                RecipeId = 1,
+                                CreatedBy = "Test",
+                                CreatedOn = DateTime.Now,
+                                StepNumber = 1,
+                                Description = "Combine and cook."
+                            }
+                          }
+        };
     }
 }
 
