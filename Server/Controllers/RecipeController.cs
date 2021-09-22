@@ -30,7 +30,7 @@ namespace PBC.Server.Controllers
             _recipeService = recipeService;
         }
 
-        [HttpPost("RecipeURL")]
+        [HttpPost("recipe-url")]
         public IRecipeDTO ProcessRecipeUrl(RecipeUrlDTO urlDTO)
         {
             try
@@ -45,7 +45,7 @@ namespace PBC.Server.Controllers
             return _recipeDTO;
         }
 
-        [HttpPost("Recipe")]
+        [HttpPost("recipe")]
         public IActionResult CreateOrUpdateRecipe(RecipeDTO recipeDTO)
         {
             try
@@ -61,7 +61,7 @@ namespace PBC.Server.Controllers
             return BadRequest();
         }  
 
-        [HttpGet("SearchRecipes/{searchText}")]
+        [HttpGet("search/{searchText}")]
         public IEnumerable<IRecipeDTO> SearchRecipes(string searchText)
         {
             IEnumerable<IRecipeDTO> recipes = new List<IRecipeDTO>();

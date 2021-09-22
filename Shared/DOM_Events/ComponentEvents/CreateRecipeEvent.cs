@@ -45,7 +45,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
                     }
                     else
                     {
-                        var response = await _http.PostAsJsonAsync("/api/Recipe/RecipeURL", RecipeUrlDTO);
+                        var response = await _http.PostAsJsonAsync("/api/recipe/recipe-url", RecipeUrlDTO);
                         var scrapedRecipe = await response.Content.ReadFromJsonAsync<RecipeDTO>();
                         RecipeDTO = scrapedRecipe;
                         Lazor.Toggle();

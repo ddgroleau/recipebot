@@ -30,7 +30,7 @@ namespace PBC.Server.Controllers
             _listDayDTO = listDayDTO;
         }
 
-        [HttpGet("Day")]
+        [HttpGet("day")]
         public async Task<IListDayDTO> GenerateRandomDay()
         {
             _logger.LogInformation($"Received request for Random Day at ListController, GenerateRandomDay method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
@@ -47,7 +47,7 @@ namespace PBC.Server.Controllers
             }
         }
 
-        [HttpPost("NewList")]
+        [HttpPost("new-list")]
         public IActionResult CreateList(ListGeneratorDTO listDays)
         {
             try
@@ -62,7 +62,7 @@ namespace PBC.Server.Controllers
             return BadRequest();
         }
 
-        [HttpGet("RandomRecipe/{recipeType}")]
+        [HttpGet("random-recipe/{recipeType}")]
         public async Task<IRecipeDTO> GetRandomRecipeByType(string recipeType)
         {
             return await _listService.GenerateRandomRecipeByType(recipeType);

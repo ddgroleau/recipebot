@@ -47,7 +47,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             {
                 if (!String.IsNullOrEmpty(SearchText))
                 {
-                    SearchResults = await _http.GetFromJsonAsync<List<RecipeDTO>>($"/api/Recipe/SearchRecipes/{SearchText}");
+                    SearchResults = await _http.GetFromJsonAsync<List<RecipeDTO>>($"/api/recipe/search/{SearchText}");
                 }
             }
             catch (Exception)

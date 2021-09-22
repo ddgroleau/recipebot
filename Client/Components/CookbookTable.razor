@@ -78,7 +78,7 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
-        Event.RetrievedRecipes = await Event.GetRecipesAsync(123);
+        Event.RetrievedRecipes = await Event.GetUserRecipesAsync();
 
         StateHasChanged();
     }

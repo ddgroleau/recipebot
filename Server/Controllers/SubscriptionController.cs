@@ -26,7 +26,7 @@ namespace PBC.Server.Controllers
             _subscriptionService = subscriptionService;
         }
 
-        [HttpPost("Subscribe")]
+        [HttpPost("subscribe")]
         public IActionResult Subscribe(int recipeId)
         {
             try
@@ -42,7 +42,7 @@ namespace PBC.Server.Controllers
             return BadRequest();
         }
 
-        [HttpPost("Unsubscribe")]
+        [HttpPost("unsubscribe")]
         public IActionResult Unsubscribe(int recipeId)
         {
             try

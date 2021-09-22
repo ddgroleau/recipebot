@@ -37,7 +37,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
                 Lazor.SetLoadingStatus(true);
                 if (Lazor.IsObjectValid(ListGeneratorDTO))
                 {
-                    var response = await _http.PostAsJsonAsync("/api/List/NewList", ListGeneratorDTO);
+                    var response = await _http.PostAsJsonAsync("/api/list/new-list", ListGeneratorDTO);
                     if (response.IsSuccessStatusCode)
                     {
                         Lazor.SetSuccessStatus(true);
@@ -105,7 +105,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         {
             try
             {
-                var listDay = await _http.GetFromJsonAsync<ListDayDTO>("/api/List/Day");
+                var listDay = await _http.GetFromJsonAsync<ListDayDTO>("/api/list/day");
                 listDay.Date = listDay.Date.AddDays(ListGeneratorDTO.Days + 1);
                 listDay.SequenceNumber = ListGeneratorDTO.Days + 1;
                 return listDay;

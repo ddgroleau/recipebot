@@ -30,11 +30,11 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             RetrievedRecipes = userRecipes;
         }
 
-        public async Task<IEnumerable<IRecipeDTO>> GetRecipesAsync(int userId)
+        public async Task<IEnumerable<IRecipeDTO>> GetUserRecipesAsync()
         {
             try
             {
-                RetrievedRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>($"https://localhost:4001/api/Subscription/Subscriptions/{userId}");
+                RetrievedRecipes = await _http.GetFromJsonAsync<List<RecipeDTO>>($"https://localhost:4001/api/recipe/user-recipes");
             }
             catch (Exception e)
             {
@@ -60,7 +60,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         {
             try
             {
-                var response = await _http.PostAsJsonAsync("/api/Subscription/Subscribe", RecipeDTO.RecipeId);
+                var response = await _http.PostAsJsonAsync("/api/subscription/subscribe", RecipeDTO.RecipeId);
                 Lazor.SetSuccessStatus(response.IsSuccessStatusCode);
             }
             catch (Exception e)
@@ -75,7 +75,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         {
             try
             {
-                var response = await _http.PostAsJsonAsync("/api/Subscription/Unsubscribe", RecipeDTO.RecipeId);
+                var response = await _http.PostAsJsonAsync("/api/subscription/unsubscribe", RecipeDTO.RecipeId);
                 Lazor.SetSuccessStatus(response.IsSuccessStatusCode);
             }
             catch (Exception e)

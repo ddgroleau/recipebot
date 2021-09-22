@@ -38,9 +38,9 @@ namespace UnitTests.DOM_Events.ComponentEvents
             GC.SuppressFinalize(this);
         }
         [Fact]
-        public async void GetRecipesAsync_WithValidParameters_ShouldBeCorrectType()
+        public async void GetUserRecipesAsync_WithValidParameters_ShouldBeCorrectType()
         {
-            var recipes = await Cookbook.GetRecipesAsync(1);
+            var recipes = await Cookbook.GetUserRecipesAsync();
 
             Assert.IsAssignableFrom<IEnumerable<IRecipeDTO>>(recipes);
         }

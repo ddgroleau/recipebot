@@ -14,7 +14,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         public ILazor Lazor { get; set; }
         public string Message { get; set; }
         public Dictionary<int, bool> Loading { get; set; }
-        public Task<IEnumerable<IRecipeDTO>> GetRecipesAsync(int userId);
+        public Task<IEnumerable<IRecipeDTO>> GetUserRecipesAsync();
         public void HandleUpdate();
         public void HandleDetails();
         public Task<bool> HandleSubscribe();

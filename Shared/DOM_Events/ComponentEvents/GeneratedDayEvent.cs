@@ -43,7 +43,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
             RefreshSymbol[recipeType] = null;
             try
             {
-                newRecipe = await _http.GetFromJsonAsync<RecipeDTO>($"/api/List/RandomRecipe/{recipeType}");
+                newRecipe = await _http.GetFromJsonAsync<RecipeDTO>($"/api/list/random-recipe/{recipeType}");
             }
             catch (Exception)
             {
