@@ -26,35 +26,27 @@ namespace PBC.Server.Data.Repositories
             _userState = userState;
         }
 
-        public async Task Subscribe(int id)
+        public async Task Subscribe(int recipeId)
         {
-            Recipe recipe = await _dbContext.Recipes.FindAsync(id);
+            Recipe recipe = await _dbContext.Recipes.FindAsync(recipeId);
             
             if(recipe != null)
             {
                 RecipeSubscription recipeSubscription = await BuildSubscription(recipe.RecipeId);
                 
-                bool previousSubscription = await _dbContext.RecipeSubscriptions.Where(s => s.RecipeId.Equals(recipeSubscription.RecipeId) &&
-                                            s.ApplicationUserId.Equals(recipeSubscription.ApplicationUserId)).AnyAsync();
+                bool previousSubscription = await _dbContext.RecipeSubscriptions
+                    .Where(s => s.RecipeId.Equals(recipeSubscription.RecipeId) 
+                        && s.ApplicationUserId.Equals(recipeSubscription.ApplicationUserId))
+                    .AnyAsync();
 
-                if (previousSubscription)
-                {
-                    var entity = await _dbContext.RecipeSubscriptions.FirstOrDefaultAsync(s => s.RecipeId == recipeSubscription.RecipeId &&
-                                    s.ApplicationUserId == recipeSubscription.ApplicationUserId);
-                    entity.IsSubscribed = true;
-                }
-                else
-                {
-                    await _dbContext.RecipeSubscriptions.AddAsync(recipeSubscription);
-                }
-                await _dbContext.SaveChangesAsync();
+                await SaveSubscription(previousSubscription, recipeSubscription);
             }
             return;
         }
 
-        public async Task Unsubscribe(int id)
+        public async Task Unsubscribe(int recipeId)
         {
-            var entity = await _dbContext.RecipeSubscriptions.FindAsync(id);
+            var entity = await _dbContext.RecipeSubscriptions.FindAsync(recipeId);
             if(entity != null)
             {
                 entity.IsSubscribed = false;
@@ -64,181 +56,6 @@ namespace PBC.Server.Data.Repositories
             {
                 throw new InvalidOperationException();
             }
-        }
-
-
-        public IEnumerable<ISubscriptionServiceDTO> GetUserRecipes(int userId)
-        {
-
-            var recipes = new List<ISubscriptionServiceDTO>
-            {
-
-                new SubscriptionServiceDTO
-                {
-                    Recipe = new RecipeServiceDTO
-                    {
-                        RecipeId = 11,
-                        Title = $"Recipe11",
-                        Description = "Description11",
-                        RecipeType = "Breakfast",
-                        Ingredients = { "Salt" },
-                        Instructions = { "Combine and cook." }
-                    }
-                },
-                    new SubscriptionServiceDTO
-                    {
-                        Recipe = new RecipeServiceDTO
-                        {
-                            RecipeId = 12,
-                            Title = $"Recipe12",
-                            Description = "Description12",
-                            RecipeType = "Breakfast",
-                            Ingredients = { "Salt" },
-                            Instructions = { "Combine and cook." }
-                        }
-                    },
-            new SubscriptionServiceDTO
-            {
-                Recipe = new RecipeServiceDTO
-                {
-                    RecipeId = 13,
-                    Title = $"Recipe13",
-                    Description = "Description13",
-                    RecipeType = "Breakfast",
-                    Ingredients = { "Salt" },
-                    Instructions = { "Combine and cook." }
-                }
-            },
-            new SubscriptionServiceDTO
-            {
-                Recipe = new RecipeServiceDTO
-                {
-                    RecipeId = 14,
-                    Title = $"Recipe14",
-                    Description = "Description14",
-                    RecipeType = "Breakfast",
-                    Ingredients = { "Salt" },
-                    Instructions = { "Combine and cook." }
-                }
-            },
-            new SubscriptionServiceDTO
-            {
-                Recipe = new RecipeServiceDTO
-                {
-                    RecipeId = 15,
-                    Title = $"Recipe15",
-                    Description = "Description15",
-                    RecipeType = "Breakfast",
-                    Ingredients = { "Salt" },
-                    Instructions = { "Combine and cook." }
-                }
-            },
-            new SubscriptionServiceDTO
-            {
-                Recipe = new RecipeServiceDTO
-                {
-                    RecipeId = 16,
-                    Title = $"Recipe16",
-                    Description = "Description16",
-                    RecipeType = "Lunch",
-                    Ingredients = { "Salt" },
-                    Instructions = { "Combine and cook." }
-                }
-            },
-
-            new SubscriptionServiceDTO
-            {
-                Recipe = new RecipeServiceDTO
-                {
-                    RecipeId = 17,
-                    Title = $"Recipe17",
-                    Description = "Description17",
-                    RecipeType = "Lunch",
-                    Ingredients = { "Salt" },
-                    Instructions = { "Combine and cook." }
-                }
-            },
-
-            new SubscriptionServiceDTO
-            {
-                Recipe = new RecipeServiceDTO
-                {
-                    RecipeId = 18,
-                    Title = $"Recipe18",
-                    Description = "Description18",
-                    RecipeType = "Lunch",
-                    Ingredients = { "Salt" },
-                    Instructions = { "Combine and cook." }
-                }
-            },
-
-            new SubscriptionServiceDTO
-            {
-                Recipe = new RecipeServiceDTO
-                {
-                    RecipeId = 19,
-                    Title = $"Recipe19",
-                    Description = "Description19",
-                    RecipeType = "Dinner",
-                    Ingredients = { "Salt" },
-                    Instructions = { "Combine and cook." }
-                }
-            },
-
-            new SubscriptionServiceDTO
-            {
-                Recipe = new RecipeServiceDTO
-                {
-                    RecipeId = 20,
-                    Title = $"Recipe20",
-                    Description = "Description20",
-                    RecipeType = "Dinner",
-                    Ingredients = { "Salt" },
-                    Instructions = { "Combine and cook." }
-                }
-            },
-
-            new SubscriptionServiceDTO
-            {
-                Recipe = new RecipeServiceDTO
-                {
-                    RecipeId = 21,
-                    Title = $"Recipe21",
-                    Description = "Description21",
-                    RecipeType = "Dinner",
-                    Ingredients = { "Salt" },
-                    Instructions = { "Combine and cook." }
-                }
-            },
-
-            new SubscriptionServiceDTO
-            {
-                Recipe = new RecipeServiceDTO
-                {
-                    RecipeId = 22,
-                    Title = $"Recipe22",
-                    Description = "Description22",
-                    RecipeType = "Dinner",
-                    Ingredients = { "Salt" },
-                    Instructions = { "Combine and cook." }
-                }
-            },
-
-            new SubscriptionServiceDTO
-            {
-                Recipe = new RecipeServiceDTO
-                {
-                    RecipeId = 23,
-                    Title = $"Recipe23",
-                    Description = "Description23",
-                    RecipeType = "Dinner",
-                    Ingredients = { "Salt" },
-                    Instructions = { "Combine and cook." }
-                }
-            } };
-
-
-            return recipes;
         }
 
         private async Task<RecipeSubscription> BuildSubscription(int recipeId)
@@ -254,6 +71,19 @@ namespace PBC.Server.Data.Repositories
             return subscription;
         }
 
-
+        private async Task SaveSubscription(bool previousSubscription, RecipeSubscription recipeSubscription)
+        {
+              if (previousSubscription)
+                {
+                    var entity = await _dbContext.RecipeSubscriptions.FirstOrDefaultAsync(s => s.RecipeId == recipeSubscription.RecipeId &&
+                                    s.ApplicationUserId == recipeSubscription.ApplicationUserId);
+                    entity.IsSubscribed = true;
+                }
+                else
+                {
+                    await _dbContext.RecipeSubscriptions.AddAsync(recipeSubscription);
+                }
+                await _dbContext.SaveChangesAsync();
+        }
     }
 }

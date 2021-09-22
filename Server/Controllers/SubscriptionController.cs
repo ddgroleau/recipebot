@@ -26,22 +26,6 @@ namespace PBC.Server.Controllers
             _subscriptionService = subscriptionService;
         }
 
-        [HttpGet("Subscriptions/{userId}")]
-        public IEnumerable<IRecipeDTO> GetUserRecipes(int userId)
-        {
-            _logger.LogInformation($"Request for user recipes recieved by RecipeController, GetUserRecipes method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-
-            try
-            {
-                return _subscriptionService.GetUserRecipes(userId);
-            }
-            catch (Exception)
-            {
-                _logger.LogError($"Could retrieve user recipe list at SubscriptionController, GetUserRecipes method,. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-            };
-            return new List<IRecipeDTO>();
-        }
-
         [HttpPost("Subscribe")]
         public IActionResult Subscribe(int recipeId)
         {

@@ -32,16 +32,5 @@ namespace PBC.Shared.SubscriptionComponent
             _subscriptionRepository.Unsubscribe(recipeId);
         }
 
-        public IEnumerable<IRecipeDTO> GetUserRecipes(int userId)
-        {
-            List<IRecipeDTO> userRecipes = new List<IRecipeDTO>();
-            var subscriptions = _subscriptionRepository.GetUserRecipes(userId);
-            foreach(var recipe in subscriptions)
-            {
-                var recipeDTO =_recipeBuilder.Build(recipe.Recipe);
-                userRecipes.Add(recipeDTO);
-            }
-            return userRecipes;
-        }
     }
 }

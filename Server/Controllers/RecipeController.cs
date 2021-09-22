@@ -76,5 +76,21 @@ namespace PBC.Server.Controllers
             }
             return recipes;
         }
+
+        [HttpGet("user-recipes")]
+        public async Task<IEnumerable<IRecipeDTO>> GetUserRecipes()
+        {
+            _logger.LogInformation($"Request for user recipes recieved by RecipeController, GetUserRecipes method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+
+            try
+            {
+                return await _recipeService.GetUserRecipes();
+            }
+            catch (Exception)
+            {
+                _logger.LogError($"Could retrieve user recipe list at RecipeController, GetUserRecipes method,. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+            };
+            return new List<IRecipeDTO>();
+        }
     }
 }

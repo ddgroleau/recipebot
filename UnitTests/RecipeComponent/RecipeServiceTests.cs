@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using PBC.Server.Data;
 using PBC.Server.Data.Repositories;
 using PBC.Shared;
 using PBC.Shared.Common;
@@ -10,6 +11,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnitTests.Data;
+using UnitTests.MockObjects;
 using Xunit;
 
 namespace UnitTests.RecipeComponent
@@ -17,6 +20,8 @@ namespace UnitTests.RecipeComponent
     public class RecipeServiceTests : IDisposable
     {
         AbstractRecipeFactory RecipeFactory;
+        public ApplicationDbContext Db;
+        public IUserState UserState;
         ILogger<ISubscriberState> StateLogger;
         ISubscriberState SubscriberState;
         IRecipeServiceDTO RecipeServiceDTO;
@@ -28,12 +33,14 @@ namespace UnitTests.RecipeComponent
         public RecipeServiceTests()
         {
             RecipeFactory = new RecipeFactory();
+            Db = new MockDbContext().Context;
+            UserState = new MockUserState();
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriberState = new SubscriberState(StateLogger);
             RecipeServiceDTO = new RecipeServiceDTO();
             RecipeDTO = new RecipeDTO();
             RecipeBuilder = new RecipeBuilder(RecipeFactory);
-            RecipeRepository = new RecipeRepository();
+            RecipeRepository = new RecipeRepository(RecipeFactory,Db,UserState);
             RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, SubscriberState);
         }
 
@@ -180,6 +187,14 @@ namespace UnitTests.RecipeComponent
             var results = RecipeService.SearchRecipes("Test");
 
             Assert.IsAssignableFrom<IEnumerable<IRecipeDTO>>(results);
+        }
+
+        [Fact]
+        public async Task GetUserRecipes_ShouldReturnRecipeDTOs()
+        {
+            var result = await RecipeService.GetUserRecipes();
+
+            Assert.IsAssignableFrom<IEnumerable<IRecipeDTO>>(result);
         }
 
     }

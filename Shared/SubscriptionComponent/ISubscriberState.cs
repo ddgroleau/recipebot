@@ -10,6 +10,6 @@ namespace PBC.Shared.SubscriptionComponent
     public interface ISubscriberState
     {
         public bool UpdateState();
-        public Task<IEnumerable<IRecipeDTO>> GetRecipeSubscriptions(int userId);
+        public Task<IEnumerable<IRecipeDTO>> GetUserRecipes();
     }
 }

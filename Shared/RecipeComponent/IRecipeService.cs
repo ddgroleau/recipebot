@@ -10,6 +10,6 @@ namespace PBC.Shared.RecipeComponent
     {
         public IRecipeServiceDTO CreateRecipe(IRecipeDTO recipeDTO);
         public IEnumerable<IRecipeDTO> SearchRecipes(string searchText);
-
+        public Task<IEnumerable<IRecipeDTO>> GetUserRecipes();
     }
 }

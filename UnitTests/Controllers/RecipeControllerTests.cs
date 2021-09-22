@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PBC.Server.Controllers;
+using PBC.Server.Data;
 using PBC.Server.Data.Repositories;
 using PBC.Shared;
 using PBC.Shared.Common;
@@ -11,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UnitTests.Data;
+using UnitTests.MockObjects;
 using Xunit;
 
 namespace UnitTests.Controllers
@@ -18,6 +21,8 @@ namespace UnitTests.Controllers
     public class RecipeControllerFixture : IDisposable
     {
         public AbstractRecipeFactory RecipeFactory;
+        public ApplicationDbContext Db;
+        public IUserState UserState;
         public ILogger<ISubscriberState> StateLogger;
         public ISubscriberState SubscriberState;
         public ILogger<RecipeController> Logger;
@@ -32,6 +37,8 @@ namespace UnitTests.Controllers
 
         public RecipeControllerFixture()
         {
+            Db = new MockDbContext().Context;
+            UserState = new MockUserState();
             RecipeFactory = new RecipeFactory();
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriberState = new SubscriberState(StateLogger);
@@ -41,13 +48,14 @@ namespace UnitTests.Controllers
             RecipeBuilder = new RecipeBuilder(RecipeFactory);
             Scraper = new AllRecipesScraper();
             RecipeUrlDTO = new RecipeUrlDTO();
-            RecipeRepository = new RecipeRepository();
+            RecipeRepository = new RecipeRepository(RecipeFactory,Db,UserState);
             RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, SubscriberState);
             RecipeController = new RecipeController(Logger, RecipeDTO, Scraper, RecipeService);
         }
 
         public void Dispose()
         {
+            Db.Dispose();
             GC.SuppressFinalize(this);
         }
     }
@@ -99,6 +107,14 @@ namespace UnitTests.Controllers
             string searchText = "Test";
 
             var results = Fixture.RecipeController.SearchRecipes(searchText);
+
+            Assert.IsAssignableFrom<IEnumerable<IRecipeDTO>>(results);
+        }
+
+        [Fact]
+        public async Task GetUserRecipes_ShouldReturnRecipeDTO()
+        {
+            var results = await Fixture.RecipeController.GetUserRecipes();
 
             Assert.IsAssignableFrom<IEnumerable<IRecipeDTO>>(results);
         }

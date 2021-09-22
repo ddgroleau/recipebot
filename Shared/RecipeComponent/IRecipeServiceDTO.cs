@@ -10,7 +10,6 @@ namespace PBC.Shared.RecipeComponent
     {
         public int RecipeId { get; set;  }
         public string RecipeType { get; set; }
-
         public string URL { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

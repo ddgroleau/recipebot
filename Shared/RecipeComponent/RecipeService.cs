@@ -39,11 +39,36 @@ namespace PBC.Shared.RecipeComponent
             return recipeModel;
         }
 
+        public IEnumerable<IRecipeDTO> SearchRecipes(string searchText)
+        {
+            List<IRecipeDTO> recipeResults = new List<IRecipeDTO>();
+            List<IRecipeServiceDTO> searchResults = _recipeRepository.SearchRecipes(searchText).ToList();
+            
+            foreach(var recipe in searchResults)
+            {
+                var recipeResult =_recipeBuilder.Build(recipe);
+                recipeResults.Add(recipeResult);
+            }
+            return recipeResults;        
+        }
+
+        public async Task<IEnumerable<IRecipeDTO>> GetUserRecipes()
+        {
+            List<IRecipeDTO> userRecipes = new List<IRecipeDTO>();
+            var recipeServiceDTOs = await _recipeRepository.GetUserRecipes();
+            foreach (var recipeDTO in recipeServiceDTOs)
+            {
+                var userRecipe = _recipeBuilder.Build(recipeDTO);
+                userRecipes.Add(userRecipe);
+            }
+            return userRecipes;
+        }
+
         private void SaveRecipe(IRecipeServiceDTO recipeModel)
         {
             try
             {
-                if(RecipeExists(recipeModel))
+                if (RecipeExists(recipeModel))
                 {
                     _recipeRepository.UpdateRecipe(recipeModel);
                 }
@@ -55,7 +80,7 @@ namespace PBC.Shared.RecipeComponent
             }
             catch (Exception e)
             {
-                throw new InvalidOperationException("Unable to Add Recipe to Database.",e);
+                throw new InvalidOperationException("Unable to Add Recipe to Database.", e);
             }
         }
 
@@ -73,19 +98,6 @@ namespace PBC.Shared.RecipeComponent
                 throw;
             }
             return isValid;
-        }
-
-        public IEnumerable<IRecipeDTO> SearchRecipes(string searchText)
-        {
-            List<IRecipeDTO> recipeResults = new List<IRecipeDTO>();
-            List<IRecipeServiceDTO> searchResults = _recipeRepository.SearchRecipes(searchText).ToList();
-            
-            foreach(var recipe in searchResults)
-            {
-                var recipeResult =_recipeBuilder.Build(recipe);
-                recipeResults.Add(recipeResult);
-            }
-            return recipeResults;        
         }
 
         private bool RecipeExists(IRecipeServiceDTO recipeServiceDTO)

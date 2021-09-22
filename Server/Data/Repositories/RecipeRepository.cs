@@ -1,4 +1,6 @@
-﻿using PBC.Shared.RecipeComponent;
+﻿using Microsoft.EntityFrameworkCore;
+using PBC.Shared.Common;
+using PBC.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,17 @@ namespace PBC.Server.Data.Repositories
 {
     public class RecipeRepository : IRecipeRepository
     {
+        private readonly AbstractRecipeFactory _recipeFactory;
+        private readonly ApplicationDbContext _dbContext;
+        private readonly IUserState _userState;
+
+        public RecipeRepository(AbstractRecipeFactory recipeFactory, ApplicationDbContext context, IUserState userState)
+        {
+            _recipeFactory = recipeFactory;
+            _dbContext = context;
+            _userState = userState;
+        }
+
         public void CreateRecipe(IRecipeServiceDTO recipe) 
         {
             // Add a recipe to recipe table
@@ -42,6 +55,55 @@ namespace PBC.Server.Data.Repositories
             // Update a recipe in RecipeSubscriptions
         }
 
+        public async Task<IEnumerable<IRecipeServiceDTO>> GetUserRecipes()
+        {
+
+            var userRecipes = new List<IRecipeServiceDTO>();
+
+            var userId = await _userState.CurrentUserIdAsync();
+            
+            var recipes = _dbContext.Recipes.AsNoTracking()
+                .Include(recipe => recipe.Ingredients)
+                .Include(recipe => recipe.Instructions)
+                .Join(_dbContext.RecipeSubscriptions.Where(subscription => subscription.ApplicationUserId.Equals(userId)),
+                recipe => recipe.RecipeId,
+                subscription => subscription.RecipeId,
+                (recipe, subscription) => recipe);
+            
+            foreach(var recipe in recipes)
+            {
+                var recipeServiceDTO = BuildRecipe(recipe);
+
+                userRecipes.Add(recipeServiceDTO);
+            }
+
+            return userRecipes;
+        }
+
+        private IRecipeServiceDTO BuildRecipe(Recipe recipe)
+        {
+            var recipeServiceDTO = _recipeFactory.MakeRecipeServiceDTO();
+
+            recipeServiceDTO.RecipeId = recipe.RecipeId;
+            recipeServiceDTO.RecipeType = recipe.RecipeType;
+            recipeServiceDTO.Title = recipe.Title;
+            recipeServiceDTO.Description = recipe.Description;
+            recipeServiceDTO.URL = recipe.URL;
+
+            foreach (var ingredient in recipe.Ingredients)
+            {
+                recipeServiceDTO.Ingredients.Add(ingredient.Description);
+            }
+
+            foreach (var instruction in recipe.Instructions)
+            {
+                recipeServiceDTO.Instructions.Add(instruction.Description);
+            }
+
+            return recipeServiceDTO;
+        }
+
+        
 
     }
 }

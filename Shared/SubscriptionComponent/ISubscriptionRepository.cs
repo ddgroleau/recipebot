@@ -8,8 +8,7 @@ namespace PBC.Shared.SubscriptionComponent
 {
     public interface ISubscriptionRepository
     {
-        public Task Subscribe(int id);
-        public Task Unsubscribe(int id);
-        public IEnumerable<ISubscriptionServiceDTO> GetUserRecipes(int userId);
+        public Task Subscribe(int recipeId);
+        public Task Unsubscribe(int recipeId);
     }
 }

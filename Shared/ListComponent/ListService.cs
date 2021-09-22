@@ -37,7 +37,7 @@ namespace PBC.Shared.ListComponent
         {
             try
             {
-                var userRecipes = await _subscriberState.GetRecipeSubscriptions(123);//Change this once auth is implemented
+                var userRecipes = await _subscriberState.GetUserRecipes();//Change this once auth is implemented
                 return _listBuilder.Build(userRecipes);
             }
             catch (Exception)
@@ -51,7 +51,7 @@ namespace PBC.Shared.ListComponent
             IRecipeDTO recipe;
             try
             {
-                var userRecipes = await _subscriberState.GetRecipeSubscriptions(123);//Change this once auth is implemented
+                var userRecipes = await _subscriberState.GetUserRecipes();//Change this once auth is implemented
                 recipe = _listBuilder.GenerateRandomRecipeByType(userRecipes, recipeType);
             }
             catch (Exception)

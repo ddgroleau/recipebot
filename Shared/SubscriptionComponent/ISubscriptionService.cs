@@ -11,7 +11,5 @@ namespace PBC.Shared.SubscriptionComponent
     {
         public void Subscribe(int id);
         public void Unsubscribe(int id);
-        public IEnumerable<IRecipeDTO> GetUserRecipes(int userId);
-
     }
 }

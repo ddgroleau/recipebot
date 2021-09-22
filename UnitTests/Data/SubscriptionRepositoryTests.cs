@@ -79,10 +79,10 @@ namespace UnitTests.Data
 
             await SubscriptionRepository.Subscribe(MockObject.Recipe.RecipeId);
 
-            bool isSubscribed = await Db.RecipeSubscriptions.Where(x => x.RecipeId
-                                                                .Equals(MockObject.Recipe.RecipeId) && x.ApplicationUserId
-                                                                .Equals(userid))
-                                                            .AnyAsync();
+            bool isSubscribed = await Db.RecipeSubscriptions
+                .Where(x => x.RecipeId.Equals(MockObject.Recipe.RecipeId) 
+                    && x.ApplicationUserId.Equals(userid))
+                .AnyAsync();
 
             Assert.True(isSubscribed);
         }
@@ -105,10 +105,10 @@ namespace UnitTests.Data
 
             await SubscriptionRepository.Subscribe(recipe.RecipeId); // subscribe to that same recipe
 
-            var recipeSubscription = await Db.RecipeSubscriptions.Where(x =>
-                                                                x.RecipeId.Equals(recipe.RecipeId)
-                                                                && x.ApplicationUserId.Equals(userid))
-                                                      .SingleAsync();
+            var recipeSubscription = await Db.RecipeSubscriptions
+                .Where(x => x.RecipeId.Equals(recipe.RecipeId)
+                    && x.ApplicationUserId.Equals(userid))
+                .SingleAsync();
 
             bool isSubscribed = recipeSubscription.IsSubscribed;
 
