@@ -14,9 +14,9 @@ namespace UnitTests.MockObjects
     {
         [AcceptableURL]
         public string URL { get; set; }
+        
         [ListMustContainElements]
         public List<string> ListString { get; set; } = new List<string>();
-
 
         public RecipeSubscription RecipeSubscription = new RecipeSubscription
         {
@@ -182,6 +182,56 @@ namespace UnitTests.MockObjects
                          Ingredients = { "Salt" },
                          Instructions = { "Combine and cook." }
                      }
+            };
+
+        public RecipeServiceDTO RecipeServiceDTO = new RecipeServiceDTO
+        {
+            Title = "Recipe2",
+            Description = "Description2",
+            URL = "https://allrecipes.com/12345",
+            RecipeType = "Dinner",
+            Ingredients = { "Pepper" },
+            Instructions = { "Shake and bake." }
+        };
+
+        public Recipe CreateRecipeExpected = new Recipe
+        {
+            Title = "Recipe2",
+            Description = "Description2",
+            URL = "https://allrecipes.com/12345",
+            RecipeType = "Dinner",
+            Ingredients = new List<Ingredient>
+                        {
+                            new Ingredient
+                            {
+                                IngredientId = 1,
+                                CreatedBy = "TestUsername",
+                                CreatedOn = DateTime.Now,
+                                Description = "Pepper"
+                            }
+                        },
+            Instructions = new List<Instruction>
+                        {
+                            new Instruction
+                            {
+                                InstructionId = 1,
+                                CreatedBy = "TestUsername",
+                                CreatedOn = DateTime.Now,
+                                StepNumber = 1,
+                                Description = "Shake and bake."
+                            }
+                          },
+            CreatedBy = "TestUsername",
+            CreatedOn = DateTime.Now
+        };
+
+        public RecipeSubscription ExpectedSubscription =
+            new RecipeSubscription
+            {
+                ApplicationUserId = "TestUsername",
+                CreationDate = DateTime.Now,
+                LastModifed = DateTime.Now,
+                IsSubscribed = true
             };
     }
 }

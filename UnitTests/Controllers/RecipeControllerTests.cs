@@ -11,6 +11,7 @@ using PBC.Shared.WebScraper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using UnitTests.Data;
 using UnitTests.MockObjects;
@@ -20,6 +21,8 @@ namespace UnitTests.Controllers
 {
     public class RecipeControllerFixture : IDisposable
     {
+        public IFactory<Ingredient> IngredientFactory;
+        public IFactory<Instruction> InstructionFactory;
         public AbstractRecipeFactory RecipeFactory;
         public ApplicationDbContext Db;
         public IUserState UserState;
@@ -37,6 +40,8 @@ namespace UnitTests.Controllers
 
         public RecipeControllerFixture()
         {
+            IngredientFactory = new IngredientFactory();
+            InstructionFactory = new InstructionFactory();
             Db = new MockDbContext().Context;
             UserState = new MockUserState();
             RecipeFactory = new RecipeFactory();
@@ -48,9 +53,14 @@ namespace UnitTests.Controllers
             RecipeBuilder = new RecipeBuilder(RecipeFactory);
             Scraper = new AllRecipesScraper();
             RecipeUrlDTO = new RecipeUrlDTO();
-            RecipeRepository = new RecipeRepository(RecipeFactory,Db,UserState);
+            RecipeRepository = new RecipeRepository(
+                                RecipeFactory,
+                                Db,
+                                UserState,
+                                IngredientFactory,
+                                InstructionFactory);
             RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, SubscriberState);
-            RecipeController = new RecipeController(Logger, RecipeDTO, Scraper, RecipeService);
+            RecipeController = new RecipeController(Logger, RecipeDTO, Scraper, RecipeService, new HttpClient());
         }
 
         public void Dispose()
@@ -76,17 +86,17 @@ namespace UnitTests.Controllers
         }
 
         [Fact]
-        public void CreateOrUpdateRecipe_WithInvalidRecipeDTO_ShouldReturn400()
+        public async Task CreateOrUpdateRecipe_WithInvalidRecipeDTO_ShouldReturn400()
         {
             var recipe = Fixture.RecipeDTO;
             recipe.Title = null;
-            var postResult = Fixture.RecipeController.CreateOrUpdateRecipe((RecipeDTO)recipe);
+            var postResult = await Fixture.RecipeController.CreateOrUpdateRecipe((RecipeDTO)recipe);
 
             Assert.IsType<BadRequestResult>(postResult);
         }
 
         [Fact]
-        public void CreateOrUpdateRecipe_WithValidRecipeDTO_ShouldReturn200()
+        public async Task CreateOrUpdateRecipe_WithValidRecipeDTO_ShouldReturn422()
         {
             var recipeDTO = Fixture.RecipeDTO;
 
@@ -96,9 +106,9 @@ namespace UnitTests.Controllers
             recipeDTO.Ingredients.Add("test");
             recipeDTO.Instructions.Add("test");
 
-            var postResult = Fixture.RecipeController.CreateOrUpdateRecipe((RecipeDTO)recipeDTO);
+            var postResult = await Fixture.RecipeController.CreateOrUpdateRecipe((RecipeDTO)recipeDTO);
 
-            Assert.IsType<OkResult>(postResult);
+            Assert.IsType<UnprocessableEntityResult>(postResult);
         }
   
         [Fact]

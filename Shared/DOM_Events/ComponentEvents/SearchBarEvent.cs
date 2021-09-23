@@ -25,6 +25,7 @@ namespace PBC.Shared.DOM_Events.ComponentEvents
         }
 
         public string SearchText { get; set; }
+
         public IEnumerable<IRecipeDTO> SearchResults { get; set; } = new List<RecipeDTO>();
 
         public async Task<IEnumerable<IRecipeDTO>> HandleKeyPress()

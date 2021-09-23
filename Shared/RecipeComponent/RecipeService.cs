@@ -23,20 +23,20 @@ namespace PBC.Shared.RecipeComponent
             _subscriberState = subscriberState;
         }
   
-        public IRecipeServiceDTO CreateRecipe(IRecipeDTO recipeDTO)
+        public async Task<int> CreateRecipe(IRecipeDTO recipeDTO)
         {
-            IRecipeServiceDTO recipeModel;
+            int createdId = 0;
 
             if (RecipeIsValid(recipeDTO))
             {
-                recipeModel = _recipeBuilder.Build(recipeDTO);
-                SaveRecipe(recipeModel);
+                var recipeModel = _recipeBuilder.Build(recipeDTO);
+                createdId = await SaveRecipe(recipeModel);
             }
             else
             {
                 throw new InvalidOperationException();
             }
-            return recipeModel;
+            return createdId;
         }
 
         public IEnumerable<IRecipeDTO> SearchRecipes(string searchText)
@@ -64,8 +64,10 @@ namespace PBC.Shared.RecipeComponent
             return userRecipes;
         }
 
-        private void SaveRecipe(IRecipeServiceDTO recipeModel)
+        private async Task<int> SaveRecipe(IRecipeServiceDTO recipeModel)
         {
+            int createdId = 0;
+
             try
             {
                 if (RecipeExists(recipeModel))
@@ -74,14 +76,19 @@ namespace PBC.Shared.RecipeComponent
                 }
                 else
                 {
-                    _recipeRepository.CreateRecipe(recipeModel);
+                    await _recipeRepository.CreateRecipe(recipeModel);
                 }
+
+                createdId = await _recipeRepository.FindRecipe(recipeModel);
+
                 _subscriberState.UpdateState();
             }
             catch (Exception e)
             {
                 throw new InvalidOperationException("Unable to Add Recipe to Database.", e);
             }
+            
+            return createdId;
         }
 
         private bool RecipeIsValid(IRecipeDTO recipeDTO)
@@ -102,7 +109,7 @@ namespace PBC.Shared.RecipeComponent
 
         private bool RecipeExists(IRecipeServiceDTO recipeServiceDTO)
         {
-            return _recipeRepository.FindOne(recipeServiceDTO.RecipeId) != null;
+            return  _recipeRepository.FindRecipeById(recipeServiceDTO.RecipeId) != null;
         }
 
     }

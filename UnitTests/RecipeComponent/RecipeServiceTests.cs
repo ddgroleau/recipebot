@@ -19,6 +19,8 @@ namespace UnitTests.RecipeComponent
 {
     public class RecipeServiceTests : IDisposable
     {
+        public IFactory<Ingredient> IngredientFactory;
+        public IFactory<Instruction> InstructionFactory;
         AbstractRecipeFactory RecipeFactory;
         public ApplicationDbContext Db;
         public IUserState UserState;
@@ -32,6 +34,8 @@ namespace UnitTests.RecipeComponent
 
         public RecipeServiceTests()
         {
+            IngredientFactory = new IngredientFactory();
+            InstructionFactory = new InstructionFactory();
             RecipeFactory = new RecipeFactory();
             Db = new MockDbContext().Context;
             UserState = new MockUserState();
@@ -40,7 +44,12 @@ namespace UnitTests.RecipeComponent
             RecipeServiceDTO = new RecipeServiceDTO();
             RecipeDTO = new RecipeDTO();
             RecipeBuilder = new RecipeBuilder(RecipeFactory);
-            RecipeRepository = new RecipeRepository(RecipeFactory,Db,UserState);
+            RecipeRepository = new RecipeRepository(
+                        RecipeFactory,
+                        Db,
+                        UserState,
+                        IngredientFactory,
+                        InstructionFactory);
             RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, SubscriberState);
         }
 
@@ -50,7 +59,7 @@ namespace UnitTests.RecipeComponent
         }
   
         [Fact]
-        public void CreateRecipe_WithValidRecipeDTO_ShouldReturnRecipeServiceDTO()
+        public async Task CreateRecipe_WithValidRecipeDTO_ShouldReturnRecipeServiceDTO()
         {
             var recipeDTO = RecipeDTO;
 
@@ -64,17 +73,13 @@ namespace UnitTests.RecipeComponent
             recipeDTO.Instructions.Add("Test");
             recipeDTO.Ingredients.Add("Test");
 
-            var result = RecipeService.CreateRecipe(recipeDTO);
+            var result = await RecipeService.CreateRecipe(recipeDTO);
 
-            Assert.Equal(result.URL, recipeDTO.URL);
-            Assert.Equal(result.Title, recipeDTO.Title);
-            Assert.Equal(result.Description, recipeDTO.Description);
-            Assert.Equal(result.Ingredients, result.Ingredients);
-            Assert.Equal(result.Instructions, result.Instructions);
+            Assert.IsType<int>(result);
         }
 
         [Fact]
-        public void CreateRecipe_WithInvalidRecipeType_ShouldThrowException()
+        public async Task CreateRecipe_WithInvalidRecipeType_ShouldThrowException()
         {
             var recipeDTO = RecipeDTO;
 
@@ -88,11 +93,11 @@ namespace UnitTests.RecipeComponent
             recipeDTO.Instructions.Add("Test");
             recipeDTO.Ingredients.Add("Test");
 
-            Assert.Throws<InvalidOperationException>(() => RecipeService.CreateRecipe(recipeDTO));
+            await Assert.ThrowsAsync<InvalidOperationException>(async ()=> await RecipeService.CreateRecipe(recipeDTO));
         }
 
         [Fact]
-        public void CreateRecipe_WithInvalidRecipeURL_ShouldThrowException()
+        public async Task CreateRecipe_WithInvalidRecipeURL_ShouldThrowException()
         {
             var recipeDTO = RecipeDTO;
 
@@ -105,11 +110,11 @@ namespace UnitTests.RecipeComponent
             recipeDTO.Instructions.Add("Test");
             recipeDTO.Ingredients.Add("Test");
 
-            Assert.Throws<InvalidOperationException>(() => RecipeService.CreateRecipe(recipeDTO));
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await RecipeService.CreateRecipe(recipeDTO));
         }
 
         [Fact]
-        public void CreateRecipe_WithInvalidRecipeTitle_ShouldThrowException()
+        public async Task CreateRecipe_WithInvalidRecipeTitle_ShouldThrowException()
         {
             var recipeDTO = RecipeDTO;
 
@@ -123,11 +128,11 @@ namespace UnitTests.RecipeComponent
             recipeDTO.Instructions.Add("Test");
             recipeDTO.Ingredients.Add("Test");
 
-            Assert.Throws<InvalidOperationException>(() => RecipeService.CreateRecipe(recipeDTO));
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await RecipeService.CreateRecipe(recipeDTO));
         }
 
         [Fact]
-        public void CreateRecipe_WithInvalidIngredients_ShouldThrowException()
+        public async Task CreateRecipe_WithInvalidIngredients_ShouldThrowException()
         {
             var recipeDTO = RecipeDTO;
 
@@ -140,11 +145,11 @@ namespace UnitTests.RecipeComponent
 
             recipeDTO.Instructions.Add("Test");
 
-            Assert.Throws<InvalidOperationException>(() => RecipeService.CreateRecipe(recipeDTO));
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await RecipeService.CreateRecipe(recipeDTO));
         }
 
         [Fact]
-        public void CreateRecipe_WithInvalidInstructions_ShouldThrowException()
+        public async Task CreateRecipe_WithInvalidInstructions_ShouldThrowException()
         {
             var recipeDTO = RecipeDTO;
 
@@ -157,11 +162,12 @@ namespace UnitTests.RecipeComponent
 
             recipeDTO.Ingredients.Add("Test");
 
-            Assert.Throws<InvalidOperationException>(() => RecipeService.CreateRecipe(recipeDTO));
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await RecipeService.CreateRecipe(recipeDTO));
+
         }
 
         [Fact]
-        public void CreateRecipe_WithInvalidDescription_ShouldThrowException()
+        public async Task CreateRecipe_WithInvalidDescription_ShouldThrowException()
         {
             var recipeDTO = RecipeDTO;
 
@@ -178,7 +184,8 @@ namespace UnitTests.RecipeComponent
             recipeDTO.Ingredients.Add("Test");
             recipeDTO.Instructions.Add("Test");
 
-            Assert.Throws<InvalidOperationException>(() => RecipeService.CreateRecipe(recipeDTO));
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await RecipeService.CreateRecipe(recipeDTO));
+
         }
 
         [Fact]

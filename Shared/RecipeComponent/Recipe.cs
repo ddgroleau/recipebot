@@ -18,8 +18,8 @@ namespace PBC.Shared.RecipeComponent
         public string Title { get; set; }
         [MaxLength(250)]
         public string Description { get; set; }
-        public ICollection<Ingredient> Ingredients { get; set; }
-        public ICollection<Instruction> Instructions { get; set; }
+        public ICollection<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
+        public ICollection<Instruction> Instructions { get; set; } = new List<Instruction>();
         [MaxLength(90)]
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
