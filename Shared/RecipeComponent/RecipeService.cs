@@ -42,7 +42,7 @@ namespace PBC.Shared.RecipeComponent
         public IEnumerable<IRecipeDTO> SearchRecipes(string searchText)
         {
             List<IRecipeDTO> recipeResults = new List<IRecipeDTO>();
-            List<IRecipeServiceDTO> searchResults = _recipeRepository.SearchRecipes(searchText).ToList();
+            var searchResults = _recipeRepository.SearchRecipes(searchText);
             
             foreach(var recipe in searchResults)
             {

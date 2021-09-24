@@ -32,7 +32,7 @@ namespace UnitTests.MockObjects
         public Recipe Recipe = new Recipe
         {
             RecipeId = 1,
-            Title = $"Recipe1",
+            Title = "Recipe1",
             Description = "Description1",
             URL = "https://allrecipes.com/1234",
             RecipeType = "Breakfast",

@@ -82,7 +82,7 @@ namespace PBC.Server.Controllers
             _logger.LogInformation($"Search request received by RecipeController, SearchRecipes method. Search text: {searchText}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
             try
             {
-                recipes = _recipeService.SearchRecipes(searchText);
+                recipes =  _recipeService.SearchRecipes(searchText);
             }
             catch (Exception e)
             {

@@ -9,7 +9,7 @@ namespace PBC.Shared.RecipeComponent
     public interface IRecipeRepository
      {
         public Task CreateRecipe(IRecipeServiceDTO recipeServiceDTO);
-        public IEnumerable<IRecipeServiceDTO> SearchRecipes(string text);
+        public IEnumerable<IRecipeServiceDTO> SearchRecipes(string searchText);
         public Task<int> FindRecipe(IRecipeServiceDTO recipeServiceDTO);
         public IRecipeServiceDTO FindRecipeById(int id);
         public void UpdateRecipe(IRecipeServiceDTO recipe);

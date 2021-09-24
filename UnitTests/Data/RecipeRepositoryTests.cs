@@ -44,7 +44,8 @@ namespace UnitTests.Data
             Db.Dispose();
             GC.SuppressFinalize(this);
         }
-        
+
+        #region GetUserRecipes
         [Fact]
         public async Task GetUserRecipes_WithOneSubscription_ShouldReturnSubscription()
         {
@@ -76,7 +77,9 @@ namespace UnitTests.Data
 
             Assert.True(isEmpty);
         }
+        #endregion
 
+        #region CreateRecipe
         [Fact]
         public async Task CreateRecipe_WithValidRecipe_ShouldCreateRecipe()
         {
@@ -120,6 +123,54 @@ namespace UnitTests.Data
                String.Format("{0:MM/dd/yyyy HH:mm}", expected.CreatedOn),
                String.Format("{0:MM/dd/yyyy HH:mm}", createdRecipe.CreatedOn));
         }
+        #endregion
 
+        #region SearchRecipes
+        [Theory]
+        [InlineData("recipe1")]
+        [InlineData("description")]
+        [InlineData("allrecipes")]
+        [InlineData("BREAKFAST")]
+        [InlineData("salt")]
+        [InlineData("combine")]
+        public async Task SearchRecipes_WithSearchText_ShouldReturnRecipe(string searchText)
+        {
+            var expected = MockObject.Recipe;
+
+            await Db.Recipes.AddAsync(expected);
+            await Db.SaveChangesAsync();
+
+            var searchResult = RecipeRepository.SearchRecipes(searchText);
+            Assert.Equal(expected.Title, searchResult.Single().Title);
+            Assert.Equal(expected.Description, searchResult.Single().Description);
+            Assert.Equal(expected.URL, searchResult.Single().URL);
+            Assert.Equal(expected.RecipeType, searchResult.Single().RecipeType);
+            Assert.Equal(expected.Ingredients.Single().Description, searchResult.Single().Ingredients.Single());
+            Assert.Equal(expected.Instructions.Single().Description, searchResult.Single().Instructions.Single());
+
+        }
+
+        [Fact]
+        public async Task SearchRecipes_WithEmptySearchText_ShouldReturnEmpty()
+        {
+            await Db.Recipes.AddAsync(MockObject.Recipe);
+            await Db.SaveChangesAsync();
+
+            var searchResult = RecipeRepository.SearchRecipes(string.Empty);
+            
+            Assert.False(searchResult.Any());
+        }
+
+        [Fact]
+        public async Task SearchRecipes_WithWhiteSpaceSearchText_ShouldReturnEmpty()
+        {
+            await Db.Recipes.AddAsync(MockObject.Recipe);
+            await Db.SaveChangesAsync();
+
+            var searchResult = RecipeRepository.SearchRecipes(" ");
+
+            Assert.False(searchResult.Any());
+        }
+        #endregion
     }
 }
