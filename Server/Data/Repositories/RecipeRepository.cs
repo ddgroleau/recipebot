@@ -51,16 +51,14 @@ namespace PBC.Server.Data.Repositories
                 .Include(x => x.Ingredients)
                 .Include(x => x.Instructions)
                 .Where(x => 
-                !string.IsNullOrEmpty(searchText.Trim()) &&
-                (
+                !string.IsNullOrEmpty(searchText.Trim()) && (
                    x.Title.ToLower().Contains(searchText.ToLower())
                 || x.Description.ToLower().Contains(searchText.ToLower())
                 || x.URL.ToLower().Contains(searchText.ToLower())
                 || x.RecipeType.ToLower().Contains(searchText.ToLower())
                 || x.Ingredients.Where(x=> x.Description.ToLower().Contains(searchText.ToLower())).Any()
                 || x.Instructions.Where(x => x.Description.ToLower().Contains(searchText.ToLower())).Any()
-                )
-                );
+                ));
             
             foreach(var recipe in recipes)
             {
@@ -71,19 +69,85 @@ namespace PBC.Server.Data.Repositories
             return searchResults;
         }
 
-        public async Task<int> FindRecipe(IRecipeServiceDTO recipeServiceDTO)
+        public Task<int> FindRecipe(IRecipeServiceDTO recipeServiceDTO)
         {
-            return 0;
+            int recipeId = _dbContext.Recipes
+                .AsNoTracking()
+                .Where(x =>
+                    x.Title.Equals(recipeServiceDTO.Title)
+                    && x.Description.Equals(recipeServiceDTO.Description)
+                    && x.URL.Equals(recipeServiceDTO.URL)
+                    && x.RecipeType.Equals(recipeServiceDTO.RecipeType))
+                .Select(x => x.RecipeId)
+                .FirstOrDefault();
+
+            return Task.FromResult(recipeId);
         }
 
-        public IRecipeServiceDTO FindRecipeById(int id)
+        public async Task<IRecipeServiceDTO> FindRecipeById(int id)
         {
-            return new RecipeServiceDTO();
+            var recipe = await _dbContext.Recipes
+                .Include(x => x.Ingredients)
+                .Include(x => x.Instructions)
+                .Where(x => x.RecipeId == id)
+                .FirstOrDefaultAsync();
+
+            var recipeServiceDTO = BuildRecipeServiceDTO(recipe);
+
+            return recipeServiceDTO;
         }
 
-        public void UpdateRecipe(IRecipeServiceDTO recipe)
+        public async Task UpdateRecipe(IRecipeServiceDTO recipeServiceDTO)
         {
-            // Update a recipe in RecipeSubscriptions
+            var entity = await _dbContext.Recipes.FindAsync(recipeServiceDTO.RecipeId);
+            
+            if (entity == null) throw new InvalidOperationException("This recipe does not exist.");
+
+            entity.Title = recipeServiceDTO.Title;
+            entity.RecipeType = recipeServiceDTO.RecipeType;
+            entity.Description = recipeServiceDTO.Description;
+            entity.URL = recipeServiceDTO.URL;
+            
+            for(int i = 0; i < recipeServiceDTO.Ingredients.Count; i++)
+            {
+                var entityIngredient = entity.Ingredients.ElementAtOrDefault(i);
+
+                if (entityIngredient == null)
+                {
+                    Ingredient ingredient = _ingredientFactory.Make();
+                    ingredient.Description = recipeServiceDTO.Ingredients[i];
+                    ingredient.CreatedBy = await _userState.CurrentUsernameAsync();
+                    ingredient.CreatedOn = DateTime.Now;
+                    entity.Ingredients.Add(ingredient);
+                }
+                else
+                {
+                    entityIngredient.Description = recipeServiceDTO.Ingredients[i];
+                }
+            }
+            
+            for (int i = 0; i < recipeServiceDTO.Instructions.Count; i++)
+            {
+                var entityInstruction = entity.Instructions.ElementAtOrDefault(i);
+
+                if (entityInstruction == null)
+                {
+                    Instruction instruction = _instructionFactory.Make();
+                    instruction.Description = recipeServiceDTO.Instructions[i];
+                    instruction.CreatedBy = await _userState.CurrentUsernameAsync();
+                    instruction.CreatedOn = DateTime.Now;
+                    instruction.StepNumber = i + 1;
+                    entity.Instructions.Add(instruction);
+                }
+                else
+                {
+                    entityInstruction.Description = recipeServiceDTO.Instructions[i];
+                }
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            return;
         }
 
         public async Task<IEnumerable<IRecipeServiceDTO>> GetUserRecipes()
@@ -114,6 +178,8 @@ namespace PBC.Server.Data.Repositories
         private IRecipeServiceDTO BuildRecipeServiceDTO(Recipe recipe)
         {
             IRecipeServiceDTO recipeServiceDTO = _recipeFactory.MakeRecipeServiceDTO();
+
+            if (recipe == null) return recipeServiceDTO;
 
             recipeServiceDTO.RecipeId = recipe.RecipeId;
             recipeServiceDTO.RecipeType = recipe.RecipeType;

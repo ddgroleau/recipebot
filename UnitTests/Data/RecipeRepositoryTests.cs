@@ -172,5 +172,99 @@ namespace UnitTests.Data
             Assert.False(searchResult.Any());
         }
         #endregion
+
+        #region FindRecipe
+        [Fact]
+        public async Task FindRecipe_WithValidRecipeServiceDTO_ShouldReturnId()
+        {
+            var recipe = MockObject.FindRecipeRecipe;
+
+            await Db.Recipes.AddAsync(recipe).ConfigureAwait(false);
+            await Db.SaveChangesAsync().ConfigureAwait(false);
+
+            var actual = await RecipeRepository.FindRecipe(MockObject.RecipeServiceDTO).ConfigureAwait(false);
+
+            Assert.Equal(1, actual);
+        }
+
+        [Fact]
+        public async Task FindRecipe_WithNoMatch_ShouldBeNull()
+        {
+            var actual = await RecipeRepository.FindRecipe(MockObject.RecipeServiceDTO).ConfigureAwait(false);
+
+            Assert.Equal(0,actual);
+        }
+        #endregion
+
+        #region FindRecipeById
+        [Fact]
+        public async Task FindRecipeById_WithValidId_ShouldReturnRecipe()
+        {
+            var expected = MockObject.FindRecipeRecipe;
+
+            await Db.Recipes.AddAsync(expected).ConfigureAwait(false);
+            await Db.SaveChangesAsync().ConfigureAwait(false);
+
+            var actual = await RecipeRepository.FindRecipeById(1);
+
+            Assert.Equal(1, actual.RecipeId);
+            Assert.Equal(expected.RecipeType, actual.RecipeType);
+            Assert.Equal(expected.Title, actual.Title);
+            Assert.Equal(expected.Description, actual.Description);
+            Assert.Equal(expected.URL, actual.URL);
+            Assert.Equal(expected.Ingredients.FirstOrDefault().Description, actual.Ingredients.FirstOrDefault());
+            Assert.Equal(expected.Instructions.FirstOrDefault().Description, actual.Instructions.FirstOrDefault());
+        }
+
+        [Fact]
+        public async Task FindRecipeById_WithValidId_ShouldReturnNull()
+        {
+            var actual = await RecipeRepository.FindRecipeById(1);
+
+            Assert.Equal(0,actual.RecipeId);
+        }
+        #endregion
+
+        #region UpdateRecipe
+        [Fact]
+        public async Task UpdateRecipe_WithNewTitle_ShouldUpdateRecipe()
+        {
+            var expected = MockObject.Recipe;
+
+            await Db.Recipes.AddAsync(expected).ConfigureAwait(false);
+            await Db.SaveChangesAsync().ConfigureAwait(false);
+
+            await RecipeRepository.UpdateRecipe(MockObject.UpdatedRecipe);
+
+            var actual = await Db.Recipes.FindAsync(expected.RecipeId);
+
+            Assert.Equal(MockObject.UpdatedRecipe.Title, actual.Title);
+        }
+
+        [Fact]
+        public async Task UpdateRecipe_WithMoreIngredientsAndInstructions_ShouldUpdateRecipe()
+        {
+            var expected = MockObject.Recipe;
+
+            await Db.Recipes.AddAsync(expected).ConfigureAwait(false);
+            await Db.SaveChangesAsync().ConfigureAwait(false);
+
+            MockObject.UpdatedRecipe.Ingredients.Add("Second ingredient.");
+            MockObject.UpdatedRecipe.Instructions.Add("Second instruction.");
+            await RecipeRepository.UpdateRecipe(MockObject.UpdatedRecipe);
+
+            var actual = await Db.Recipes.FindAsync(expected.RecipeId);
+
+            Assert.Equal(2, actual.Ingredients.Count);
+            Assert.Equal(2, actual.Instructions.Count);
+        }
+
+        [Fact]
+        public async Task UpdateRecipe_WitNonExistentId_ShouldThrowException()
+        {
+            await Assert.ThrowsAsync<InvalidOperationException>(async ()=> await RecipeRepository.UpdateRecipe(MockObject.UpdatedRecipe));
+        }
+        #endregion
     }
+
 }

@@ -11,8 +11,8 @@ namespace PBC.Shared.RecipeComponent
         public Task CreateRecipe(IRecipeServiceDTO recipeServiceDTO);
         public IEnumerable<IRecipeServiceDTO> SearchRecipes(string searchText);
         public Task<int> FindRecipe(IRecipeServiceDTO recipeServiceDTO);
-        public IRecipeServiceDTO FindRecipeById(int id);
-        public void UpdateRecipe(IRecipeServiceDTO recipe);
+        public Task<IRecipeServiceDTO> FindRecipeById(int id);
+        public Task UpdateRecipe(IRecipeServiceDTO recipe);
         public Task<IEnumerable<IRecipeServiceDTO>> GetUserRecipes();
     }
 }

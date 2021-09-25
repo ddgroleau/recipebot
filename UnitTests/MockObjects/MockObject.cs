@@ -63,6 +63,17 @@ namespace UnitTests.MockObjects
                           }
         };
 
+        public RecipeServiceDTO UpdatedRecipe = new RecipeServiceDTO
+        {
+            RecipeId = 1,
+            Title = "New Title",
+            Description = "Description1",
+            URL = "https://allrecipes.com/1234",
+            RecipeType = "Breakfast",
+            Ingredients = { "Salt"},
+            Instructions = {"Combine and cook."}
+        };
+
         public List<IRecipeServiceDTO> RecipeServiceDTOs = new List<IRecipeServiceDTO>
             {
                 new RecipeServiceDTO
@@ -192,6 +203,35 @@ namespace UnitTests.MockObjects
             RecipeType = "Dinner",
             Ingredients = { "Pepper" },
             Instructions = { "Shake and bake." }
+        };
+
+        public Recipe FindRecipeRecipe = new Recipe
+        {
+            Title = "Recipe2",
+            Description = "Description2",
+            URL = "https://allrecipes.com/12345",
+            RecipeType = "Dinner",
+            CreatedBy = "TestUsername",
+            CreatedOn = DateTime.Now,
+            Ingredients = new List<Ingredient>
+                        {
+                            new Ingredient
+                            {
+                                CreatedBy = "TestUsername",
+                                CreatedOn = DateTime.Now,
+                                Description = "Pepper"
+                            }
+                        },
+            Instructions = new List<Instruction>
+                        {
+                            new Instruction
+                            {
+                                CreatedBy = "TestUsername",
+                                CreatedOn = DateTime.Now,
+                                StepNumber = 1,
+                                Description = "Shake and bake."
+                            }
+                          }
         };
 
         public Recipe CreateRecipeExpected = new Recipe
