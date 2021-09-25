@@ -93,7 +93,8 @@ namespace UnitTests.Data
                 .Include(x => x.Ingredients)
                 .Include(x => x.Ingredients)
                 .Where(x => x.URL == recipe.URL)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync()
+                ;
 
             Assert.Equal(1,                    createdRecipe.RecipeId);
             Assert.Equal(expected.RecipeType,  createdRecipe.RecipeType);
@@ -179,10 +180,10 @@ namespace UnitTests.Data
         {
             var recipe = MockObject.FindRecipeRecipe;
 
-            await Db.Recipes.AddAsync(recipe).ConfigureAwait(false);
-            await Db.SaveChangesAsync().ConfigureAwait(false);
+            await Db.Recipes.AddAsync(recipe);
+            await Db.SaveChangesAsync();
 
-            var actual = await RecipeRepository.FindRecipe(MockObject.RecipeServiceDTO).ConfigureAwait(false);
+            var actual = await RecipeRepository.FindRecipe(MockObject.RecipeServiceDTO);
 
             Assert.Equal(1, actual);
         }
@@ -190,7 +191,7 @@ namespace UnitTests.Data
         [Fact]
         public async Task FindRecipe_WithNoMatch_ShouldBeNull()
         {
-            var actual = await RecipeRepository.FindRecipe(MockObject.RecipeServiceDTO).ConfigureAwait(false);
+            var actual = await RecipeRepository.FindRecipe(MockObject.RecipeServiceDTO);
 
             Assert.Equal(0,actual);
         }
@@ -202,8 +203,8 @@ namespace UnitTests.Data
         {
             var expected = MockObject.FindRecipeRecipe;
 
-            await Db.Recipes.AddAsync(expected).ConfigureAwait(false);
-            await Db.SaveChangesAsync().ConfigureAwait(false);
+            await Db.Recipes.AddAsync(expected);
+            await Db.SaveChangesAsync();
 
             var actual = await RecipeRepository.FindRecipeById(1);
 
@@ -231,8 +232,8 @@ namespace UnitTests.Data
         {
             var expected = MockObject.Recipe;
 
-            await Db.Recipes.AddAsync(expected).ConfigureAwait(false);
-            await Db.SaveChangesAsync().ConfigureAwait(false);
+            await Db.Recipes.AddAsync(expected);
+            await Db.SaveChangesAsync();
 
             await RecipeRepository.UpdateRecipe(MockObject.UpdatedRecipe);
 
@@ -246,8 +247,8 @@ namespace UnitTests.Data
         {
             var expected = MockObject.Recipe;
 
-            await Db.Recipes.AddAsync(expected).ConfigureAwait(false);
-            await Db.SaveChangesAsync().ConfigureAwait(false);
+            await Db.Recipes.AddAsync(expected);
+            await Db.SaveChangesAsync();
 
             MockObject.UpdatedRecipe.Ingredients.Add("Second ingredient.");
             MockObject.UpdatedRecipe.Instructions.Add("Second instruction.");

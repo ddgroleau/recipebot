@@ -11,6 +11,6 @@ namespace PBC.Shared.ListComponent
     {
         public Task<IListDayDTO> GenerateDayOfRecipes();
         public Task<IRecipeDTO> GenerateRandomRecipeByType(string recipeType);
-        public IListDTO CreateList(IListGeneratorDTO listGeneratorDTO);
+        public Task<IListDTO> CreateList(IListGeneratorDTO listGeneratorDTO);
     }
 }

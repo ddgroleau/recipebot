@@ -28,7 +28,6 @@ namespace UnitTests.MockObjects
             RecipeId = 1
         };
 
-
         public Recipe Recipe = new Recipe
         {
             RecipeId = 1,

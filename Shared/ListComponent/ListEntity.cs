@@ -13,5 +13,7 @@ namespace PBC.Shared.ListComponent
         [Range(1,7)]
         public int Days { get; set; }
         public ICollection<ListDay> ListDays { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

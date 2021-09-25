@@ -16,6 +16,7 @@ namespace PBC.Shared
         [Range(1,7)]
         public int SequenceNumber { get; set; }
         public DateTime Date { get; set; }
+
         // I had to use concrete implementation types here else I could not deserialize this object from JSON.
         public RecipeDTO Breakfast { get; set; }
         public RecipeDTO Lunch { get; set; }

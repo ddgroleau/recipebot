@@ -90,7 +90,8 @@ namespace PBC.Server.Data.Repositories
                 .Include(x => x.Ingredients)
                 .Include(x => x.Instructions)
                 .Where(x => x.RecipeId == id)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync()
+                ;
 
             var recipeServiceDTO = BuildRecipeServiceDTO(recipe);
 
@@ -156,7 +157,7 @@ namespace PBC.Server.Data.Repositories
             var userRecipes = new List<IRecipeServiceDTO>();
 
             var userId = await _userState.CurrentUserIdAsync();
-            
+
             var recipes = _dbContext.Recipes.AsNoTracking()
                 .Include(recipe => recipe.Ingredients)
                 .Include(recipe => recipe.Instructions)

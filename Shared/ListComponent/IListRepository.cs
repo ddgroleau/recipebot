@@ -8,7 +8,7 @@ namespace PBC.Shared.ListComponent
 {
     public interface IListRepository
     {
-        public void InsertOne(IListDTO list);
+        public Task CreateListAsync(IListDTO list);
       
     }
 }

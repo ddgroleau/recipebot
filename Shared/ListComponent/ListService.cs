@@ -62,12 +62,12 @@ namespace PBC.Shared.ListComponent
             return recipe;
         }
         
-        public IListDTO CreateList(IListGeneratorDTO listGeneratorDTO)
+        public async Task<IListDTO> CreateList(IListGeneratorDTO listGeneratorDTO)
         {
             if (ListIsValid(listGeneratorDTO))
             {
                 var list = _listBuilder.Build(listGeneratorDTO);
-                SaveList(list);
+                await SaveList(list);
                 return list;
             }
             return _listDTO;
@@ -89,11 +89,11 @@ namespace PBC.Shared.ListComponent
             return isValid;
         }
 
-        private IListDTO SaveList(IListDTO listDTO)
+        private async Task<IListDTO> SaveList(IListDTO listDTO)
         {
             try
             {
-                _listRepository.InsertOne(listDTO);
+                await _listRepository.CreateListAsync(listDTO);
             }
             catch (Exception e)
             {
