@@ -60,7 +60,7 @@ namespace UnitTests.ListComponent
         }
 
         [Fact]
-        public async void GenerateDayOfRecipes_NoParameters_ShouldReturnDayDTO()
+        public async Task GenerateDayOfRecipes_NoParameters_ShouldReturnDayDTO()
         {
             var result = await ListService.GenerateDayOfRecipes();
 
@@ -68,9 +68,9 @@ namespace UnitTests.ListComponent
         }
 
         [Fact]
-        public void CreateList_WithEmptyListGeneratorDTO_ShouldReturnListDTO()
+        public async Task CreateList_WithEmptyListGeneratorDTO_ShouldReturnListDTO()
         {
-            var list = ListService.CreateList(ListGeneratorDTO);
+            var list = await ListService.CreateList(ListGeneratorDTO);
 
             Assert.IsAssignableFrom<IListDTO>(list);
         }

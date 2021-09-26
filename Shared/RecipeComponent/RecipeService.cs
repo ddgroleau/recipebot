@@ -72,7 +72,7 @@ namespace PBC.Shared.RecipeComponent
             {
                 if (RecipeExists(recipeModel))
                 {
-                    _recipeRepository.UpdateRecipe(recipeModel);
+                   await _recipeRepository.UpdateRecipe(recipeModel);
                 }
                 else
                 {

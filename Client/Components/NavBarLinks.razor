@@ -1,6 +1,12 @@
-﻿@inject ILazor Lazor
+﻿@using System.Text.RegularExpressions
+@inject ILazor Lazor
 @inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
+
+@{ 
+    string pattern = $"^[\\w]+";
+    var regex = new Regex(pattern); 
+}
 
 <ul class="navbar-nav">
     <AuthorizeView>
@@ -21,7 +27,7 @@
                 </NavLink>
             </li>
             <li class="nav-item">
-                <NavLink class="nav-link" href="authentication/profile">Hello, @context.User.Identity.Name!</NavLink>
+                <NavLink class="nav-link" href="authentication/profile">@regex.Match(context.User.Identity.Name).Value</NavLink>
             </li>
             <li class="nav-item">
                 <button class="nav-link btn btn-link" @onclick="BeginSignOut">Logout</button>
@@ -39,14 +45,10 @@
 </ul>
 
 
-@code {
-
-
-    private async Task BeginSignOut(MouseEventArgs args)
+@code { private async Task BeginSignOut(MouseEventArgs args)
     {
         await SignOutManager.SetSignOutState();
         Navigation.NavigateTo("authentication/logout");
-    }
-}
+    } }
 
 

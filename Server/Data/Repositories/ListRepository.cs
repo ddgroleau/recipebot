@@ -22,6 +22,8 @@ namespace PBC.Server.Data.Repositories
         }
         public async Task CreateListAsync(IListDTO list)
         {
+            if (list.ListDays == null) return;
+
             ListEntity listEntity = _listFactory.Make();
             var user = await _userState.CurrentUsernameAsync();
 
@@ -43,6 +45,7 @@ namespace PBC.Server.Data.Repositories
 
             await _dbContext.Lists.AddAsync(listEntity);
             await _dbContext.SaveChangesAsync();
+            return;
         }
     }
 }

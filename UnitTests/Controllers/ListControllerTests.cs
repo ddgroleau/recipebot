@@ -65,7 +65,7 @@ namespace UnitTests.Controllers
         }
 
         [Fact]
-        public async void GenerateRandomDay_NoParameters_ShouldReturnDayDTO()
+        public async Task GenerateRandomDay_NoParameters_ShouldReturnDayDTO()
         {
             var result = await ListController.GenerateRandomDay();
 
@@ -73,9 +73,9 @@ namespace UnitTests.Controllers
         }
 
         [Fact]
-        public void CreateList_WithValidListGeneratorDTO_ShouldReturnHttpResponse()
+        public async Task CreateList_WithValidListGeneratorDTO_ShouldReturnHttpResponse()
         {
-            var result = ListController.CreateList((ListGeneratorDTO)GeneratedList);
+            var result = await ListController.CreateList((ListGeneratorDTO)GeneratedList);
 
             Assert.IsType<OkResult>(result);
         }

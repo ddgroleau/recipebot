@@ -47,7 +47,7 @@ namespace PBC.Shared.ListComponent
         {
             try
             {
-                var typeRecipes = userRecipes.Where(x => x.RecipeType == recipeType);
+                var typeRecipes = userRecipes.Where(x => x.RecipeType.Equals(recipeType));
 
                 int typeCount = Math.Max(typeRecipes.Count() - 1, 0);
 

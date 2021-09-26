@@ -52,6 +52,7 @@ namespace PBC.Server.Controllers
         {
             try
             {
+                await _listService.CreateList(listDays);
                 _logger.LogInformation($"Received new List at ListController, CreateList method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
                 return Ok();
             }

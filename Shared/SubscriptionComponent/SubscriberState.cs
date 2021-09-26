@@ -12,7 +12,10 @@ namespace PBC.Shared.SubscriptionComponent
 {
     public class SubscriberState : ISubscriberState
     {
-        private HttpClient Http = new();
+        private HttpClient Http = new HttpClient
+        {
+            Timeout = TimeSpan.FromSeconds(1)
+        };
         private IEnumerable<IRecipeDTO> UserRecipes { get; set; } = new List<IRecipeDTO>();
         private bool SubscriptionsHaveChanged { get; set; } = true;
         private ILogger<ISubscriberState> _logger;

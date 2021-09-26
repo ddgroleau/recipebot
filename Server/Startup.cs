@@ -19,6 +19,7 @@ using System.Net.Http;
 using Microsoft.AspNetCore.Identity;
 using PBC.Server.Data;
 using PBC.Server.Data.Repositories;
+using System.Security.Claims;
 
 namespace PBC.Server
 {
@@ -33,12 +34,19 @@ namespace PBC.Server
 
         public void ConfigureServices(IServiceCollection services)
         {
+            #region Data
             services.AddDbContext<ApplicationDbContext>(options =>
-             options.UseSqlite(
-                 Configuration.GetConnectionString("SQLite")));
+                options.UseSqlite(
+            Configuration.GetConnectionString("SQLite")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+            services.AddScoped<IRecipeRepository, RecipeRepository>();
+            services.AddScoped<IListRepository, ListRepository>();
+            #endregion
+
+            #region Identity
             services.AddDefaultIdentity<ApplicationUser>() //options => options.SignIn.RequireConfirmedAccount = true
                     .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -47,40 +55,45 @@ namespace PBC.Server
 
             services.AddAuthentication()
                     .AddIdentityServerJwt();
+            #endregion
 
+            #region Utility
             services.AddControllersWithViews();
             services.AddRazorPages();
-
             services.AddHttpContextAccessor();
+            services.AddScoped<HttpClient>();
+            services.AddScoped<IUserState, UserState>();
+            #endregion
 
+            #region RecipeComponent
             services.AddScoped<IRecipeDTO, RecipeDTO>();
-            services.AddScoped<IListGeneratorDTO, ListGeneratorDTO>();
-            services.AddScoped<IListDayDTO, ListDayDTO>();
             services.AddScoped<IRecipeServiceDTO, RecipeServiceDTO>();
-            services.AddScoped<IRecipeRepository, RecipeRepository>();
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<IAllRecipesScraper, AllRecipesScraper>();
             services.AddScoped<IFactory<Ingredient>, IngredientFactory>();
             services.AddScoped<IFactory<Instruction>, InstructionFactory>();
             services.AddScoped<AbstractRecipeFactory, RecipeFactory>();
-            services.AddScoped<IFactory<RecipeSubscription>, SubscriptionFactory>();
             services.AddScoped<IBuilder<IRecipeServiceDTO, IRecipeDTO>, RecipeBuilder>();
-            services.AddScoped<IListService, ListService>();
-            services.AddScoped<IListBuilder, ListBuilder>();
-            services.AddScoped<IListDTO, ListDTO>();
-            services.AddScoped<IListRepository, ListRepository>();
-            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
-            services.AddScoped<ISubscriptionService, SubscriptionService>();
-            services.AddScoped<AbstractListFactory, ListFactory>();
-
-            services.AddScoped<HttpClient>();
             services.AddScoped<Recipe>();
             services.AddScoped<Ingredient>();
             services.AddScoped<Instruction>();
-            services.AddScoped<RecipeSubscription>();
+            #endregion
 
+            #region ListComponent
+            services.AddScoped<IListService, ListService>();
+            services.AddScoped<IListBuilder, ListBuilder>();
+            services.AddScoped<IListDTO, ListDTO>();
+            services.AddScoped<IListDayDTO, ListDayDTO>();
+            services.AddScoped<IListGeneratorDTO, ListGeneratorDTO>();
+            services.AddScoped<AbstractListFactory, ListFactory>();
+            #endregion
+
+            #region SubscriptionComponent
+            services.AddScoped<ISubscriptionService, SubscriptionService>();
+            services.AddScoped<IFactory<RecipeSubscription>, SubscriptionFactory>();
             services.AddSingleton<ISubscriberState, SubscriberState>();
-            services.AddSingleton<IUserState, UserState>();
+            services.AddScoped<RecipeSubscription>();
+            #endregion
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -101,9 +114,7 @@ namespace PBC.Server
             app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();

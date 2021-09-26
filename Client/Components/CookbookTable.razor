@@ -95,7 +95,6 @@
         Event.Loading.Add(Event.RecipeDTO.RecipeId, true);
         StateHasChanged();
         await Event.HandleSubscribe();
-        Event.RetrievedRecipes = Event.RetrievedRecipes.Append(recipe);//Remove this once subscription component is complete.
         StateHasChanged();
         /* 2 calls to StateHasChanged() to re-render loading button:
            first call is to initiate loading animation,
@@ -107,7 +106,6 @@
         Event.Loading.Add(Event.RecipeDTO.RecipeId, true);
         StateHasChanged();
         await Event.HandleUnsubscribe();
-        Event.RetrievedRecipes = Event.RetrievedRecipes.Where(x => !x.Equals(recipe));//Remove this once subscription component is complete.
         StateHasChanged();
         /* 2 calls to StateHasChanged() to re-render loading button:
            first call is to initiate loading animation,
