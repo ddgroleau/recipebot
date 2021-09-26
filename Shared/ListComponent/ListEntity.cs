@@ -12,7 +12,7 @@ namespace PBC.Shared.ListComponent
         public int ListEntityId { get; set; }
         [Range(1,7)]
         public int Days { get; set; }
-        public ICollection<ListDay> ListDays { get; set; }
+        public ICollection<ListDay> ListDays { get; set; } = new List<ListDay>();
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
     }

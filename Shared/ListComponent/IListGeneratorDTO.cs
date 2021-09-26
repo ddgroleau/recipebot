@@ -9,7 +9,7 @@ namespace PBC.Shared.ListComponent
 {
     public interface IListGeneratorDTO
     {
-        public int ListId { get; set; }
+        public int ListEntityId { get; set; }
         public int Days { get; set; }
         public List<ListDayDTO> GeneratedDays { get; set; }
     }

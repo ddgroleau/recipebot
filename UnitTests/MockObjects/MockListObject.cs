@@ -12,8 +12,8 @@ namespace UnitTests.MockObjects
     public class MockListObject
     {
         public IListGeneratorDTO GeneratedList { get; }
-        public IListGeneratorDTO InvalidList {get;}
-        public IListDTO ListDTO { get;  }
+        public IListGeneratorDTO InvalidList { get; }
+        public IListDTO ListDTO { get; }
         public ListEntity ListEntity { get; }
 
         public MockListObject()
@@ -27,7 +27,7 @@ namespace UnitTests.MockObjects
                     {
                         new ListDayDTO
                         {
-                            ListId = 1,
+                            ListEntityId = 1,
                             SequenceNumber = 1,
                             Date = DateTime.Today.AddDays(2),
                             Breakfast = new RecipeDTO
@@ -62,7 +62,7 @@ namespace UnitTests.MockObjects
                     {
                         new ListDayDTO
                         {
-                            ListId = 2,
+                            ListEntityId = 2,
                             SequenceNumber = 2,
                             Date = DateTime.Today.AddDays(3),
                                             Breakfast = new RecipeDTO
@@ -97,7 +97,7 @@ namespace UnitTests.MockObjects
                     {
                         new ListDayDTO
                         {
-                            ListId = 3,
+                            ListEntityId = 3,
                             SequenceNumber = 3,
                             Date = DateTime.Today.AddDays(4),
                                            Breakfast = new RecipeDTO
@@ -131,6 +131,7 @@ namespace UnitTests.MockObjects
                     }
                 }
             };
+
             ListEntity = new ListEntity
             {
                 Days = 3,
@@ -143,75 +144,10 @@ namespace UnitTests.MockObjects
                         {
                             SequenceNumber = 1,
                             Date = DateTime.Today.AddDays(2),
-                            Breakfast = new Recipe
-                            {
-                                Title = "Day1Breakfast",
-                                Description = "Day1BreakfastDescription",
-                                RecipeType = "Breakfast",
-                                URL = "https://allrecipes.com/12345",
-                                Ingredients = {
-                                    new Ingredient
-                                    {
-                                        Description = "Salt",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername"
-                                    } 
-                                },
-                                Instructions = {
-                                    new Instruction
-                                    { 
-                                        Description ="Combine and cook.",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername"
-                                    }
-                                }
-                            },
-                            Lunch = new Recipe
-                            {
-                                Title = "Day1Lunch",
-                                Description = "Day1LunchDescription",
-                                RecipeType = "Lunch",
-                                URL = "https://allrecipes.com/12345",
-                               Ingredients = {
-                                    new Ingredient
-                                    {
-                                        Description = "Salt",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername"
-                                    }
-                                },
-                                Instructions = {
-                                    new Instruction
-                                    {
-                                        Description ="Combine and cook.",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername"
-                                    }
-                                }
-                            },
-                            Dinner = new Recipe
-                            {
-                                Title = "Day1Dinner",
-                                Description = "Day1DinnerDescription",
-                                RecipeType = "Dinner",
-                                URL = "https://allrecipes.com/12345",
-                               Ingredients = {
-                                    new Ingredient
-                                    {
-                                        Description = "Salt",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername"
-                                    }
-                                },
-                                Instructions = {
-                                    new Instruction
-                                    {
-                                        Description ="Combine and cook.",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername"
-                                    }
-                                }
-                            }
+                            BreakfastRecipeId = 1,
+                            LunchRecipeId = 2,
+                            DinnerRecipeId = 3
+
                         }
                     },
                     {
@@ -219,78 +155,9 @@ namespace UnitTests.MockObjects
                         {
                             SequenceNumber = 2,
                             Date = DateTime.Today.AddDays(3),
-                                            Breakfast = new Recipe
-                            {
-                                Title = "Day2Breakfast",
-                                Description = "Day2BreakfastDescription",
-                                RecipeType = "Breakfast",
-                                URL = "https://allrecipes.com/12345",
-                               Ingredients = {
-                                    new Ingredient
-                                    {
-                                        Description = "Salt",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername"
-                                    }
-                                },
-                                Instructions = {
-                                    new Instruction
-                                    {
-                                        Description ="Combine and cook.",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername",
-                                         StepNumber = 1
-                                    }
-                                }
-                            },
-                            Lunch = new Recipe
-                            {
-                                Title = "Day2Lunch",
-                                Description = "Day2LunchDescription",
-                                RecipeType = "Lunch",
-                                URL = "https://allrecipes.com/12345",
-                                Ingredients = {
-                                    new Ingredient
-                                    {
-                                        Description = "Salt",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername"
-                                    }
-                                },
-                                Instructions = {
-                                    new Instruction
-                                    {
-                                        Description ="Combine and cook.",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername",
-                                         StepNumber = 1
-                                    }
-                                }
-                            },
-                            Dinner = new Recipe
-                            {
-                                Title = "Day2Dinner",
-                                Description = "Day2DinnerDescription",
-                                RecipeType = "Dinner",
-                                URL = "https://allrecipes.com/12345",
-                                Ingredients = {
-                                    new Ingredient
-                                    {
-                                        Description = "Salt",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername"
-                                    }
-                                },
-                                Instructions = {
-                                    new Instruction
-                                    {
-                                        Description ="Combine and cook.",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername",
-                                         StepNumber = 1
-                                    }
-                                }
-                            }
+                            BreakfastRecipeId = 4,
+                            LunchRecipeId = 5,
+                            DinnerRecipeId = 6
                         }
                     },
                     {
@@ -298,82 +165,14 @@ namespace UnitTests.MockObjects
                         {
                             SequenceNumber = 3,
                             Date = DateTime.Today.AddDays(4),
-                                           Breakfast = new Recipe
-                            {
-                                Title = "Day3Breakfast",
-                                Description = "Day3BreakfastDescription",
-                                RecipeType = "Breakfast",
-                                URL = "https://allrecipes.com/12345",
-                               Ingredients = {
-                                    new Ingredient
-                                    {
-                                        Description = "Salt",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername"
-                                    }
-                                },
-                                Instructions = {
-                                    new Instruction
-                                    {
-                                        Description ="Combine and cook.",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername",
-                                        StepNumber = 1
-                                    }
-                                }
-                            },
-                            Lunch = new Recipe
-                            {
-                                Title = "Day3Lunch",
-                                Description = "Day3LunchDescription",
-                                RecipeType = "Lunch",
-                                URL = "https://allrecipes.com/12345",
-                                Ingredients = {
-                                    new Ingredient
-                                    {
-                                        Description = "Salt",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername"
-                                    }
-                                },
-                                Instructions = {
-                                    new Instruction
-                                    {
-                                        Description ="Combine and cook.",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername",
-                                         StepNumber = 1
-                                    }
-                                }
-                            },
-                            Dinner = new Recipe
-                            {
-                                Title = "Day3Dinner",
-                                Description = "Day3DinnerDescription",
-                                RecipeType = "Dinner",
-                                URL = "https://allrecipes.com/12345",
-                                Ingredients = {
-                                    new Ingredient
-                                    {
-                                        Description = "Salt",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername"
-                                    }
-                                },
-                                Instructions = {
-                                    new Instruction
-                                    {
-                                        Description ="Combine and cook.",
-                                        CreatedOn = DateTime.Now,
-                                        CreatedBy = "TestUsername",
-                                        StepNumber = 1
-                                    }
-                                }
-                            }
+                             BreakfastRecipeId = 7,
+                            LunchRecipeId = 8,
+                            DinnerRecipeId = 9
                         }
                     }
                 }
             };
+
             ListDTO = new ListDTO
             {
                 Days = 3,
@@ -381,11 +180,11 @@ namespace UnitTests.MockObjects
                 {
                         new ListDayDTO
                         {
-                            ListId = 1,
                             SequenceNumber = 1,
                             Date = DateTime.Today.AddDays(2),
                             Breakfast = new RecipeDTO
                             {
+                                RecipeId = 1,
                                 Title = "Day1Breakfast",
                                 Description = "Day1BreakfastDescription",
                                 RecipeType = "Breakfast",
@@ -395,6 +194,7 @@ namespace UnitTests.MockObjects
                             },
                             Lunch = new RecipeDTO
                             {
+                                RecipeId = 2,
                                 Title = "Day1Lunch",
                                 Description = "Day1LunchDescription",
                                 RecipeType = "Lunch",
@@ -404,6 +204,7 @@ namespace UnitTests.MockObjects
                             },
                             Dinner = new RecipeDTO
                             {
+                                RecipeId = 3,
                                 Title = "Day1Dinner",
                                 Description = "Day1DinnerDescription",
                                 RecipeType = "Dinner",
@@ -412,14 +213,13 @@ namespace UnitTests.MockObjects
                                 Instructions = {{ "Combine and cook." }}
                             }
                         },
-                 
                         new ListDayDTO
                         {
-                            ListId = 2,
                             SequenceNumber = 2,
                             Date = DateTime.Today.AddDays(3),
-                                            Breakfast = new RecipeDTO
+                            Breakfast = new RecipeDTO
                             {
+                                RecipeId = 4,
                                 Title = "Day2Breakfast",
                                 Description = "Day2BreakfastDescription",
                                 RecipeType = "Breakfast",
@@ -429,6 +229,7 @@ namespace UnitTests.MockObjects
                             },
                             Lunch = new RecipeDTO
                             {
+                                RecipeId = 5,
                                 Title = "Day2Lunch",
                                 Description = "Day2LunchDescription",
                                 RecipeType = "Lunch",
@@ -438,6 +239,7 @@ namespace UnitTests.MockObjects
                             },
                             Dinner = new RecipeDTO
                             {
+                                RecipeId = 6,
                                 Title = "Day2Dinner",
                                 Description = "Day2DinnerDescription",
                                 RecipeType = "Dinner",
@@ -445,16 +247,14 @@ namespace UnitTests.MockObjects
                                 Ingredients = { { "Salt" } },
                                 Instructions = {{ "Combine and cook." }}
                             }
-       
-                    },
-           
+                        },
                         new ListDayDTO
                         {
-                            ListId = 3,
                             SequenceNumber = 3,
                             Date = DateTime.Today.AddDays(4),
                                            Breakfast = new RecipeDTO
                             {
+                                RecipeId = 7,
                                 Title = "Day3Breakfast",
                                 Description = "Day3BreakfastDescription",
                                 RecipeType = "Breakfast",
@@ -464,6 +264,7 @@ namespace UnitTests.MockObjects
                             },
                             Lunch = new RecipeDTO
                             {
+                                RecipeId = 8,
                                 Title = "Day3Lunch",
                                 Description = "Day3LunchDescription",
                                 RecipeType = "Lunch",
@@ -473,6 +274,7 @@ namespace UnitTests.MockObjects
                             },
                             Dinner = new RecipeDTO
                             {
+                                RecipeId = 9,
                                 Title = "Day3Dinner",
                                 Description = "Day3DinnerDescription",
                                 RecipeType = "Dinner",
@@ -480,12 +282,12 @@ namespace UnitTests.MockObjects
                                 Ingredients = { { "Salt" } },
                                 Instructions = {{ "Combine and cook." }}
                             }
-           
+
                     }
                 }
             };
+
         }
 
-        
     }
 }

@@ -9,5 +9,19 @@ namespace PBC.Shared.RecipeComponent
 {
     public class RecipeFactory : AbstractRecipeFactory
     {
+        public override Recipe Make()
+        {
+            return new Recipe();
+        }
+
+        public override IRecipeDTO MakeRecipeDTO()
+        {
+            return new RecipeDTO();
+        }
+
+        public override IRecipeServiceDTO MakeRecipeServiceDTO()
+        {
+            return new RecipeServiceDTO();
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
+using PBC.Server.Data;
 using PBC.Server.Data.Repositories;
 using PBC.Shared;
+using PBC.Shared.Common;
 using PBC.Shared.ListComponent;
 using PBC.Shared.RecipeComponent;
 using PBC.Shared.SubscriptionComponent;
@@ -10,6 +12,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using UnitTests.Data;
 using UnitTests.MockObjects;
 using Xunit;
 
@@ -17,6 +20,9 @@ namespace UnitTests.ListComponent
 {
     public class ListServiceTests : IDisposable
     {
+        public AbstractListFactory ListFactory;
+        public ApplicationDbContext Db;
+        public IUserState UserState;
         ILogger<ISubscriberState> StateLogger;
         ISubscriberState SubscriberState;
         IListRepository ListRepository;
@@ -31,9 +37,12 @@ namespace UnitTests.ListComponent
 
         public ListServiceTests()
         {
+            Db = new MockDbContext().Context;
+            UserState = new MockUserState();
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriberState = new SubscriberState(StateLogger);
-            ListRepository = new ListRepository();
+            ListFactory = new ListFactory();
+            ListRepository = new ListRepository(Db,UserState,ListFactory);
             RecipeDTO = new RecipeDTO();
             Http = new HttpClient();
             ListDayDTO = new ListDayDTO();
@@ -67,18 +76,18 @@ namespace UnitTests.ListComponent
         }
 
         [Fact]
-        public void CreateList_WithValidListGeneratorDTO_ShouldHaveEqualObjects()
+        public async Task CreateList_WithValidListGeneratorDTO_ShouldHaveEqualObjects()
         {
-            var list = ListService.CreateList(MockList.GeneratedList);
+            var list = await ListService.CreateList(MockList.GeneratedList);
 
             Assert.Equal(MockList.GeneratedList.Days, list.Days);
             Assert.Equal(MockList.GeneratedList.GeneratedDays.Count, list.ListDays.ToList().Count);
         }
 
         [Fact]
-        public void CreateList_WithInvalidListGeneratorDTO_ShouldHaveNullDays()
+        public async Task CreateList_WithInvalidListGeneratorDTO_ShouldHaveNullDays()
         {
-            var list = ListService.CreateList(MockList.InvalidList);
+            var list = await ListService.CreateList(MockList.InvalidList);
 
             Assert.Equal(0, list.Days);
         }

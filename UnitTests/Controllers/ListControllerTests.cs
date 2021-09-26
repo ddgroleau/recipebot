@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PBC.Server.Controllers;
+using PBC.Server.Data;
 using PBC.Server.Data.Repositories;
 using PBC.Shared;
+using PBC.Shared.Common;
 using PBC.Shared.ListComponent;
 using PBC.Shared.RecipeComponent;
 using PBC.Shared.SubscriptionComponent;
@@ -13,6 +15,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using UnitTests.Data;
 using UnitTests.MockObjects;
 using Xunit;
 
@@ -20,6 +23,9 @@ namespace UnitTests.Controllers
 {
     public class ListControllerTests : IDisposable
     {
+        public AbstractListFactory ListFactory;
+        public ApplicationDbContext Db;
+        public IUserState UserState;
         ILogger<ISubscriberState> StateLogger;
         ISubscriberState SubscriberState;
         IListRepository ListRepository;
@@ -35,9 +41,12 @@ namespace UnitTests.Controllers
 
         public ListControllerTests()
         {
+            Db = new MockDbContext().Context;
+            UserState = new MockUserState();
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriberState = new SubscriberState(StateLogger);
-            ListRepository = new ListRepository();
+            ListFactory = new ListFactory();
+            ListRepository = new ListRepository(Db, UserState,ListFactory);
             RecipeDTO = new RecipeDTO();
             Http = new HttpClient();
             ListDayDTO = new ListDayDTO();
