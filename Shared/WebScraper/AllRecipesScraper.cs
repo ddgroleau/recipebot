@@ -24,7 +24,7 @@ namespace PBC.Shared.WebScraper
                 recipeDTO.URL = URL;
 
                 recipeDTO.Title = page.DocumentNode
-                                        .SelectNodes("//h1[@class='headline heading-content']")
+                                        .SelectNodes("//h1[@class='headline heading-content elementFont__display']")
                                         .FirstOrDefault().InnerHtml.Trim();
 
                 var summary = page.DocumentNode

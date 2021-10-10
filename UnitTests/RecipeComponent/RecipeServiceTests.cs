@@ -26,7 +26,6 @@ namespace UnitTests.RecipeComponent
         public IUserState UserState;
         ILogger<ISubscriberState> StateLogger;
         ISubscriberState SubscriberState;
-        IRecipeServiceDTO RecipeServiceDTO;
         IBuilder<IRecipeServiceDTO, IRecipeDTO> RecipeBuilder;
         IRecipeDTO RecipeDTO;
         IRecipeRepository RecipeRepository;
@@ -41,7 +40,6 @@ namespace UnitTests.RecipeComponent
             UserState = new MockUserState();
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriberState = new SubscriberState(StateLogger);
-            RecipeServiceDTO = new RecipeServiceDTO();
             RecipeDTO = new RecipeDTO();
             RecipeBuilder = new RecipeBuilder(RecipeFactory);
             RecipeRepository = new RecipeRepository(
@@ -67,12 +65,15 @@ namespace UnitTests.RecipeComponent
             recipeDTO.Title = "Test";
             recipeDTO.Description = "Test";
             recipeDTO.RecipeType = "Breakfast";
-            recipeDTO.Ingredients = new List<string>();
-            recipeDTO.Instructions = new List<string>();
-
-            recipeDTO.Instructions.Add("Test");
-            recipeDTO.Ingredients.Add("Test");
-
+            recipeDTO.Ingredients = new List<string>()
+            {
+                "Test"
+            };
+            recipeDTO.Instructions = new List<string>
+            {
+                "Test"
+            };
+           
             var result = await RecipeService.CreateRecipe(recipeDTO);
 
             Assert.IsType<int>(result);

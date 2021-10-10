@@ -25,7 +25,7 @@ namespace PBC.Shared.RecipeComponent
   
         public async Task<int> CreateRecipe(IRecipeDTO recipeDTO)
         {
-            int createdId = 0;
+            int createdId;
 
             if (RecipeIsValid(recipeDTO))
             {
@@ -66,11 +66,11 @@ namespace PBC.Shared.RecipeComponent
 
         private async Task<int> SaveRecipe(IRecipeServiceDTO recipeModel)
         {
-            int createdId = 0;
+            int createdId;
 
             try
             {
-                if (RecipeExists(recipeModel))
+                if (await RecipeExists(recipeModel.RecipeId))
                 {
                    await _recipeRepository.UpdateRecipe(recipeModel);
                 }
@@ -91,7 +91,7 @@ namespace PBC.Shared.RecipeComponent
             return createdId;
         }
 
-        private bool RecipeIsValid(IRecipeDTO recipeDTO)
+        private static bool RecipeIsValid(IRecipeDTO recipeDTO)
         {
             bool isValid;
             try
@@ -107,9 +107,10 @@ namespace PBC.Shared.RecipeComponent
             return isValid;
         }
 
-        private bool RecipeExists(IRecipeServiceDTO recipeServiceDTO)
+        private async Task<bool> RecipeExists(int recipeId)
         {
-            return  _recipeRepository.FindRecipeById(recipeServiceDTO.RecipeId) != null;
+            var recipe = await _recipeRepository.FindRecipeById(recipeId);
+            return recipe.RecipeId > 0;
         }
 
     }
