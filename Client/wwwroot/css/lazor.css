@@ -1,0 +1,78 @@
+.l-modal {
+  position: fixed;
+  height: 80vh;
+  width: 100%;
+  top: 58px;
+  left: 0;
+  z-index: 1;
+  border: solid red 1px;
+  background-color: white;
+  padding: 10px;
+  overflow: auto;
+}
+
+.l-hide {
+  display: none !important;
+}
+
+.l-show {
+  display: normal !important;
+}
+
+.l-searchResults {
+  overflow-wrap: break-word;
+  width: 25vh;
+  border: solid black 1px;
+}
+
+.l-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.l-search-field {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  padding: .5rem 1.5rem .5rem 1.5rem;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  width: 75%;
+  border-radius: 4rem;
+  -webkit-box-shadow: 0.2rem 0.3rem 0.4rem 0.2rem rgba(172, 171, 171, 0.432);
+          box-shadow: 0.2rem 0.3rem 0.4rem 0.2rem rgba(172, 171, 171, 0.432);
+}
+
+.l-search-field input {
+  outline: none;
+  border: none;
+  width: 100%;
+}
+
+.l-search-field button {
+  float: right;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.l-search-field button img {
+  position: relative;
+  width: 1.2rem;
+  height: 1.2rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+/*# sourceMappingURL=lazor.css.map */

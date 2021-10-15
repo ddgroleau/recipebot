@@ -1,0 +1,43 @@
+@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+
+@import './lazor.scss';
+
+.searchbar {
+    display: flex;
+    justify-content: center;
+    margin-top: 20%;
+    }
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+nav {
+    font-family: monospace;
+    background-color: #fff;
+    box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
+}
+
+footer {
+    border-top: solid black 1px;
+    padding-left: 10px;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+}

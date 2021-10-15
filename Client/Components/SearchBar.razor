@@ -1,12 +1,14 @@
 ﻿@inject ISearchBarEvent Event
 
 <div>
-    <form class="l-form" @onsubmit="Event.HandleClick">
-        <input class="l-search-field" @bind-value="Event.SearchText"
-               @bind-value:event="oninput" @onkeypress="Event.HandleKeyPress" placeholder="Search Recipes" />
+    <form class="l-form searchbar" @onsubmit="Event.HandleClick">
+        <div class="l-search-field">
+        <input  @bind-value="Event.SearchText"
+               @bind-value:event="oninput" @onkeypress="Event.HandleKeyPress" placeholder="Search Recipes"/>
         <button type="submit" class="l-search-button">
             <img src="search.png">
         </button>
+        </div>
     </form>
     @{
         if (!string.IsNullOrEmpty(Event.SearchText))
