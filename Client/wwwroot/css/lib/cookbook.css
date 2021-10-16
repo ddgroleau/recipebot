@@ -1,0 +1,55 @@
+.cookbook-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  width: 100%;
+  height: 90vh;
+  margin-top: 1rem;
+}
+
+.cookbook-container .create-recipe-container {
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.cookbook-container .create-recipe-container .card {
+  width: 100%;
+}
+
+.cookbook-container .create-recipe-container .card .card-body {
+  width: 100%;
+}
+
+.cookbook-container .create-recipe-container .card .card-body .create-recipe-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border: solid #d633d6 1px;
+}
+
+.cookbook-container .create-recipe-container .card .card-body .create-recipe-form button {
+  border: solid #d63341 1px;
+}
+
+.cookbook-container .cookbook-table-container {
+  border: solid green 1px;
+  margin-top: 1rem;
+  text-align: center;
+}
+/*# sourceMappingURL=cookbook.css.map */

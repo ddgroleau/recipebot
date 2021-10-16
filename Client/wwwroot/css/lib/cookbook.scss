@@ -1,0 +1,37 @@
+@mixin marginTop {
+    margin-top: 1rem;
+}
+
+.cookbook-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 90vh;
+    @include marginTop();
+    .create-recipe-container {
+      min-width: fit-content;
+      width: 100%;
+      @include marginTop();
+      .card {
+          width: 100%;
+          .card-body {
+            width: 100%;
+            .create-recipe-form {
+                display: flex;
+                justify-content: center;
+                border: solid rgb(214, 51, 214) 1px;
+                button {
+                    border: solid rgb(214, 51, 65) 1px;
+                }
+            }
+          }
+      }
+    }
+    .cookbook-table-container {
+        border: solid green 1px;
+        @include marginTop();
+        text-align: center;
+    }
+}

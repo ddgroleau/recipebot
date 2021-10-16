@@ -1,78 +1,85 @@
 ﻿@inject ICookBookTableEvent Event
 
 <div class="col-12">
-    <h5>Table</h5>
+    <h5>Your Recipes</h5>
 </div>
 
 <div class="col-12">
-    <table>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Tools</th>
-
-        </tr>
-        @{
-            var retrievedRecipse = Event.RetrievedRecipes;
-            if (IsSearchResults)
-            {
-                retrievedRecipse = SearchResults;
-            }
-            foreach (var recipe in retrievedRecipse)
-            {
+    @{
+        if(Event.RetrievedRecipes.Any())
+        {
+            <table>
                 <tr>
-                    <td>@recipe.Title</td>
-                    <td>@recipe.Description</td>
-                    <td>
-                        <button @onclick="(() =>
-                                          {
-                                              Event.RecipeDTO = recipe;
-                                              Event.HandleDetails();
-                                          }
-                              )">
-                            DetailsButton
-                        </button>
-                        @{
-                            bool isSubscribed = Event.RetrievedRecipes.Select(x => x.RecipeId)
-                                                          .Contains(recipe.RecipeId);
-                                <LoadingButton Loading="@Event.Loading.TryGetValue(recipe.RecipeId, out _)" HandleClick=@(async () =>
-                                                                 {
-                                                                     if(isSubscribed)
-                                                                     {
-                                                                         await HandleUnsubscribe(recipe);
-                                                                     }
-                                                                     else
-                                                                     {
-                                                                         await HandleSubscribe(recipe);
-                                                                     }
-                                                                 })>
-                                    @(isSubscribed ? "Unsubscribe" : "Subscribe")
-                                </LoadingButton>
-                            if (isSubscribed)
-                            {
-                                <button @onclick="(() =>
-                                                     {
-                                        Event.RecipeDTO = recipe;
-                                        Event.HandleUpdate();
-                                    })">
-                                    UpdateButton
-                                </button>
-                            }
-
-                        }
-
-                    </td>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Tools</th>
                 </tr>
-            }
-        }
-        <CascadingValue Name="Lazor" Value="Event.Lazor">
-            <CascadingValue Name="RecipeDTO" Value="@Event.RecipeDTO">
-                <MessageModal>@Event.Message</MessageModal>
-                <EditRecipeModal HandleClick="Event.Lazor.Toggle" />
-            </CascadingValue>
-        </CascadingValue>
-    </table>
+                @{
+                    var retrievedRecipse = Event.RetrievedRecipes;
+                    if (IsSearchResults)
+                    {
+                        retrievedRecipse = SearchResults;
+                    }
+                    foreach (var recipe in retrievedRecipse)
+                    {
+                        <tr>
+                            <td>@recipe.Title</td>
+                            <td>@recipe.Description</td>
+                            <td>
+                                <button @onclick="(() =>
+                                                {
+                                                    Event.RecipeDTO = recipe;
+                                                    Event.HandleDetails();
+                                                }
+                                    )">
+                                    DetailsButton
+                                </button>
+                                @{
+                                    bool isSubscribed = Event.RetrievedRecipes.Select(x => x.RecipeId)
+                                                                .Contains(recipe.RecipeId);
+                                        <LoadingButton Loading="@Event.Loading.TryGetValue(recipe.RecipeId, out _)" HandleClick=@(async () =>
+                                                                        {
+                                                                            if(isSubscribed)
+                                                                            {
+                                                                                await HandleUnsubscribe(recipe);
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                await HandleSubscribe(recipe);
+                                                                            }
+                                                                        })>
+                                            @(isSubscribed ? "Unsubscribe" : "Subscribe")
+                                        </LoadingButton>
+                                    if (isSubscribed)
+                                    {
+                                        <button @onclick="(() =>
+                                                            {
+                                                Event.RecipeDTO = recipe;
+                                                Event.HandleUpdate();
+                                            })">
+                                            UpdateButton
+                                        </button>
+                                    }
 
+                                }
+
+                            </td>
+                        </tr>
+                    }
+                }
+                <CascadingValue Name="Lazor" Value="Event.Lazor">
+                    <CascadingValue Name="RecipeDTO" Value="@Event.RecipeDTO">
+                        <MessageModal>@Event.Message</MessageModal>
+                        <EditRecipeModal HandleClick="Event.Lazor.Toggle" />
+                    </CascadingValue>
+                </CascadingValue>
+            </table>
+        }
+        else
+        {
+            <p>Create a recipe to start!</p>
+        }
+    }
 </div>
 
 @code {

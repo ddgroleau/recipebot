@@ -3,17 +3,19 @@
 <div class="card">
 
     <h4 class="card-header">
-        Add a Recipe
+       Create a Recipe!
     </h4>
 
     <div class="card-body">
-        <EditForm Model="@Event.RecipeUrlDTO" OnSubmit=@(()=>Event.HandleSubmit())>
+        <EditForm class="create-recipe-form" Model="@Event.RecipeUrlDTO" OnSubmit=@(()=>Event.HandleSubmit())>
             <DataAnnotationsValidator />
 
             <InputText @bind-Value="@Event.RecipeUrlDTO.URL" class="form-control" DisplayName="Recipe URL" />
             <ValidationMessage For="@(() => @Event.RecipeUrlDTO.URL)" />
 
-                <LoadingButton Loading="@Event.Lazor.Loading">Create Recipe</LoadingButton>
+                <LoadingButton Loading="@Event.Lazor.Loading">
+                    <span>Create</span>
+                    </LoadingButton>
 
         </EditForm>
     </div>

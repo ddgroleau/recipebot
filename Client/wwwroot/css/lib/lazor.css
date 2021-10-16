@@ -49,7 +49,7 @@
   min-width: -webkit-fit-content;
   min-width: -moz-fit-content;
   min-width: fit-content;
-  width: 75%;
+  width: 40%;
   border-radius: 4rem;
   -webkit-box-shadow: 0.2rem 0.3rem 0.4rem 0.2rem rgba(172, 171, 171, 0.432);
           box-shadow: 0.2rem 0.3rem 0.4rem 0.2rem rgba(172, 171, 171, 0.432);
@@ -74,5 +74,12 @@
   height: 1.2rem;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.l-search-field button:hover img {
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+  -webkit-transform: scale(150%);
+          transform: scale(150%);
 }
 /*# sourceMappingURL=lazor.css.map */

@@ -1,3 +1,8 @@
+@mixin l-zoom($scale) {
+    transition: 0.25s;
+    transform: scale($scale);
+}
+
 .l-modal {
     position: fixed;
     height: 80vh;
@@ -36,26 +41,31 @@
     flex-wrap: nowrap;
     padding: .5rem 1.5rem .5rem 1.5rem;
     min-width: fit-content;
-    width: 75%;
+    width: 40%;
     border-radius: 4rem;
     box-shadow: .2rem .3rem .4rem .2rem rgba(172, 171, 171, 0.432);
-    input {
-    outline: none;
-    border: none;
-    width:100%
-    }
-    button {
-    float: right;
-    background: transparent;
-    border: none;
-    outline: none;
-    img {
-        position: relative;
-        width: 1.2rem;
-        height: 1.2rem;
-        object-fit: cover;
-    }
-}
+        input {
+        outline: none;
+        border: none;
+        width: 100%;
+        }
+        button {
+        float: right;
+        background: transparent;
+        border: none;
+        outline: none;
+            img {
+                position: relative;
+                width: 1.2rem;
+                height: 1.2rem;
+                object-fit: cover;
+            }
+        }
+        button:hover {
+            img {
+                @include l-zoom(150%);
+            }
+        }
 }
 
 
