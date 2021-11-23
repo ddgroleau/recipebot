@@ -47,7 +47,7 @@ namespace PBC.Server.Controllers
             }
         }
 
-        [HttpPost("new-list")]
+        [HttpPost("new-list")] 
         public async Task<IActionResult> CreateList(ListGeneratorDTO listDays)
         {
             try
