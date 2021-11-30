@@ -16,8 +16,8 @@ body {
 }
 
 nav {
-    font-family: monospace;
     background-color: #fff;
+    font-weight: 600;
     box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
     li:hover {
         @include l-zoom(110%);
@@ -25,8 +25,11 @@ nav {
 }
 
 footer {
-    border-top: solid black 1px;
+    border-top: solid rgba(59, 59, 59, 0.589) 1px;
     padding-left: .5rem;
+    a {
+        color: rgba(59, 59, 59, 0.589) !important;
+    }
 }
 
 #blazor-error-ui {

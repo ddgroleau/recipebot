@@ -53,8 +53,9 @@
   min-width: fit-content;
   width: 40%;
   border-radius: 4rem;
-  -webkit-box-shadow: 0.2rem 0.3rem 0.4rem 0.2rem rgba(172, 171, 171, 0.432);
-          box-shadow: 0.2rem 0.3rem 0.4rem 0.2rem rgba(172, 171, 171, 0.432);
+  border: solid rgba(139, 138, 138, 0.26) 0.1rem;
+  -webkit-box-shadow: 0.2rem 0.3rem 0.1rem 0.1rem rgba(172, 171, 171, 0.432);
+          box-shadow: 0.2rem 0.3rem 0.1rem 0.1rem rgba(172, 171, 171, 0.432);
 }
 
 .l-search-field input {
@@ -224,8 +225,8 @@ body {
 }
 
 nav {
-  font-family: monospace;
   background-color: #fff;
+  font-weight: 600;
   -webkit-box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
           box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
 }
@@ -238,8 +239,12 @@ nav li:hover {
 }
 
 footer {
-  border-top: solid black 1px;
+  border-top: solid rgba(59, 59, 59, 0.589) 1px;
   padding-left: .5rem;
+}
+
+footer a {
+  color: rgba(59, 59, 59, 0.589) !important;
 }
 
 #blazor-error-ui {

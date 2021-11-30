@@ -43,7 +43,8 @@
     min-width: fit-content;
     width: 40%;
     border-radius: 4rem;
-    box-shadow: .2rem .3rem .4rem .2rem rgba(172, 171, 171, 0.432);
+    border: solid rgba(139, 138, 138, 0.26) .1rem;
+    box-shadow: .2rem .3rem .1rem .1rem rgba(172, 171, 171, 0.432);
         input {
         outline: none;
         border: none;
