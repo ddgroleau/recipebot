@@ -1,6 +1,8 @@
 @mixin marginTop {
-    margin-top: 1rem;
+    margin-top: 5%;
 }
+
+$pbc_orange: #F58B28;
 
 .cookbook-container {
     display: flex;
@@ -12,18 +14,25 @@
     @include marginTop();
     .create-recipe-container {
       min-width: fit-content;
-      width: 100%;
+      width: 95%;
+      max-width: 60vh;
       @include marginTop();
       .card {
           width: 100%;
+          border: none;
+          h3 {
+              color: $pbc_orange
+          }
           .card-body {
             width: 100%;
             .create-recipe-form {
                 display: flex;
                 justify-content: center;
-                border: solid rgb(214, 51, 214) 1px;
                 button {
-                    border: solid rgb(214, 51, 65) 1px;
+                    background-color: $pbc_orange;
+                    padding:  0.5rem 2rem;
+                    border:none;
+                    margin-left: 1rem;
                 }
             }
           }

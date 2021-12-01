@@ -19,6 +19,14 @@ namespace UnitTests.MockObjects
             return Task<string>.Factory.StartNew(() => "TestUserId");
 
         }
+        public string GetCurrentUserName()
+        { return "test"; }
+        public void SetUserName(string userName)
+        { }
+        public string GetCurrentUserId()
+        { return "test"; }
+        public void SetUserId(string userId)
+        { }
 
     }
 }

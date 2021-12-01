@@ -36,7 +36,7 @@ namespace PBC.Server.Data.Repositories
 
         public async Task CreateRecipe(IRecipeServiceDTO recipeServiceDTO) 
         {
-                Recipe recipe = await BuildRecipe(recipeServiceDTO);
+                Recipe recipe = BuildRecipe(recipeServiceDTO);
                 await _dbContext.Recipes.AddAsync(recipe);
                 await _dbContext.SaveChangesAsync();
 
@@ -201,10 +201,10 @@ namespace PBC.Server.Data.Repositories
             return recipeServiceDTO;
         }
 
-        private async Task<Recipe> BuildRecipe(IRecipeServiceDTO recipeServiceDTO)
+        private Recipe BuildRecipe(IRecipeServiceDTO recipeServiceDTO)
         {
             Recipe recipe = _recipeFactory.Make();
-            string username = await _userState.CurrentUsernameAsync();
+            string username = _userState.GetCurrentUserName();
             
             recipe.RecipeType = recipeServiceDTO.RecipeType;
             recipe.Title = recipeServiceDTO.Title;

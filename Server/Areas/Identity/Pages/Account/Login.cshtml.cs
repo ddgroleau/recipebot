@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using PBC.Shared.Common;
 
 namespace PBC.Server.Areas.Identity.Pages.Account
 {
@@ -21,14 +22,17 @@ namespace PBC.Server.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IUserState _userState;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IUserState userState)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _userState = userState;
         }
 
         [BindProperty]
@@ -86,6 +90,11 @@ namespace PBC.Server.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                   
+                    ApplicationUser user = await _userManager.FindByNameAsync(Input.Email);
+                    _userState.SetUserName(user.UserName);
+                    _userState.SetUserId(user.Id);
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

@@ -20,6 +20,9 @@ using Microsoft.AspNetCore.Identity;
 using PBC.Server.Data;
 using PBC.Server.Data.Repositories;
 using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
 
 namespace PBC.Server
 {
@@ -47,7 +50,7 @@ namespace PBC.Server
             #endregion
 
             #region Identity
-            services.AddDefaultIdentity<ApplicationUser>() //options => options.SignIn.RequireConfirmedAccount = true
+            services.AddDefaultIdentity<ApplicationUser>()
                     .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
@@ -61,8 +64,8 @@ namespace PBC.Server
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddHttpContextAccessor();
-            services.AddScoped<HttpClient>();
-            services.AddScoped<IUserState, UserState>();
+            services.AddHttpClient();
+            services.AddSingleton<IUserState, UserState>();
             #endregion
 
             #region RecipeComponent

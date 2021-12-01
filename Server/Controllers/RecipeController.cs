@@ -64,13 +64,12 @@ namespace PBC.Server.Controllers
                 int createdId = await _recipeService.CreateRecipe(recipeDTO);
 
                 var subscription = await NotifySubscriptionComponent(createdId);
-                bool isSubscribed = subscription.Equals(Ok());
 
-                return isSubscribed ? Ok() : UnprocessableEntity();
+                return subscription;
             }
             catch (Exception e)
             {
-                _logger.LogError($"Failed to process RecipeDTO \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.", e.Message);
+                _logger.LogError($"Failed to process RecipeDTO \"{recipeDTO.Title}\" at RecipeController, CreateOrUpdateRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.", e.Message);
             }
             return BadRequest();
         }  
@@ -111,7 +110,7 @@ namespace PBC.Server.Controllers
         {
             try
             {
-                var subscribeAction = await _http.PostAsJsonAsync("/api/subscriptions/subscripe", createdId);
+                var subscribeAction = await _http.PostAsJsonAsync("https://localhost:4001/api/subscription/subscribe", createdId);
                 bool subscriptionCreated = subscribeAction.IsSuccessStatusCode;
                 if (subscriptionCreated)
                 {

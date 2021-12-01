@@ -32,7 +32,7 @@ namespace PBC.Server.Data.Repositories
             
             if(recipe != null)
             {
-                RecipeSubscription recipeSubscription = await BuildSubscription(recipe.RecipeId);
+                RecipeSubscription recipeSubscription = BuildSubscription(recipe.RecipeId);
                 
                 bool previousSubscription = await _dbContext.RecipeSubscriptions
                     .Where(s => s.RecipeId.Equals(recipeSubscription.RecipeId) 
@@ -58,12 +58,12 @@ namespace PBC.Server.Data.Repositories
             }
         }
 
-        private async Task<RecipeSubscription> BuildSubscription(int recipeId)
+        private RecipeSubscription BuildSubscription(int recipeId)
         {
             RecipeSubscription subscription = _subscriptionFactory.Make();
 
             subscription.RecipeId = recipeId;
-            subscription.ApplicationUserId = await _userState.CurrentUserIdAsync();
+            subscription.ApplicationUserId = _userState.GetCurrentUserId();
             subscription.IsSubscribed = true;
             subscription.CreationDate = DateTime.Now;
             subscription.LastModifed = DateTime.Now;

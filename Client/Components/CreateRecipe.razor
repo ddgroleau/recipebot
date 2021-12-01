@@ -1,15 +1,12 @@
 ﻿@inject ICreateRecipeEvent Event
 
 <div class="card">
-
-    <h4 class="card-header">
-       Create a Recipe!
-    </h4>
-
     <div class="card-body">
+            <h3>Create a Recipe</h3>
+            <p>Enter your recipe URL</p>
         <EditForm class="create-recipe-form" Model="@Event.RecipeUrlDTO" OnSubmit=@(()=>Event.HandleSubmit())>
             <DataAnnotationsValidator />
-
+            
             <InputText @bind-Value="@Event.RecipeUrlDTO.URL" class="form-control" DisplayName="Recipe URL" />
             <ValidationMessage For="@(() => @Event.RecipeUrlDTO.URL)" />
 

@@ -11,5 +11,10 @@ namespace PBC.Shared.Common
         public Task<string> CurrentUsernameAsync();
 
         public Task<string> CurrentUserIdAsync();
+        public string GetCurrentUserName();
+        public void SetUserName(string userName);
+        public string GetCurrentUserId();
+        public void SetUserId(string userId);
+  
     }
 }
