@@ -25,7 +25,7 @@ namespace PBC.Server.Data.Repositories
             if (list.ListDays == null) return;
 
             ListEntity listEntity = _listFactory.Make();
-            var user = await _userState.CurrentUsernameAsync();
+            var user = _userState.GetCurrentUserName();
 
             listEntity.Days = list.Days;
             listEntity.CreatedBy = user;

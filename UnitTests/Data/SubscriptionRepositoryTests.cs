@@ -72,7 +72,7 @@ namespace UnitTests.Data
         [Fact]
         public async Task Subscribe_WithValidNewId_ShouldBeTrue()
         {
-            var userid = await UserState.CurrentUserIdAsync();
+            var userid = UserState.GetCurrentUserId();
 
             await Db.Recipes.AddAsync(MockObject.Recipe);
             Db.SaveChanges();
@@ -90,7 +90,7 @@ namespace UnitTests.Data
         [Fact]
         public async Task Subscribe_WithValidPreviousId_ShouldBeTrue()
         {
-            var userid = await UserState.CurrentUserIdAsync();
+            var userid = UserState.GetCurrentUserId();
             
             await Db.Recipes.AddAsync(MockObject.Recipe); // Add the recipe
 

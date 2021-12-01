@@ -92,8 +92,8 @@ namespace PBC.Server.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                    
                     ApplicationUser user = await _userManager.FindByNameAsync(Input.Email);
-                    _userState.SetUserName(user.UserName);
-                    _userState.SetUserId(user.Id);
+                    _userState.SetCurrentUserName(user.UserName);
+                    _userState.SetCurrentUserId(user.Id);
 
                     return LocalRedirect(returnUrl);
                 }

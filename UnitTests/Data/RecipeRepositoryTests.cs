@@ -83,7 +83,7 @@ namespace UnitTests.Data
         [Fact]
         public async Task CreateRecipe_WithValidRecipe_ShouldCreateRecipe()
         {
-            var userId = await UserState.CurrentUserIdAsync();
+            var userId = UserState.GetCurrentUserId();
             var recipe = MockObject.RecipeServiceDTO;
             var expected = MockObject.CreateRecipeExpected;
 

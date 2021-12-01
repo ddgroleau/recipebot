@@ -117,7 +117,7 @@ namespace PBC.Server.Data.Repositories
                 {
                     Ingredient ingredient = _ingredientFactory.Make();
                     ingredient.Description = recipeServiceDTO.Ingredients[i];
-                    ingredient.CreatedBy = await _userState.CurrentUsernameAsync();
+                    ingredient.CreatedBy = _userState.GetCurrentUserName();
                     ingredient.CreatedOn = DateTime.Now;
                     entity.Ingredients.Add(ingredient);
                 }
@@ -135,7 +135,7 @@ namespace PBC.Server.Data.Repositories
                 {
                     Instruction instruction = _instructionFactory.Make();
                     instruction.Description = recipeServiceDTO.Instructions[i];
-                    instruction.CreatedBy = await _userState.CurrentUsernameAsync();
+                    instruction.CreatedBy = _userState.GetCurrentUserName();
                     instruction.CreatedOn = DateTime.Now;
                     instruction.StepNumber = i + 1;
                     entity.Instructions.Add(instruction);
@@ -156,15 +156,16 @@ namespace PBC.Server.Data.Repositories
 
             var userRecipes = new List<IRecipeServiceDTO>();
 
-            var userId = await _userState.CurrentUserIdAsync();
+            var userId = _userState.GetCurrentUserId();
 
-            var recipes = _dbContext.Recipes.AsNoTracking()
+            var recipes = await _dbContext.Recipes.AsNoTracking()
                 .Include(recipe => recipe.Ingredients)
                 .Include(recipe => recipe.Instructions)
                 .Join(_dbContext.RecipeSubscriptions.Where(subscription => subscription.ApplicationUserId.Equals(userId)),
                 recipe => recipe.RecipeId,
                 subscription => subscription.RecipeId,
-                (recipe, subscription) => recipe);
+                (recipe, subscription) => recipe)
+                .ToListAsync();
             
             foreach(var recipe in recipes)
             {

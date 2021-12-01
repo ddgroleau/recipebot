@@ -126,7 +126,7 @@ namespace UnitTests.WebScraper
             recipeDTOExpected.URL = validRecipeUrl;
             recipeDTOExpected.Title = "No Bake Strawberry Cheesecake";
             recipeDTOExpected.Description = "Light and fluffy no bake cheesecake with a strawberry surprise taste. " +
-                "Prep Time: 30 mins. Cook Time: 3 hrs 30 mins. Total Time: 3 hrs 60 mins. Servings: 10. Yield: 1 cheesecake.";
+                "Prep Time: 30 mins. Cook Time: 3 hrs 30 mins. Total Time: 4 hrs. Servings: 10. Yield: 1 cheesecake.";
 
             recipeDTOExpected.Ingredients.Add("1 (3 ounce) package strawberry-flavored gelatin (such as Jell-O®)");
             recipeDTOExpected.Ingredients.Add("1 cup boiling water");
@@ -159,7 +159,7 @@ namespace UnitTests.WebScraper
             recipeDTOExpected.URL = validRecipeUrl;
             recipeDTOExpected.Title = "No Bake Strawberry Cheesecake";
             recipeDTOExpected.Description = "Light and fluffy no bake cheesecake with a strawberry surprise taste. " +
-                "Prep Time: 30 mins. Cook Time: 3 hrs 30 mins. Total Time: 3 hrs 60 mins. Servings: 10. Yield: 1 cheesecake.";
+                "Prep Time: 30 mins. Cook Time: 3 hrs 30 mins. Total Time: 4 hrs. Servings: 10. Yield: 1 cheesecake.";
 
             recipeDTOExpected.Ingredients.Add("1 (3 ounce) package strawberry-flavored gelatin (such as Jell-O®)");
             recipeDTOExpected.Ingredients.Add("1 cup boiling water");
