@@ -16,6 +16,7 @@ $pbc_orange: #F58B28;
       min-width: fit-content;
       width: 95%;
       max-width: 60vh;
+      height: auto;
       @include marginTop();
       .card {
           width: 100%;

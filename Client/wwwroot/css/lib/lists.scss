@@ -1,0 +1,96 @@
+@mixin marginTop {
+    margin-top: 5%;
+}
+$pbc_orange: #F58B28;
+
+.list__container {
+    @include marginTop();
+    display:flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    max-width: 95%;
+    h3 {
+        color: $pbc_orange;
+    }
+}
+
+.list-generator__card {
+    max-width: 80%;
+    background-color: #FFB54D;
+    border: none;
+    box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
+    margin: 1rem 0;
+    .card__form {
+        margin: 1rem;
+        display: flex;
+        align-items: flex-start;
+        width: 95%;
+        h4 {
+            color: #fff;
+        }
+    }
+}
+
+.card__input {
+    border: none;
+    margin-left: .5rem;
+    width: 3rem;
+    border-bottom: solid .1rem #fff;
+    font-weight: 600;
+    color: #fff;
+    background-color: #FFB54D;
+}
+
+.card__button {
+    button {
+        margin-left: 1rem;
+        background-color: rgba(255, 255, 255, 0.781);
+        font-weight: 600;
+    }
+    button:focus {
+        box-shadow: none;
+    }
+}
+
+.button-plus {
+    button {
+        color: rgb(41, 39, 39)
+    }
+    button:hover {
+        background-color: white;
+        color: rgb(247, 80, 19);
+        transition: ease-in all .25s;
+    }
+    button:focus {
+        box-shadow: 0 0 .1rem .1rem #fff;
+    }
+}
+
+.button-minus {
+    button {
+        color: rgb(41, 39, 39)
+    }
+    button:hover {
+        background-color: white;
+        color: rgb(240, 55, 9);
+        transition: ease-in all .25s;
+    }
+}
+
+.button-list-submit {
+    button {
+        color: rgb(41, 39, 39)
+    }
+    button:hover {
+        background-color: white;
+        color: rgb(247, 80, 19);
+        transform: translateX(.15rem);
+        transition: ease-in all .25s;
+    }
+}

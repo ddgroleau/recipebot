@@ -111,6 +111,7 @@
   min-width: fit-content;
   width: 95%;
   max-width: 60vh;
+  height: auto;
   margin-top: 5%;
 }
 
@@ -216,6 +217,118 @@
   .login__img {
     display: none;
   }
+}
+
+.list__container {
+  margin-top: 5%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+.list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 70%;
+  max-width: 95%;
+}
+
+.list h3 {
+  color: #F58B28;
+}
+
+.list-generator__card {
+  max-width: 80%;
+  background-color: #FFB54D;
+  border: none;
+  -webkit-box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
+          box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
+  margin: 1rem 0;
+}
+
+.list-generator__card .card__form {
+  margin: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  width: 95%;
+}
+
+.list-generator__card .card__form h4 {
+  color: #fff;
+}
+
+.card__input {
+  border: none;
+  margin-left: .5rem;
+  width: 3rem;
+  border-bottom: solid .1rem #fff;
+  font-weight: 600;
+  color: #fff;
+  background-color: #FFB54D;
+}
+
+.card__button button {
+  margin-left: 1rem;
+  background-color: rgba(255, 255, 255, 0.781);
+  font-weight: 600;
+}
+
+.card__button button:focus {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.button-plus button {
+  color: #292727;
+}
+
+.button-plus button:hover {
+  background-color: white;
+  color: #f75013;
+  -webkit-transition: ease-in all .25s;
+  transition: ease-in all .25s;
+}
+
+.button-plus button:focus {
+  -webkit-box-shadow: 0 0 .1rem .1rem #fff;
+          box-shadow: 0 0 .1rem .1rem #fff;
+}
+
+.button-minus button {
+  color: #292727;
+}
+
+.button-minus button:hover {
+  background-color: white;
+  color: #f03709;
+  -webkit-transition: ease-in all .25s;
+  transition: ease-in all .25s;
+}
+
+.button-list-submit button {
+  color: #292727;
+}
+
+.button-list-submit button:hover {
+  background-color: white;
+  color: #f75013;
+  -webkit-transform: translateX(0.15rem);
+          transform: translateX(0.15rem);
+  -webkit-transition: ease-in all .25s;
+  transition: ease-in all .25s;
 }
 
 .searchbar {

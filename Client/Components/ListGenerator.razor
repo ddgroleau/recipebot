@@ -1,20 +1,22 @@
 ﻿@inject IListGeneratorEvent Event
 
-<div class="card">
-    <h4 class="card-header">
-        Generate List
-        <br />
-        <label>Days:</label>
-        <CascadingValue Name="Loading" Value="@Event.Lazor.Loading">
-            <LoadingButton HandleClick="async () => await HandleAdd()">(+)</LoadingButton>
-            <LoadingButton HandleClick="() => Event.RemoveDay()">(-)</LoadingButton>
-        </CascadingValue>
+<div class="card list-generator__card">
+    <div class="card__form">
+
         <EditForm Model="Event.ListGeneratorDTO">
             <DataAnnotationsValidator />
-            <InputNumber @bind-Value=@Event.ListGeneratorDTO.Days />
+            <h4>Generating recipes for number of days: 
+            <InputNumber class="card__input" @bind-Value=@Event.ListGeneratorDTO.Days />
+            </h4>
         </EditForm>
+
+        <CascadingValue Name="Loading" Value="@Event.Lazor.Loading">
+            <div class="card__button button-plus"><LoadingButton HandleClick="async () => await HandleAdd()">+1 Day</LoadingButton></div>
+             <div class="card__button button-minus"><LoadingButton HandleClick="() => Event.RemoveDay()">-1 Day</LoadingButton></div>
+        </CascadingValue>
+        
         <span class="small form-text text-danger">@Event.Lazor.ErrorMessage</span>
-    </h4>
+    </div>
     <div class="card-body">
         <div class="row">
 
@@ -37,7 +39,7 @@
             }
 
         </div>
-            <LoadingButton Loading=@Event.Lazor.Loading HandleClick="async()=> await HandleClick()">Submit List</LoadingButton>
+            <div class="card__button button-list-submit"><LoadingButton Loading=@Event.Lazor.Loading HandleClick="async()=> await HandleClick()">Submit List</LoadingButton></div>
     </div>
 </div>
 

@@ -23,6 +23,7 @@
   min-width: fit-content;
   width: 95%;
   max-width: 60vh;
+  height: auto;
   margin-top: 5%;
 }
 
