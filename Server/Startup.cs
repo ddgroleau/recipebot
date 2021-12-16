@@ -1,13 +1,9 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Linq;
 using PBC.Shared;
 using PBC.Server.Models;
 using PBC.Shared.Common;
@@ -15,33 +11,48 @@ using PBC.Shared.ListComponent;
 using PBC.Shared.RecipeComponent;
 using PBC.Shared.SubscriptionComponent;
 using PBC.Shared.WebScraper;
-using System.Net.Http;
-using Microsoft.AspNetCore.Identity;
 using PBC.Server.Data;
 using PBC.Server.Data.Repositories;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Server;
+using Microsoft.AspNetCore.Hosting;
 
 namespace PBC.Server
 {
     public class Startup
     {
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Env { get; }
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            Env = env;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             #region Data
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
-            Configuration.GetConnectionString("SQLite")));
-
+            if (Env.IsDevelopment())
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                   options.UseSqlServer(
+               Configuration.GetConnectionString("DevelopmentDb"),
+               o => o.MigrationsAssembly("PBC.Server")));
+            } 
+            else if (Env.IsStaging())
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                   options.UseSqlServer(
+               Configuration.GetConnectionString("StagingDb"),
+               o => o.MigrationsAssembly("PBC.Server")));
+            }
+            else
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                   options.UseSqlServer(
+               Configuration.GetConnectionString("ProductionDb"),
+               o => o.MigrationsAssembly("PBC.Server")));
+            }
+            
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
@@ -99,7 +110,7 @@ namespace PBC.Server
             #endregion
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context)
         {
             if (env.IsDevelopment())
             {
@@ -128,6 +139,8 @@ namespace PBC.Server
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
             });
+
+            context.Database.Migrate();
         }
     }
 }

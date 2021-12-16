@@ -8,9 +8,6 @@ WORKDIR /src
 COPY ["Server/PBC.Server.csproj", "Server/"]
 RUN dotnet restore "Server/PBC.Server.csproj"
 COPY . .
-
-RUN export PATH="$PATH:/root/.dotnet/tools" && dotnet tool install --global dotnet-ef
-
 WORKDIR "/src/Server"
 RUN dotnet build "PBC.Server.csproj" -c Release -o /app/build
 

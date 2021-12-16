@@ -1,16 +1,20 @@
 version: '3.7'
 
 services:
+  
   recipebot:
     image: recipebot_server
     build:
       context: .
       dockerfile: Server/Dockerfile
     ports:
-        - 4000:80
-        - 4001:443
+      - 4000:80
+      - 4001:443
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Staging
+    depends_on:
+      - sqlserver
+  
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2019-latest
     hostname: 'sqlserver'  
@@ -18,7 +22,7 @@ services:
       ACCEPT_EULA: Y  
       SA_PASSWORD: ${sqlServer} 
     volumes:  
-      - ./data/mssql:/var/opt/mssql3  
+      - /tmp/mssql:/var/opt/mssql3  
     ports:  
       - '1433:1433'  
     expose:  

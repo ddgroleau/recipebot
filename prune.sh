@@ -12,7 +12,7 @@ then
     docker container rm $containers
     echo -e "\n"
 else
-    echo -e "There are no containers top stop/remove.\n"
+    echo -e "There are no containers to stop/remove.\n"
 fi
 
 if [ ! -z "$images" ]
