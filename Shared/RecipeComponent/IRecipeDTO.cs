@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PBC.Shared.RecipeComponent
+namespace Recipebot.Shared.RecipeComponent
 {
     public interface IRecipeDTO
     {

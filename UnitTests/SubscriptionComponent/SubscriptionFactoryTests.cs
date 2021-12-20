@@ -1,6 +1,6 @@
-﻿using PBC.Shared.Common;
-using PBC.Shared.RecipeComponent;
-using PBC.Shared.SubscriptionComponent;
+﻿using Recipebot.Shared.Common;
+using Recipebot.Shared.RecipeComponent;
+using Recipebot.Shared.SubscriptionComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;

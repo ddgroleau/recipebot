@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
-using PBC.Shared;
-using PBC.Shared.DOM_Events;
-using PBC.Shared.DOM_Events.ComponentEvents;
-using PBC.Shared.Lazor;
-using PBC.Shared.RecipeComponent;
+using Recipebot.Shared;
+using Recipebot.Shared.DOM_Events;
+using Recipebot.Shared.DOM_Events.ComponentEvents;
+using Recipebot.Shared.Lazor;
+using Recipebot.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,6 @@
-﻿using PBC.Shared.Common;
-using PBC.Shared.DOM_Events;
-using PBC.Shared.SubscriptionComponent;
+﻿using Recipebot.Shared.Common;
+using Recipebot.Shared.DOM_Events;
+using Recipebot.Shared.SubscriptionComponent;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PBC.Shared.RecipeComponent
+namespace Recipebot.Shared.RecipeComponent
 {
     public class RecipeService : IRecipeService
     {

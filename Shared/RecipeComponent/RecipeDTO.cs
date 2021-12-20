@@ -9,10 +9,10 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PBC.Shared.Custom_Validation;
-using PBC.Shared.RecipeComponent;
+using Recipebot.Shared.Custom_Validation;
+using Recipebot.Shared.RecipeComponent;
 
-namespace PBC.Shared
+namespace Recipebot.Shared
 {
     public class RecipeDTO : IRecipeDTO
     {

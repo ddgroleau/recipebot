@@ -6,13 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PBC.Server.Models;
-using PBC.Shared.ListComponent;
-using PBC.Shared.RecipeComponent;
-using PBC.Shared.SubscriptionComponent;
+using Recipebot.Server.Models;
+using Recipebot.Shared.ListComponent;
+using Recipebot.Shared.RecipeComponent;
+using Recipebot.Shared.SubscriptionComponent;
 using Microsoft.AspNetCore.Identity;
 
-namespace PBC.Server.Data
+namespace Recipebot.Server.Data
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {

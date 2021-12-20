@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PBC.Shared.Custom_Validation;
-using PBC.Shared.DOM_Events;
-using PBC.Shared.ListComponent;
+using Recipebot.Shared.Custom_Validation;
+using Recipebot.Shared.DOM_Events;
+using Recipebot.Shared.ListComponent;
 
-namespace PBC.Shared
+namespace Recipebot.Shared
 {
     public class ListGeneratorDTO : IListGeneratorDTO
     {

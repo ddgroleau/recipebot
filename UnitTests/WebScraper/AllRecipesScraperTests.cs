@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using PBC.Shared;
-using PBC.Shared.RecipeComponent;
-using PBC.Shared.WebScraper;
+using Recipebot.Shared;
+using Recipebot.Shared.RecipeComponent;
+using Recipebot.Shared.WebScraper;
 using System;
 using System.Collections.Generic;
 using Xunit;

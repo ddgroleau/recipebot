@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PBC.Server.Models
+namespace Recipebot.Server.Models
 {
     public class ApplicationUser : IdentityUser
     {

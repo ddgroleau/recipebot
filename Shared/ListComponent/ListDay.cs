@@ -1,4 +1,4 @@
-﻿using PBC.Shared.RecipeComponent;
+﻿using Recipebot.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PBC.Shared.ListComponent
+namespace Recipebot.Shared.ListComponent
 {
     public class ListDay
     {

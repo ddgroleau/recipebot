@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using PBC.Shared.RecipeComponent;
+using Recipebot.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PBC.Shared.SubscriptionComponent
+namespace Recipebot.Shared.SubscriptionComponent
 {
     public class SubscriberState : ISubscriberState
     {

@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PBC.Server.Data;
+using Recipebot.Server.Data;
 
-namespace PBC.Server.Migrations
+namespace Recipebot.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -257,7 +257,7 @@ namespace PBC.Server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("PBC.Server.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Recipebot.Server.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -322,7 +322,7 @@ namespace PBC.Server.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("PBC.Shared.ListComponent.ListDay", b =>
+            modelBuilder.Entity("Recipebot.Shared.ListComponent.ListDay", b =>
                 {
                     b.Property<int>("ListDayId")
                         .ValueGeneratedOnAdd()
@@ -354,7 +354,7 @@ namespace PBC.Server.Migrations
                     b.ToTable("ListDays");
                 });
 
-            modelBuilder.Entity("PBC.Shared.ListComponent.ListEntity", b =>
+            modelBuilder.Entity("Recipebot.Shared.ListComponent.ListEntity", b =>
                 {
                     b.Property<int>("ListEntityId")
                         .ValueGeneratedOnAdd()
@@ -375,7 +375,7 @@ namespace PBC.Server.Migrations
                     b.ToTable("Lists");
                 });
 
-            modelBuilder.Entity("PBC.Shared.RecipeComponent.Ingredient", b =>
+            modelBuilder.Entity("Recipebot.Shared.RecipeComponent.Ingredient", b =>
                 {
                     b.Property<int>("IngredientId")
                         .ValueGeneratedOnAdd()
@@ -403,7 +403,7 @@ namespace PBC.Server.Migrations
                     b.ToTable("Ingredients");
                 });
 
-            modelBuilder.Entity("PBC.Shared.RecipeComponent.Instruction", b =>
+            modelBuilder.Entity("Recipebot.Shared.RecipeComponent.Instruction", b =>
                 {
                     b.Property<int>("InstructionId")
                         .ValueGeneratedOnAdd()
@@ -434,7 +434,7 @@ namespace PBC.Server.Migrations
                     b.ToTable("Instructions");
                 });
 
-            modelBuilder.Entity("PBC.Shared.RecipeComponent.Recipe", b =>
+            modelBuilder.Entity("Recipebot.Shared.RecipeComponent.Recipe", b =>
                 {
                     b.Property<int>("RecipeId")
                         .ValueGeneratedOnAdd()
@@ -470,7 +470,7 @@ namespace PBC.Server.Migrations
                     b.ToTable("Recipes");
                 });
 
-            modelBuilder.Entity("PBC.Shared.SubscriptionComponent.RecipeSubscription", b =>
+            modelBuilder.Entity("Recipebot.Shared.SubscriptionComponent.RecipeSubscription", b =>
                 {
                     b.Property<int>("RecipeSubscriptionId")
                         .ValueGeneratedOnAdd()
@@ -508,7 +508,7 @@ namespace PBC.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("PBC.Server.Models.ApplicationUser", null)
+                    b.HasOne("Recipebot.Server.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -517,7 +517,7 @@ namespace PBC.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("PBC.Server.Models.ApplicationUser", null)
+                    b.HasOne("Recipebot.Server.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -532,7 +532,7 @@ namespace PBC.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PBC.Server.Models.ApplicationUser", null)
+                    b.HasOne("Recipebot.Server.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -541,46 +541,46 @@ namespace PBC.Server.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("PBC.Server.Models.ApplicationUser", null)
+                    b.HasOne("Recipebot.Server.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PBC.Shared.ListComponent.ListDay", b =>
+            modelBuilder.Entity("Recipebot.Shared.ListComponent.ListDay", b =>
                 {
-                    b.HasOne("PBC.Shared.ListComponent.ListEntity", null)
+                    b.HasOne("Recipebot.Shared.ListComponent.ListEntity", null)
                         .WithMany("ListDays")
                         .HasForeignKey("ListEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PBC.Shared.RecipeComponent.Ingredient", b =>
+            modelBuilder.Entity("Recipebot.Shared.RecipeComponent.Ingredient", b =>
                 {
-                    b.HasOne("PBC.Shared.RecipeComponent.Recipe", null)
+                    b.HasOne("Recipebot.Shared.RecipeComponent.Recipe", null)
                         .WithMany("Ingredients")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PBC.Shared.RecipeComponent.Instruction", b =>
+            modelBuilder.Entity("Recipebot.Shared.RecipeComponent.Instruction", b =>
                 {
-                    b.HasOne("PBC.Shared.RecipeComponent.Recipe", null)
+                    b.HasOne("Recipebot.Shared.RecipeComponent.Recipe", null)
                         .WithMany("Instructions")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PBC.Shared.ListComponent.ListEntity", b =>
+            modelBuilder.Entity("Recipebot.Shared.ListComponent.ListEntity", b =>
                 {
                     b.Navigation("ListDays");
                 });
 
-            modelBuilder.Entity("PBC.Shared.RecipeComponent.Recipe", b =>
+            modelBuilder.Entity("Recipebot.Shared.RecipeComponent.Recipe", b =>
                 {
                     b.Navigation("Ingredients");
 

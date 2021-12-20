@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PBC.Shared;
-using PBC.Shared.ListComponent;
-using PBC.Shared.RecipeComponent;
+using Recipebot.Shared;
+using Recipebot.Shared.ListComponent;
+using Recipebot.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace PBC.Server.Controllers
+namespace Recipebot.Server.Controllers
 {
     [Authorize]
     [Route("/api/[controller]")]

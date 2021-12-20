@@ -18,7 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Shared\PBC.Shared.csproj" />
+		<ProjectReference Include="..\Shared\Recipebot.Shared.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

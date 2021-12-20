@@ -1,5 +1,5 @@
-﻿using PBC.Shared.RecipeComponent;
-using PBC.Shared.SubscriptionComponent;
+﻿using Recipebot.Shared.RecipeComponent;
+using Recipebot.Shared.SubscriptionComponent;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PBC.Shared.ListComponent
+namespace Recipebot.Shared.ListComponent
 {
 
     public class ListService : IListService

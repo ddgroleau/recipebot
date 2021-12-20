@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PBC.Shared.SubscriptionComponent
+namespace Recipebot.Shared.SubscriptionComponent
 {
     public interface ISubscriptionRepository
     {

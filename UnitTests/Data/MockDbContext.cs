@@ -1,14 +1,9 @@
 ﻿using IdentityServer4.EntityFramework.Options;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using PBC.Server.Data;
-using System;
-using System.Collections.Generic;
+using Microsoft.Data.Sqlite;
+using Recipebot.Server.Data;
 using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnitTests.Data
 {
@@ -24,7 +19,7 @@ namespace UnitTests.Data
                                                         new OperationalStoreOptions()));
             Context.Database.EnsureCreated();
         }
-      
+
         public ApplicationDbContext Context { get; }
 
         private static DbConnection CreateInMemoryDatabase()

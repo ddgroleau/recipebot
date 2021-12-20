@@ -1,6 +1,6 @@
 ﻿using System;
-using PBC.Server.Data;
-using PBC.Server.Models;
+using Recipebot.Server.Data;
+using Recipebot.Server.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-[assembly: HostingStartup(typeof(PBC.Server.Areas.Identity.IdentityHostingStartup))]
-namespace PBC.Server.Areas.Identity
+[assembly: HostingStartup(typeof(Recipebot.Server.Areas.Identity.IdentityHostingStartup))]
+namespace Recipebot.Server.Areas.Identity
 {
     public class IdentityHostingStartup : IHostingStartup
     {

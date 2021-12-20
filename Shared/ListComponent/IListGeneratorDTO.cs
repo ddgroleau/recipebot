@@ -1,11 +1,11 @@
-﻿using PBC.Shared.DOM_Events;
+﻿using Recipebot.Shared.DOM_Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PBC.Shared.ListComponent
+namespace Recipebot.Shared.ListComponent
 {
     public interface IListGeneratorDTO
     {

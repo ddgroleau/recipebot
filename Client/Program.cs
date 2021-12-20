@@ -5,17 +5,15 @@ using System.Threading.Tasks;
 using System.Text;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using PBC.Shared;
-using PBC.Shared.DOM_Events;
-using PBC.Shared.DOM_Events.ComponentEvents;
-using PBC.Shared.Lazor;
-using PBC.Shared.ListComponent;
-using PBC.Shared.RecipeComponent;
+using Recipebot.Shared;
+using Recipebot.Shared.DOM_Events;
+using Recipebot.Shared.DOM_Events.ComponentEvents;
+using Recipebot.Shared.Lazor;
+using Recipebot.Shared.ListComponent;
+using Recipebot.Shared.RecipeComponent;
 
-namespace PBC.Client
+namespace Recipebot.Client
 {
     public class Program
     {
@@ -27,10 +25,10 @@ namespace PBC.Client
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            builder.Services.AddHttpClient("PBC.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+            builder.Services.AddHttpClient("Recipebot.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
             .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
-            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("PBC.ServerAPI"));
+            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Recipebot.ServerAPI"));
 
             builder.Services.AddApiAuthorization();
 

@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PBC.Shared;
-using PBC.Shared.RecipeComponent;
-using PBC.Shared.SubscriptionComponent;
+using Recipebot.Shared;
+using Recipebot.Shared.RecipeComponent;
+using Recipebot.Shared.SubscriptionComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PBC.Server.Controllers
+namespace Recipebot.Server.Controllers
 {
     [AllowAnonymous]
     [Route("api/[controller]")]

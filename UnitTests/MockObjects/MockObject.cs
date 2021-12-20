@@ -1,6 +1,6 @@
-﻿using PBC.Shared.Custom_Validation;
-using PBC.Shared.RecipeComponent;
-using PBC.Shared.SubscriptionComponent;
+﻿using Recipebot.Shared.Custom_Validation;
+using Recipebot.Shared.RecipeComponent;
+using Recipebot.Shared.SubscriptionComponent;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

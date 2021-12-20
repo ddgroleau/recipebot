@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using PBC.Shared.SubscriptionComponent;
+using Recipebot.Shared.SubscriptionComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;

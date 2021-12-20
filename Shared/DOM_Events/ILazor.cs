@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PBC.Shared.DOM_Events
+namespace Recipebot.Shared.DOM_Events
 {
     public interface ILazor
     {

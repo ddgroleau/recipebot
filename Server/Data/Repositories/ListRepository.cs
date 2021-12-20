@@ -1,12 +1,12 @@
-﻿using PBC.Shared.Common;
-using PBC.Shared.ListComponent;
+﻿using Recipebot.Shared.Common;
+using Recipebot.Shared.ListComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PBC.Server.Data.Repositories
+namespace Recipebot.Server.Data.Repositories
 {
     public class ListRepository : IListRepository
     {

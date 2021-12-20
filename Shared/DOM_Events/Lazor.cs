@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using PBC.Shared.DOM_Events;
+using Recipebot.Shared.DOM_Events;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +9,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PBC.Shared.Lazor
+namespace Recipebot.Shared.Lazor
 {
     public class Lazor : ILazor
     {

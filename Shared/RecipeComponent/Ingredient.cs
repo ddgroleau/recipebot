@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PBC.Shared.RecipeComponent
+namespace Recipebot.Shared.RecipeComponent
 {
     public class Ingredient
     {

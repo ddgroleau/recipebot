@@ -4,18 +4,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PBC.Shared;
-using PBC.Server.Models;
-using PBC.Shared.Common;
-using PBC.Shared.ListComponent;
-using PBC.Shared.RecipeComponent;
-using PBC.Shared.SubscriptionComponent;
-using PBC.Shared.WebScraper;
-using PBC.Server.Data;
-using PBC.Server.Data.Repositories;
+using Recipebot.Shared;
+using Recipebot.Server.Models;
+using Recipebot.Shared.Common;
+using Recipebot.Shared.ListComponent;
+using Recipebot.Shared.RecipeComponent;
+using Recipebot.Shared.SubscriptionComponent;
+using Recipebot.Shared.WebScraper;
+using Recipebot.Server.Data;
+using Recipebot.Server.Data.Repositories;
 using Microsoft.AspNetCore.Hosting;
 
-namespace PBC.Server
+namespace Recipebot.Server
 {
     public class Startup
     {
@@ -36,21 +36,21 @@ namespace PBC.Server
                 services.AddDbContext<ApplicationDbContext>(options =>
                    options.UseSqlServer(
                Configuration.GetConnectionString("DevelopmentDb"),
-               o => o.MigrationsAssembly("PBC.Server")));
+               o => o.MigrationsAssembly("Recipebot.Server")));
             } 
             else if (Env.IsStaging())
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
                    options.UseSqlServer(
                Configuration.GetConnectionString("StagingDb"),
-               o => o.MigrationsAssembly("PBC.Server")));
+               o => o.MigrationsAssembly("Recipebot.Server")));
             }
             else
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
                    options.UseSqlServer(
                Configuration.GetConnectionString("ProductionDb"),
-               o => o.MigrationsAssembly("PBC.Server")));
+               o => o.MigrationsAssembly("Recipebot.Server")));
             }
             
             services.AddDatabaseDeveloperPageExceptionFilter();

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace PBC.Server.Controllers
+namespace Recipebot.Server.Controllers
 {
     public class OidcConfigurationController : Controller
     {

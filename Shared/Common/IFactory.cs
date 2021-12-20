@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PBC.Shared.Common
+namespace Recipebot.Shared.Common
 {
     public interface IFactory<T> where T : class
     {

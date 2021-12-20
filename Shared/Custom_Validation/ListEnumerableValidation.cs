@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PBC.Shared.Custom_Validation
+namespace Recipebot.Shared.Custom_Validation
 {
     public class ListMustContainDays : ValidationAttribute
     {

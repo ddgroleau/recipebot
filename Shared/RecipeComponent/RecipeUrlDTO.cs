@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using PBC.Shared.Custom_Validation;
-using PBC.Shared.DOM_Events;
+using Recipebot.Shared.Custom_Validation;
+using Recipebot.Shared.DOM_Events;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace PBC.Shared.RecipeComponent
+namespace Recipebot.Shared.RecipeComponent
 {
     public class RecipeUrlDTO : IRecipeUrlDTO
     {

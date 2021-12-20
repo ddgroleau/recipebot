@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PBC.Server.Data;
-using PBC.Server.Data.Repositories;
-using PBC.Shared.Common;
-using PBC.Shared.RecipeComponent;
+using Recipebot.Server.Data;
+using Recipebot.Server.Data.Repositories;
+using Recipebot.Shared.Common;
+using Recipebot.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;

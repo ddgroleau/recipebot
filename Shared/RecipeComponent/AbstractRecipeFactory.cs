@@ -1,12 +1,12 @@
-﻿using PBC.Shared.Common;
-using PBC.Shared.RecipeComponent;
+﻿using Recipebot.Shared.Common;
+using Recipebot.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PBC.Shared.RecipeComponent
+namespace Recipebot.Shared.RecipeComponent
 {
     public abstract class AbstractRecipeFactory : IFactory<Recipe>
     {
