@@ -3,7 +3,7 @@ version: '3.7'
 services:
   
   recipebot:
-    image: recipebot_server
+    image: recipebot
     build:
       context: .
       dockerfile: Server/Dockerfile
