@@ -1,9 +1,8 @@
 ﻿@inject IListGeneratorEvent Event
 
-<div class="card list-generator__card">
-    
+<div class="card list__card">
+ 
     <div class="card__form">
-        
         <div class="form-submit__container">
             <EditForm Model="Event.ListGeneratorDTO">
                 <DataAnnotationsValidator />
@@ -11,16 +10,15 @@
                 <InputNumber disabled=true class="card__input" @bind-Value=@Event.ListGeneratorDTO.Days />
                 </h4>
             </EditForm>
-            <div class="submit-error__container">
+            <div class="submit__container">
                 <div class="card__button button-list-submit">
                     <LoadingButton Loading=@Event.Lazor.Loading HandleClick="async()=> await HandleClick()">
                         Save Plan
                     </LoadingButton>
                 </div>
-                <span class="small form-text text-danger">@Event.Lazor.ErrorMessage</span>
             </div>
         </div>
-
+   
         <div class="list-generator__buttons">
             <CascadingValue Name="Loading" Value="@Event.Lazor.Loading">
                 <div class="card__button button-plus"><LoadingButton HandleClick="async () => await HandleAdd()">+1 Day</LoadingButton></div>
@@ -29,6 +27,9 @@
         </div>
     </div>
 
+   <div class="list-error">
+        <span>@Event.Lazor.ErrorMessage</span>
+    </div>
     <div class="card-body">
         <div class="row">
 
