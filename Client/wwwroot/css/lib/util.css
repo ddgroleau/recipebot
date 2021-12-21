@@ -45,6 +45,8 @@
 }
 
 .searchbar__container {
+  position: absolute;
+  top: clamp(10rem, 12.5rem, 15rem);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -70,9 +72,6 @@
 @media only screen and (max-width: 900px) {
   .searchbar {
     width: 70vw;
-  }
-  .searchbar__container {
-    margin-top: 15%;
   }
 }
 /*# sourceMappingURL=util.css.map */

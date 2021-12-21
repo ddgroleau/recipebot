@@ -1,25 +1,24 @@
 ﻿@inject IGeneratedDayEvent Event
 
-<div class="col">
-    <div class="card">
-        <h4 class="card-header">Day @ListDay.SequenceNumber</h4>
-        <div class="card-body">
-            <p class="card-text">@ListDay.Date.ToShortDateString()</p>
+    <div class="day-card">
+        <h4>Day @ListDay.SequenceNumber</h4>
+        <div>
+            <p>@ListDay.Date.ToShortDateString()</p>
             <br />
-            <p class="card-text">@ListDay.Breakfast.Title</p>
+            <p>@ListDay.Breakfast.Title</p>
                 <LoadingButton Loading=@Event.Loading["Breakfast"] HandleClick="@(async ()=> await RegenerateRecipe("Breakfast"))">@Event.RefreshSymbol["Breakfast"]</LoadingButton>
             <br />
-            <p class="card-text">@ListDay.Lunch.Title</p>
+            <p>@ListDay.Lunch.Title</p>
                 <LoadingButton Loading=@Event.Loading["Lunch"] HandleClick="@(async ()=> await RegenerateRecipe("Lunch"))">@Event.RefreshSymbol["Lunch"]</LoadingButton>
             <br />
-            <p class="card-text">@ListDay.Dinner.Title</p>
+            <p>@ListDay.Dinner.Title</p>
                 <LoadingButton Loading=@Event.Loading["Dinner"] HandleClick="@(async ()=> await RegenerateRecipe("Dinner"))">@Event.RefreshSymbol["Dinner"]</LoadingButton>
             <br />
             <br />
                 <LoadingButton Loading=@Event.Loading["AllThree"] HandleClick="@(async ()=> await RegenerateRecipe("AllThree"))">Regenerate Day</LoadingButton>
         </div>
     </div>
-</div>
+
     @code {
         [CascadingParameter(Name = "GeneratedDay")]
         public IListDayDTO ListDay { get; set; }

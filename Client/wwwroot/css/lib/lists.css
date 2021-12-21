@@ -1,20 +1,25 @@
 .list__container {
-  margin-top: 5rem;
+  margin-top: 4rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   width: 100%;
-  padding: 1rem;
+  height: 100%;
 }
 
-.list-header {
+@media only screen and (max-width: 1024px) {
+  .list__container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+
+.list-generator__container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -25,36 +30,49 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  padding: 1rem;
+  width: 100%;
+}
+
+.list__header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  margin: 0 1rem;
   width: 100%;
 }
 
-.list-header h3 {
+.list__header h3 {
   color: #F58B28;
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
 }
 
-.list__card {
+.list-generator {
   border: none;
   -webkit-box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
           box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
   margin: 1rem 0;
   min-height: 50vh;
-  min-width: 75vw;
+  width: 100%;
 }
 
-.list__card .card__form {
+.list-generator .list-generator__form {
   padding: 1rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-}
-
-.list__card .card__form form {
-  min-width: -webkit-max-content;
-  min-width: -moz-max-content;
-  min-width: max-content;
 }
 
 .form-submit__container {
@@ -66,9 +84,16 @@
       -ms-flex-direction: column;
           flex-direction: column;
   width: 100%;
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+}
+
+.form-submit__container h5 {
+  color: #4e4e4e;
 }
 
 .submit__container {
@@ -99,6 +124,11 @@
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
+  z-index: 10;
+}
+
+.list-error span {
+  background-color: #fff;
 }
 
 .list-generator__buttons {
@@ -178,5 +208,29 @@
           transform: scale(110%);
   -webkit-transition: ease-in all .1s;
   transition: ease-in all .1s;
+}
+
+.mealplan__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 1rem;
+  width: 100%;
+}
+
+.mealplan__card {
+  border: none;
+  -webkit-box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
+          box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
+  margin: 1rem 0;
+  min-height: 50vh;
+  width: 100%;
 }
 /*# sourceMappingURL=lists.css.map */

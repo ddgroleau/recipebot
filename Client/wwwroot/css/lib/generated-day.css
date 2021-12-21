@@ -1,0 +1,77 @@
+.day-card__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 1rem 0;
+  padding-top: 0.5rem;
+  width: 100%;
+  max-height: 50vh;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  overflow-y: scroll;
+  scrollbar-color: #fff, #F58B28;
+  scrollbar-width: 1rem;
+}
+
+.day-card {
+  z-index: -1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 30%;
+  min-width: 20rem;
+  margin: 0 0.5rem 0.5rem 0.5rem;
+  padding: 0.5rem;
+  -webkit-box-shadow: 0 0.1rem 0.1em 0.1rem rgba(92, 91, 91, 0.267);
+          box-shadow: 0 0.1rem 0.1em 0.1rem rgba(92, 91, 91, 0.267);
+  border-radius: 5px;
+}
+
+.day-card:nth-child(1) {
+  background-color: #FCB07E;
+}
+
+.day-card:nth-child(2) {
+  background-color: #E5BEED;
+}
+
+.day-card:nth-child(3) {
+  background-color: #54DEFD;
+}
+
+.day-card:nth-child(4) {
+  background-color: #49C6E5;
+}
+
+.day-card:nth-child(5) {
+  background-color: #00BD9D;
+}
+
+.day-card:nth-child(6) {
+  background-color: #99F7AB;
+}
+
+.day-card:nth-child(7) {
+  background-color: #8AEA92;
+}
+
+#day-card__container::-webkit-scrollbar {
+  background: #fff;
+  border-radius: 1rem;
+}
+
+#day-card__container::-webkit-scrollbar-track {
+  background: #F58B28;
+  border-radius: 1rem;
+}
+/*# sourceMappingURL=generated-day.css.map */

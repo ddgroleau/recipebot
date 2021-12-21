@@ -1,56 +1,71 @@
 ﻿@inject IListGeneratorEvent Event
 
-<div class="card list__card">
- 
-    <div class="card__form">
-        <div class="form-submit__container">
-            <EditForm Model="Event.ListGeneratorDTO">
-                <DataAnnotationsValidator />
-                <h4>Meal plan days: 
-                <InputNumber disabled=true class="card__input" @bind-Value=@Event.ListGeneratorDTO.Days />
-                </h4>
-            </EditForm>
-            <div class="submit__container">
-                <div class="card__button button-list-submit">
-                    <LoadingButton Loading=@Event.Lazor.Loading HandleClick="async()=> await HandleClick()">
-                        Save Plan
-                    </LoadingButton>
+<div class="list__container">
+    <div class="list-generator__container">
+        <div class="list__header">
+            <h3>Meal Plan Generator</h3>
+            <p>
+                Generate a random list of recipes. Use the Days +/- buttons to add days to your meal plan.
+            </p>
+        </div>
+        <div class="list-generator">
+            <div class="list-generator__form">
+                <div class="form-submit__container">
+                    <EditForm Model="Event.ListGeneratorDTO">
+                        <DataAnnotationsValidator />
+                        <h5>Meal plan days: 
+                        <InputNumber disabled=true class="card__input" @bind-Value=@Event.ListGeneratorDTO.Days />
+                        </h5>
+                    </EditForm>
+                    <div class="submit__container">
+                        <div class="card__button button-list-submit">
+                            <LoadingButton Loading=@Event.Lazor.Loading HandleClick="async()=> await HandleClick()">
+                                Save Plan
+                            </LoadingButton>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-generator__buttons">
+                    <CascadingValue Name="Loading" Value="@Event.Lazor.Loading">
+                        <div class="card__button button-plus"><LoadingButton HandleClick="async () => await HandleAdd()">+1 Day</LoadingButton></div>
+                        <div class="card__button button-minus"><LoadingButton HandleClick="() => Event.RemoveDay()">-1 Day</LoadingButton></div>
+                    </CascadingValue>
                 </div>
             </div>
-        </div>
-   
-        <div class="list-generator__buttons">
-            <CascadingValue Name="Loading" Value="@Event.Lazor.Loading">
-                <div class="card__button button-plus"><LoadingButton HandleClick="async () => await HandleAdd()">+1 Day</LoadingButton></div>
-                <div class="card__button button-minus"><LoadingButton HandleClick="() => Event.RemoveDay()">-1 Day</LoadingButton></div>
-            </CascadingValue>
-        </div>
-    </div>
-
-   <div class="list-error">
-        <span>@Event.Lazor.ErrorMessage</span>
-    </div>
-    <div class="card-body">
-        <div class="row">
-
-            @{
-                if (Event.Lazor.IsSuccess)
-                {
-                    <h4 class="text-center text-success">Success!</h4>
-                    <button type="button" @onclick="()=>Event.Lazor.SetSuccessStatus(false)" class="btn btn-danger float-right">&times;</button>
-                }
-                else
-                {
-
-                    foreach (var day in Event.ListGeneratorDTO.GeneratedDays)
+            <div class="list-error">
+                <span>@Event.Lazor.ErrorMessage</span>
+            </div>
+            <div id="day-card__container" class="day-card__container">
+                @{
+                    if (Event.Lazor.IsSuccess)
                     {
-                        <CascadingValue Name="GeneratedDay" Value="day">
-                            <GeneratedDay />
-                        </CascadingValue>
+                        <h4 class="text-center text-success">Success!</h4>
+                        <button type="button" @onclick="()=>Event.Lazor.SetSuccessStatus(false)" class="btn btn-danger float-right">&times;</button>
+                    }
+                    else
+                    {
+                        foreach (var day in Event.ListGeneratorDTO.GeneratedDays)
+                        {
+                            <CascadingValue Name="GeneratedDay" Value="day">
+                                <GeneratedDay />
+                            </CascadingValue>
+                        }
                     }
                 }
-            }
-
+            </div>
+        </div>
+    </div>
+    <div class="mealplan__container">
+         <div class="list__header">
+         <h3>
+            Saved Mealplans:
+         </h3>
+            <p>
+                View your saved meal plans.
+            </p>
+        </div>
+        <div class="mealplan__card">
+            
         </div>
     </div>
 </div>

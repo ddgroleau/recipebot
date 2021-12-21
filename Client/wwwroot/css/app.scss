@@ -1,11 +1,11 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
-
 @import './lib/lazor.scss';
 @import './lib/cookbook.scss';
 @import './lib/login.scss';
 @import './lib/lists.scss';
 @import './lib/util.scss';
+@import './lib/generated-day.scss';
 
 body {
     font-family: 'Open Sans', sans-serif;
@@ -45,3 +45,4 @@ footer {
         top: 0.5rem;
     }
 }
+
