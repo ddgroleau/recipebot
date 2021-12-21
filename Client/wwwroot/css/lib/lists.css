@@ -1,5 +1,5 @@
 .list__container {
-  margin-top: 5%;
+  margin-top: 20%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -17,7 +17,6 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 70%;
   max-width: 95%;
 }
 
@@ -26,27 +25,69 @@
 }
 
 .list-generator__card {
-  max-width: 80%;
-  background-color: #FFB54D;
   border: none;
   -webkit-box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
           box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
   margin: 1rem 0;
+  min-height: 50vh;
 }
 
 .list-generator__card .card__form {
-  margin: 1rem;
+  padding: 1rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  width: 95%;
 }
 
-.list-generator__card .card__form h4 {
-  color: #fff;
+.list-generator__card .card__form form {
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+}
+
+.form-submit__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.submit-error__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.submit-error__container span {
+  text-align: center;
+}
+
+.list-generator__buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  width: 100%;
 }
 
 .card__input {
@@ -55,14 +96,19 @@
   width: 3rem;
   border-bottom: solid .1rem #fff;
   font-weight: 600;
-  color: #fff;
-  background-color: #FFB54D;
 }
 
 .card__button button {
-  margin-left: 1rem;
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+  margin: .5rem;
+  width: 5rem;
   background-color: rgba(255, 255, 255, 0.781);
   font-weight: 600;
+  border: solid #fff 1px;
+  -webkit-box-shadow: 0 0.1rem 0.1em 0.1rem rgba(92, 91, 91, 0.267);
+          box-shadow: 0 0.1rem 0.1em 0.1rem rgba(92, 91, 91, 0.267);
 }
 
 .card__button button:focus {
@@ -75,10 +121,13 @@
 }
 
 .button-plus button:hover {
-  background-color: white;
-  color: #f75013;
-  -webkit-transition: ease-in all .25s;
-  transition: ease-in all .25s;
+  background-color: #388a38;
+  color: #fff;
+  -webkit-transition: ease-in all .1s;
+  transition: ease-in all .1s;
+  border: none;
+  -webkit-transform: scale(110%);
+          transform: scale(110%);
 }
 
 .button-plus button:focus {
@@ -91,22 +140,28 @@
 }
 
 .button-minus button:hover {
-  background-color: white;
-  color: #f03709;
-  -webkit-transition: ease-in all .25s;
-  transition: ease-in all .25s;
+  background-color: #f55353;
+  color: #fff;
+  -webkit-transition: ease-in all .1s;
+  transition: ease-in all .1s;
+  border: none;
+  -webkit-transform: scale(110%);
+          transform: scale(110%);
 }
 
 .button-list-submit button {
   color: #292727;
+  border: solid #fff 1px;
+  -webkit-box-shadow: 0 0.1rem 0.1em 0.1rem rgba(92, 91, 91, 0.267);
+          box-shadow: 0 0.1rem 0.1em 0.1rem rgba(92, 91, 91, 0.267);
 }
 
 .button-list-submit button:hover {
-  background-color: white;
-  color: #f75013;
-  -webkit-transform: translateX(0.15rem);
-          transform: translateX(0.15rem);
-  -webkit-transition: ease-in all .25s;
-  transition: ease-in all .25s;
+  border: solid #F58B28 1px;
+  color: #F58B28;
+  -webkit-transform: scale(110%);
+          transform: scale(110%);
+  -webkit-transition: ease-in all .1s;
+  transition: ease-in all .1s;
 }
 /*# sourceMappingURL=lists.css.map */

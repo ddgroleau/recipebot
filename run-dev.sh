@@ -9,15 +9,7 @@ then
 else
     echo -e "Starting your SQL Server container...\n"
 
-    docker run \
-        -e "ACCEPT_EULA=Y" \
-        -e "SA_PASSWORD=msSQLpass123" 
-        -p 1433:1433 \
-        --name sql_server \
-        -h sqlserver \
-        -v /tmp/mssql:/var/opt/mssql3 \
-        -d \
-        mcr.microsoft.com/mssql/server:2019-latest
+    docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=msSQLpass123" -p 1433:1433 --name sql_server -h sqlserver -v /tmp/mssql:/var/opt/mssql3 -d mcr.microsoft.com/mssql/server:2019-latest
 fi
 
 echo -e "Starting the application...\n"

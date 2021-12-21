@@ -1,7 +1,10 @@
-.loading {
-    position: absolute;
-    top: 30%;
-    left: 40%;
+.loading__container {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  .loading {
     border: 30px solid #EAF0F6;
     border-radius: 50%;
     border-top: 30px solid #FF7A59;
@@ -9,6 +12,7 @@
     height: 300px;
     animation: spinner 0.5s linear infinite;
   }
+}
   
   @keyframes spinner {
     0% { transform: rotate(0deg); }
