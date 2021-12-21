@@ -1,7 +1,6 @@
 ﻿@inject ISearchBarEvent Event
 
-<div>
-    <form class="l-form searchbar" @onsubmit="Event.HandleClick">
+    <form class="l-form" @onsubmit="Event.HandleClick">
         <div class="l-search-field">
         <input  @bind-value="Event.SearchText"
                @bind-value:event="oninput" @onkeypress="Event.HandleKeyPress" placeholder="Search Recipes"/>
@@ -29,7 +28,6 @@
             </div>
         }
     }
-</div>
     
 
     <CascadingValue Name="SearchBarEvent" Value="Event">

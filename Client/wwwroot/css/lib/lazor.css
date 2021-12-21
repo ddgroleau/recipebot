@@ -29,6 +29,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  width: 100%;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
@@ -46,10 +47,7 @@
   -ms-flex-wrap: nowrap;
       flex-wrap: nowrap;
   padding: .5rem 1.5rem .5rem 1.5rem;
-  min-width: -webkit-fit-content;
-  min-width: -moz-fit-content;
-  min-width: fit-content;
-  width: 40%;
+  width: 100%;
   border-radius: 4rem;
   border: solid rgba(139, 138, 138, 0.26) 0.1rem;
   -webkit-box-shadow: 0.2rem 0.3rem 0.1rem 0.1rem rgba(172, 171, 171, 0.432);

@@ -31,6 +31,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  width: 100%;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
@@ -48,10 +49,7 @@
   -ms-flex-wrap: nowrap;
       flex-wrap: nowrap;
   padding: .5rem 1.5rem .5rem 1.5rem;
-  min-width: -webkit-fit-content;
-  min-width: -moz-fit-content;
-  min-width: fit-content;
-  width: 40%;
+  width: 100%;
   border-radius: 4rem;
   border: solid rgba(139, 138, 138, 0.26) 0.1rem;
   -webkit-box-shadow: 0.2rem 0.3rem 0.1rem 0.1rem rgba(172, 171, 171, 0.432);
@@ -329,6 +327,73 @@
           transform: translateX(0.15rem);
   -webkit-transition: ease-in all .25s;
   transition: ease-in all .25s;
+}
+
+.loading {
+  position: absolute;
+  top: 30%;
+  left: 40%;
+  border: 30px solid #EAF0F6;
+  border-radius: 50%;
+  border-top: 30px solid #FF7A59;
+  width: 300px;
+  height: 300px;
+  -webkit-animation: spinner 0.5s linear infinite;
+          animation: spinner 0.5s linear infinite;
+}
+
+@-webkit-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+.searchbar__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.searchbar {
+  width: 40vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
+}
+
+@media only screen and (max-width: 900px) {
+  .searchbar {
+    width: 70vw;
+  }
+  .searchbar__container {
+    margin-top: 15%;
+  }
 }
 
 .searchbar {
