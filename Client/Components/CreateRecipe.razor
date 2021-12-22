@@ -1,20 +1,17 @@
 ﻿@inject ICreateRecipeEvent Event
 
-<div class="card">
-    <div class="card-body">
+<div class="create-recipe__card">
+    <div class="create-recipe-card__body">
             <h3>Create a Recipe</h3>
             <p>Enter your recipe URL</p>
-        <EditForm class="create-recipe-form" Model="@Event.RecipeUrlDTO" OnSubmit=@(()=>Event.HandleSubmit())>
-            <DataAnnotationsValidator />
-            
-            <InputText @bind-Value="@Event.RecipeUrlDTO.URL" class="form-control" DisplayName="Recipe URL" />
-            <ValidationMessage For="@(() => @Event.RecipeUrlDTO.URL)" />
-
+            <EditForm class="create-recipe__form" Model="@Event.RecipeUrlDTO" OnSubmit=@(()=>Event.HandleSubmit())>
+                <DataAnnotationsValidator />
+                <InputText @bind-Value="@Event.RecipeUrlDTO.URL" class="form-control" DisplayName="Recipe URL" />
+                <ValidationMessage For="@(() => @Event.RecipeUrlDTO.URL)" />
                 <LoadingButton Loading="@Event.Lazor.Loading">
                     <span>Create</span>
-                    </LoadingButton>
-
-        </EditForm>
+                </LoadingButton>
+            </EditForm>
     </div>
 
         <CascadingValue Name="Lazor" Value="@Event.Lazor">

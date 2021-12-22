@@ -1,4 +1,4 @@
-﻿<div class="form-group">
+﻿<div class="edit-recipe__form-group"> 
         <label for="Instructions">Instructions:</label>
         <ol>
             @{
@@ -14,15 +14,13 @@
                 }
                 else
                 {
-                    <li class="list-unstyled">
-                        <p>No instructions found. Want to add some?</p>
-                    </li>
+                    <li style="list-style-type:none">No instructions found. Want to add some?</li>
                 }
              }
          </ol>
-        <div class="form-group">
+        <div class="edit-recipe__add-element add-instruction">
             <InputText @bind-Value="@Event.NewInstruction" />
-            <button type="button" class="btn btn-dark" @onclick="()=>Event.AddInstruction(Model)">Add Instruction</button>
+            <button type="button" class="btn" @onclick="()=>Event.AddInstruction(Model)">+Instruction</button>
         </div>
 </div>
 

@@ -1,0 +1,40 @@
+.create-recipe__card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  border: none;
+}
+
+.create-recipe__card h3 {
+  color: #F58B28;
+}
+
+.create-recipe__card .create-recipe-card__body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.create-recipe__card .create-recipe-card__body .create-recipe__form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.create-recipe__card .create-recipe-card__body .create-recipe__form button {
+  background-color: #F58B28;
+  padding: 0.5rem 2rem;
+  border: none;
+  margin-left: 1rem;
+}
+/*# sourceMappingURL=create-recipe.css.map */

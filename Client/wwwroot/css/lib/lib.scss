@@ -1,0 +1,46 @@
+@mixin marginTop {
+    margin-top: 10%;
+}
+@mixin flex {
+    display: flex;
+    width: 100%;
+}
+@mixin l-zoom($scale) {
+    transition: 0.25s;
+    transform: scale($scale);
+}
+@mixin cardBorder {
+    box-shadow: 0 0.1rem 0.1em 0.1rem rgba(92, 91, 91, 0.267);
+}
+@mixin buttonBorder {
+    border: solid #fff 1px;
+    box-shadow: 0 0.1rem 0.1em 0.1rem rgba(92, 91, 91, 0.267);
+}
+@mixin container {
+    border: none;
+    box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
+}
+$recipebot_grey: rgb(78, 78, 78);
+$recipebot_danger: rgb(250, 78, 78);
+$pbc_orange: #F58B28;
+$card-backgrounds:(
+    1:#FCB07E,
+    2:#E5BEED,
+    3:#54DEFD,
+    4:#49C6E5,
+    5:#00BD9D,
+    6:#99F7AB,
+    7:#8AEA92
+);
+$add-instruction-dark: #377771;
+$add-instruction-light:#4CE0B3;
+$add-instruction-dark-transparent: #37777183;
+$add-instruction-light-transparent:#4ce0b38c;
+$add-ingredient-dark: #4357AD;
+$add-ingredient-light: #A3D5FF;
+$add-ingredient-dark-transparent: #4356ad80;
+$add-ingredient-light-transparent: #a3d6ff83;
+$edit-recipe-light:#8B80F9;
+$edit-recipe-dark:#6457A6;
+
+

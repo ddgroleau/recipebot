@@ -3,75 +3,86 @@
 
 <div class="@Lazor.ToggleTarget">
     <div class="l-modal">
-        <div class="card">
-            <h4 class="card-header">
-                Check your Recipe!
-                <button type="button" @onclick="HandleClick" class="btn btn-danger float-right">&times;</button>
-            </h4>
-            <div class="card-body">
+        <div class="edit-recipe__container">
+            <div class="edit-recipe__card">
+                <div class="edit-recipe-card__header">
+                    <h4>Check your Recipe!</h4>
+                    <button type="button" @onclick="HandleClick">&times</button>
+                </div>
+                <div class="edit-recipe-card__body">
+                    @{
+                        if (Lazor.IsSuccess)
+                        {
+                            <h4 class="text-center text-success">Success!</h4>
+                        }
+                        else
+                        {
+                            <EditForm Model="@RecipeDTO" OnValidSubmit=@(()=>Event.HandleValidSubmit(Lazor,RecipeDTO))>
+                                <DataAnnotationsValidator />
 
-                @{
-                    if (Lazor.IsSuccess)
-                    {
-                        <h4 class="text-center text-success">Success!</h4>
-                    }
-                    else
-                    {
-                        <EditForm Model="@RecipeDTO" OnValidSubmit=@(()=>Event.HandleValidSubmit(Lazor,RecipeDTO))>
-                            <DataAnnotationsValidator />
-
-                            <div class="form-group">
-                                <label for="Title">
-                                    Title:
-                                    <InputText @bind-Value="@RecipeDTO.Title" />
-                                </label>
-                                <div class="small form-text text-danger">
-                                    <ValidationMessage For="@(() => RecipeDTO.Title)" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="RecipeType">
-                                    Recipe Type:
-                                    <InputSelect @bind-Value="@RecipeDTO.RecipeType">
-                                        <option value="default">Choose a type</option>
-                                        <option value="@RecipeTypes.GetRecipeType("Breakfast")">Breakfast</option>
-                                        <option value="@RecipeTypes.GetRecipeType("Lunch")">Lunch</option>
-                                        <option value="@RecipeTypes.GetRecipeType("Dinner")">Dinner</option>
-                                        <option value="@RecipeTypes.GetRecipeType("Snack")">Snack</option>
-                                        <option value="@RecipeTypes.GetRecipeType("Beverage")">Beverage</option>
-                                    </InputSelect>
-                                </label>
-                                <div class="small form-text text-danger">
-                                    <ValidationMessage For="@(() => RecipeDTO.RecipeType)" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="Description">
-                                    Description:
-                                    <InputTextArea @bind-Value="@RecipeDTO.Description" />
-                                </label>
-                            </div>
-
-                            <CascadingValue Name="Event" Value="@Event">
-                                <CascadingValue Name="Model" Value="@RecipeDTO">
-                                    <IngredientsForm />
-                                    <div class="small form-text text-danger">
-                                        <ValidationMessage For="@(() => RecipeDTO.Ingredients)" />
+                                <div class="edit-recipe__form-group">
+                                       <label for="RecipeType">
+                                        Recipe Type:
+                                        <InputSelect @bind-Value="@RecipeDTO.RecipeType">
+                                            <option value="default">Choose a type</option>
+                                            <option value="@RecipeTypes.GetRecipeType("Breakfast")">Breakfast</option>
+                                            <option value="@RecipeTypes.GetRecipeType("Lunch")">Lunch</option>
+                                            <option value="@RecipeTypes.GetRecipeType("Dinner")">Dinner</option>
+                                            <option value="@RecipeTypes.GetRecipeType("Snack")">Snack</option>
+                                            <option value="@RecipeTypes.GetRecipeType("Beverage")">Beverage</option>
+                                        </InputSelect>
+                                    </label>
+                                    <div class="edit-recipe__error">
+                                        <ValidationMessage For="@(() => RecipeDTO.RecipeType)" />
                                     </div>
-                                    <InstructionsForm />
-                                    <div class="small form-text text-danger">
-                                        <ValidationMessage For="@(() => RecipeDTO.Instructions)" />
+                                    <label for="Title">
+                                        Title:
+                                        <InputText @bind-Value="@RecipeDTO.Title" />
+                                    </label>
+                                    <div class="edit-recipe__error">
+                                        <ValidationMessage For="@(() => RecipeDTO.Title)" />
+                                    </div>
+                                </div>
+                                
+                                <div class="edit-recipe__form-group">
+                                    <label for="Description">
+                                        Description:
+                                    </label>
+                                    <InputTextArea @bind-Value="@RecipeDTO.Description" />
+                                </div>
+
+                                <CascadingValue Name="Event" Value="@Event">
+                                <CascadingValue Name="Model" Value="@RecipeDTO">
+                                    <div class="edit-recipe__form-group">
+                                        <IngredientsForm />
+                                        <div class="edit-recipe__error">
+                                            <ValidationMessage For="@(() => RecipeDTO.Ingredients)" />
+                                        </div>
+                                    </div>
+                                    <div class="edit-recipe__form-group">
+                                        <InstructionsForm />
+                                        <div class="edit-recipe__error">
+                                            <ValidationMessage For="@(() => RecipeDTO.Instructions)" />
+                                        </div>
                                     </div>
                                 </CascadingValue>
-                            </CascadingValue>
+                                </CascadingValue>
 
-                            <span class="small form-text text-danger">@Lazor.ErrorMessage</span>
+                                <span class="edit-recipe__error">@Lazor.ErrorMessage</span>
 
-                                <LoadingButton Loading="@Lazor.Loading">Submit</LoadingButton>
-                        </EditForm>
+                                <div class="edit-recipe__controls">
+                                    <div class="edit-recipe__submit">
+                                        <LoadingButton Loading="@Lazor.Loading">Submit</LoadingButton>
+                                    </div>
+                                    <div class="edit-recipe__close">
+                                        <button type="button" @onclick="HandleClick" class="btn">Close</button>
+                                    </div>
+                                </div>
+                            </EditForm>
+                        }
                     }
-                }
 
+                </div>
             </div>
         </div>
     </div>

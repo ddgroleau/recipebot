@@ -1,19 +1,5 @@
-$card-backgrounds:(
-    1:#FCB07E,
-    2:#E5BEED,
-    3:#54DEFD,
-    4:#49C6E5,
-    5:#00BD9D,
-    6:#99F7AB,
-    7:#8AEA92
-);
-@mixin flex {
-    display: flex;
-    width: 100%;
-}
-@mixin cardBorder {
-    box-shadow: 0 0.1rem 0.1em 0.1rem rgba(92, 91, 91, 0.267);
-}
+@import './lib.scss';
+
 .day-card__container {
     @include flex();
     margin: 1rem 0;

@@ -1,13 +1,14 @@
 .l-modal {
   position: fixed;
-  height: 80vh;
+  height: 100%;
   width: 100%;
-  top: 58px;
+  top: 7.5%;
   left: 0;
   z-index: 1;
-  border: solid red 1px;
-  background-color: white;
-  padding: 10px;
+  background: -webkit-gradient(linear, left top, right bottom, from(white), to(rgba(255, 255, 255, 0.85)));
+  background: linear-gradient(to right bottom, white, rgba(255, 255, 255, 0.85));
+  -webkit-backdrop-filter: 3rem;
+          backdrop-filter: 3rem;
   overflow: auto;
 }
 

@@ -1,0 +1,119 @@
+@import './lib.scss';
+@mixin editRecipeButton($color1, $color2, $font1, $font2) {
+    button {
+        margin-top: 1rem;
+        background-color: $color1;
+        color: $font1;
+        max-width: max-content;
+    }
+    button:hover {
+        background-color: $color2;
+        color: $font2;
+        transform: scale(110%);
+        transition: ease-in all .1s;
+    }
+}
+@mixin editRecipeInput($border-bottom, $background-hover) {
+    input {
+        outline: none;
+        background: none;
+        border: none;
+        border-bottom: solid $border-bottom 1px;
+        margin-right: .5rem;
+        height: 85%;
+    }
+    input:hover {
+        border-radius: 5px;
+        background-color: $background-hover;
+    }
+}
+
+.edit-recipe__container {
+    @include flex;
+    height: 100%;
+    justify-content: center;
+    align-items: flex-start;
+}
+.edit-recipe__card {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    min-height: max-content;
+    overflow: auto;
+    @include cardBorder;
+    margin:1rem;
+    height: clamp(75%,85%,95%);
+    width: clamp(75%,90%,100%);
+    padding: 1rem;
+    border-radius: 5px;
+}
+.edit-recipe-card__header {
+    @include flex();
+    align-items: flex-start;
+    justify-content: space-between;
+    h4 {
+        color: $recipebot_grey;
+    }
+    button {
+        outline: none;
+        border: none;
+        background: none;
+        color: $recipebot_danger;
+        align-items: flex-start;
+        font-size: 2rem;
+        font-weight: 800;
+        height: min-content;
+        margin-top: -1rem;
+    }
+    button:hover {
+        transform: scale(140%);
+        transition: all ease-in-out .15s;
+    }
+}
+.edit-recipe-card__body {
+    @include flex();
+}
+
+.edit-recipe__form-group {
+    @include flex();
+    flex-direction: column;
+    padding-top: 0.5rem;
+}
+
+.edit-recipe__error {
+    color: $recipebot_danger;
+}
+
+.edit-recipe__add-element{
+    @include flex();
+    justify-content: center;
+    align-items: flex-end;
+    height: 3rem;
+}
+
+.add-ingredient {
+    @include editRecipeButton($add-ingredient-light, $add-ingredient-dark, black, #fff);
+    @include editRecipeInput($add-ingredient-light, $add-ingredient-light-transparent);
+}
+.add-instruction {
+    @include editRecipeButton($add-instruction-dark, $add-instruction-light, #fff, black);
+    @include editRecipeInput($add-instruction-dark, $add-instruction-dark-transparent);
+}
+
+.edit-recipe__controls {
+    @include flex();
+    .edit-recipe__submit {
+        @include flex();
+        justify-content: flex-start;
+        @include editRecipeButton($edit-recipe-light, $edit-recipe-dark, black, #fff);
+    }
+    .edit-recipe__close {
+        @include flex();
+        justify-content: flex-end;
+        @include editRecipeButton($recipebot_danger, #fff, #fff, black);
+        button {
+            border: solid $recipebot_danger 1px;
+        }
+    }
+}

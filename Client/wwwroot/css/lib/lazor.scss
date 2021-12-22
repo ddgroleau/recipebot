@@ -1,18 +1,14 @@
-@mixin l-zoom($scale) {
-    transition: 0.25s;
-    transform: scale($scale);
-}
+@import './lib.scss';
 
 .l-modal {
     position: fixed;
-    height: 80vh;
+    height: 100%;
     width: 100%;
-    top: 58px;
+    top: 7.5%;
     left: 0;
     z-index: 1;
-    border: solid red 1px;
-    background-color: white;
-    padding: 10px;
+    background: linear-gradient(to right bottom,rgb(255, 255, 255),rgba(255, 255, 255, 0.85));
+    backdrop-filter: 3rem;
     overflow: auto;
 }
 

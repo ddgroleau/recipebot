@@ -1,8 +1,4 @@
-@mixin buttonBorder {
-    border: solid #fff 1px;
-    box-shadow: 0 0.1rem 0.1em 0.1rem rgba(92, 91, 91, 0.267);
-}
-$pbc_orange: #F58B28;
+@import './lib.scss';
 
 .list__container {
     margin-top: 4rem;
@@ -38,8 +34,7 @@ $pbc_orange: #F58B28;
 }
 // List Generator
 .list-generator{
-    border: none;
-    box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
+    @include container();
     min-height: 50vh;
     width: 100%;
     .list-generator__form {
@@ -145,8 +140,7 @@ $pbc_orange: #F58B28;
     width: 100%;
 }
 .mealplan__card {
-    border: none;
-    box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
+    @include container();
     min-height: 50vh;
     width: 100%;
 }

@@ -1,47 +1,30 @@
-@mixin marginTop {
-    margin-top: 5%;
-}
-
-$pbc_orange: #F58B28;
+@import './lib.scss';
 
 .cookbook-container {
-    display: flex;
+    @include flex();
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    width: 100%;
     height: 90vh;
+    max-width: 95vw;
     @include marginTop();
     .create-recipe-container {
+      @include flex();
       min-width: fit-content;
-      width: 95%;
       max-width: 60vh;
       height: auto;
-      @include marginTop();
-      .card {
-          width: 100%;
-          border: none;
-          h3 {
-              color: $pbc_orange
-          }
-          .card-body {
-            width: 100%;
-            .create-recipe-form {
-                display: flex;
-                justify-content: center;
-                button {
-                    background-color: $pbc_orange;
-                    padding:  0.5rem 2rem;
-                    border:none;
-                    margin-left: 1rem;
-                }
-            }
-          }
-      }
     }
     .cookbook-table-container {
-        border: solid green 1px;
-        @include marginTop();
-        text-align: center;
+        @include flex();
+        @include container();
+        flex-direction: column;
+        padding: 1rem;
+        min-height: 50vh;
+        margin: 2rem 1rem;
     }
+}
+@media only screen and (max-width:1024px) {
+.cookbook-container {
+      margin-top: 20%;
+  }
 }
