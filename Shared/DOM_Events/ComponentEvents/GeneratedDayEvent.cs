@@ -30,7 +30,7 @@ namespace Recipebot.Shared.DOM_Events.ComponentEvents
             };
 
         public Dictionary<string, string> RefreshSymbol { get; set; } = new Dictionary<string, string>() {
-                { "Breakfast", "↻" },
+                { "Breakfast", "&#x1F504" },
                 { "Lunch", "↻" },
                 { "Dinner", "↻" },
                 { "AllThree", "↻" }

@@ -837,7 +837,17 @@
   padding-top: 0.5rem;
 }
 
+.edit-recipe__form-group p {
+  font-size: 1rem;
+  color: #4e4e4e;
+  font-style: italic;
+}
+
 .edit-recipe__error {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
   color: #fa4e4e;
 }
 
@@ -855,7 +865,11 @@
   height: 3rem;
 }
 
-.add-ingredient button {
+.edit-recipe__add-element input {
+  max-width: 11rem;
+}
+
+.add-ingredient button, .edit-recipe__ingredients button {
   margin-top: 1rem;
   background-color: #A3D5FF;
   color: black;
@@ -864,7 +878,7 @@
   max-width: max-content;
 }
 
-.add-ingredient button:hover {
+.add-ingredient button:hover, .edit-recipe__ingredients button:hover {
   background-color: #4357AD;
   color: #fff;
   -webkit-transform: scale(110%);
@@ -873,21 +887,25 @@
   transition: ease-in all .1s;
 }
 
-.add-ingredient input {
+.add-ingredient input, .add-ingredient textarea, .edit-recipe__ingredients input, .edit-recipe__ingredients textarea {
   outline: none;
   background: none;
-  border: none;
-  border-bottom: solid #A3D5FF 1px;
+  border: solid #A3D5FF 1px;
   margin-right: .5rem;
-  height: 85%;
+  border-radius: 5px;
+  height: 83%;
 }
 
-.add-ingredient input:hover {
-  border-radius: 5px;
+.add-ingredient input:hover, .add-ingredient textarea:hover, .edit-recipe__ingredients input:hover, .edit-recipe__ingredients textarea:hover {
   background-color: #a3d6ff83;
 }
 
-.add-instruction button {
+.add-ingredient li, .edit-recipe__ingredients li {
+  color: #4357AD;
+  margin-top: 0.5rem;
+}
+
+.add-instruction button, .edit-recipe__instructions button {
   margin-top: 1rem;
   background-color: #377771;
   color: #fff;
@@ -896,7 +914,7 @@
   max-width: max-content;
 }
 
-.add-instruction button:hover {
+.add-instruction button:hover, .edit-recipe__instructions button:hover {
   background-color: #4CE0B3;
   color: black;
   -webkit-transform: scale(110%);
@@ -905,18 +923,22 @@
   transition: ease-in all .1s;
 }
 
-.add-instruction input {
+.add-instruction input, .add-instruction textarea, .edit-recipe__instructions input, .edit-recipe__instructions textarea {
   outline: none;
   background: none;
-  border: none;
-  border-bottom: solid #377771 1px;
+  border: solid #377771 1px;
   margin-right: .5rem;
-  height: 85%;
+  border-radius: 5px;
+  height: 83%;
 }
 
-.add-instruction input:hover {
-  border-radius: 5px;
+.add-instruction input:hover, .add-instruction textarea:hover, .edit-recipe__instructions input:hover, .edit-recipe__instructions textarea:hover {
   background-color: #37777183;
+}
+
+.add-instruction li, .edit-recipe__instructions li {
+  color: #377771;
+  margin-top: 0.5rem;
 }
 
 .edit-recipe__controls {
@@ -924,6 +946,9 @@
   display: -ms-flexbox;
   display: flex;
   width: 100%;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
 }
 
 .edit-recipe__controls .edit-recipe__submit {
@@ -984,6 +1009,100 @@
 
 .edit-recipe__controls .edit-recipe__close button {
   border: solid #fa4e4e 1px;
+}
+
+.edit-recipe__description {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.edit-recipe__description input, .edit-recipe__description textarea {
+  outline: none;
+  background: none;
+  border: solid #31C0A3 1px;
+  margin-right: .5rem;
+  border-radius: 5px;
+  height: 83%;
+}
+
+.edit-recipe__description input:hover, .edit-recipe__description textarea:hover {
+  background-color: #31c0a388;
+}
+
+.edit-recipe__title {
+  padding-top: 0.5rem;
+}
+
+.edit-recipe__title input, .edit-recipe__title textarea {
+  outline: none;
+  background: none;
+  border: solid #FE5F55 1px;
+  margin-right: .5rem;
+  border-radius: 5px;
+  height: 83%;
+}
+
+.edit-recipe__title input:hover, .edit-recipe__title textarea:hover {
+  background-color: #fe60557c;
+}
+
+.edit-recipe__title input {
+  margin-left: 1rem;
+  width: 15rem;
+}
+
+.edit-recipe__select {
+  border: solid #8B80F9 1px;
+  background-color: #fff;
+  margin-left: 1rem;
+  border-radius: 5px;
+  z-index: 2;
+}
+
+.edit-recipe__select select {
+  z-index: 1;
+  color: #4e4e4e;
+  background: none;
+  border: none;
+  outline: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.edit-recipe__select select::-ms-expand {
+  display: none;
+}
+
+.edit-recipe__form-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.edit-recipe__type {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  padding-top: 0.5rem;
 }
 
 body {

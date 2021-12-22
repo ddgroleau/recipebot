@@ -14,16 +14,15 @@
     }
 }
 @mixin editRecipeInput($border-bottom, $background-hover) {
-    input {
+    input, textarea {
         outline: none;
         background: none;
-        border: none;
-        border-bottom: solid $border-bottom 1px;
+        border: solid $border-bottom 1px;
         margin-right: .5rem;
-        height: 85%;
-    }
-    input:hover {
         border-radius: 5px;
+        height: 83%;
+    }
+    input:hover, textarea:hover {
         background-color: $background-hover;
     }
 }
@@ -74,35 +73,48 @@
 .edit-recipe-card__body {
     @include flex();
 }
-
 .edit-recipe__form-group {
     @include flex();
     flex-direction: column;
     padding-top: 0.5rem;
+    p {
+        font-size: 1rem;
+        color: $recipebot_grey;
+        font-style: italic;
+    }
 }
-
 .edit-recipe__error {
+    @include flex();
     color: $recipebot_danger;
 }
-
 .edit-recipe__add-element{
     @include flex();
     justify-content: center;
     align-items: flex-end;
     height: 3rem;
+    input {
+        max-width: 11rem;
+    }
 }
-
-.add-ingredient {
+.add-ingredient, .edit-recipe__ingredients {
     @include editRecipeButton($add-ingredient-light, $add-ingredient-dark, black, #fff);
     @include editRecipeInput($add-ingredient-light, $add-ingredient-light-transparent);
+    li {
+        color: $add-ingredient-dark;
+        margin-top: 0.5rem;
+    }
 }
-.add-instruction {
+.add-instruction, .edit-recipe__instructions {
     @include editRecipeButton($add-instruction-dark, $add-instruction-light, #fff, black);
     @include editRecipeInput($add-instruction-dark, $add-instruction-dark-transparent);
+    li {
+        color: $add-instruction-dark;
+        margin-top: 0.5rem;
+    }
 }
-
 .edit-recipe__controls {
     @include flex();
+    align-items: flex-end;
     .edit-recipe__submit {
         @include flex();
         justify-content: flex-start;
@@ -116,4 +128,45 @@
             border: solid $recipebot_danger 1px;
         }
     }
+}
+.edit-recipe__description {
+    @include flex();
+    flex-direction: column;
+    @include editRecipeInput($edit-recipe-description, $edit-recipe-description-transparent);
+}
+.edit-recipe__title {
+    @include editRecipeInput($edit-recipe-title, $edit-recipe-title-transparent);
+    padding-top: 0.5rem;
+    input {
+        margin-left: 1rem;
+        width: 15rem;
+    }
+}
+.edit-recipe__select {
+    border: solid $edit-recipe-light 1px;
+    background-color: #fff;
+    margin-left: 1rem;
+    border-radius:5px;
+    z-index: 2;
+    select {
+        z-index: 1;
+        color: $recipebot_grey;
+        background: none;
+        border:none;
+        outline: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        &::-ms-expand { display: none };
+    }
+}
+.edit-recipe__form-header {
+    @include flex();
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.edit-recipe__type {
+    @include flex();
+    padding-top: 0.5rem;
 }

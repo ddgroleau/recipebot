@@ -20,35 +20,39 @@
                             <EditForm Model="@RecipeDTO" OnValidSubmit=@(()=>Event.HandleValidSubmit(Lazor,RecipeDTO))>
                                 <DataAnnotationsValidator />
 
-                                <div class="edit-recipe__form-group">
-                                       <label for="RecipeType">
-                                        Recipe Type:
-                                        <InputSelect @bind-Value="@RecipeDTO.RecipeType">
-                                            <option value="default">Choose a type</option>
-                                            <option value="@RecipeTypes.GetRecipeType("Breakfast")">Breakfast</option>
-                                            <option value="@RecipeTypes.GetRecipeType("Lunch")">Lunch</option>
-                                            <option value="@RecipeTypes.GetRecipeType("Dinner")">Dinner</option>
-                                            <option value="@RecipeTypes.GetRecipeType("Snack")">Snack</option>
-                                            <option value="@RecipeTypes.GetRecipeType("Beverage")">Beverage</option>
-                                        </InputSelect>
-                                    </label>
-                                    <div class="edit-recipe__error">
-                                        <ValidationMessage For="@(() => RecipeDTO.RecipeType)" />
+                                <div class="edit-recipe__form-header">
+                                    <div class="edit-recipe__type">
+                                        <label for="RecipeType">Recipe Type: </label>
+                                        <div class="edit-recipe__select">
+                                            <InputSelect @bind-Value="@RecipeDTO.RecipeType">
+                                                <option value="default">Choose a type  &#x2304;</option>
+                                                <option value="@RecipeTypes.GetRecipeType("Breakfast")">Breakfast</option>
+                                                <option value="@RecipeTypes.GetRecipeType("Lunch")">Lunch</option>
+                                                <option value="@RecipeTypes.GetRecipeType("Dinner")">Dinner</option>
+                                                <option value="@RecipeTypes.GetRecipeType("Snack")">Snack</option>
+                                                <option value="@RecipeTypes.GetRecipeType("Beverage")">Beverage</option>
+                                            </InputSelect>
+                                        </div>
                                     </div>
-                                    <label for="Title">
-                                        Title:
+                                    <div class="edit-recipe__error">
+                                            <ValidationMessage For="@(() => RecipeDTO.RecipeType)" />
+                                    </div>
+                                    <div class="edit-recipe__title">
+                                        <label for="Title">Title:</label>
                                         <InputText @bind-Value="@RecipeDTO.Title" />
-                                    </label>
+                                    </div>
                                     <div class="edit-recipe__error">
                                         <ValidationMessage For="@(() => RecipeDTO.Title)" />
                                     </div>
                                 </div>
                                 
                                 <div class="edit-recipe__form-group">
-                                    <label for="Description">
-                                        Description:
-                                    </label>
-                                    <InputTextArea @bind-Value="@RecipeDTO.Description" />
+                                    <div class="edit-recipe__description">
+                                        <label for="Description">
+                                            Description:
+                                        </label>
+                                        <InputTextArea @bind-Value="@RecipeDTO.Description" />
+                                    </div>
                                 </div>
 
                                 <CascadingValue Name="Event" Value="@Event">

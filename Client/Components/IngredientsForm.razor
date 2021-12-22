@@ -1,6 +1,6 @@
 ﻿<div class="edit-recipe__form-group">
-    <label for="Ingredients">Ingredients:</label>
-        <ol>
+    <label for="Ingredients">Ingredients:
+        <ol class="edit-recipe__ingredients">
             @{
                 if (Model.Ingredients.Any())
                 {
@@ -11,16 +11,19 @@
                         </li>
                     }
                 }
-                else
-                {
-                    <li style="list-style-type:none">No ingredients found. Want to add some?</li>
-                }
             }
-                </ol>
+        </ol>
+        @{
+            if(!Model.Ingredients.Any())
+            {
+                <p>No ingredients found. Add some below!</p>
+            }
+        }
         <div class="edit-recipe__add-element add-ingredient">
             <InputText @bind-Value="@Event.NewIngredient" />
             <button type="button" class="btn" @onclick="()=>Event.AddIngredient(Model)">+Ingredient</button>
         </div>
+    </label>
 </div>
 
 @code {
