@@ -42,6 +42,10 @@
                         <h4 class="text-center text-success">Success!</h4>
                         <button type="button" @onclick="()=>Event.Lazor.SetSuccessStatus(false)" class="btn btn-danger float-right">&times;</button>
                     }
+                    else if (Event.ListGeneratorDTO.Days == 0) 
+                    {
+                        <p style="color:rgb(78, 78, 78);"><i>Your generated days will appear here</i></p>
+                    }
                     else
                     {
                         foreach (var day in Event.ListGeneratorDTO.GeneratedDays)

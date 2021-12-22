@@ -7,14 +7,17 @@ $card-backgrounds:(
     6:#99F7AB,
     7:#8AEA92
 );
+@mixin flex {
+    display: flex;
+    width: 100%;
+}
 @mixin cardBorder {
     box-shadow: 0 0.1rem 0.1em 0.1rem rgba(92, 91, 91, 0.267);
 }
 .day-card__container {
-    display: flex;
+    @include flex();
     margin: 1rem 0;
     padding-top: 0.5rem;
-    width: 100%;
     max-height: 50vh;
     justify-content: center;
     align-items: flex-start;
@@ -24,7 +27,6 @@ $card-backgrounds:(
     scrollbar-width: 1rem;
 }
 .day-card {
-    z-index: -1;
     display: flex;
     flex-direction: column;
     width: 30%;
@@ -33,11 +35,42 @@ $card-backgrounds:(
     padding: 0.5rem;
     @include cardBorder();
     border-radius: 5px;
+    padding: 1rem;
+    color: rgb(78, 78, 78);
 }
 @each $child, $color in $card-backgrounds {
     .day-card:nth-child(#{$child}) {
         background-color: $color;
+        button:hover {
+            color: $color;
+            transform: scale(110%);
+            opacity: 95%;
+        }
       }
+}
+.day-card__header {
+    @include flex();
+    justify-content: space-between;
+}
+.day-card__body {
+    @include flex();
+    flex-direction: column;
+    justify-content: center;
+    button {
+        border: none;
+        min-width: min-content;
+        max-width: fit-content;
+        background-color: #fff;
+        opacity: 60%;
+    }
+}
+.day-card__recipe {
+    @include flex();
+    align-items: center;
+}
+
+.day-card button:nth-child(4) {
+    margin-top: 1rem;
 }
 
 #day-card__container::-webkit-scrollbar {
@@ -48,4 +81,3 @@ $card-backgrounds:(
     background: #F58B28;
     border-radius: 1rem;
 }
-

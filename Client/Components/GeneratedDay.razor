@@ -1,22 +1,32 @@
 ﻿@inject IGeneratedDayEvent Event
 
     <div class="day-card">
-        <h4>Day @ListDay.SequenceNumber</h4>
-        <div>
+        <div class="day-card__header">
+            <h5>Day @ListDay.SequenceNumber</h5>
             <p>@ListDay.Date.ToShortDateString()</p>
-            <br />
-            <p>@ListDay.Breakfast.Title</p>
-                <LoadingButton Loading=@Event.Loading["Breakfast"] HandleClick="@(async ()=> await RegenerateRecipe("Breakfast"))">@Event.RefreshSymbol["Breakfast"]</LoadingButton>
-            <br />
-            <p>@ListDay.Lunch.Title</p>
-                <LoadingButton Loading=@Event.Loading["Lunch"] HandleClick="@(async ()=> await RegenerateRecipe("Lunch"))">@Event.RefreshSymbol["Lunch"]</LoadingButton>
-            <br />
-            <p>@ListDay.Dinner.Title</p>
-                <LoadingButton Loading=@Event.Loading["Dinner"] HandleClick="@(async ()=> await RegenerateRecipe("Dinner"))">@Event.RefreshSymbol["Dinner"]</LoadingButton>
-            <br />
-            <br />
-                <LoadingButton Loading=@Event.Loading["AllThree"] HandleClick="@(async ()=> await RegenerateRecipe("AllThree"))">Regenerate Day</LoadingButton>
         </div>
+        <div class="day-card__body">
+            <div class="day-card__recipe">
+                <p>@ListDay.Breakfast.Title</p>
+                <LoadingButton Loading=@Event.Loading["Breakfast"] HandleClick="@(async ()=> await RegenerateRecipe("Breakfast"))">
+                    @Event.RefreshSymbol["Breakfast"]
+                </LoadingButton>
+            </div>
+            <div class="day-card__meal">
+                <p>@ListDay.Lunch.Title</p>
+                <LoadingButton Loading=@Event.Loading["Lunch"] HandleClick="@(async ()=> await RegenerateRecipe("Lunch"))">
+                    @Event.RefreshSymbol["Lunch"]
+                </LoadingButton>
+             </div>
+             <div class="day-card__meal">
+                <p>@ListDay.Dinner.Title</p>
+                <LoadingButton Loading=@Event.Loading["Dinner"] HandleClick="@(async ()=> await RegenerateRecipe("Dinner"))">
+                    @Event.RefreshSymbol["Dinner"]
+                </LoadingButton>
+             </div>
+            <LoadingButton Loading=@Event.Loading["AllThree"] HandleClick="@(async ()=> await RegenerateRecipe("AllThree"))">Regenerate Day</LoadingButton> 
+        </div>
+            
     </div>
 
     @code {
