@@ -4,23 +4,24 @@
     ViewData["Title"] = "Personal Data";
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
+<div class="account-tool">
+    <h4>@ViewData["Title"]</h4>
 
-<h4>@ViewData["Title"]</h4>
-
-<div class="row">
-    <div class="col-md-6">
-        <p>
-           <strong>Download Personal Data</strong>
-           <br>Click below to download all of your data.
-        </p>
-        <form id="download-data" asp-page="DownloadPersonalData" method="post" class="form-group">
-            <button class="btn btn-primary" type="submit">Download</button>
-        </form>
-         <p>
-           <strong>Delete Account</strong>
-           <br>This action cannot be undone.
-        </p>
-            <a id="delete" asp-page="DeletePersonalData" class="btn btn-secondary">Delete</a>
+    <div class="row">
+        <div class="col-md-6">
+            <p>
+            <strong>Download Personal Data</strong>
+            <br>Click below to download all of your data.
+            </p>
+            <form id="download-data" asp-page="DownloadPersonalData" method="post" class="form-group">
+                <button class="btn btn-primary" type="submit">Download</button>
+            </form>
+            <p>
+            <strong>Delete Account</strong>
+            <br>This action cannot be undone.
+            </p>
+                <a id="delete" asp-page="DeletePersonalData" class="btn btn-secondary">Delete</a>
+        </div>
     </div>
 </div>
 

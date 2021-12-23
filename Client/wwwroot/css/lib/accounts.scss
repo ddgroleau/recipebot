@@ -1,0 +1,73 @@
+@import './lib.scss';
+
+.account__container {
+    @include flex();
+    flex-direction: column;
+    margin-top: 2rem;
+    a {
+        color: $recipebot_grey;
+    }
+}
+
+#profile.nav-link.active, 
+#email.nav-link.active, 
+#change-password.nav-link.active,
+#external-login.nav-link.active, 
+#personal-data.nav-link.active, 
+#two-factor.nav-link.active {
+    background-color: $recipebot_orange;
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: $recipebot_orange;
+    border: solid $recipebot_orange 1px;
+
+}
+
+.btn-primary:hover {
+    color: $recipebot_orange;
+    background-color: #fff;
+    border: solid $recipebot_orange 1px;
+    transform: scale(102%);
+    transition: all ease-in-out .3s;
+}
+
+#email-verification.btn.btn-link {
+    color: $recipebot_orange;
+}
+#email-verification.btn.btn-link:hover {
+    color: $recipebot_grey;
+    text-decoration: underline;
+    transform: scale(102%);
+    transition: all ease-in-out .3s;
+}
+
+#delete.btn-secondary {
+    background-color: $recipebot_danger;
+    border: solid $recipebot_danger 1px;
+    color: #fff;
+}
+
+#delete.btn-secondary:hover {
+    transform: scale(102%);
+    transition: all ease-in-out .3s;
+    color: $recipebot_danger;
+    background-color: #fff;
+    border: solid $recipebot_danger 1px;
+}
+
+.account-tool {
+    margin-top: 1rem;
+}
+
+.nav-item:hover {
+    transform: scale(102%);
+    transition: all ease-in-out .3s;
+    background-color: $recipebot_orange;
+    border-radius: 5px;
+    a {
+        color: #fff;
+
+    }
+}

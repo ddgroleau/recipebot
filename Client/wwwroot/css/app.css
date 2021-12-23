@@ -1162,6 +1162,93 @@
   text-align: center;
 }
 
+.account__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 2rem;
+}
+
+.account__container a {
+  color: #4e4e4e;
+}
+
+#profile.nav-link.active,
+#email.nav-link.active,
+#change-password.nav-link.active,
+#external-login.nav-link.active,
+#personal-data.nav-link.active,
+#two-factor.nav-link.active {
+  background-color: #F58B28;
+  color: #fff;
+}
+
+.btn-primary {
+  background-color: #F58B28;
+  border: solid #F58B28 1px;
+}
+
+.btn-primary:hover {
+  color: #F58B28;
+  background-color: #fff;
+  border: solid #F58B28 1px;
+  -webkit-transform: scale(102%);
+          transform: scale(102%);
+  -webkit-transition: all ease-in-out .3s;
+  transition: all ease-in-out .3s;
+}
+
+#email-verification.btn.btn-link {
+  color: #F58B28;
+}
+
+#email-verification.btn.btn-link:hover {
+  color: #4e4e4e;
+  text-decoration: underline;
+  -webkit-transform: scale(102%);
+          transform: scale(102%);
+  -webkit-transition: all ease-in-out .3s;
+  transition: all ease-in-out .3s;
+}
+
+#delete.btn-secondary {
+  background-color: #fa4e4e;
+  border: solid #fa4e4e 1px;
+  color: #fff;
+}
+
+#delete.btn-secondary:hover {
+  -webkit-transform: scale(102%);
+          transform: scale(102%);
+  -webkit-transition: all ease-in-out .3s;
+  transition: all ease-in-out .3s;
+  color: #fa4e4e;
+  background-color: #fff;
+  border: solid #fa4e4e 1px;
+}
+
+.account-tool {
+  margin-top: 1rem;
+}
+
+.nav-item:hover {
+  -webkit-transform: scale(102%);
+          transform: scale(102%);
+  -webkit-transition: all ease-in-out .3s;
+  transition: all ease-in-out .3s;
+  background-color: #F58B28;
+  border-radius: 5px;
+}
+
+.nav-item:hover a {
+  color: #fff;
+}
+
 body {
   font-family: 'Open Sans', sans-serif;
 }
