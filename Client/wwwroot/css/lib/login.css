@@ -35,6 +35,16 @@
 .login__button {
   background-color: #F58B28;
   padding: 0.5rem 2rem;
+  border: solid #F58B28 1px;
+}
+
+.login__button:hover {
+  background-color: #fff;
+  color: #F58B28;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+  -webkit-transform: scale(110%);
+          transform: scale(110%);
 }
 
 .login__img {

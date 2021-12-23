@@ -1,3 +1,5 @@
+@import './lib.scss';
+
 .login {
     display: flex;
     align-items: flex-start;
@@ -21,8 +23,15 @@
 }
 
 .login__button {
-    background-color: #F58B28;
+    background-color: $recipebot_orange;
     padding:  0.5rem 2rem;
+    border: solid $recipebot_orange 1px;
+}
+
+.login__button:hover {
+    background-color: #fff;
+    color: $recipebot_orange;
+    @include l-zoom(110%);
 }
 
 .login__img {
@@ -33,7 +42,7 @@
 }
 
 .login__link {
-    color: #F58B28;
+    color: $recipebot_orange;
     cursor: pointer;
 }
 

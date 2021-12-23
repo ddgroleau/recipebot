@@ -172,6 +172,16 @@
 .login__button {
   background-color: #F58B28;
   padding: 0.5rem 2rem;
+  border: solid #F58B28 1px;
+}
+
+.login__button:hover {
+  background-color: #fff;
+  color: #F58B28;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+  -webkit-transform: scale(110%);
+          transform: scale(110%);
 }
 
 .login__img {
@@ -1295,6 +1305,25 @@ nav {
   font-weight: 600;
   -webkit-box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
           box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
+}
+
+.register {
+  margin-top: 7.5%;
+}
+
+.form-control, .form-control:focus, .form-control:active {
+  background: transparent;
+}
+
+.form-control:focus {
+  border: solid #F58B28 1px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  outline: none;
+  -webkit-transform: scale(105%);
+          transform: scale(105%);
+  -webkit-transition: all ease-in .15s;
+  transition: all ease-in .15s;
 }
 
 @media only screen and (max-width: 767px) {
