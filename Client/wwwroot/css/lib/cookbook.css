@@ -1,4 +1,4 @@
-.cookbook-container {
+.cookbook__container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -7,18 +7,18 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
   height: 90vh;
   max-width: 95vw;
-  margin-top: 10%;
+  margin-top: 5rem;
 }
 
-.cookbook-container .create-recipe-container {
+.cookbook__container .create-recipe__container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -30,7 +30,7 @@
   height: auto;
 }
 
-.cookbook-container .cookbook-table-container {
+.cookbook__container .cookbook-table__container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -38,18 +38,13 @@
   border: none;
   -webkit-box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
           box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
+  max-width: 50rem;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
   padding: 1rem;
   min-height: 50vh;
-  margin: 2rem 1rem;
-}
-
-@media only screen and (max-width: 1024px) {
-  .cookbook-container {
-    margin-top: 20%;
-  }
+  margin: 2rem 0;
 }
 /*# sourceMappingURL=cookbook.css.map */

@@ -6,9 +6,12 @@ echo -e "\nStarting up your development services...\n"
 if [ $(docker container list | grep -o sql_server) ]
 then
     echo -e "SQL Server container is already running...\n"
+elif [ $(docker ps -a | grep -o sql_server) ]
+then
+    echo -e "SQL Server container was stopped. Restarting...\n"
+    docker start sql_server
 else
     echo -e "Starting your SQL Server container...\n"
-
     docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=msSQLpass123" -p 1433:1433 --name sql_server -h sqlserver -v /tmp/mssql:/var/opt/mssql3 -d mcr.microsoft.com/mssql/server:2019-latest
 fi
 

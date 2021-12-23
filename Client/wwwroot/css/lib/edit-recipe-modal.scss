@@ -35,17 +35,22 @@
 }
 .edit-recipe__card {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    flex-direction: column;
     min-height: max-content;
     overflow: auto;
     @include cardBorder;
     margin:1rem;
     height: clamp(75%,85%,95%);
-    width: clamp(75%,90%,100%);
+    width: max-content;
     padding: 1rem;
     border-radius: 5px;
+}
+@media only screen and (min-width: 410px) {
+    .edit-recipe__card {
+        padding: 1rem 2rem;
+    }
 }
 .edit-recipe-card__header {
     @include flex();
@@ -77,11 +82,7 @@
     @include flex();
     flex-direction: column;
     padding-top: 0.5rem;
-    p {
-        font-size: 1rem;
-        color: $recipebot_grey;
-        font-style: italic;
-    }
+
 }
 .edit-recipe__error {
     @include flex();
@@ -91,27 +92,46 @@
     @include flex();
     justify-content: center;
     align-items: flex-end;
+    flex-wrap: nowrap;
     height: 3rem;
-    input {
-        max-width: 11rem;
-    }
+    max-width: 8rem;
 }
 .add-ingredient, .edit-recipe__ingredients {
+    @include flex();
+    justify-content: space-between;
     @include editRecipeButton($add-ingredient-light, $add-ingredient-dark, black, #fff);
     @include editRecipeInput($add-ingredient-light, $add-ingredient-light-transparent);
     li {
         color: $add-ingredient-dark;
-        margin-top: 0.5rem;
     }
 }
 .add-instruction, .edit-recipe__instructions {
+    @include flex();
+    justify-content: space-between;
     @include editRecipeButton($add-instruction-dark, $add-instruction-light, #fff, black);
     @include editRecipeInput($add-instruction-dark, $add-instruction-dark-transparent);
     li {
         color: $add-instruction-dark;
-        margin-top: 0.5rem;
     }
 }
+.edit-recipe__instructions, .edit-recipe__ingredients {
+    @include flex();
+    flex-direction: column;
+    background: $edit-recipe-list;
+    border-radius: 5px;
+    li {
+        padding: 0.5rem;
+    }
+}
+.edit-recipe__list-none {
+    list-style: none;
+    margin-left: -2rem;
+    margin-right: 1rem;
+    font-size: 1rem;
+    color: $recipebot_grey !important;
+    font-style: italic;
+}
+
 .edit-recipe__controls {
     @include flex();
     align-items: flex-end;
@@ -135,11 +155,13 @@
     @include editRecipeInput($edit-recipe-description, $edit-recipe-description-transparent);
 }
 .edit-recipe__title {
+    @include flex();
+    flex-direction: column;
     @include editRecipeInput($edit-recipe-title, $edit-recipe-title-transparent);
     padding-top: 0.5rem;
     input {
-        margin-left: 1rem;
-        width: 15rem;
+        max-height: 1.75rem;
+        width: 100%;
     }
 }
 .edit-recipe__select {
@@ -169,4 +191,12 @@
 .edit-recipe__type {
     @include flex();
     padding-top: 0.5rem;
+}
+
+.add-element__btn {
+    border: none;
+    border-radius: 4px;
+    padding: 0 .5rem;
+    height: 2.5rem;
+    text-align: center;
 }

@@ -49,6 +49,7 @@
       -ms-flex-pack: center;
           justify-content: center;
   margin: 0 1rem;
+  min-height: 7rem;
   width: 100%;
 }
 

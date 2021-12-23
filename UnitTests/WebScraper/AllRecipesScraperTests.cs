@@ -86,6 +86,7 @@ namespace UnitTests.WebScraper
             Assert.Equal(recipeDTOExpected.Ingredients, recipeDTOActual.Ingredients);
             Assert.Equal(recipeDTOExpected.Instructions, recipeDTOActual.Instructions);
         }
+        
         [Fact]
         public void ScrapeRecipe_WithValidAirFryerRecipe_ShouldReturnRecipeDTO()
         {

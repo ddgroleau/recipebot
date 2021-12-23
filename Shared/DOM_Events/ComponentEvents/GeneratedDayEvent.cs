@@ -21,16 +21,16 @@ namespace Recipebot.Shared.DOM_Events.ComponentEvents
             _recipeDTO = recipeDTO;
             _logger = logger;
         }
-        // "↻" is a refresh icon.
         public Dictionary<string, bool> Loading { get; set; } = new Dictionary<string, bool>() {
                 { "Breakfast", false },
                 { "Lunch", false },
                 { "Dinner", false },
                 { "AllThree", false }
             };
-
+            
+        // "↻" is a refresh icon.
         public Dictionary<string, string> RefreshSymbol { get; set; } = new Dictionary<string, string>() {
-                { "Breakfast", "&#x1F504" },
+                { "Breakfast", "↻" },
                 { "Lunch", "↻" },
                 { "Dinner", "↻" },
                 { "AllThree", "↻" }

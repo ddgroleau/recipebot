@@ -12,17 +12,15 @@
                         </li>
                     }
                 }
+                else
+                {
+                    <li class="edit-recipe__list-none">No instructions found. Add some below!</li>
+                }
             }
         </ol>
-        @{
-            if(!Model.Instructions.Any())
-            {
-                <p>No instructions found. Add some below!</p>
-            }
-        }
         <div class="edit-recipe__add-element add-instruction">
             <InputText @bind-Value="@Event.NewInstruction" />
-            <button type="button" class="btn" @onclick="()=>Event.AddInstruction(Model)">+Instruction</button>
+            <button type="button" class="add-element__btn" @onclick="()=>Event.AddInstruction(Model)">+Instruction</button>
         </div>
     </label>
 </div>
