@@ -20,11 +20,14 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@regex.Match(User.Identity.Name).Value</a>
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" style="color:black">@regex.Match(User.Identity.Name).Value</a>
         </li>
-        <li class="nav-item">
+         <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item logout">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" method="post">
-                <button type="submit" class="nav-link btn btn-link">Logout</button>
+                <button id="logout" type="submit" class="nav-link btn btn-link"><span>Logout</span></button>
             </form>
         </li> }
     else

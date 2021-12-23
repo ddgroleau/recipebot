@@ -72,16 +72,43 @@
   margin-top: 1rem;
 }
 
-.nav-item:hover {
-  -webkit-transform: scale(102%);
-          transform: scale(102%);
-  -webkit-transition: all ease-in-out .3s;
-  transition: all ease-in-out .3s;
+.nav-item {
+  padding: 0 0.5rem;
+}
+
+.nav-item:hover, .nav-item.active {
   background-color: #F58B28;
   border-radius: 5px;
+  color: #fff;
+}
+
+.nav-item:hover {
+  -webkit-transition: all ease-in-out .25s;
+  transition: all ease-in-out .25s;
+  -webkit-transform: scale(100%);
+          transform: scale(100%);
 }
 
 .nav-item:hover a {
-  color: #fff;
+  color: #fff !important;
+}
+
+.navbar-toggler, .navbar-toggler:focus {
+  border: none;
+}
+
+.logout button {
+  font-weight: 600;
+}
+
+.logout:hover {
+  background-color: #fa4e4e;
+  -webkit-transition: all ease-in-out .25s;
+  transition: all ease-in-out .25s;
+  color: #fff !important;
+}
+
+#logout:hover, #logout button:hover, #logout span:hover {
+  color: #fff !important;
 }
 /*# sourceMappingURL=accounts.css.map */

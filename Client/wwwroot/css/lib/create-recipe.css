@@ -34,7 +34,17 @@
 .create-recipe__card .create-recipe-card__body .create-recipe__form button {
   background-color: #F58B28;
   padding: 0.5rem 2rem;
-  border: none;
+  border: solid #F58B28 1px;
+  color: #fff;
   margin-left: 1rem;
+}
+
+.create-recipe__card .create-recipe-card__body .create-recipe__form button:hover {
+  background-color: #fff;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+  -webkit-transform: scale(105%);
+          transform: scale(105%);
+  color: #F58B28;
 }
 /*# sourceMappingURL=create-recipe.css.map */

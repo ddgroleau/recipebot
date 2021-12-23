@@ -1,21 +1,22 @@
 ﻿@inject ILazor e
 
-<nav class="navbar fixed-top navbar-expand-sm navbar-light" style="color:rgba(0,0,0,0) !important"><p>DummyNavBar</p></nav>
-<nav class="navbar fixed-top navbar-expand-sm navbar-light">
+<!--Do not remove dummy navbar. Navbar expands if screen <= md -->
+<nav class="navbar fixed-top navbar-expand-md navbar-light" style="color:rgba(0,0,0,0) !important"><p>DummyNavBar</p></nav>
+<nav class="navbar fixed-top navbar-expand-md navbar-light">
 
-    <img src="/navbar.png"/>
+    <a href="/"><img src="/navbar.png"/></a>
 
     <button class="btn" type="button" @onclick="e.Toggle">
-        <span class="navbar-toggler-icon d-block d-sm-none"></span>
+        <span class="navbar-toggler-icon d-block d-md-none"></span>
     </button>
 
-    <!--Show if NavBar>sm  -->
-    <div class="col-12 d-none d-sm-block" @onclick="e.Toggle">
+    <!--Show if NavBar > md -->
+    <div class="col-12 d-none d-md-block" @onclick="e.Toggle">
         <NavBarLinks />
     </div>
 
-    <!--Show if NavBar<=sm -->
-    <div class="col-12 @e.ToggleTarget d-sm-none" @onclick="e.Toggle">
+    <!--Show if NavBar <= md -->
+    <div class="col-12 @e.ToggleTarget d-md-none" @onclick="e.Toggle">
         <NavBarLinks />
     </div>
 

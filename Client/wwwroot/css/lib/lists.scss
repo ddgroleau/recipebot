@@ -29,7 +29,7 @@
     min-height: 7rem;
     width: 100%;
     h3 {
-        color: $pbc_orange;
+        color: $recipebot_orange;
         min-width: max-content;
     }
 }
@@ -126,8 +126,8 @@
          @include buttonBorder();
     }
     button:hover {
-        border: solid $pbc_orange 1px;
-        color: $pbc_orange;
+        border: solid $recipebot_orange 1px;
+        color: $recipebot_orange;
         transform: scale(110%);
         transition: ease-in all .1s;
     }

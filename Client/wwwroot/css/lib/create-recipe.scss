@@ -4,7 +4,7 @@
     @include flex();
     border: none;
     h3 {
-        color: $pbc_orange
+        color: $recipebot_orange
     }
     .create-recipe-card__body {
         @include flex();
@@ -13,11 +13,17 @@
           @include flex();
           justify-content: center;
           button {
-              background-color: $pbc_orange;
+              background-color: $recipebot_orange;
               padding:  0.5rem 2rem;
-              border:none;
+              border: solid $recipebot_orange 1px;
+              color: #fff;
               margin-left: 1rem;
           }
+          button:hover {
+            background-color: #fff;
+            @include l-zoom(105%);
+            color: $recipebot_orange;
+        }
       }
     }
 }

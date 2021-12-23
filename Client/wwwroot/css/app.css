@@ -729,8 +729,18 @@
 .create-recipe__card .create-recipe-card__body .create-recipe__form button {
   background-color: #F58B28;
   padding: 0.5rem 2rem;
-  border: none;
+  border: solid #F58B28 1px;
+  color: #fff;
   margin-left: 1rem;
+}
+
+.create-recipe__card .create-recipe-card__body .create-recipe__form button:hover {
+  background-color: #fff;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+  -webkit-transform: scale(105%);
+          transform: scale(105%);
+  color: #F58B28;
 }
 
 .edit-recipe__container {
@@ -1236,17 +1246,44 @@
   margin-top: 1rem;
 }
 
-.nav-item:hover {
-  -webkit-transform: scale(102%);
-          transform: scale(102%);
-  -webkit-transition: all ease-in-out .3s;
-  transition: all ease-in-out .3s;
+.nav-item {
+  padding: 0 0.5rem;
+}
+
+.nav-item:hover, .nav-item.active {
   background-color: #F58B28;
   border-radius: 5px;
+  color: #fff;
+}
+
+.nav-item:hover {
+  -webkit-transition: all ease-in-out .25s;
+  transition: all ease-in-out .25s;
+  -webkit-transform: scale(100%);
+          transform: scale(100%);
 }
 
 .nav-item:hover a {
-  color: #fff;
+  color: #fff !important;
+}
+
+.navbar-toggler, .navbar-toggler:focus {
+  border: none;
+}
+
+.logout button {
+  font-weight: 600;
+}
+
+.logout:hover {
+  background-color: #fa4e4e;
+  -webkit-transition: all ease-in-out .25s;
+  transition: all ease-in-out .25s;
+  color: #fff !important;
+}
+
+#logout:hover, #logout button:hover, #logout span:hover {
+  color: #fff !important;
 }
 
 body {
@@ -1260,11 +1297,10 @@ nav {
           box-shadow: 0 0.1rem 0.3rem 0.1rem rgba(92, 91, 91, 0.267);
 }
 
-nav li:hover {
-  -webkit-transition: 0.25s;
-  transition: 0.25s;
-  -webkit-transform: scale(110%);
-          transform: scale(110%);
+@media only screen and (max-width: 767px) {
+  .navbar-nav {
+    margin-top: .5rem;
+  }
 }
 
 footer {

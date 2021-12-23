@@ -9,6 +9,7 @@
     }
 }
 
+// Bootstrap styles formatted for default Identity app. Styles are overridden for quick color schema change.
 #profile.nav-link.active, 
 #email.nav-link.active, 
 #change-password.nav-link.active,
@@ -60,14 +61,39 @@
 .account-tool {
     margin-top: 1rem;
 }
-
-.nav-item:hover {
-    transform: scale(102%);
-    transition: all ease-in-out .3s;
+.nav-item {
+    padding: 0 0.5rem;
+}
+.nav-item:hover, .nav-item.active{
     background-color: $recipebot_orange;
     border-radius: 5px;
+    color: #fff;
+}
+.nav-item:hover {
+    transition: all ease-in-out .25s;
+    transform: scale(100%);
     a {
-        color: #fff;
-
+        color: #fff !important;
     }
+}
+
+.navbar-toggler, .navbar-toggler:focus {
+    border: none;
+}
+
+.logout {
+    button {
+        font-weight:600;
+    }
+}
+
+.logout:hover {
+    background-color: $recipebot_danger;
+    transition: all ease-in-out .25s;
+    color: #fff !important;
+}
+
+
+#logout:hover, #logout button:hover, #logout span:hover {
+    color: #fff !important;
 }
