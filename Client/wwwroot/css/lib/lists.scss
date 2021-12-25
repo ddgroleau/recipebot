@@ -13,6 +13,11 @@
         flex-direction: column;
     }
 }
+@media only screen and (min-width: 1024px) {
+    .list__container {
+        padding: 0 2rem;
+    }
+}
 .list-generator__container {
     display:flex;
     flex-direction: column;
@@ -95,13 +100,16 @@
         font-weight: 600;
         @include buttonBorder();
     }
+    button:focus {
+        @include buttonBorder();
+    }
 }
 .button-plus {
     button {
         color: rgb(41, 39, 39)
     }
     button:hover {
-        background-color: rgb(56, 138, 56);
+        background-color: $recipebot_plus;
         color: #fff;
         transition: ease-in all .1s;
         border:none;
@@ -113,7 +121,7 @@
         color: rgb(41, 39, 39)
     }
     button:hover {
-        background-color: rgb(245, 83, 83);
+        background-color: $recipebot_danger;
         color: #fff;
         transition: ease-in all .1s;
         border:none;

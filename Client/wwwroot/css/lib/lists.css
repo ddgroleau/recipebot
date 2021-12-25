@@ -19,6 +19,12 @@
   }
 }
 
+@media only screen and (min-width: 1024px) {
+  .list__container {
+    padding: 0 2rem;
+  }
+}
+
 .list-generator__container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -166,12 +172,18 @@
           box-shadow: 0 0.1rem 0.1em 0.1rem rgba(92, 91, 91, 0.267);
 }
 
+.card__button button:focus {
+  border: solid #fff 1px;
+  -webkit-box-shadow: 0 0.1rem 0.1em 0.1rem rgba(92, 91, 91, 0.267);
+          box-shadow: 0 0.1rem 0.1em 0.1rem rgba(92, 91, 91, 0.267);
+}
+
 .button-plus button {
   color: #292727;
 }
 
 .button-plus button:hover {
-  background-color: #388a38;
+  background-color: #00BD9D;
   color: #fff;
   -webkit-transition: ease-in all .1s;
   transition: ease-in all .1s;
@@ -185,7 +197,7 @@
 }
 
 .button-minus button:hover {
-  background-color: #f55353;
+  background-color: #fa4e4e;
   color: #fff;
   -webkit-transition: ease-in all .1s;
   transition: ease-in all .1s;

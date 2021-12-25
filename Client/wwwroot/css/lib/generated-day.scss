@@ -8,7 +8,7 @@
     justify-content: center;
     align-items: flex-start;
     flex-wrap: wrap;
-    overflow-y: scroll;
+    overflow-y: auto;
     scrollbar-color: #fff, #F58B28;
     scrollbar-width: 1rem;
 }
@@ -60,10 +60,14 @@
 }
 
 #day-card__container::-webkit-scrollbar {
-    background: #fff;
     border-radius: 1rem;
 }
 #day-card__container::-webkit-scrollbar-track {
-    background: #F58B28;
+    background: #fff;
+    border-radius: 1rem;
+}
+
+#day-card__container::-webkit-scrollbar-thumb {
+    background: $recipebot_orange;
     border-radius: 1rem;
 }

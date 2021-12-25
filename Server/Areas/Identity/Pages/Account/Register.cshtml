@@ -4,11 +4,10 @@
     ViewData["Title"] = "Register";
 }
 
-<div class="register">
+<div class="login">
+    <div class=login__card>
     <h1>@ViewData["Title"]</h1>
 
-    <div class="row">
-        <div class="col-md-4">
             <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
@@ -29,7 +28,6 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Register</button>
             </form>
-        </div>
         @* <div class="col-md-6 col-md-offset-2">
             <section>
                 <h4>Use another service to register.</h4>
@@ -60,6 +58,9 @@
                 }
             </section>
         </div> *@
+    </div>
+    <div class="login__img">
+        <img src="/RecipeBot_Half.png"></img>
     </div>
 </div>
 @section Scripts {

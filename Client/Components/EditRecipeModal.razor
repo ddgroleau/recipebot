@@ -23,15 +23,15 @@
                                 <div class="edit-recipe__form-header">
                                     <div class="edit-recipe__type">
                                         <label for="RecipeType">Recipe Type: </label>
-                                        <div class="edit-recipe__select">
+                                        <div class="edit-recipe__select"> 
                                             <InputSelect @bind-Value="@RecipeDTO.RecipeType">
-                                                <option value="default">Choose a type  &#x2304;</option>
+                                                <option value="default">Choose a type</option>
                                                 <option value="@RecipeTypes.GetRecipeType("Breakfast")">Breakfast</option>
                                                 <option value="@RecipeTypes.GetRecipeType("Lunch")">Lunch</option>
                                                 <option value="@RecipeTypes.GetRecipeType("Dinner")">Dinner</option>
                                                 <option value="@RecipeTypes.GetRecipeType("Snack")">Snack</option>
                                                 <option value="@RecipeTypes.GetRecipeType("Beverage")">Beverage</option>
-                                            </InputSelect>
+                                            </InputSelect><i class="fa fa-chevron-down"></i>
                                         </div>
                                     </div>
                                     <div class="edit-recipe__error">
