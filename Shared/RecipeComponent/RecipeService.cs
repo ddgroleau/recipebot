@@ -12,13 +12,11 @@ namespace Recipebot.Shared.RecipeComponent
 {
     public class RecipeService : IRecipeService
     {
-        private readonly IBuilder<IRecipeServiceDTO, IRecipeDTO> _recipeBuilder;
         private readonly IRecipeRepository _recipeRepository;
         private readonly ISubscriberState _subscriberState;
 
-        public RecipeService(IBuilder<IRecipeServiceDTO, IRecipeDTO> recipeBuilder, IRecipeRepository recipeRepository, ISubscriberState subscriberState)
+        public RecipeService(IRecipeRepository recipeRepository, ISubscriberState subscriberState)
         {
-            _recipeBuilder = recipeBuilder;
             _recipeRepository = recipeRepository;
             _subscriberState = subscriberState;
         }
@@ -29,8 +27,7 @@ namespace Recipebot.Shared.RecipeComponent
 
             if (RecipeIsValid(recipeDTO))
             {
-                var recipeModel = _recipeBuilder.Build(recipeDTO);
-                createdId = await SaveRecipe(recipeModel);
+                createdId = await SaveRecipe(recipeDTO);
             }
             else
             {
@@ -46,8 +43,7 @@ namespace Recipebot.Shared.RecipeComponent
             
             foreach(var recipe in searchResults)
             {
-                var recipeResult =_recipeBuilder.Build(recipe);
-                recipeResults.Add(recipeResult);
+                recipeResults.Add(recipe);
             }
             return recipeResults;        
         }
@@ -55,16 +51,15 @@ namespace Recipebot.Shared.RecipeComponent
         public async Task<IEnumerable<IRecipeDTO>> GetUserRecipes()
         {
             List<IRecipeDTO> userRecipes = new List<IRecipeDTO>();
-            var recipeServiceDTOs = await _recipeRepository.GetUserRecipes();
-            foreach (var recipeDTO in recipeServiceDTOs)
+            var RecipeDTOs = await _recipeRepository.GetUserRecipes();
+            foreach (var recipeDTO in RecipeDTOs)
             {
-                var userRecipe = _recipeBuilder.Build(recipeDTO);
-                userRecipes.Add(userRecipe);
+                userRecipes.Add(recipeDTO);
             }
             return userRecipes;
         }
 
-        private async Task<int> SaveRecipe(IRecipeServiceDTO recipeModel)
+        private async Task<int> SaveRecipe(IRecipeDTO recipeModel)
         {
             int createdId;
 
@@ -91,14 +86,14 @@ namespace Recipebot.Shared.RecipeComponent
             return createdId;
         }
 
-        private static bool RecipeIsValid(IRecipeDTO recipeDTO)
+        private static bool RecipeIsValid(IRecipeDTO RecipeDTO)
         {
             bool isValid;
             try
             {
-                var validationContext = new ValidationContext(recipeDTO);
+                var validationContext = new ValidationContext(RecipeDTO);
 
-                isValid = Validator.TryValidateObject(recipeDTO, validationContext, new List<ValidationResult>(), true);
+                isValid = Validator.TryValidateObject(RecipeDTO, validationContext, new List<ValidationResult>(), true);
             }
             catch (Exception)
             {

@@ -30,7 +30,7 @@ namespace UnitTests.DOM_Events.ComponentEvents
             Logger = new LoggerFactory().CreateLogger<IRecipeUrlDTO>();
             Http = new HttpClient();
             RecipeUrlDTO = new RecipeUrlDTO();
-            RecipeEvent = new CreateRecipeEvent(Lazor,RecipeUrlDTO,RecipeDTO,Logger,Http);
+            RecipeEvent = new CreateRecipeEvent(Lazor,RecipeUrlDTO,Logger,Http,RecipeDTO);
         }
 
         public void Dispose()
@@ -40,7 +40,7 @@ namespace UnitTests.DOM_Events.ComponentEvents
         }
 
         [Fact]
-        public async void HandleSubmit_WithValidParameters_ShouldReturnRecipeDTO()
+        public async Task HandleSubmit_WithValidParameters_ShouldReturnRecipeDTO()
         {
             var actual = await RecipeEvent.HandleSubmit();
 

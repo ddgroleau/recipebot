@@ -21,8 +21,6 @@ namespace UnitTests.SubscriptionComponent
         public ApplicationDbContext Db;
         public IUserState UserState;
         public AbstractRecipeFactory RecipeFactory;
-        public IRecipeServiceDTO RecipeServiceDTO;
-        public IBuilder<IRecipeServiceDTO, IRecipeDTO> RecipeBuilder;
         public IRecipeDTO RecipeDTO;
         public IFactory<RecipeSubscription> SubscriptionFactory;
         public ILogger<ISubscriberState> StateLogger;
@@ -36,13 +34,12 @@ namespace UnitTests.SubscriptionComponent
             RecipeFactory = new RecipeFactory();
             RecipeDTO = new RecipeDTO();
             UserState = new MockUserState();
-            RecipeServiceDTO = new RecipeServiceDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeFactory);
+            RecipeDTO = new RecipeDTO();
             SubscriptionFactory = new SubscriptionFactory();
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriptionRepository = new SubscriptionRepository(SubscriptionFactory, Db, UserState);
             SubscriberState = new SubscriberState(StateLogger);
-            SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository, RecipeBuilder);
+            SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository);
         }
 
         public void Dispose()

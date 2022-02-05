@@ -3,100 +3,112 @@ using Recipebot.Shared.RecipeComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Recipebot.Shared.WebScraper
 {
-    public class AllRecipesScraper : IAllRecipesScraper
+    public class AllRecipesScraper : IRecipeScraper
     {
-        public IRecipeDTO ScrapeRecipe(string URL, IRecipeDTO recipeDTO)
+        public IRecipeDTO ScrapeRecipe(string URL, IRecipeDTO RecipeDTO)
         {
             if(!URL.StartsWith("https://www.allrecipes.com/recipe/"))
             {
-                return recipeDTO;
+                return RecipeDTO;
             }
             try
             {
                 HtmlWeb webPage = new HtmlWeb();
                 HtmlDocument page = webPage.Load(URL);
 
-                recipeDTO.URL = URL;
+                RecipeDTO.URL = URL;
 
-                recipeDTO.Title = page.DocumentNode
-                                        .SelectNodes("//h1[@class='headline heading-content elementFont__display']")
-                                        .FirstOrDefault().InnerHtml.Trim();
+                RecipeDTO.Title = page.DocumentNode.SelectNodes("//h1[@class='headline heading-content elementFont__display']")
+                                                   .FirstOrDefault()
+                                                   .InnerText
+                                                   .Trim();
 
-                var summary = page.DocumentNode
-                                        .SelectNodes("//div[@class='recipe-meta-item-body']")
-                                        .Select(x => x.InnerHtml.Trim());
-
-                recipeDTO.Description = page.DocumentNode
+                var summary = page.DocumentNode.SelectNodes("//div[@class='recipe-meta-item-body elementFont__subtitle']");
+                                       
+                RecipeDTO.Description = page.DocumentNode
                                         .SelectNodes("//p[@class='margin-0-auto']")
-                                        .FirstOrDefault().InnerHtml.Trim();
+                                        .FirstOrDefault().InnerText.Trim();
 
-                recipeDTO.Ingredients = page.DocumentNode
-                                        .SelectNodes("//span[@class='ingredients-item-name']")
-                                        .Select(x => x.InnerHtml.Trim()).ToList();
+                RecipeDTO.Ingredients = page.DocumentNode
+                                        .SelectNodes("//span[@class='ingredients-item-name elementFont__body']")
+                                        .Select(x => x.InnerText.Trim()).ToList();
 
-                recipeDTO.Instructions = recipeDTO.Instructions = page.DocumentNode
-                                        .SelectNodes("//li[@class='subcontainer instructions-section-item']")
+                RecipeDTO.Instructions = RecipeDTO.Instructions = page.DocumentNode
+                                        .SelectNodes("//div[@class='section-body elementFont__body--paragraphWithin elementFont__body--linkWithin']")
                                         .Descendants()
                                         .Where(x => x.Name.Equals("p"))
-                                        .Select(x => x.InnerHtml.Trim()).ToList();
+                                        .Select(x => x.InnerText.Trim()).ToList();
 
+                RecipeDTO.Description += $" Prep Time: {summary.ElementAt(0).InnerText.Trim()}. "
+                +$"Cook Time: {summary.ElementAt(1).InnerText.Trim()}. "
+                +$"Total Time: {summary.ElementAt(2).InnerText.Trim()}. "
+                +$"Servings: {summary.ElementAt(3).InnerText.Trim()}. "
+                +$"Yield: {summary.ElementAt(4).InnerText.Trim()}.";
 
-                recipeDTO.Description += $" Prep Time: {summary.ElementAt(0)}. "
-                 + $"Cook Time: {summary.ElementAt(1)}. "
-                 + $"Total Time: {summary.ElementAt(2)}. "
-                 + $"Servings: {summary.ElementAt(3)}. "
-                 + $"Yield: {summary.ElementAt(4)}.";
-
-                return recipeDTO;
+                return RecipeDTO;
             }
             catch (ArgumentNullException)
             {
-                return ScrapeRecipeFromAlternateUI(URL, recipeDTO);
+                return ScrapeRecipeFromAlternateUI(URL, RecipeDTO);
             }
             catch (Exception)
             {
-                return recipeDTO;
+                return RecipeDTO;
             }
         }
 
-        private IRecipeDTO ScrapeRecipeFromAlternateUI(string URL, IRecipeDTO recipeDTO)
+        private IRecipeDTO ScrapeRecipeFromAlternateUI(string URL, IRecipeDTO RecipeDTO)
         {
             try
             {
                 HtmlWeb webPage = new HtmlWeb();
                 HtmlDocument page = webPage.Load(URL);
 
-                recipeDTO.URL = URL;
+                RecipeDTO.URL = URL;
 
-                recipeDTO.Title = page.DocumentNode
+                RecipeDTO.Title = page.DocumentNode
                                       .SelectNodes("//h1[@class='recipe-summary__h1']")
                                       .FirstOrDefault().InnerHtml;
 
-                recipeDTO.Description = page.DocumentNode
+                RecipeDTO.Description = page.DocumentNode
                                       .SelectNodes("//div[@class='submitter__description']")
                                       .FirstOrDefault().InnerHtml[7..].Replace("&#34;", "").Trim();
 
-                recipeDTO.Ingredients = page.DocumentNode
+                RecipeDTO.Ingredients = page.DocumentNode
                                       .SelectNodes("//span[@class='recipe-ingred_txt added']")
                                       .Select(x => x.InnerHtml.Trim()).ToList();
 
-                recipeDTO.Instructions = recipeDTO.Instructions = page.DocumentNode
+                RecipeDTO.Instructions = RecipeDTO.Instructions = page.DocumentNode
                                       .SelectNodes("//span[@class='recipe-directions__list--item']")
                                       .Select(x => x.InnerHtml.Trim())
                                       .Where(x => !String.IsNullOrEmpty(x)).ToList();
 
-                return recipeDTO;
+                return RecipeDTO;
             }
             catch (Exception)
             {
-                return recipeDTO;
+                return RecipeDTO;
             }
         }
+
+        //public async Task GetHtmlContent(string url)
+        //{
+        //    try
+        //    {
+        //        HttpResponseMessage content = await _http.(url);
+                
+        //    }
+        //    catch(Exception e)
+        //    {
+
+        //    }
+        //}
 
     }
 }

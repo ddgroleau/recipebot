@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Recipebot.Shared.WebScraper
 {
-    public interface IAllRecipesScraper
+    public interface IRecipeScraper
     {
-        public IRecipeDTO ScrapeRecipe(string URL, IRecipeDTO recipeDTO);
+        public IRecipeDTO ScrapeRecipe(string URL, IRecipeDTO RecipeDTO);
     }
 }

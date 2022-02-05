@@ -26,46 +26,46 @@ namespace Recipebot.Shared.DOM_Events.ComponentEvents
 
         [MaxLength(350, ErrorMessage = "New instruction is too long.")]
         public string NewInstruction { get; set; }
-        public async Task<IRecipeDTO> HandleValidSubmit(ILazor lazor, IRecipeDTO recipeDTO)
+        public async Task<IRecipeDTO> HandleValidSubmit(ILazor lazor, IRecipeDTO RecipeDTO)
         {
             try
             {
-                bool recipeDTOIsValid = lazor.IsObjectValid(recipeDTO);
+                bool RecipeDTOIsValid = lazor.IsObjectValid(RecipeDTO);
 
-                if (recipeDTOIsValid)
+                if (RecipeDTOIsValid)
                 {
                     lazor.SetLoadingStatus(true);
-                    var response = await _http.PostAsJsonAsync("/api/recipe/recipe", recipeDTO);
+                    var response = await _http.PostAsJsonAsync("/api/recipe/recipe", RecipeDTO);
                     if (response.IsSuccessStatusCode)
                     {
                         lazor.SetSuccessStatus(true);
-                        _logger.LogInformation($"Successfully posted recipe \"{recipeDTO.Title}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-                        ResetRecipe(recipeDTO);
-                        return recipeDTO;
+                        _logger.LogInformation($"Successfully posted recipe \"{RecipeDTO.Title}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+                        ResetRecipe(RecipeDTO);
+                        return RecipeDTO;
                     }
-                    _logger.LogError($"Failed to post recipe \"{recipeDTO.Title}\" to RecipeController. Server responded with {response.StatusCode}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+                    _logger.LogError($"Failed to post recipe \"{RecipeDTO.Title}\" to RecipeController. Server responded with {response.StatusCode}. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
                     lazor.SetErrorMessage($"Sorry, something went wrong. Server responded with {response.StatusCode}.");
-                    return recipeDTO;
+                    return RecipeDTO;
                 }
             }
             catch (Exception err)
             {
                 lazor.SetErrorMessage($"Sorry, something went wrong. Error {lazor.ErrorMessage}.");
-                _logger.LogError($"Exception occured when posting recipe \"{recipeDTO.Title}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.", err.Message);
+                _logger.LogError($"Exception occured when posting recipe \"{RecipeDTO.Title}\" to RecipeController. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.", err.Message);
             }
             lazor.SetLoadingStatus(false);
-            return recipeDTO;
+            return RecipeDTO;
         }
-        public void ResetRecipe(IRecipeDTO recipeDTO)
+        public void ResetRecipe(IRecipeDTO RecipeDTO)
         {
-            recipeDTO.URL = null;
-            recipeDTO.Title = null;
-            recipeDTO.Description = null;
-            recipeDTO.Ingredients = new List<string>();
-            recipeDTO.Instructions = new List<string>();
+            RecipeDTO.URL = null;
+            RecipeDTO.Title = null;
+            RecipeDTO.Description = null;
+            RecipeDTO.Ingredients = new List<string>();
+            RecipeDTO.Instructions = new List<string>();
         }
 
-        public IRecipeDTO AddIngredient(IRecipeDTO recipeDTO)
+        public IRecipeDTO AddIngredient(IRecipeDTO RecipeDTO)
         {
             var validationContext = new ValidationContext(this)
             {
@@ -73,13 +73,13 @@ namespace Recipebot.Shared.DOM_Events.ComponentEvents
             };
             bool newIngredientIsValid = Validator.TryValidateProperty(NewIngredient, validationContext, new List<ValidationResult>());
 
-            if (newIngredientIsValid) { recipeDTO.Ingredients.Add(NewIngredient); }
+            if (newIngredientIsValid) { RecipeDTO.Ingredients.Add(NewIngredient); }
 
             NewIngredient = null;
 
-            return recipeDTO;
+            return RecipeDTO;
         }
-        public IRecipeDTO AddInstruction(IRecipeDTO recipeDTO)
+        public IRecipeDTO AddInstruction(IRecipeDTO RecipeDTO)
         {
             var validationContext = new ValidationContext(this)
             {
@@ -87,11 +87,11 @@ namespace Recipebot.Shared.DOM_Events.ComponentEvents
             };
             bool newInstructionIsValid = Validator.TryValidateProperty(NewInstruction, validationContext, new List<ValidationResult>());
 
-            if (newInstructionIsValid) { recipeDTO.Instructions.Add(NewInstruction); }
+            if (newInstructionIsValid) { RecipeDTO.Instructions.Add(NewInstruction); }
 
             NewInstruction = null;
 
-            return recipeDTO;
+            return RecipeDTO;
         }
     }
 }

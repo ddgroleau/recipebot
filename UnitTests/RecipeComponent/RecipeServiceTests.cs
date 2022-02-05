@@ -23,7 +23,6 @@ namespace UnitTests.RecipeComponent
         public IUserState UserState;
         ILogger<ISubscriberState> StateLogger;
         ISubscriberState SubscriberState;
-        IBuilder<IRecipeServiceDTO, IRecipeDTO> RecipeBuilder;
         IRecipeDTO RecipeDTO;
         IRecipeRepository RecipeRepository;
         IRecipeService RecipeService;
@@ -38,14 +37,13 @@ namespace UnitTests.RecipeComponent
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriberState = new SubscriberState(StateLogger);
             RecipeDTO = new RecipeDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeFactory);
             RecipeRepository = new RecipeRepository(
                         RecipeFactory,
                         Db,
                         UserState,
                         IngredientFactory,
                         InstructionFactory);
-            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, SubscriberState);
+            RecipeService = new RecipeService(RecipeRepository, SubscriberState);
         }
 
         public void Dispose()
@@ -54,24 +52,22 @@ namespace UnitTests.RecipeComponent
         }
   
         [Fact]
-        public async Task CreateRecipe_WithValidRecipeDTO_ShouldReturnRecipeServiceDTO()
+        public async Task CreateRecipe_WithValidRecipeDTO_ShouldReturnRecipeDTO()
         {
-            var recipeDTO = RecipeDTO;
-
-            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
-            recipeDTO.Title = "Test";
-            recipeDTO.Description = "Test";
-            recipeDTO.RecipeType = "Breakfast";
-            recipeDTO.Ingredients = new List<string>()
+            RecipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            RecipeDTO.Title = "Test";
+            RecipeDTO.Description = "Test";
+            RecipeDTO.RecipeType = "Breakfast";
+            RecipeDTO.Ingredients = new List<string>()
             {
                 "Test"
             };
-            recipeDTO.Instructions = new List<string>
+            RecipeDTO.Instructions = new List<string>
             {
                 "Test"
             };
            
-            var result = await RecipeService.CreateRecipe(recipeDTO);
+            var result = await RecipeService.CreateRecipe(RecipeDTO);
 
             Assert.IsType<int>(result);
         }
@@ -79,115 +75,103 @@ namespace UnitTests.RecipeComponent
         [Fact]
         public async Task CreateRecipe_WithInvalidRecipeType_ShouldThrowException()
         {
-            var recipeDTO = RecipeDTO;
+            RecipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            RecipeDTO.Title = "Test";
+            RecipeDTO.Description = "Test";
+            RecipeDTO.RecipeType = "Supper";
+            RecipeDTO.Ingredients = new List<string>();
+            RecipeDTO.Instructions = new List<string>();
 
-            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
-            recipeDTO.Title = "Test";
-            recipeDTO.Description = "Test";
-            recipeDTO.RecipeType = "Supper";
-            recipeDTO.Ingredients = new List<string>();
-            recipeDTO.Instructions = new List<string>();
+            RecipeDTO.Instructions.Add("Test");
+            RecipeDTO.Ingredients.Add("Test");
 
-            recipeDTO.Instructions.Add("Test");
-            recipeDTO.Ingredients.Add("Test");
-
-            await Assert.ThrowsAsync<InvalidOperationException>(async ()=> await RecipeService.CreateRecipe(recipeDTO));
+            await Assert.ThrowsAsync<InvalidOperationException>(async ()=> await RecipeService.CreateRecipe(RecipeDTO));
         }
 
         [Fact]
         public async Task CreateRecipe_WithInvalidRecipeURL_ShouldThrowException()
         {
-            var recipeDTO = RecipeDTO;
+            RecipeDTO.URL = "https://www.allrecipes.com";
+            RecipeDTO.Title = "Test";
+            RecipeDTO.Description = "Test";
+            RecipeDTO.RecipeType = "Dinner";
+            RecipeDTO.Ingredients = new List<string>();
+            RecipeDTO.Instructions = new List<string>();
+            RecipeDTO.Instructions.Add("Test");
+            RecipeDTO.Ingredients.Add("Test");
 
-            recipeDTO.URL = "https://www.allrecipes.com";
-            recipeDTO.Title = "Test";
-            recipeDTO.Description = "Test";
-            recipeDTO.RecipeType = "Dinner";
-            recipeDTO.Ingredients = new List<string>();
-            recipeDTO.Instructions = new List<string>();
-            recipeDTO.Instructions.Add("Test");
-            recipeDTO.Ingredients.Add("Test");
-
-            await Assert.ThrowsAsync<InvalidOperationException>(async () => await RecipeService.CreateRecipe(recipeDTO));
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await RecipeService.CreateRecipe(RecipeDTO));
         }
 
         [Fact]
         public async Task CreateRecipe_WithInvalidRecipeTitle_ShouldThrowException()
         {
-            var recipeDTO = RecipeDTO;
+            RecipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            RecipeDTO.Title = "";
+            RecipeDTO.Description = "Test";
+            RecipeDTO.RecipeType = "Dinner";
+            RecipeDTO.Ingredients = new List<string>();
+            RecipeDTO.Instructions = new List<string>();
 
-            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
-            recipeDTO.Title = "";
-            recipeDTO.Description = "Test";
-            recipeDTO.RecipeType = "Dinner";
-            recipeDTO.Ingredients = new List<string>();
-            recipeDTO.Instructions = new List<string>();
+            RecipeDTO.Instructions.Add("Test");
+            RecipeDTO.Ingredients.Add("Test");
 
-            recipeDTO.Instructions.Add("Test");
-            recipeDTO.Ingredients.Add("Test");
-
-            await Assert.ThrowsAsync<InvalidOperationException>(async () => await RecipeService.CreateRecipe(recipeDTO));
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await RecipeService.CreateRecipe(RecipeDTO));
         }
 
         [Fact]
         public async Task CreateRecipe_WithInvalidIngredients_ShouldThrowException()
         {
-            var recipeDTO = RecipeDTO;
+            RecipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            RecipeDTO.Title = "Test";
+            RecipeDTO.Description = "Test";
+            RecipeDTO.RecipeType = "Dinner";
+            RecipeDTO.Ingredients = new List<string>();
+            RecipeDTO.Instructions = new List<string>();
 
-            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
-            recipeDTO.Title = "Test";
-            recipeDTO.Description = "Test";
-            recipeDTO.RecipeType = "Dinner";
-            recipeDTO.Ingredients = new List<string>();
-            recipeDTO.Instructions = new List<string>();
+            RecipeDTO.Instructions.Add("Test");
 
-            recipeDTO.Instructions.Add("Test");
-
-            await Assert.ThrowsAsync<InvalidOperationException>(async () => await RecipeService.CreateRecipe(recipeDTO));
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await RecipeService.CreateRecipe(RecipeDTO));
         }
 
         [Fact]
         public async Task CreateRecipe_WithInvalidInstructions_ShouldThrowException()
         {
-            var recipeDTO = RecipeDTO;
+            RecipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            RecipeDTO.Title = "Test";
+            RecipeDTO.Description = "Test";
+            RecipeDTO.RecipeType = "Dinner";
+            RecipeDTO.Ingredients = new List<string>();
+            RecipeDTO.Instructions = new List<string>();
 
-            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
-            recipeDTO.Title = "Test";
-            recipeDTO.Description = "Test";
-            recipeDTO.RecipeType = "Dinner";
-            recipeDTO.Ingredients = new List<string>();
-            recipeDTO.Instructions = new List<string>();
+            RecipeDTO.Ingredients.Add("Test");
 
-            recipeDTO.Ingredients.Add("Test");
-
-            await Assert.ThrowsAsync<InvalidOperationException>(async () => await RecipeService.CreateRecipe(recipeDTO));
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await RecipeService.CreateRecipe(RecipeDTO));
 
         }
 
         [Fact]
         public async Task CreateRecipe_WithInvalidDescription_ShouldThrowException()
         {
-            var recipeDTO = RecipeDTO;
-
-            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
-            recipeDTO.Title = "Test";
-            recipeDTO.Description = "The central part of a computer, the part that carries out the individual steps that make up our programs," +
+            RecipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            RecipeDTO.Title = "Test";
+            RecipeDTO.Description = "The central part of a computer, the part that carries out the individual steps that make up our programs," +
                                     " is called the processor. The programs we have seen so far are things that will keep the processor busy " +
                                     "until they have finished their work. The speed at which something like a loop that manipulates numbers can " +
                                     "be executed depends pretty much entirely on the speed of the processor";
-            recipeDTO.RecipeType = "Dinner";
-            recipeDTO.Ingredients = new List<string>();
-            recipeDTO.Instructions = new List<string>();
+            RecipeDTO.RecipeType = "Dinner";
+            RecipeDTO.Ingredients = new List<string>();
+            RecipeDTO.Instructions = new List<string>();
 
-            recipeDTO.Ingredients.Add("Test");
-            recipeDTO.Instructions.Add("Test");
+            RecipeDTO.Ingredients.Add("Test");
+            RecipeDTO.Instructions.Add("Test");
 
-            await Assert.ThrowsAsync<InvalidOperationException>(async () => await RecipeService.CreateRecipe(recipeDTO));
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await RecipeService.CreateRecipe(RecipeDTO));
 
         }
 
         [Fact]
-        public void SearchRecipes_WithSearchText_ShouldReturnRecipeServiceDTOList()
+        public void SearchRecipes_WithSearchText_ShouldReturnRecipeDTOList()
         {
             var results = RecipeService.SearchRecipes("Test");
 

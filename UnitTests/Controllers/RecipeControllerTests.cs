@@ -30,13 +30,11 @@ namespace UnitTests.Controllers
         public ISubscriberState SubscriberState;
         public ILogger<RecipeController> Logger;
         public IRecipeDTO RecipeDTO;
-        public IAllRecipesScraper Scraper;
+        public IRecipeScraper Scraper;
         public IRecipeUrlDTO RecipeUrlDTO;
         public RecipeController RecipeController;
         public IRecipeRepository RecipeRepository;
         public IRecipeService RecipeService;
-        public IBuilder<IRecipeServiceDTO, IRecipeDTO> RecipeBuilder;
-        public IRecipeServiceDTO RecipeServiceDTO;
 
         public RecipeControllerFixture()
         {
@@ -47,10 +45,8 @@ namespace UnitTests.Controllers
             RecipeFactory = new RecipeFactory();
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriberState = new SubscriberState(StateLogger);
-            RecipeServiceDTO = new RecipeServiceDTO();
-            Logger = new LoggerFactory().CreateLogger<RecipeController>();
             RecipeDTO = new RecipeDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeFactory);
+            Logger = new LoggerFactory().CreateLogger<RecipeController>();
             Scraper = new AllRecipesScraper();
             RecipeUrlDTO = new RecipeUrlDTO();
             RecipeRepository = new RecipeRepository(
@@ -59,7 +55,7 @@ namespace UnitTests.Controllers
                                 UserState,
                                 IngredientFactory,
                                 InstructionFactory);
-            RecipeService = new RecipeService(RecipeBuilder, RecipeRepository, SubscriberState);
+            RecipeService = new RecipeService(RecipeRepository, SubscriberState);
             RecipeController = new RecipeController(Logger, RecipeDTO, Scraper, RecipeService, new HttpClient());
         }
 
@@ -98,15 +94,15 @@ namespace UnitTests.Controllers
         [Fact]
         public async Task CreateOrUpdateRecipe_WithValidRecipeDTO_ShouldReturn422()
         {
-            var recipeDTO = Fixture.RecipeDTO;
+            var RecipeDTO = Fixture.RecipeDTO;
 
-            recipeDTO.URL = "https://www.allrecipes.com/recipe/264739/lemon-garlic-chicken-kebabs/";
-            recipeDTO.Title = "test";
-            recipeDTO.RecipeType = "Breakfast";
-            recipeDTO.Ingredients.Add("test");
-            recipeDTO.Instructions.Add("test");
+            RecipeDTO.URL = "https://www.allrecipes.com/recipe/264739/lemon-garlic-chicken-kebabs/";
+            RecipeDTO.Title = "test";
+            RecipeDTO.RecipeType = "Breakfast";
+            RecipeDTO.Ingredients.Add("test");
+            RecipeDTO.Instructions.Add("test");
 
-            var postResult = await Fixture.RecipeController.CreateOrUpdateRecipe((RecipeDTO)recipeDTO);
+            var postResult = await Fixture.RecipeController.CreateOrUpdateRecipe((RecipeDTO)RecipeDTO);
 
             Assert.IsType<UnprocessableEntityResult>(postResult);
         }

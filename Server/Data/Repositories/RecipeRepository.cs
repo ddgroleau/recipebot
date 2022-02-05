@@ -34,18 +34,18 @@ namespace Recipebot.Server.Data.Repositories
             _instructionFactory = instructionFactory;
         }
 
-        public async Task CreateRecipe(IRecipeServiceDTO recipeServiceDTO) 
+        public async Task CreateRecipe(IRecipeDTO RecipeDTO) 
         {
-                Recipe recipe = BuildRecipe(recipeServiceDTO);
+                Recipe recipe = BuildRecipe(RecipeDTO);
                 await _dbContext.Recipes.AddAsync(recipe);
                 await _dbContext.SaveChangesAsync();
 
                 return;
         }
 
-        public IEnumerable<IRecipeServiceDTO> SearchRecipes(string searchText)
+        public IEnumerable<IRecipeDTO> SearchRecipes(string searchText)
         {
-            var searchResults = new List<IRecipeServiceDTO>();
+            var searchResults = new List<IRecipeDTO>();
 
             var recipes = _dbContext.Recipes
                 .Include(x => x.Ingredients)
@@ -62,29 +62,29 @@ namespace Recipebot.Server.Data.Repositories
             
             foreach(var recipe in recipes)
             {
-                var recipeServiceDTO = BuildRecipeServiceDTO(recipe);
-                searchResults.Add(recipeServiceDTO);
+                var RecipeDTO = BuildRecipeDTO(recipe);
+                searchResults.Add(RecipeDTO);
             }
 
             return searchResults;
         }
 
-        public Task<int> FindRecipe(IRecipeServiceDTO recipeServiceDTO)
+        public Task<int> FindRecipe(IRecipeDTO RecipeDTO)
         {
             int recipeId = _dbContext.Recipes
                 .AsNoTracking()
                 .Where(x =>
-                    x.Title.Equals(recipeServiceDTO.Title)
-                    && x.Description.Equals(recipeServiceDTO.Description)
-                    && x.URL.Equals(recipeServiceDTO.URL)
-                    && x.RecipeType.Equals(recipeServiceDTO.RecipeType))
+                    x.Title.Equals(RecipeDTO.Title)
+                    && x.Description.Equals(RecipeDTO.Description)
+                    && x.URL.Equals(RecipeDTO.URL)
+                    && x.RecipeType.Equals(RecipeDTO.RecipeType))
                 .Select(x => x.RecipeId)
                 .FirstOrDefault();
 
             return Task.FromResult(recipeId);
         }
 
-        public async Task<IRecipeServiceDTO> FindRecipeById(int id)
+        public async Task<IRecipeDTO> FindRecipeById(int id)
         {
             var recipe = await _dbContext.Recipes
                 .Include(x => x.Ingredients)
@@ -93,48 +93,48 @@ namespace Recipebot.Server.Data.Repositories
                 .FirstOrDefaultAsync()
                 ;
 
-            var recipeServiceDTO = BuildRecipeServiceDTO(recipe);
+            var RecipeDTO = BuildRecipeDTO(recipe);
 
-            return recipeServiceDTO;
+            return RecipeDTO;
         }
 
-        public async Task UpdateRecipe(IRecipeServiceDTO recipeServiceDTO)
+        public async Task UpdateRecipe(IRecipeDTO RecipeDTO)
         {
-            var entity = await _dbContext.Recipes.FindAsync(recipeServiceDTO.RecipeId);
+            var entity = await _dbContext.Recipes.FindAsync(RecipeDTO.RecipeId);
             
             if (entity == null) throw new InvalidOperationException("This recipe does not exist.");
 
-            entity.Title = recipeServiceDTO.Title;
-            entity.RecipeType = recipeServiceDTO.RecipeType;
-            entity.Description = recipeServiceDTO.Description;
-            entity.URL = recipeServiceDTO.URL;
+            entity.Title = RecipeDTO.Title;
+            entity.RecipeType = RecipeDTO.RecipeType;
+            entity.Description = RecipeDTO.Description;
+            entity.URL = RecipeDTO.URL;
             
-            for(int i = 0; i < recipeServiceDTO.Ingredients.Count; i++)
+            for(int i = 0; i < RecipeDTO.Ingredients.Count; i++)
             {
                 var entityIngredient = entity.Ingredients.ElementAtOrDefault(i);
 
                 if (entityIngredient == null)
                 {
                     Ingredient ingredient = _ingredientFactory.Make();
-                    ingredient.Description = recipeServiceDTO.Ingredients[i];
+                    ingredient.Description = RecipeDTO.Ingredients[i];
                     ingredient.CreatedBy = _userState.GetCurrentUserName();
                     ingredient.CreatedOn = DateTime.Now;
                     entity.Ingredients.Add(ingredient);
                 }
                 else
                 {
-                    entityIngredient.Description = recipeServiceDTO.Ingredients[i];
+                    entityIngredient.Description = RecipeDTO.Ingredients[i];
                 }
             }
             
-            for (int i = 0; i < recipeServiceDTO.Instructions.Count; i++)
+            for (int i = 0; i < RecipeDTO.Instructions.Count; i++)
             {
                 var entityInstruction = entity.Instructions.ElementAtOrDefault(i);
 
                 if (entityInstruction == null)
                 {
                     Instruction instruction = _instructionFactory.Make();
-                    instruction.Description = recipeServiceDTO.Instructions[i];
+                    instruction.Description = RecipeDTO.Instructions[i];
                     instruction.CreatedBy = _userState.GetCurrentUserName();
                     instruction.CreatedOn = DateTime.Now;
                     instruction.StepNumber = i + 1;
@@ -142,7 +142,7 @@ namespace Recipebot.Server.Data.Repositories
                 }
                 else
                 {
-                    entityInstruction.Description = recipeServiceDTO.Instructions[i];
+                    entityInstruction.Description = RecipeDTO.Instructions[i];
                 }
             }
 
@@ -151,10 +151,10 @@ namespace Recipebot.Server.Data.Repositories
             return;
         }
 
-        public async Task<IEnumerable<IRecipeServiceDTO>> GetUserRecipes()
+        public async Task<IEnumerable<IRecipeDTO>> GetUserRecipes()
         {
 
-            var userRecipes = new List<IRecipeServiceDTO>();
+            var userRecipes = new List<IRecipeDTO>();
 
             var userId = _userState.GetCurrentUserId();
 
@@ -169,52 +169,52 @@ namespace Recipebot.Server.Data.Repositories
             
             foreach(var recipe in recipes)
             {
-                var recipeServiceDTO = BuildRecipeServiceDTO(recipe);
+                var RecipeDTO = BuildRecipeDTO(recipe);
 
-                userRecipes.Add(recipeServiceDTO);
+                userRecipes.Add(RecipeDTO);
             }
 
             return userRecipes;
         }
 
-        private IRecipeServiceDTO BuildRecipeServiceDTO(Recipe recipe)
+        private IRecipeDTO BuildRecipeDTO(Recipe recipe)
         {
-            IRecipeServiceDTO recipeServiceDTO = _recipeFactory.MakeRecipeServiceDTO();
+            IRecipeDTO RecipeDTO = _recipeFactory.MakeRecipeDTO();
 
-            if (recipe == null) return recipeServiceDTO;
+            if (recipe == null) return RecipeDTO;
 
-            recipeServiceDTO.RecipeId = recipe.RecipeId;
-            recipeServiceDTO.RecipeType = recipe.RecipeType;
-            recipeServiceDTO.Title = recipe.Title;
-            recipeServiceDTO.Description = recipe.Description;
-            recipeServiceDTO.URL = recipe.URL;
+            RecipeDTO.RecipeId = recipe.RecipeId;
+            RecipeDTO.RecipeType = recipe.RecipeType;
+            RecipeDTO.Title = recipe.Title;
+            RecipeDTO.Description = recipe.Description;
+            RecipeDTO.URL = recipe.URL;
 
             foreach (Ingredient ingredient in recipe.Ingredients)
             {
-                recipeServiceDTO.Ingredients.Add(ingredient.Description);
+                RecipeDTO.Ingredients.Add(ingredient.Description);
             }
 
             foreach (Instruction instruction in recipe.Instructions)
             {
-                recipeServiceDTO.Instructions.Add(instruction.Description);
+                RecipeDTO.Instructions.Add(instruction.Description);
             }
 
-            return recipeServiceDTO;
+            return RecipeDTO;
         }
 
-        private Recipe BuildRecipe(IRecipeServiceDTO recipeServiceDTO)
+        private Recipe BuildRecipe(IRecipeDTO RecipeDTO)
         {
             Recipe recipe = _recipeFactory.Make();
             string username = _userState.GetCurrentUserName();
             
-            recipe.RecipeType = recipeServiceDTO.RecipeType;
-            recipe.Title = recipeServiceDTO.Title;
-            recipe.Description = recipeServiceDTO.Description;
-            recipe.URL = recipeServiceDTO.URL;
+            recipe.RecipeType = RecipeDTO.RecipeType;
+            recipe.Title = RecipeDTO.Title;
+            recipe.Description = RecipeDTO.Description;
+            recipe.URL = RecipeDTO.URL;
             recipe.CreatedBy = username;
             recipe.CreatedOn = DateTime.Now;
 
-            foreach (string ingredientDescription in recipeServiceDTO.Ingredients)
+            foreach (string ingredientDescription in RecipeDTO.Ingredients)
             {
                 Ingredient ingredient = _ingredientFactory.Make();
                 ingredient.Description = ingredientDescription;
@@ -224,10 +224,10 @@ namespace Recipebot.Server.Data.Repositories
                 recipe.Ingredients.Add(ingredient);
             }
 
-            for (int i = 0; i < recipeServiceDTO.Instructions.Count; i++)
+            for (int i = 0; i < RecipeDTO.Instructions.Count; i++)
             {
                 Instruction instruction = _instructionFactory.Make();
-                instruction.Description = recipeServiceDTO.Instructions[i];
+                instruction.Description = RecipeDTO.Instructions[i];
                 instruction.CreatedBy = username;
                 instruction.CreatedOn = DateTime.Now;
                 instruction.StepNumber = i + 1;

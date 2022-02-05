@@ -8,7 +8,7 @@ namespace Recipebot.Shared.RecipeComponent
 {
     public interface IRecipeService
     {
-        public Task<int> CreateRecipe(IRecipeDTO recipeDTO);
+        public Task<int> CreateRecipe(IRecipeDTO RecipeDTO);
         public IEnumerable<IRecipeDTO> SearchRecipes(string searchText);
         public Task<IEnumerable<IRecipeDTO>> GetUserRecipes();
     }

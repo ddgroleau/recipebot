@@ -28,6 +28,7 @@ namespace UnitTests.DOM_Events
         {
             GC.SuppressFinalize(this);
         }
+
         [Fact]
         public void Toggle_WithIsToggledDefault_ShouldMakeIsToggledFalse()
         {
@@ -132,18 +133,16 @@ namespace UnitTests.DOM_Events
         [Fact]
         public void IsObjectValid_WithValidRecipeDTO_ShouldReturnTrue()
         {
-            var recipeDTO = RecipeDTO;
+            RecipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            RecipeDTO.Title = "Test";
+            RecipeDTO.Description = "Test";
+            RecipeDTO.RecipeType = "Dinner";
+            RecipeDTO.Ingredients = new List<string>();
+            RecipeDTO.Instructions = new List<string>();
+            RecipeDTO.Instructions.Add("Test");
+            RecipeDTO.Ingredients.Add("Test");
 
-            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
-            recipeDTO.Title = "Test";
-            recipeDTO.Description = "Test";
-            recipeDTO.RecipeType = "Dinner";
-            recipeDTO.Ingredients = new List<string>();
-            recipeDTO.Instructions = new List<string>();
-            recipeDTO.Instructions.Add("Test");
-            recipeDTO.Ingredients.Add("Test");
-
-            var isValid = Lazor.IsObjectValid(recipeDTO);
+            var isValid = Lazor.IsObjectValid(RecipeDTO);
 
             Assert.True(isValid);
         }
@@ -151,16 +150,14 @@ namespace UnitTests.DOM_Events
         [Fact]
         public void IsObjectValid_WithInvalidRecipeDTO_ShouldReturnFalse()
         {
-            var recipeDTO = RecipeDTO;
+            RecipeDTO.URL = "https://www.allrecipes.com/";
+            RecipeDTO.RecipeType = "Breakfast";
+            RecipeDTO.Title = "";
+            RecipeDTO.Description = "Test";
+            RecipeDTO.Ingredients = new List<string>();
+            RecipeDTO.Instructions = new List<string>();
 
-            recipeDTO.URL = "https://www.allrecipes.com/";
-            recipeDTO.RecipeType = "Breakfast";
-            recipeDTO.Title = "";
-            recipeDTO.Description = "Test";
-            recipeDTO.Ingredients = new List<string>();
-            recipeDTO.Instructions = new List<string>();
-
-            var isValid = Lazor.IsObjectValid(recipeDTO);
+            var isValid = Lazor.IsObjectValid(RecipeDTO);
 
             Assert.False(isValid);
         }
@@ -168,18 +165,16 @@ namespace UnitTests.DOM_Events
         [Fact]
         public void IsObjectValid_WithInvalidRecipeURL_ShouldReturnFalse()
         {
-            var recipeDTO = RecipeDTO;
+            RecipeDTO.URL = "https://www.allrecipes.com/";
+            RecipeDTO.Title = "Test";
+            RecipeDTO.Description = "Test";
+            RecipeDTO.Ingredients = new List<string>();
+            RecipeDTO.Ingredients.Add("Test");
+            RecipeDTO.Instructions = new List<string>();
+            RecipeDTO.Instructions.Add("Test");
+            RecipeDTO.RecipeType = "Breakfast";
 
-            recipeDTO.URL = "https://www.allrecipes.com/";
-            recipeDTO.Title = "Test";
-            recipeDTO.Description = "Test";
-            recipeDTO.Ingredients = new List<string>();
-            recipeDTO.Ingredients.Add("Test");
-            recipeDTO.Instructions = new List<string>();
-            recipeDTO.Instructions.Add("Test");
-            recipeDTO.RecipeType = "Breakfast";
-
-            var isValid = Lazor.IsObjectValid(recipeDTO);
+            var isValid = Lazor.IsObjectValid(RecipeDTO);
 
             Assert.False(isValid);
         }
@@ -187,18 +182,16 @@ namespace UnitTests.DOM_Events
         [Fact]
         public void IsObjectValid_WithInvalidTitle_ShouldReturnFalse()
         {
-            var recipeDTO = RecipeDTO;
+            RecipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            RecipeDTO.Title = "";
+            RecipeDTO.Description = "Test";
+            RecipeDTO.Ingredients = new List<string>();
+            RecipeDTO.Ingredients.Add("Test");
+            RecipeDTO.Instructions = new List<string>();
+            RecipeDTO.Instructions.Add("Test");
+            RecipeDTO.RecipeType = "Breakfast";
 
-            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
-            recipeDTO.Title = "";
-            recipeDTO.Description = "Test";
-            recipeDTO.Ingredients = new List<string>();
-            recipeDTO.Ingredients.Add("Test");
-            recipeDTO.Instructions = new List<string>();
-            recipeDTO.Instructions.Add("Test");
-            recipeDTO.RecipeType = "Breakfast";
-
-            var isValid = Lazor.IsObjectValid(recipeDTO);
+            var isValid = Lazor.IsObjectValid(RecipeDTO);
 
             Assert.False(isValid);
         }
@@ -206,18 +199,16 @@ namespace UnitTests.DOM_Events
         [Fact]
         public void IsObjectValid_WithInvalidRecipeType_ShouldReturnFalse()
         {
-            var recipeDTO = RecipeDTO;
+            RecipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
+            RecipeDTO.Title = "Test";
+            RecipeDTO.Description = "Test";
+            RecipeDTO.Ingredients = new List<string>();
+            RecipeDTO.Ingredients.Add("Test");
+            RecipeDTO.Instructions = new List<string>();
+            RecipeDTO.Instructions.Add("Test");
+            RecipeDTO.RecipeType = "Supper";
 
-            recipeDTO.URL = "https://www.allrecipes.com/recipe/234410/no-bake-strawberry-cheesecake/";
-            recipeDTO.Title = "Test";
-            recipeDTO.Description = "Test";
-            recipeDTO.Ingredients = new List<string>();
-            recipeDTO.Ingredients.Add("Test");
-            recipeDTO.Instructions = new List<string>();
-            recipeDTO.Instructions.Add("Test");
-            recipeDTO.RecipeType = "Supper";
-
-            var isValid = Lazor.IsObjectValid(recipeDTO);
+            var isValid = Lazor.IsObjectValid(RecipeDTO);
 
             Assert.False(isValid);
         }

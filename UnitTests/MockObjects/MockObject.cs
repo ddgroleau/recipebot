@@ -1,4 +1,5 @@
-﻿using Recipebot.Shared.Custom_Validation;
+﻿using Recipebot.Shared;
+using Recipebot.Shared.Custom_Validation;
 using Recipebot.Shared.RecipeComponent;
 using Recipebot.Shared.SubscriptionComponent;
 using System;
@@ -62,7 +63,7 @@ namespace UnitTests.MockObjects
                           }
         };
 
-        public RecipeServiceDTO UpdatedRecipe = new RecipeServiceDTO
+        public RecipeDTO UpdatedRecipe = new RecipeDTO
         {
             RecipeId = 1,
             Title = "New Title",
@@ -73,9 +74,9 @@ namespace UnitTests.MockObjects
             Instructions = {"Combine and cook."}
         };
 
-        public List<IRecipeServiceDTO> RecipeServiceDTOs = new List<IRecipeServiceDTO>
+        public List<IRecipeDTO> RecipeDTOs = new List<IRecipeDTO>
             {
-                new RecipeServiceDTO
+                new RecipeDTO
                     {
                         RecipeId = 11,
                         Title = $"Recipe11",
@@ -84,7 +85,7 @@ namespace UnitTests.MockObjects
                         Ingredients = { "Salt" },
                         Instructions = { "Combine and cook." }
                     },
-                new RecipeServiceDTO
+                new RecipeDTO
                     {
                         RecipeId = 12,
                         Title = $"Recipe12",
@@ -93,7 +94,7 @@ namespace UnitTests.MockObjects
                         Ingredients = { "Salt" },
                         Instructions = { "Combine and cook." }
                     },
-                 new RecipeServiceDTO
+                 new RecipeDTO
                     {
                         RecipeId = 13,
                         Title = $"Recipe13",
@@ -102,7 +103,7 @@ namespace UnitTests.MockObjects
                         Ingredients = { "Salt" },
                         Instructions = { "Combine and cook." }
                     },
-                  new RecipeServiceDTO
+                  new RecipeDTO
                     {
                         RecipeId = 14,
                         Title = $"Recipe14",
@@ -111,7 +112,7 @@ namespace UnitTests.MockObjects
                         Ingredients = { "Salt" },
                         Instructions = { "Combine and cook." }
                     },
-                  new RecipeServiceDTO
+                  new RecipeDTO
                     {
                         RecipeId = 15,
                         Title = $"Recipe15",
@@ -120,7 +121,7 @@ namespace UnitTests.MockObjects
                         Ingredients = { "Salt" },
                         Instructions = { "Combine and cook." }
                     },
-               new RecipeServiceDTO
+               new RecipeDTO
                     {
                         RecipeId = 16,
                         Title = $"Recipe16",
@@ -129,7 +130,7 @@ namespace UnitTests.MockObjects
                         Ingredients = { "Salt" },
                         Instructions = { "Combine and cook." }
                     },
-                new RecipeServiceDTO
+                new RecipeDTO
                     {
                         RecipeId = 17,
                         Title = $"Recipe17",
@@ -138,7 +139,7 @@ namespace UnitTests.MockObjects
                         Ingredients = { "Salt" },
                         Instructions = { "Combine and cook." }
                     },
-               new RecipeServiceDTO
+               new RecipeDTO
                    {
                        RecipeId = 18,
                        Title = $"Recipe18",
@@ -147,7 +148,7 @@ namespace UnitTests.MockObjects
                        Ingredients = { "Salt" },
                        Instructions = { "Combine and cook." }
                    },
-                new RecipeServiceDTO
+                new RecipeDTO
                     {
                         RecipeId = 19,
                         Title = $"Recipe19",
@@ -156,7 +157,7 @@ namespace UnitTests.MockObjects
                         Ingredients = { "Salt" },
                         Instructions = { "Combine and cook." }
                     },
-                new RecipeServiceDTO
+                new RecipeDTO
                     {
                         RecipeId = 20,
                         Title = $"Recipe20",
@@ -165,7 +166,7 @@ namespace UnitTests.MockObjects
                         Ingredients = { "Salt" },
                         Instructions = { "Combine and cook." }
                     },
-                new RecipeServiceDTO
+                new RecipeDTO
                     {
                         RecipeId = 21,
                         Title = $"Recipe21",
@@ -174,7 +175,7 @@ namespace UnitTests.MockObjects
                         Ingredients = { "Salt" },
                         Instructions = { "Combine and cook." }
                     },
-                new RecipeServiceDTO
+                new RecipeDTO
                     {
                         RecipeId = 22,
                         Title = $"Recipe22",
@@ -183,7 +184,7 @@ namespace UnitTests.MockObjects
                         Ingredients = { "Salt" },
                         Instructions = { "Combine and cook." }
                     },
-                 new RecipeServiceDTO
+                 new RecipeDTO
                      {
                          RecipeId = 23,
                          Title = $"Recipe23",
@@ -194,7 +195,7 @@ namespace UnitTests.MockObjects
                      }
             };
 
-        public RecipeServiceDTO RecipeServiceDTO = new RecipeServiceDTO
+        public RecipeDTO RecipeDTO = new RecipeDTO
         {
             Title = "Recipe2",
             Description = "Description2",

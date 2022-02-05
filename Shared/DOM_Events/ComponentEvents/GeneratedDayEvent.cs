@@ -12,13 +12,13 @@ namespace Recipebot.Shared.DOM_Events.ComponentEvents
 {
     public class GeneratedDayEvent : IGeneratedDayEvent
     {
-        private readonly IRecipeDTO _recipeDTO;
+        private readonly IRecipeDTO _RecipeDTO;
         private readonly HttpClient _http;
         private readonly ILogger<GeneratedDayEvent> _logger;
-        public GeneratedDayEvent(IRecipeDTO recipeDTO, HttpClient http, ILogger<GeneratedDayEvent> logger)
+        public GeneratedDayEvent(IRecipeDTO RecipeDTO, HttpClient http, ILogger<GeneratedDayEvent> logger)
         {
             _http = http;
-            _recipeDTO = recipeDTO;
+            _RecipeDTO = RecipeDTO;
             _logger = logger;
         }
         public Dictionary<string, bool> Loading { get; set; } = new Dictionary<string, bool>() {
@@ -38,7 +38,7 @@ namespace Recipebot.Shared.DOM_Events.ComponentEvents
 
         public async Task<IRecipeDTO> RegenerateRecipe(string recipeType)
         {
-            var newRecipe = _recipeDTO;
+            var newRecipe = _RecipeDTO;
             Loading[recipeType] = true;
             RefreshSymbol[recipeType] = null;
             try

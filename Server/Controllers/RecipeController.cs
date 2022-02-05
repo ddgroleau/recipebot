@@ -20,21 +20,21 @@ namespace Recipebot.Server.Controllers
     public class RecipeController : ControllerBase
     {
         private readonly ILogger<RecipeController> _logger;
-        private readonly IRecipeDTO _recipeDTO;
-        private readonly IAllRecipesScraper _allRecipesScraper;
+        private readonly IRecipeDTO _RecipeDTO;
+        private readonly IRecipeScraper _allRecipesScraper;
         private readonly IRecipeService _recipeService;
         private readonly HttpClient _http;
 
         public RecipeController(
             ILogger<RecipeController> logger, 
-            IRecipeDTO recipeDTO, 
-            IAllRecipesScraper 
+            IRecipeDTO RecipeDTO, 
+            IRecipeScraper 
             allRecipesScraper, 
             IRecipeService recipeService, 
             HttpClient http)
         {
             _logger = logger;
-            _recipeDTO = recipeDTO;
+            _RecipeDTO = RecipeDTO;
             _allRecipesScraper = allRecipesScraper;
             _recipeService = recipeService;
             _http = http;
@@ -46,22 +46,22 @@ namespace Recipebot.Server.Controllers
             try
             {
                 _logger.LogInformation($"New URL {urlDTO.URL} recieved by RecipeController, PostRecipeUrl method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-                return _allRecipesScraper.ScrapeRecipe(urlDTO.URL, _recipeDTO);
+                return _allRecipesScraper.ScrapeRecipe(urlDTO.URL, _RecipeDTO);
             }
             catch (Exception)
             {
                 _logger.LogError($"Failed to scrape {urlDTO.URL} from AllRecipes.com; RecipeController, PostRecipeUrl method.");
             }
-            return _recipeDTO;
+            return _RecipeDTO;
         }
 
         [HttpPost("recipe")]
-        public async Task<IActionResult> CreateOrUpdateRecipe(RecipeDTO recipeDTO)
+        public async Task<IActionResult> CreateOrUpdateRecipe(RecipeDTO RecipeDTO)
         {
             try
             {
-                _logger.LogInformation($"Processing RecipeDTO: \"{recipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
-                int createdId = await _recipeService.CreateRecipe(recipeDTO);
+                _logger.LogInformation($"Processing RecipeDTO: \"{RecipeDTO.Title}\" at RecipeController, PostRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.");
+                int createdId = await _recipeService.CreateRecipe(RecipeDTO);
 
                 var subscription = await NotifySubscriptionComponent(createdId);
 
@@ -69,7 +69,7 @@ namespace Recipebot.Server.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError($"Failed to process RecipeDTO \"{recipeDTO.Title}\" at RecipeController, CreateOrUpdateRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.", e.Message);
+                _logger.LogError($"Failed to process RecipeDTO \"{RecipeDTO.Title}\" at RecipeController, CreateOrUpdateRecipe method. Timestamp: {DateTime.Now:MM/dd/yyyy HH:mm:ss}.", e.Message);
             }
             return BadRequest();
         }  

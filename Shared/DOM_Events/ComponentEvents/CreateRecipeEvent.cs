@@ -19,19 +19,19 @@ namespace Recipebot.Shared.DOM_Events.ComponentEvents
         private readonly ILogger<IRecipeUrlDTO> _logger;
         private readonly HttpClient _http;
 
-        public CreateRecipeEvent(ILazor e, IRecipeUrlDTO recipeUrlDTO, IRecipeDTO recipeDTO, ILogger<IRecipeUrlDTO> logger, HttpClient http)
+        public CreateRecipeEvent(ILazor e, IRecipeUrlDTO recipeUrlDTO, ILogger<IRecipeUrlDTO> logger, HttpClient http, IRecipeDTO recipeDTO)
         {
             Lazor = e;
             RecipeUrlDTO = recipeUrlDTO;
+            RecipeDTO = recipeDTO;
             _logger = logger;
             _http = http;
-            RecipeDTO = recipeDTO;
         }
 
         public async Task<IRecipeDTO> HandleSubmit()
         {
             try
-            {
+            { 
                 Lazor.SetLoadingStatus(true);
                 Lazor.SetErrorMessage(null);
 

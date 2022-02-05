@@ -10,12 +10,12 @@ namespace Recipebot.Shared.ListComponent
     public class ListBuilder : IListBuilder
     {
         private readonly IListDayDTO _listDayDTO;
-        private readonly IRecipeDTO _recipeDTO;
+        private readonly IRecipeDTO _RecipeDTO;
         private readonly IListDTO _listDTO;
-        public ListBuilder(IListDayDTO listDayDTO, IRecipeDTO recipeDTO, IListDTO listDTO)
+        public ListBuilder(IListDayDTO listDayDTO, IRecipeDTO RecipeDTO, IListDTO listDTO)
         {
             _listDayDTO = listDayDTO;
-            _recipeDTO = recipeDTO;
+            _RecipeDTO = RecipeDTO;
             _listDTO = listDTO;
         }
 
@@ -57,7 +57,7 @@ namespace Recipebot.Shared.ListComponent
             }
             catch (Exception)
             {
-                return (RecipeDTO)_recipeDTO;
+                return (RecipeDTO)_RecipeDTO;
             }
         }
     }

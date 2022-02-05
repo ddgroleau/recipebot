@@ -8,11 +8,11 @@ namespace Recipebot.Shared.RecipeComponent
 {
     public interface IRecipeRepository
      {
-        public Task CreateRecipe(IRecipeServiceDTO recipeServiceDTO);
-        public IEnumerable<IRecipeServiceDTO> SearchRecipes(string searchText);
-        public Task<int> FindRecipe(IRecipeServiceDTO recipeServiceDTO);
-        public Task<IRecipeServiceDTO> FindRecipeById(int id);
-        public Task UpdateRecipe(IRecipeServiceDTO recipe);
-        public Task<IEnumerable<IRecipeServiceDTO>> GetUserRecipes();
+        public Task CreateRecipe(IRecipeDTO RecipeDTO);
+        public IEnumerable<IRecipeDTO> SearchRecipes(string searchText);
+        public Task<int> FindRecipe(IRecipeDTO RecipeDTO);
+        public Task<IRecipeDTO> FindRecipeById(int id);
+        public Task UpdateRecipe(IRecipeDTO recipe);
+        public Task<IEnumerable<IRecipeDTO>> GetUserRecipes();
     }
 }

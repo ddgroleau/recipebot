@@ -14,7 +14,5 @@ namespace Recipebot.Shared.RecipeComponent
 
         public abstract IRecipeDTO MakeRecipeDTO();
 
-        public abstract IRecipeServiceDTO MakeRecipeServiceDTO();
-        
     }
 }

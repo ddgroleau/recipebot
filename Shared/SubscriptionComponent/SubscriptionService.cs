@@ -12,13 +12,11 @@ namespace Recipebot.Shared.SubscriptionComponent
     {
         private readonly ISubscriberState _subscriberState;
         private readonly ISubscriptionRepository _subscriptionRepository;
-        private readonly IBuilder<IRecipeServiceDTO, IRecipeDTO> _recipeBuilder;
 
-        public SubscriptionService(ISubscriberState subscriberState, ISubscriptionRepository subscriptionRepository, IBuilder<IRecipeServiceDTO, IRecipeDTO> recipeBuilder)
+        public SubscriptionService(ISubscriberState subscriberState, ISubscriptionRepository subscriptionRepository)
         {
             _subscriberState = subscriberState;
             _subscriptionRepository = subscriptionRepository;
-            _recipeBuilder = recipeBuilder;
         }
         public void Subscribe(int recipeId)
         {

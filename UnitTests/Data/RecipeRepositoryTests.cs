@@ -84,7 +84,7 @@ namespace UnitTests.Data
         public async Task CreateRecipe_WithValidRecipe_ShouldCreateRecipe()
         {
             var userId = UserState.GetCurrentUserId();
-            var recipe = MockObject.RecipeServiceDTO;
+            var recipe = MockObject.RecipeDTO;
             var expected = MockObject.CreateRecipeExpected;
 
             await RecipeRepository.CreateRecipe(recipe);
@@ -176,14 +176,14 @@ namespace UnitTests.Data
 
         #region FindRecipe
         [Fact]
-        public async Task FindRecipe_WithValidRecipeServiceDTO_ShouldReturnId()
+        public async Task FindRecipe_WithValidRecipeDTO_ShouldReturnId()
         {
             var recipe = MockObject.FindRecipeRecipe;
 
             await Db.Recipes.AddAsync(recipe);
             await Db.SaveChangesAsync();
 
-            var actual = await RecipeRepository.FindRecipe(MockObject.RecipeServiceDTO);
+            var actual = await RecipeRepository.FindRecipe(MockObject.RecipeDTO);
 
             Assert.Equal(1, actual);
         }
@@ -191,7 +191,7 @@ namespace UnitTests.Data
         [Fact]
         public async Task FindRecipe_WithNoMatch_ShouldBeNull()
         {
-            var actual = await RecipeRepository.FindRecipe(MockObject.RecipeServiceDTO);
+            var actual = await RecipeRepository.FindRecipe(MockObject.RecipeDTO);
 
             Assert.Equal(0,actual);
         }

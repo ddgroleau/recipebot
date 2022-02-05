@@ -23,8 +23,6 @@ namespace UnitTests.Controllers
         public ApplicationDbContext Db;
         public AbstractRecipeFactory RecipeFactory;
         public IUserState UserState;
-        public IRecipeServiceDTO RecipeServiceDTO;
-        public IBuilder<IRecipeServiceDTO, IRecipeDTO> RecipeBuilder;
         public IRecipeDTO RecipeDTO;
         public IFactory<RecipeSubscription> SubscriptionFactory;
         public ILogger<ISubscriberState> StateLogger;
@@ -40,13 +38,11 @@ namespace UnitTests.Controllers
             UserState = new MockUserState();
             RecipeFactory = new RecipeFactory();
             RecipeDTO = new RecipeDTO();
-            RecipeServiceDTO = new RecipeServiceDTO();
-            RecipeBuilder = new RecipeBuilder(RecipeFactory);
             SubscriptionFactory = new SubscriptionFactory();
             StateLogger = new LoggerFactory().CreateLogger<ISubscriberState>();
             SubscriptionRepository = new SubscriptionRepository(SubscriptionFactory,Db, UserState);
             SubscriberState = new SubscriberState(StateLogger);
-            SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository, RecipeBuilder);
+            SubscriptionService = new SubscriptionService(SubscriberState, SubscriptionRepository);
             Logger = new LoggerFactory().CreateLogger<SubscriptionController>();
             Controller = new SubscriptionController(Logger, SubscriptionService);
         }

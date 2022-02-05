@@ -81,13 +81,12 @@ namespace Recipebot.Server
 
             #region RecipeComponent
             services.AddScoped<IRecipeDTO, RecipeDTO>();
-            services.AddScoped<IRecipeServiceDTO, RecipeServiceDTO>();
+            services.AddScoped<IRecipeDTO, RecipeDTO>();
             services.AddScoped<IRecipeService, RecipeService>();
-            services.AddScoped<IAllRecipesScraper, AllRecipesScraper>();
+            services.AddScoped<IRecipeScraper, AllRecipesScraper>();
             services.AddScoped<IFactory<Ingredient>, IngredientFactory>();
             services.AddScoped<IFactory<Instruction>, InstructionFactory>();
             services.AddScoped<AbstractRecipeFactory, RecipeFactory>();
-            services.AddScoped<IBuilder<IRecipeServiceDTO, IRecipeDTO>, RecipeBuilder>();
             services.AddScoped<Recipe>();
             services.AddScoped<Ingredient>();
             services.AddScoped<Instruction>();

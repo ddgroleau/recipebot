@@ -18,10 +18,5 @@ namespace Recipebot.Shared.RecipeComponent
         {
             return new RecipeDTO();
         }
-
-        public override IRecipeServiceDTO MakeRecipeServiceDTO()
-        {
-            return new RecipeServiceDTO();
-        }
     }
 }

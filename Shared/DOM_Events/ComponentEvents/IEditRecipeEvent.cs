@@ -11,9 +11,9 @@ namespace Recipebot.Shared.DOM_Events.ComponentEvents
     {
         public string NewIngredient { get; set; }
         public string NewInstruction { get; set; }
-        public Task<IRecipeDTO> HandleValidSubmit(ILazor lazor, IRecipeDTO recipeDTO);
-        public void ResetRecipe(IRecipeDTO recipeDTO);
-        public IRecipeDTO AddIngredient(IRecipeDTO recipeDTO);
-        public IRecipeDTO AddInstruction(IRecipeDTO recipeDTO);
+        public Task<IRecipeDTO> HandleValidSubmit(ILazor lazor, IRecipeDTO RecipeDTO);
+        public void ResetRecipe(IRecipeDTO RecipeDTO);
+        public IRecipeDTO AddIngredient(IRecipeDTO RecipeDTO);
+        public IRecipeDTO AddInstruction(IRecipeDTO RecipeDTO);
     }
 }
